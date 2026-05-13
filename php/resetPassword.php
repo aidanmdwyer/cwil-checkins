@@ -70,13 +70,13 @@ if ($stmt->num_rows > 0 && $resetTimer !== null) {
 
             <label>New Password:</label><br>
             <div style="position: relative; display: inline-block;">
-                <input type="password" name="password" id="password" style="width: 150px;" required>
+                <input type="password" name="password" id="password" style="width: 150px;" required maxlength="32">
                 <button type="button" id="togglePassword" style="position: absolute; right: 0; top: 0%; height: 100%; border: none; background-color: transparent;"><img src="/imgs/eyeShowing.png" style="height: 100%"></button>
             </div>
             <br><br>
 
             <label>Confirm New Password:</label><br>
-            <input type="password" name="confirm_password" id="confirm_password" style="width: 150px;" required>
+            <input type="password" name="confirm_password" id="confirm_password" style="width: 150px;" required maxlength="32">
             <br><br>
 
             <button type="submit" class="big">Confirm</button>
