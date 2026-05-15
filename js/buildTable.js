@@ -242,7 +242,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                 }
             })
                 .catch(error => {
-                    buildingsTable.innerHTML = 'No buildings found for this account.';
+                    buildingsTable.innerHTML = error;
                     buildingsTable.style.display = 'inline-block';
                     refreshButton.disabled = false;
                     refreshButton.innerHTML = 'Refresh';
