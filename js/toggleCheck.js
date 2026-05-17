@@ -1,6 +1,6 @@
-function toggleCheck(id, name, checked) {
+function toggleCheck(name, checked) {
 
-    if(confirm('Are you sure you want to ' + ((checked === 0) ? 'check' : 'uncheck') + ' ' + decodeURIComponent(name) + '?')) {
+    if(confirm('Are you sure you want to ' + ((checked === 0) ? 'check' : 'uncheck') + ' ' + name + '?')) {
         refreshButton.disabled = true;
         refreshButton.innerHTML = 'Loading';
         fetch('/php/toggleCheck.php', {
@@ -8,7 +8,7 @@ function toggleCheck(id, name, checked) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: `id=${encodeURIComponent(id)}&checked=${encodeURIComponent(checked)}`
+            body: `name=${encodeURIComponent(name)}&checked=${encodeURIComponent(checked)}`
         })
             .then(response => response.text())
             .then(result => {

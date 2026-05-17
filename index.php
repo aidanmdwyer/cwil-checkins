@@ -45,7 +45,7 @@ if (!accountProperties('Home')) {
         <div style="margin-right: 40px;">
             <a href="/index.php"><img src="/imgs/logoSmall.png" style="width: 100px;"></a>
         </div>
-        <div style="display: flex; justify-content: space-between; width: 100%;">
+        <div style="display: flex; justify-content: space-between; width: 100%; gap: 10px;">
             <div style="display: flex; align-items: center; gap: 15px;">
                 <div class="vr"></div>
                 <form id="searchBuildingsForm">
@@ -80,7 +80,7 @@ if (!accountProperties('Home')) {
                 </label>
                 <div style="text-align: center;">Show<br>Active</div>
                 <div class="vr"></div>
-                <button id="refreshButton" class="big" style="">Refresh</button>
+                <button id="refreshButton" class="big">Refresh</button>
             </div>
             <div style="display: flex; align-items: center; gap: 15px;">
                 <button id="mainExportButton" class="big" onclick="exportBuildingsSheet('buildingsTable', new Date().toISOString().slice(0,10) + '_buildings.xlsx')">Export</button>

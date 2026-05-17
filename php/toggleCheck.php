@@ -7,7 +7,7 @@ if (!accountProperties('Checked')) {
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id'];
+    $name = $_POST['name'];
     $checked = $_POST['checked'];
     $insChecked = 1 - (int)$checked;
 
@@ -17,12 +17,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $chicagoTime = new DateTime('now', new DateTimeZone('America/Chicago'));
         $formattedTime = $chicagoTime->format('Y-m-d H:i:s');
 
-        $stmt = $conn->prepare("UPDATE buildings SET checked = ?, checkedTime = ? WHERE id = ?");
-        $stmt->bind_param("iss", $insChecked, $formattedTime, $id);
+        $stmt = $conn->prepare("UPDATE buildings SET checked = ?, checkedTime = ? WHERE name = ?");
+        $stmt->bind_param("iss", $insChecked, $formattedTime, $name);
     } else {
         $null = null;
-        $stmt = $conn->prepare("UPDATE buildings SET checked = ?, checkedTime = ? WHERE id = ?");
-        $stmt->bind_param("iss", $insChecked, $null, $id);
+        $stmt = $conn->prepare("UPDATE buildings SET checked = ?, checkedTime = ? WHERE name = ?");
+        $stmt->bind_param("iss", $insChecked, $null, $name);
     }
 
     if ($stmt->execute()) {

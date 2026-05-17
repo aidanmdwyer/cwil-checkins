@@ -70,7 +70,6 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                                 data-name="${encodeHTML(rowData.name)}"
                                 data-checked="${rowData.checked}"
                                 onclick="toggleCheck(
-                                  this.dataset.id,
                                   this.dataset.name,
                                   this.dataset.checked
                                 )"
