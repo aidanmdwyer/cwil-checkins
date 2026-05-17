@@ -13,7 +13,6 @@ $successMessage = '';
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     require_once 'db.php';
 
-    $insId = bin2hex(random_bytes(8));
     $insName = $_POST['name'];
     $maxLength = 80;
     $insManager = $_POST['manager'];
@@ -49,9 +48,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if(empty($errors)) {
-        $ins = $conn->prepare("INSERT INTO buildings (`id`, `name`, `manager`, `ic`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $ins = $conn->prepare("INSERT INTO buildings (`name`, `manager`, `ic`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         try {
-            $ins->execute([$insId, $insName, $insManager, $insIc, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday, $sunday]);
+            $ins->execute([$insName, $insManager, $insIc, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday, $sunday]);
             $successMessage = 'Insertion successful: "' . $insName . '" added';
             // Optionally clear POST so form resets after success
             $_POST = [];

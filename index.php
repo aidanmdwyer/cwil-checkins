@@ -102,12 +102,9 @@ if (!accountProperties('Home')) {
         <!--        Edit form-->
         <div id="editForm" style="display: none; position: sticky; padding-right: 10px;">
             <h1>Edit Building</h1>
-            <p id="editId"></p>
+            <p id="editName"></p>
             <form method="POST" action="php/editRow.php">
-                <input type="hidden" id="editIdInput" name="editId">
-
-                <label for="Building Name">Building Name</label><br>
-                <input type="text" id="Building Name" name="name" style="width: 294px"><br><br>
+                <input type="hidden" id="editNameInput" name="editName">
 
                 <label for="Manager">Manager</label><br>
                 <select id="Manager" name="manager" style="width: 294px"></select><br><br>

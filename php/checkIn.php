@@ -3,11 +3,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     require_once 'db.php';
 
-    $id = $_GET['id'];
+    $name = $_GET['name'];
 
-    if(isset($id)) {
-        $existsStmt = $conn->prepare("SELECT COUNT(*) FROM buildings WHERE id = ?");
-        $existsStmt->bind_param("s", $id);
+    if(isset($name)) {
+        $existsStmt = $conn->prepare("SELECT COUNT(*) FROM buildings WHERE name = ?");
+        $existsStmt->bind_param("s", $name);
         $existsStmt->execute();
         $existsStmt->bind_result($count);
         $existsStmt->fetch();
@@ -18,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $formattedTime = $chicagoTime->format('Y-m-d H:i:s');
             $insChecked = 1;
 
-            $stmt = $conn->prepare("UPDATE buildings SET checked = ?, checkedTime = ? WHERE id = ?");
-            $stmt->bind_param("iss", $insChecked, $formattedTime, $id);
+            $stmt = $conn->prepare("UPDATE buildings SET checked = ?, checkedTime = ? WHERE name = ?");
+            $stmt->bind_param("iss", $insChecked, $formattedTime, $name);
 
             $conn->query("UPDATE sse_signal SET version = version + 1 WHERE id = 1");
 

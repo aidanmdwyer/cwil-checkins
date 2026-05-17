@@ -10,8 +10,9 @@ const qrContainer = document.getElementById('qrcode');
 const qrPreview = document.getElementById('qrcodePreview');
 const qrPreviewTitle = document.getElementById('qrPreviewTitle');
 const qrPreviewIC = document.getElementById('qrPreviewIC');
+let loadAll = document.getElementById('loadAll');
 let contractorList = [];
-let selectedIds = [];
+let selectedNames = [];
 
 let accessKey = null;
 

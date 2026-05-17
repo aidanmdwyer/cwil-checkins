@@ -33,14 +33,14 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         [
                             `<th><input id="selectAll" type="checkBox" onclick="handleSelectAll(this.checked)"></th>`,
                             (rowData, bgColor) =>
-                                `<td style="background-color: ${bgColor}; text-align: center;"><input class="selectBox" type="checkbox" name="checkedIds[]" value="${rowData['id']}" onclick="handleSelect()"></td>`
+                                `<td style="background-color: ${bgColor}; text-align: center;"><input class="selectBox" type="checkbox" name="checkedNames[]" value="${rowData['name']}" onclick="handleSelect()"></td>`
                         ],
-                    'ID' :
-                        [
-                            `<th>ID</th>`,
-                            (rowData, bgColor) =>
-                                `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="copyText(this.dataset.row, this)" data-row="${rowData['id']}">&#128203</button></td>`
-                        ],
+                    // 'ID' :
+                    //     [
+                    //         `<th>ID</th>`,
+                    //         (rowData, bgColor) =>
+                    //             `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="copyText(this.dataset.row, this)" data-row="${rowData['id']}">&#128203</button></td>`
+                    //     ],
                     'Name' :
                         [
                             `<th>Name</th>`,
@@ -148,7 +148,6 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
 
                 let colorSwitch = false;
                 buildingsTable.style.display = 'inline-block';
-                let loadAll = document.getElementById('loadAll');
 
                 document.getElementById('inactiveText').style.display = (document.getElementById('showActive').checked) ? 'none' : 'block';
 
@@ -198,7 +197,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         let bgColor = colorSwitch ? '#F3F3F3' : '#E5E5E5';
 
                         let tr = document.createElement('tr');
-                        tr.setAttribute('data-id', rowData['id']);
+                        tr.setAttribute('data-name', rowData['name']);
 
                         Object.keys(tableColumns).forEach(label => {
                             if(accountProperties.includes(label)) {
@@ -240,14 +239,13 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     buildingsTable.innerHTML = 'No buildings matching filter.';
                     selectSubmits.style.display = 'none';
                 }
-            })
-                .catch(error => {
-                    buildingsTable.innerHTML = error;
-                    buildingsTable.style.display = 'inline-block';
-                    refreshButton.disabled = false;
-                    refreshButton.innerHTML = 'Refresh';
-                });
+            }).catch(error => {
+                buildingsTable.innerHTML = error;
+                buildingsTable.style.display = 'inline-block';
+                refreshButton.disabled = false;
+                refreshButton.innerHTML = 'Refresh';
+                loadAll.style.display = 'none';
+            });
 
-        })
-        .catch(error => console.error('Error fetching account properties:', error));
+        }).catch(error => console.error('Error fetching account properties:', error));
 }

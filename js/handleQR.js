@@ -1,17 +1,10 @@
-function htmlEntities(str) {
-    return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-}
-
 function generateQR(data) {
     return new Promise(resolve => {
         qrPreview.innerHTML = '';
         qrContainer.innerHTML = '';
 
-        document.getElementById('printBuildingName').innerHTML = htmlEntities(data.name);
+        document.getElementById('printBuildingName').innerHTML = encodeHTML(data.name);
+        const QR_URL = window.location.origin + `/php/checkIn.php?name=${encodeURIComponent(data.name)}`;
 
         const observer = new MutationObserver(() => {
             if (qrContainer.querySelector('canvas')) {
@@ -23,13 +16,13 @@ function generateQR(data) {
         observer.observe(qrContainer, { childList: true, subtree: true });
 
         new QRCode(qrPreview, {
-            text: window.location.origin + `/php/checkIn.php?id=${data.id}`,
+            text: QR_URL,
             width: 260,
             height: 260,
         });
 
         new QRCode(qrContainer, {
-            text: window.location.origin + `/php/checkIn.php?id=${data.id}`,
+            text: QR_URL,
             width: 800,
             height: 800,
             correctLevel: QRCode.CorrectLevel.H,
@@ -129,7 +122,24 @@ async function printAll() {
     let count = 0;
     let numLoadingDots = 1;
 
-    for (const id of data) {
+    let nameIndex = -1;
+    let icIndex = -1;
+    Array.from(tableRows[0].cells).forEach((cell, index) => {
+        const headerText = cell.textContent.trim();
+        if (headerText === 'Name') {
+            nameIndex = index;
+        } else if (headerText === 'IC') {
+            icIndex = index;
+        }
+    });
+    if(nameIndex === -1 && icIndex === -1) {
+        console.error("failed to find name or ic column for print.");
+        return false;
+    }
+
+    for (const name of data) {
+        const generateData = { name: 'ERROR', ic: 'ERROR' };
+
         printProgress.value = (count / data.length) * 100;
         printProgressText.textContent = "Loading" + ".".repeat(numLoadingDots);
 
@@ -143,27 +153,12 @@ async function printAll() {
 
         await new Promise(r => setTimeout(r, 10));
 
-        const generateData = { id, name: 'ERROR', ic: 'ERROR' };
-
-        let nameIndex = -1;
-        let icIndex = -1;
-        Array.from(tableRows[0].cells).forEach((cell, index) => {
-            const headerText = cell.textContent.trim();
-            if (headerText === 'Name') {
-                nameIndex = index;
-            } else if (headerText === 'IC') {
-                icIndex = index;
-            }
-        });
-        if(nameIndex !== -1 && icIndex !== -1) {
-            tableRows.forEach(row => {
-                if (row.getAttribute('data-id') === id.toString()) {
-                    generateData.name = row.cells[nameIndex].textContent;
-                    generateData.ic = row.cells[icIndex].textContent;
-                }
-            });
+        const row = tableRows.find(row => row.getAttribute('data-name') === name.toString());
+        if(!row) {
+            console.error("failed to find a row for print.");
         } else {
-            console.error('No row found');
+            generateData.name = row.cells[nameIndex].textContent;
+            generateData.ic = row.cells[icIndex].textContent;
         }
 
         await generateQR(generateData);

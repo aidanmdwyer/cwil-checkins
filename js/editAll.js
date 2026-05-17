@@ -2,22 +2,22 @@ async function editAll(event, type) {
     let confirmStr = '';
     switch(type) {
         case 'changeIC':
-            confirmStr = 'Are you sure you want to edit ' + selectedIds.length + ' building' + ((selectedIds.length > 1) ? 's?' : '?');
+            confirmStr = 'Are you sure you want to edit ' + selectedNames.length + ' building' + ((selectedNames.length > 1) ? 's?' : '?');
             break;
         case 'changeManager':
-            confirmStr = 'Are you sure you want to edit ' + selectedIds.length + ' building' + ((selectedIds.length > 1) ? 's?' : '?');
+            confirmStr = 'Are you sure you want to edit ' + selectedNames.length + ' building' + ((selectedNames.length > 1) ? 's?' : '?');
             break;
         case 'activate':
-            confirmStr = 'Are you sure you want to activate ' + selectedIds.length + ' building' + ((selectedIds.length > 1) ? 's?' : '?');
+            confirmStr = 'Are you sure you want to activate ' + selectedNames.length + ' building' + ((selectedNames.length > 1) ? 's?' : '?');
             break;
         case 'deactivate':
-            confirmStr = 'Are you sure you want to deactivate ' + selectedIds.length + ' building' + ((selectedIds.length > 1) ? 's?' : '?');
+            confirmStr = 'Are you sure you want to deactivate ' + selectedNames.length + ' building' + ((selectedNames.length > 1) ? 's?' : '?');
             break;
         case 'checkAll':
-            confirmStr = 'Are you sure you want to check ' + selectedIds.length + ' building' + ((selectedIds.length > 1) ? 's?' : '?');
+            confirmStr = 'Are you sure you want to check ' + selectedNames.length + ' building' + ((selectedNames.length > 1) ? 's?' : '?');
             break;
         case 'uncheckAll':
-            confirmStr = 'Are you sure you want to uncheck ' + selectedIds.length + ' building' + ((selectedIds.length > 1) ? 's?' : '?');
+            confirmStr = 'Are you sure you want to uncheck ' + selectedNames.length + ' building' + ((selectedNames.length > 1) ? 's?' : '?');
             break;
         default:
             console.error('bad input for editAll()');
@@ -78,7 +78,6 @@ function changeIC(event) {
 }
 
 function resetChangeValues() {
-    document.getElementById('Building Name').value = '';
     document.getElementById('Manager').value = '';
     document.getElementById('Contractor').value = '';
     document.getElementById('editAllMessage').innerHTML = '';

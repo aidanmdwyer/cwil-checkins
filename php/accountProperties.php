@@ -17,7 +17,6 @@ $accountProperties = [
         'Filter IC',
 
         'Select',
-        'ID',
         'Name',
         'Manager',
         'IC',

@@ -8,7 +8,7 @@ setInterval(() => {
             if (version !== lastVersion) {
                 lastVersion = version;
                 // refresh table or reload
-                buildTable(undefined, true, false, selectedIds, false);
+                buildTable(undefined, true, false, selectedNames, false);
             }
         });
 }, 10000);

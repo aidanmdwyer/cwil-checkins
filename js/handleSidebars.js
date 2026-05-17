@@ -25,18 +25,17 @@ function editRow(rowData) {
 
     cancel();
     editForm.style.display = 'inline-block';
-    document.getElementById('editId').innerHTML = 'ID: ' + rowData['id'];
-    document.getElementById('editIdInput').value = rowData['id'];
-    document.getElementById('Building Name').value = rowData['name'];
+    document.getElementById('editName').innerHTML = 'Name: ' + rowData['name'];
+    document.getElementById('editNameInput').value = rowData['name'];
     document.getElementById('Manager').value = rowData['manager'];
     document.getElementById('Contractor').value = rowData['ic'];
-    document.getElementById('monday').checked = (rowData['monday'] === '1');
-    document.getElementById('tuesday').checked = (rowData['tuesday'] === '1');
-    document.getElementById('wednesday').checked = (rowData['wednesday'] === '1');
-    document.getElementById('thursday').checked = (rowData['thursday'] === '1');
-    document.getElementById('friday').checked = (rowData['friday'] === '1');
-    document.getElementById('saturday').checked = (rowData['saturday'] === '1');
-    document.getElementById('sunday').checked = (rowData['sunday'] === '1');
+    document.getElementById('monday').checked = (rowData['monday'] == 1);
+    document.getElementById('tuesday').checked = (rowData['tuesday'] == 1);
+    document.getElementById('wednesday').checked = (rowData['wednesday'] == 1);
+    document.getElementById('thursday').checked = (rowData['thursday'] == 1);
+    document.getElementById('friday').checked = (rowData['friday'] == 1);
+    document.getElementById('saturday').checked = (rowData['saturday'] == 1);
+    document.getElementById('sunday').checked = (rowData['sunday'] == 1);
     document.getElementById('MWFCheckbox').checked = false;
     document.getElementById('MFCheckbox').checked = false;
     document.getElementById('allDaysCheckbox').checked = false;
@@ -45,7 +44,6 @@ function editRow(rowData) {
 }
 
 function cancel() {
-    document.getElementById('Building Name').value = '';
     document.getElementById('Manager').value = '';
     document.getElementById('Contractor').value = '';
     editForm.style.display = 'none';
@@ -56,5 +54,5 @@ function cancel() {
     document.getElementById('changeManagerDiv').style.display = 'none';
     document.getElementById('changeICDiv').style.display = 'none';
     document.getElementById('editAllMessage').innerHTML = '';
-    selectedIds = [];
+    selectedNames = [];
 }

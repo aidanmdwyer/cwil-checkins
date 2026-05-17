@@ -12,7 +12,7 @@ function toggleCheck(id, name, checked) {
         })
             .then(response => response.text())
             .then(result => {
-                buildTable(undefined, true, false, selectedIds);
+                buildTable(undefined, true, false, selectedNames);
             })
             .catch(error => {
                 console.error('Error:', error);

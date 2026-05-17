@@ -3,14 +3,14 @@ function handleSelect() {
     selectSubmits.style.display = 'inline-block';
     editForm.style.display = 'none';
     let checkboxes = document.getElementById('tableSelectedForm').querySelectorAll(".selectBox");
-    selectedIds = [];
+    selectedNames = [];
     Array.from(checkboxes).forEach(box => {
         if(box.checked) {
-            selectedIds.push(box.value);
+            selectedNames.push(box.value);
         }
     });
-    if(selectedIds.length > 0) {
-        selectedBuildingsText.innerHTML = selectedIds.length + ' buildings selected.';
+    if(selectedNames.length > 0) {
+        selectedBuildingsText.innerHTML = selectedNames.length + ' buildings selected.';
     } else {
         cancel();
     }

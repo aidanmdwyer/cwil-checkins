@@ -11,8 +11,7 @@ header('Content-Type: application/json');
 require_once 'db.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $editId = $_POST['editId'];
-    $insName = $_POST['name'];
+    $editName = $_POST['editName'];
     $maxLength = 80;
     $insManager = $_POST['manager'];
     $insIc = $_POST['contractor'];
@@ -38,14 +37,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     //Fetch current building data
-    $select = $conn->prepare("SELECT `name`, `manager`, `ic`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday` FROM buildings WHERE id = ?");
-    $select->bind_param("s", $editId);
+    $select = $conn->prepare("SELECT `manager`, `ic`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday` FROM buildings WHERE `name` = ?");
+    $select->bind_param("s", $editName);
     $select->execute();
-    $select->bind_result($curName, $curManager, $curIc, $curMonday, $curTuesday, $curWednesday, $curThursday, $curFriday, $curSaturday, $curSunday);
+    $select->bind_result($curManager, $curIc, $curMonday, $curTuesday, $curWednesday, $curThursday, $curFriday, $curSaturday, $curSunday);
     if ($select->fetch()) {
         //Compare current values with submitted ones
         if (
-            $curName === $insName &&
             $curManager === $insManager &&
             $curIc === $insIc &&
             (bool)$curMonday === $monday &&
@@ -68,13 +66,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $select->close();
 
     //confirm insertions
-    if($insName === "") {
-        echo json_encode(['status' => 'error', 'message' => 'Building Name cannot be empty.']);
-        exit;
-    } else if(strlen($insName) > $maxLength) {
-        echo json_encode(['status' => 'error', 'message' => "Building Name cannot exceed $maxLength characters."]);
-        exit;
-    } else if($insManager === "---" || $insManager === "") {
+    if($insManager === "---" || $insManager === "") {
         echo json_encode(['status' => 'error', 'message' => 'Manager cannot be empty.']);
         exit;
     } else if($insIc === "") {
@@ -84,8 +76,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(['status' => 'error', 'message' => 'No days are selected.']);
         exit;
     } else {
-        $ins = $conn->prepare("UPDATE buildings SET `name` = ?, `manager` = ?, `ic` = ?, `monday` = ?, `tuesday` = ?, `wednesday` = ?, `thursday` = ?, `friday` = ?, `saturday` = ?, `sunday` = ? WHERE id = ?");
-        $ins->bind_param("sssiiiiiiis", $insName, $insManager, $insIc, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday, $sunday, $editId);
+        $ins = $conn->prepare("UPDATE buildings SET `manager` = ?, `ic` = ?, `monday` = ?, `tuesday` = ?, `wednesday` = ?, `thursday` = ?, `friday` = ?, `saturday` = ?, `sunday` = ? WHERE `name` = ?");
+        $ins->bind_param("ssiiiiiiis", $insManager, $insIc, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday, $sunday, $editName);
         try {
             $ins->execute();
             echo json_encode(['status' => 'success', 'message' => 'Building updated successfully!']);

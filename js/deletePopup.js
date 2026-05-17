@@ -60,8 +60,8 @@ async function confirmDeleteBuildings() {
         // Count selected checkboxes
         const checkboxes = form.querySelectorAll(".selectBox");
 
-        if (selectedIds.length > 1) {
-            if (!confirm('You are about to delete ' + selectedIds.length + ' buildings. This action cannot be undone.')) {
+        if (selectedNames.length > 1) {
+            if (!confirm('You are about to delete ' + selectedNames.length + ' buildings. This action cannot be undone.')) {
                 return; // user canceled
             }
         }
