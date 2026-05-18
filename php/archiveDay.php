@@ -8,7 +8,7 @@ $now = new DateTime('now', new DateTimeZone('America/Chicago'));
 
 //cpanel doesn't let me change cron time zone, this is a workaround, executing every hour
 if($now->format('H') === '03') {
-    $TO = "aidandyr@gmail.com, nfreeman@gocitywide.com";
+    $TO = "aidandyr@gmail.com";
     $SUBJECT = "Archive Report, CWIL Check-Ins";
     $BODY = "<html><body><b>Archive Attempt:<br>" . $now->format("M d, Y") . "<br>" . ltrim($now->format("h:i A"), "0") . "</b><br><br>";
     $HEADERS = "MIME-Version: 1.0\r\n";
