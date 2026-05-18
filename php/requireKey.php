@@ -8,9 +8,11 @@ function base64url_decode($data) {
     return base64_decode(strtr($data, '-_', '+/'));
 }
 
+$config = require __DIR__ . '/../../private/config.php';
+
 function getKey() {
-    // permanent server-side secret
-    return "yh3f97hf847y5h3";
+    global $config;
+    return $config['jwt_secret'];
 }
 
 function issueJwt($user = "anon", $ttl = 900) {
