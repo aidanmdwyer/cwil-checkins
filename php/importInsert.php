@@ -14,37 +14,35 @@ header('Content-Type: application/json');
 $payload = file_get_contents('php://input');
 $data = json_decode($payload, true);
 
-if (!is_array($data['importData']) || !isset($data['mode'])) {
+if (!is_array($data['importData']) || !isset($data['commit'])) {
     http_response_code(400);
-    echo json_encode(['error' => 'Invalid JSON']);  //front‑end will fall into catch{}
+    echo json_encode(['error' => 'Invalid JSON']);  //frontend will fall into catch block
     exit;
 }
 
-$mode = $data['mode'];
+$commitMode = $data['commit'];
 $importData = $data['importData'];
-$commitMode = ($mode === 'commit');
 
 require_once 'db.php';
 
 $insertStmt = null;
-if ($commitMode) {
-    $sql = "INSERT INTO buildings
-              (name, manager, ic, checked, checkedTime,
-               monday, tuesday, wednesday, thursday, friday, saturday, sunday)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+if($commitMode) {
+    $insertStmt = $conn->prepare(
+        "INSERT INTO buildings
+              (name, manager, ic, monday, tuesday, wednesday, thursday, friday, saturday, sunday, active)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
               manager     = VALUES(manager),
               ic          = VALUES(ic),
-              checked     = VALUES(checked),
-              checkedTime = VALUES(checkedTime),
               monday      = VALUES(monday),
               tuesday     = VALUES(tuesday),
               wednesday   = VALUES(wednesday),
               thursday    = VALUES(thursday),
               friday      = VALUES(friday),
               saturday    = VALUES(saturday),
-              sunday      = VALUES(sunday)";
-    $insertStmt = $conn->prepare($sql);
+              sunday      = VALUES(sunday),
+              active      = VALUES(active)"
+    );
     if (!$insertStmt) {
         http_response_code(500);
         echo json_encode(['error' => 'Prepare failed: '.$conn->error]);
@@ -52,25 +50,24 @@ if ($commitMode) {
     }
 }
 
-//look up existing row to decide would insert, would update, or already exists
-$selectExisting = null;
-if (!$commitMode) {
-    $selectExisting = $conn->prepare(
-        "SELECT manager, ic, checked, checkedTime,
-                monday, tuesday, wednesday, thursday, friday, saturday, sunday
-         FROM buildings WHERE name = ? LIMIT 1"
-    );
-    if (!$selectExisting) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Prepare failed: '.$conn->error]);
-        exit;
-    }
+$existingManagersQuery = $conn->query("SELECT name FROM managers");
+$existingManagers = [];
+while($row = $existingManagersQuery->fetch_assoc()) {
+    $existingManagers[] = $row['name'];
 }
 
-$checkManager = $conn->prepare("SELECT 1 FROM managers WHERE name = ? LIMIT 1");
-$checkIc = $conn->prepare("SELECT 1 FROM contractors WHERE name = ? LIMIT 1");
+$existingContractorsQuery = $conn->query("SELECT name FROM contractors");
+$existingContractors = [];
+while($row = $existingContractorsQuery->fetch_assoc()) {
+    $existingContractors[] = $row['name'];
+}
 
-/* --- 4. loop through data --- */
+$existingBuildingsQuery = $conn->query("SELECT name, manager, ic, monday, tuesday, wednesday, thursday, friday, saturday, sunday FROM buildings");
+$existingBuildings = [];
+while($row = $existingBuildingsQuery->fetch_assoc()) {
+    $existingBuildings[$row['name']] = $row;
+}
+
 $results = [];
 $missingManagers = [];
 $missingIcs = [];
@@ -85,42 +82,28 @@ $numUpdated = 0;
 $numExist = 0;
 $previewBuildings = [];
 
+//loop through import data
 foreach ($importData as $row) {
-    $doCommit = $commitMode;
     $numRows++;
+    $doCommit = $commitMode;
 
     $rowName = $row['name'];
     $rowIc = $row['ic'];
     $rowManager = $row['manager'];
-    $checked = 0;    //FALSE
-    $checked_time = null; //NULL
-    $m = (int)$row['monday'];
-    $tu = (int)$row['tuesday'];
-    $w = (int)$row['wednesday'];
-    $th = (int)$row['thursday'];
-    $f = (int)$row['friday'];
-    $sa = (int)$row['saturday'];
-    $su = (int)$row['sunday'];
+    $rowMonday = (int)$row['monday'];
+    $rowTuesday = (int)$row['tuesday'];
+    $rowWednesday = (int)$row['wednesday'];
+    $rowThursday = (int)$row['thursday'];
+    $rowFriday = (int)$row['friday'];
+    $rowSaturday = (int)$row['saturday'];
+    $rowSunday = (int)$row['sunday'];
+    $active = $rowMonday === 1 || $rowTuesday === 1 || $rowWednesday === 1 || $rowThursday === 1 || $rowFriday === 1 || $rowSaturday === 1 || $rowSunday === 1;
 
-    // Validate manager
-    $checkManager->bind_param("s", $rowManager);
-    $checkManager->execute();
-    $checkManager->store_result();
-    $managerExists = $checkManager->num_rows > 0;
-
-    // Validate IC
-    $checkIc->bind_param("s", $rowIc);
-    $checkIc->execute();
-    $checkIc->store_result();
-    $icExists = $checkIc->num_rows > 0;
+    //validate manager and IC
+    $managerExists = in_array($rowManager, $existingManagers);
+    $icExists = in_array($rowIc, $existingContractors);
 
     $rowErrors = [];
-
-
-    if($m === 0 &&  $tu === 0 && $w === 0 && $th === 0 && $f === 0 && $sa === 0 && $su === 0) {
-        $rowErrors[] = 'No Days';
-        $dayErrors[] = $rowName;
-    }
 
     if (!$icExists) {
         $rowErrors[] = 'Contractor DNE';
@@ -141,95 +124,89 @@ foreach ($importData as $row) {
     if (!empty($rowErrors)) {
         $errorCount++;
         $doCommit = false;
-        $results[] = ['success' => false, 'error' => implode(', ', $rowErrors)];
+        $results[] = ['color' => 'red', 'message' => implode(', ', $rowErrors)];
         continue;
     }
 
-    if($doCommit) {
+    if($doCommit) { //commit mode
         $insertStmt->bind_param(
-            'sssisiiiiiii',
-            $rowName,
-            $rowManager,
-            $rowIc,
-            $checked,
-            $checked_time,
-            $m, $tu, $w, $th, $f, $sa, $su
+            'sssiiiiiiii',
+            $rowName, $rowManager, $rowIc,
+            $rowMonday, $rowTuesday, $rowWednesday, $rowThursday, $rowFriday, $rowSaturday, $rowSunday,
+            $active
         );
-
         if ($insertStmt->execute()) {
             if ($insertStmt->affected_rows === 1) {
-                $results[] = ['success' => true, 'message' => 'Inserted'];
-                $numSuccesses++;
+                if(!$active) {
+                    $results[] = ['color' => 'orange', 'message' => "Inserted Deactivated"];
+                    $dayErrors[] = $rowName;
+                } else {
+                    $results[] = ['color' => 'green', 'message' => 'Inserted'];
+                    $numSuccesses++;
+                }
             } elseif ($insertStmt->affected_rows === 2) {
-                $results[] = ['success' => true, 'message' => 'Updated'];
+                if(!$active) {
+                    $results[] = ['color' => 'orange', 'message' => "Inserted Deactivated, Updated"];
+                    $dayErrors[] = $rowName;
+                } else {
+                    $results[] = ['color' => 'orange', 'message' => 'Updated'];
+                }
                 $numUpdated++;
             } else {
-                $results[] = ['success' => true, 'message' => 'Already Exists'];
+                $results[] = ['color' => 'orange', 'message' => 'Already Exists'];
                 $numExist++;
             }
         } else {
-            $results[] = ['success' => false, 'error' => $insertStmt->error];
+            $results[] = ['color' => 'red', 'message' => $insertStmt->error];
             $errorCount++;
             $otherErrorCount++;
         }
-    } else if (!$commitMode) {
-        //Preview mode
-        $selectExisting->bind_param("s", $rowName);
-        $selectExisting->execute();
-        $selectExisting->store_result();
+    } else if (!$commitMode) { //preview mode
 
-        $thisBuilding = [];
-        $thisBuilding['manager'] =  $rowManager;
-        $thisBuilding['ic'] = $rowIc;
-        $thisBuilding['m'] = $row['monday'];
-        $thisBuilding['tu'] = $row['tuesday'];
-        $thisBuilding['w'] = $row['wednesday'];
-        $thisBuilding['th'] = $row['thursday'];
-        $thisBuilding['f'] = $row['friday'];
-        $thisBuilding['sa'] = $row['saturday'];
-        $thisBuilding['su'] = $row['sunday'];
-
-        if (in_array([$row['name'] => $thisBuilding], $previewBuildings)) {
-            $results[] = ['success' => true, 'message' => 'Already Exists'];
-            $numExist++;
-        } else if(isset($previewBuildings[$row['name']])) {
-            $results[] = ['success' => true, 'message' => 'Would Update'];
-            $numUpdated++;
-        } else if ($selectExisting->num_rows === 0) {
-            // Would insert (no row with same UNIQUE/PK key, typically 'name')
-            $results[] = ['success' => true, 'message' => 'Would Insert'];
-            $numSuccesses++;
-        } else {
-            // Row exists → decide if it would update or no-op
-            $selectExisting->bind_result(
-                $exManager, $exIc, $exChecked, $exCheckedTime,
-                $exM, $exTu, $exW, $exTh, $exF, $exSa, $exSu
-            );
-            $selectExisting->fetch();
-
+        if(isset($previewBuildings[$row['name']])) {
+            if($previewBuildings[$row['name']] === $row) {
+                //exact duplicate in import
+                $results[] = ['color' => 'orange', 'message' => 'Would Already Exist'];
+                $numExist++;
+            } else {
+                //duplicate name in import, different data
+                $results[] = ['color' => 'orange', 'message' => 'Would Update'];
+                $numUpdated++;
+            }
+        } else if(isset($existingBuildings[$row['name']])) {
+            //row with same name exists in db, decide if it would update or not
+            $existingBuilding = $existingBuildings[$row['name']];
             $wouldChange =
-                ($exManager !== $rowManager) ||
-                ($exIc !== $rowIc) ||
-                ((int)$exM !== $m) ||
-                ((int)$exTu !== $tu) ||
-                ((int)$exW !== $w) ||
-                ((int)$exTh !== $th) ||
-                ((int)$exF !== $f) ||
-                ((int)$exSa !== $sa) ||
-                ((int)$exSu !== $su);
+                ($existingBuilding['manager'] !== $rowManager) ||
+                ($existingBuilding['ic'] !== $rowIc) ||
+                ((int)$existingBuilding['monday'] !== $rowMonday) ||
+                ((int)$existingBuilding['tuesday'] !== $rowTuesday) ||
+                ((int)$existingBuilding['wednesday'] !== $rowWednesday) ||
+                ((int)$existingBuilding['thursday'] !== $rowThursday) ||
+                ((int)$existingBuilding['friday'] !== $rowFriday) ||
+                ((int)$existingBuilding['saturday'] !== $rowSaturday) ||
+                ((int)$existingBuilding['sunday'] !== $rowSunday);
 
             if ($wouldChange) {
-                $results[] = ['success' => true, 'message' => 'Would Update'];
+                $results[] = ['color' => 'orange', 'message' => 'Would Update'];
                 $numUpdated++;
             } else {
-                $results[] = ['success' => true, 'message' => 'Already Exists'];
+                $results[] = ['color' => 'orange', 'message' => 'Would Already Exist'];
                 $numExist++;
+            }
+        } else {
+            if(!$active) {
+                $results[] = ['color' => 'orange', 'message' => "Would Insert Deactivated"];
+                $dayErrors[] = $rowName;
+            } else {
+                //no row with same name already in db, would insert
+                $results[] = ['color' => 'green', 'message' => 'Would Insert'];
+                $numSuccesses++;
             }
         }
 
-        $selectExisting->free_result();
-
-        $previewBuildings[$row['name']] = $thisBuilding;
+        //add this building to preview buildings
+        $previewBuildings[$row['name']] = $row;
     }
 }
 
@@ -250,5 +227,5 @@ $output = [
 
 $conn->close();
 
-/* --- 5. hand the array back to JS --- */
+//hand the array back to JS
 echo json_encode($output);

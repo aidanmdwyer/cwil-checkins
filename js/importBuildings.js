@@ -75,8 +75,13 @@ document.getElementById('csvFileInput').addEventListener('change', function(even
     }
 });
 
-function showImport(mode) {
-    if(mode === 'preview') {
+function showImport(commit) {
+    if(commit) {
+        summaryTitle.style.display = 'block';
+        summaryTitle.innerHTML = `<h2>Commit Summary:</h2>`;
+
+        commitImport.disabled = true;
+    } else {
         summaryTitle.style.display = 'block';
         summaryTitle.innerHTML = `<h2>Preview Summary:</h2>`;
 
@@ -97,16 +102,11 @@ function showImport(mode) {
 
         commitImport.style.display = 'inline-block';
         previewImport.disabled = true;
-    } else if(mode === 'commit') {
-        summaryTitle.style.display = 'block';
-        summaryTitle.innerHTML = `<h2>Commit Summary:</h2>`;
-
-        commitImport.disabled = true;
     }
-    buildImportTable(mode);
+    buildImportTable(commit);
 }
 
-function buildImportTable(mode) {
+function buildImportTable(commit) {
     const rowStatusCells = [];
 
     importTable.innerHTML = "";
@@ -152,7 +152,7 @@ function buildImportTable(mode) {
             const resp = await fetch('/php/importInsert.php?key=' + encodeURIComponent(accessKey), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({importData, mode})
+                body: JSON.stringify({importData, commit})
             });
             const results = await resp.json();
 
@@ -195,22 +195,17 @@ function buildImportTable(mode) {
                 }
                 if(results['dayErrors'].length > 0) {
                     dayErrorsDiv.style.display = 'block';
-                    dayErrorsDiv.innerHTML = `<strong style="color: red">` + results['dayErrors'].length + ` Day Errors (get inserted as deactivated):</strong><br>` + results['dayErrors'].join(`<br>`) + `<br><br>`;
+                    dayErrorsDiv.innerHTML = `<strong style="color: darkOrange">` + results['dayErrors'].length + ` Day Errors (get inserted as deactivated):</strong><br>` + results['dayErrors'].join(`<br>`) + `<br><br>`;
                 }
                 if(results['errorCount'] > 0) {
                     errorCountDiv.style.display = 'block';
-                    errorCountDiv.innerHTML = `<strong style="color: red">` + results['errorCount'] + ` Failed Insertions:</strong><br>` + results['managerErrorCount'] + ` Manager Errors<br>` + results['icErrorCount'] + ` Contractor Errors<br>` + results['dayErrors'].length + ` Day Errors<br>` + results['otherErrorCount'] + ` Other Errors<br><br>`;
+                    errorCountDiv.innerHTML = `<strong style="color: red">` + results['errorCount'] + ` Failed Insertions:</strong><br>` + results['managerErrorCount'] + ` Manager Errors<br>` + results['icErrorCount'] + ` Contractor Errors<br>` + results['otherErrorCount'] + ` Other Errors<br><br>`;
                 }
             }
 
             results['results'].forEach((r, i) => {
-                if (r.success) {
-                    rowStatusCells[i].textContent = r.message || 'Inserted';
-                    rowStatusCells[i].style.color = (r.message === 'Updated' || r.message === 'Would Update' || r.message === 'Already Exists') ? 'orange' : 'green';
-                } else {
-                    rowStatusCells[i].textContent = `Error: ${r.error}`;
-                    rowStatusCells[i].style.color = 'red';
-                }
+                rowStatusCells[i].style.color = r.color;
+                rowStatusCells[i].textContent = r.message;
             });
         } catch (e) {
             console.error(e);

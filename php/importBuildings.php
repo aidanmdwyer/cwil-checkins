@@ -37,7 +37,7 @@ if (!accountProperties('Import Buildings')) {
             <p>Upload a ".csv" file with building information.</p>
             <input id="csvFileInput" type="file" accept=".csv"><br><br>
 
-            <button id="previewImport" class="big" style="display: none;" onclick="showImport('preview')">Preview Import</button>
+            <button id="previewImport" class="big" style="display: none;" onclick="showImport(false)">Preview Import</button>
             <br>
 
             <div id="summaryTitle" style="display: none;"></div>
@@ -50,7 +50,7 @@ if (!accountProperties('Import Buildings')) {
             <div id="dayErrors" style="display: none;"></div>
             <div id="errorCount" style="display: none;"></div>
 
-            <button id="commitImport" class="big" style="display: none;" onclick="showImport('commit')">Commit Import</button><br><br>
+            <button id="commitImport" class="big" style="display: none;" onclick="showImport(true)">Commit Import</button><br><br>
 
             <table id="importTable"></table>
         </div>
