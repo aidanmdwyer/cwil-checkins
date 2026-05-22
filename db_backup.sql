@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 18, 2026 at 01:48 AM
+-- Generation Time: May 22, 2026 at 06:29 AM
 -- Server version: 11.4.10-MariaDB-cll-lve
 -- PHP Version: 8.4.21
 
@@ -46,7 +46,7 @@ CREATE TABLE `buildings` (
   `name` varchar(80) NOT NULL,
   `manager` varchar(40) NOT NULL,
   `ic` varchar(80) NOT NULL,
-  `checked` tinyint(1) NOT NULL,
+  `checked` tinyint(1) NOT NULL DEFAULT 0,
   `checkedTime` datetime DEFAULT NULL,
   `monday` tinyint(1) NOT NULL,
   `tuesday` tinyint(1) NOT NULL,
