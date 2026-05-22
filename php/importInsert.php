@@ -10,18 +10,18 @@ if (!accountProperties('Import Buildings')) {
 
 header('Content-Type: application/json');
 
-/* --- 1. read and decode JSON payload --- */
+//read and decode JSON payload
 $payload = file_get_contents('php://input');
-$data    = json_decode($payload, true);
+$data = json_decode($payload, true);
 
-if (!is_array($data['records']) || !isset($data['mode'])) {
+if (!is_array($data['importData']) || !isset($data['mode'])) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid JSON']);  //front‑end will fall into catch{}
     exit;
 }
 
 $mode = $data['mode'];
-$records = $data['records'];
+$importData = $data['importData'];
 $commitMode = ($mode === 'commit');
 
 require_once 'db.php';
@@ -29,9 +29,9 @@ require_once 'db.php';
 $insertStmt = null;
 if ($commitMode) {
     $sql = "INSERT INTO buildings
-              (id, name, manager, ic, checked, checkedTime,
+              (name, manager, ic, checked, checkedTime,
                monday, tuesday, wednesday, thursday, friday, saturday, sunday)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
               manager     = VALUES(manager),
               ic          = VALUES(ic),
@@ -52,7 +52,7 @@ if ($commitMode) {
     }
 }
 
-/* Preview path: look up existing row to decide would-insert / would-update / already-exists */
+//look up existing row to decide would insert, would update, or already exists
 $selectExisting = null;
 if (!$commitMode) {
     $selectExisting = $conn->prepare(
@@ -70,7 +70,7 @@ if (!$commitMode) {
 $checkManager = $conn->prepare("SELECT 1 FROM managers WHERE name = ? LIMIT 1");
 $checkIc = $conn->prepare("SELECT 1 FROM contractors WHERE name = ? LIMIT 1");
 
-/* --- 4. loop through records --- */
+/* --- 4. loop through data --- */
 $results = [];
 $missingManagers = [];
 $missingIcs = [];
@@ -85,7 +85,7 @@ $numUpdated = 0;
 $numExist = 0;
 $previewBuildings = [];
 
-foreach ($records as $row) {
+foreach ($importData as $row) {
     $doCommit = $commitMode;
     $numRows++;
 
@@ -146,10 +146,8 @@ foreach ($records as $row) {
     }
 
     if($doCommit) {
-        $insId = bin2hex(random_bytes(8));
         $insertStmt->bind_param(
-            'ssssisiiiiiii',
-            $insId,
+            'sssisiiiiiii',
             $rowName,
             $rowManager,
             $rowIc,

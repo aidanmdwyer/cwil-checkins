@@ -1,6 +1,5 @@
 const previewImport = document.getElementById('previewImport');
 const commitImport = document.getElementById('commitImport');
-let inputData = {};
 const numRowsDiv = document.getElementById('numRowsDiv');
 const numSuccessesDiv = document.getElementById('numSuccessesDiv');
 const numUpdatedDiv = document.getElementById('numUpdatedDiv');
@@ -12,65 +11,49 @@ const errorCountDiv = document.getElementById('errorCount');
 const importTable = document.getElementById('importTable');
 const summaryTitle = document.getElementById('summaryTitle');
 
+let importData = [];
+
 document.getElementById('csvFileInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
+            importData = [];
+
             let csvText = e.target.result;
-            csvText = csvText.replaceAll('\n', ' ');
-            let csvLines = csvText.split('\r');
-            let foundHeader = false;
-            let header = [];
-            let importData = [];
-            csvLines.forEach((line, index) => {
-                if(foundHeader) {
-                    let inQuotes = false;
-                    let startIndex = 0;
-                    let lineItems = parseCSVLine(line);
-
-                    let buildingObj = {}
-                    header.forEach((key, lineItemIndex) => {
-                        buildingObj[key] = lineItems[lineItemIndex];
-                    });
-                    if(buildingObj['Account Name'] !== '' && buildingObj['Name'][0] !== ("*")) {
-                        importData.push(buildingObj);
-                    } else {
-                        console.log('ignored: ' + buildingObj['Account Name'] + ', ' + buildingObj['Name'])
-                    }
-
-                    function parseCSVLine(line) {
-                        line = line.trim().replaceAll('\n', '');
-                        const fields = [];
-                        let field = '';
-                        let inQuotes = false;
-
-                        for (let i = 0; i < line.length; i++) {
-                            const ch = line[i];
-
-                            if (ch === '"') {
-                                if (inQuotes && line[i + 1] === '"') {
-                                    field += '"';
-                                    i++;
-                                } else {
-                                    inQuotes = !inQuotes;
-                                }
-                            } else if (ch === ',' && !inQuotes) {
-                                fields.push(field);
-                                field = '';
-                            } else {
-                                field += ch;
-                            }
-                        }
-
-                        fields.push(field);
-                        return fields;
-                    }
-                } else if(line.slice(-12) !== ',,,,,,,,,,,,') {
-                    line = line.trim().replaceAll('\n', '');
-                    header = line.split(',');
-                    foundHeader = true;
+            let csvLines = csvText.split('\r\n').filter(line => line); //split by newlines and filter out empty lines
+            let headers = csvLines[0].split(',');
+            let headerIndices = {}
+            headers.forEach((header, i) => {
+                if(header.includes("Account Name")) {
+                    headerIndices.name = i;
+                } else if(header.includes("Independent Contractor")) {
+                    headerIndices.ic = i;
+                } else if(header.includes("FSM")) {
+                    headerIndices.manager = i;
+                } else if(header.includes("Prospecting Notes")) {
+                    headerIndices.days = i;
                 }
+            })
+            csvLines.shift(); //remove header line
+
+            csvLines.forEach(line => {
+                //REGEX DOES NOT WORK WITH ESCAPED QUOTES
+                let rows = line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(item => item.replace(/^"|"$/g, ''));
+                let days = rows[headerIndices.days];
+                let buildingObj = {
+                    name: rows[headerIndices.name],
+                    ic: rows[headerIndices.ic],
+                    manager: rows[headerIndices.manager],
+                    sunday: days.includes("Sun"),
+                    monday: days.includes("Mon"),
+                    tuesday: days.includes("Tue"),
+                    wednesday: days.includes("Wed"),
+                    thursday: days.includes("Thu"),
+                    friday: days.includes("Fri"),
+                    saturday: days.includes("Sat"),
+                };
+                importData.push(buildingObj);
             });
 
             previewImport.style.display = 'inline-block';
@@ -87,8 +70,6 @@ document.getElementById('csvFileInput').addEventListener('change', function(even
             dayErrorsDiv.style.display = 'none';
             errorCountDiv.style.display = 'none';
             importTable.innerHTML = '';
-
-            inputData = convertImportData(importData);
         };
         reader.readAsText(file);
     }
@@ -122,79 +103,56 @@ function showImport(mode) {
 
         commitImport.disabled = true;
     }
-    inputData['mode'] = mode;
-    buildImportTable(inputData);
+    buildImportTable(mode);
 }
 
-function convertImportData(importData) {
-    let retList = [];
-    importData.forEach(building => {
-        let obj = {};
-        obj['name'] = building['Account Name'];
-        obj['manager'] = (building['Night Manager'] !== '') ? building['Night Manager'] : building['FSM'];
-        obj['ic'] = building['Name'];
-        obj['monday'] = (building['Monday'] === 'Yes');
-        obj['tuesday'] = (building['Tuesday'] === 'Yes');
-        obj['wednesday'] = (building['Wednesday'] === 'Yes');
-        obj['thursday'] = (building['Thursday'] === 'Yes');
-        obj['friday'] = (building['Friday'] === 'Yes');
-        obj['saturday'] = (building['Saturday'] === 'Yes');
-        obj['sunday'] = (building['Sunday'] === 'Yes');
-        retList.push(obj);
-    });
-    return {'records': retList};
-}
-
-function buildImportTable(importData) {
+function buildImportTable(mode) {
     const rowStatusCells = [];
 
     importTable.innerHTML = "";
 
-    buildImportTable();
-    sendToServer();
-
-    function buildImportTable() {
-        const headerRow = document.createElement('tr');
-        headerRow.innerHTML =
-            `<th>Name</th><th>Manager</th><th>IC</th>
+    const headerRow = document.createElement('tr');
+    headerRow.innerHTML =
+        `<th>Name</th><th>Manager</th><th>IC</th>
              <th>M</th><th>T</th><th>W</th><th>Th</th><th>F</th><th>Sat</th><th>Sun</th>
              <th>Status</th>`;
-        importTable.appendChild(headerRow);
+    importTable.appendChild(headerRow);
 
-        importData['records'].forEach(building => {
-            const tr = document.createElement('tr');
+    importData.forEach(building => {
+        const tr = document.createElement('tr');
 
-            /* fixed‑text columns */
-            ['name', 'manager', 'ic'].forEach(k => {
+        /* fixed‑text columns */
+        ['name', 'manager', 'ic'].forEach(k => {
+            const td = document.createElement('td');
+            td.textContent = building[k] ?? '';
+            tr.appendChild(td);
+        });
+
+        /* day flags */
+        ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+            .forEach(d => {
                 const td = document.createElement('td');
-                td.textContent = building[k] ?? '';
+                if (building[d]) td.style.backgroundColor = 'lightgreen';
                 tr.appendChild(td);
             });
 
-            /* day flags */
-            ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
-                .forEach(d => {
-                    const td = document.createElement('td');
-                    if (building[d]) td.style.backgroundColor = 'lightgreen';
-                    tr.appendChild(td);
-                });
+        /* status placeholder */
+        const statusTd = document.createElement('td');
+        statusTd.className = 'status';
+        tr.appendChild(statusTd);
+        rowStatusCells.push(statusTd);
 
-            /* status placeholder */
-            const statusTd = document.createElement('td');
-            statusTd.className = 'status';
-            tr.appendChild(statusTd);
-            rowStatusCells.push(statusTd);
+        importTable.appendChild(tr);
+    });
 
-            importTable.appendChild(tr);
-        });
-    }
+    sendToServer();
 
     async function sendToServer() {
         try {
             const resp = await fetch('/php/importInsert.php?key=' + encodeURIComponent(accessKey), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(importData)
+                body: JSON.stringify({importData, mode})
             });
             const results = await resp.json();
 
@@ -237,7 +195,7 @@ function buildImportTable(importData) {
                 }
                 if(results['dayErrors'].length > 0) {
                     dayErrorsDiv.style.display = 'block';
-                    dayErrorsDiv.innerHTML = `<strong style="color: red">` + results['dayErrors'].length + ` Day Errors:</strong><br>` + results['dayErrors'].join(`<br>`) + `<br><br>`;
+                    dayErrorsDiv.innerHTML = `<strong style="color: red">` + results['dayErrors'].length + ` Day Errors (get inserted as deactivated):</strong><br>` + results['dayErrors'].join(`<br>`) + `<br><br>`;
                 }
                 if(results['errorCount'] > 0) {
                     errorCountDiv.style.display = 'block';
