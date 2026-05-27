@@ -58,7 +58,6 @@ $accountProperties = [
 
         'Filter Manager',
         'Filter IC',
-        'Show Inactive',
 
         'Name',
         'Manager',
