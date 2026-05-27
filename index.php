@@ -58,28 +58,30 @@ if (!accountProperties('Home')) {
                     </label>
                 </form>
                 <div class="vr"></div>
-                <label style="display: flex; flex-direction: column;">
+                <label style="display: <?php echo accountProperties('Filter Manager') ? 'flex; flex-direction: column' : 'none';?>;">
                     Filter Manager
                     <select id="filterManager" name="filterManager"></select>
                 </label>
-                <div class="vr"></div>
+                <div class="vr" style="display: <?php echo accountProperties('Filter Manager') ? 'block' : 'none';?>;"></div>
                 <label style="display: <?php echo accountProperties('Filter IC') ? 'flex; flex-direction: column' : 'none';?>;" >
                     Filter IC
                     <select id="filterIC" name="filterIC"></select>
                 </label>
-                <div class="vr" style="display: <?php echo accountProperties('Filter IC') ? 'flex; flex-direction: column' : 'none';?>;"></div>
+                <div class="vr" style="display: <?php echo accountProperties('Filter IC') ? 'block' : 'none';?>;"></div>
                 <label style="display: flex; flex-direction: column; align-items: center; white-space: nowrap;">
                     Today Only
                     <input id="todayOnly" type="checkbox" name="todayOnly">
                 </label>
-                <div class="vr"></div>
-                <div style="text-align: center;">Show<br>Inactive</div>
-                <label class="switch">
-                    <input id="showActive" type="checkbox" checked>
-                    <span class="slider round"></span>
-                </label>
-                <div style="text-align: center;">Show<br>Active</div>
-                <div class="vr"></div>
+                <div class="vr" style="display: <?php echo accountProperties('Filter IC') ? 'block' : 'none';?>;"></div>
+                <div style="<?php echo accountProperties('Show Inactive') ? 'display: flex; align-items: center; gap: 15px' : 'display: none';?>;">
+                    <div style="text-align: center;">Show<br>Inactive</div>
+                    <label class="switch">
+                        <input id="showActive" type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                    <div style="text-align: center;">Show<br>Active</div>
+                </div>
+                <div class="vr" style="display: <?php echo accountProperties('Show Inactive') ? 'block' : 'none';?>;"></div>
                 <button id="refreshButton" class="big">Refresh</button>
             </div>
             <div style="display: flex; align-items: center; gap: 15px;">

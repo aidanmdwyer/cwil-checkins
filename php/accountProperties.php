@@ -14,7 +14,9 @@ $accountProperties = [
         'Import Buildings',
         'All Accounts',
 
+        'Filter Manager',
         'Filter IC',
+        'Show Inactive',
 
         'Select',
         'Name',
@@ -35,7 +37,9 @@ $accountProperties = [
         'Check-In Archives (right)',
         'All Accounts',
 
+        'Filter Manager',
         'Filter IC',
+        'Show Inactive',
 
         'Select',
         'Name',
@@ -52,7 +56,9 @@ $accountProperties = [
         'Home',
         'Check-In Archives (left)',
 
+        'Filter Manager',
         'Filter IC',
+        'Show Inactive',
 
         'Name',
         'Manager',
@@ -72,7 +78,6 @@ $accountProperties = [
         'Checked',
         'Time Checked',
         'Days',
-        'QR',
         'View Note'
     ],
     '' => []
