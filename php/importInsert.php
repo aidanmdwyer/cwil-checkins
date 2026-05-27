@@ -62,18 +62,13 @@ while($row = $existingContractorsQuery->fetch_assoc()) {
     $existingContractors[] = $row['name'];
 }
 
-$existingBuildingsQuery = $conn->query("SELECT name, manager, ic, monday, tuesday, wednesday, thursday, friday, saturday, sunday FROM buildings");
-$existingBuildings = [];
-while($row = $existingBuildingsQuery->fetch_assoc()) {
-    $existingBuildings[$row['name']] = $row;
-}
-
 $results = [];
 $missingManagers = [];
 $missingIcs = [];
 $errorCount = 0;
 $managerErrorCount = 0;
 $icErrorCount = 0;
+$vendorCardErrorCount = 0;
 $dayErrors = [];
 $otherErrorCount = 0;
 $numSuccesses = 0;
@@ -84,9 +79,6 @@ $previewBuildings = [];
 
 //loop through import data
 foreach ($importData as $row) {
-    $numRows++;
-    $doCommit = $commitMode;
-
     $rowName = $row['name'];
     $rowIc = $row['ic'];
     $rowManager = $row['manager'];
@@ -99,13 +91,19 @@ foreach ($importData as $row) {
     $rowSunday = (int)$row['sunday'];
     $active = $rowMonday === 1 || $rowTuesday === 1 || $rowWednesday === 1 || $rowThursday === 1 || $rowFriday === 1 || $rowSaturday === 1 || $rowSunday === 1;
 
+    $numRows++;
+    $doCommit = $commitMode;
+
     //validate manager and IC
     $managerExists = in_array($rowManager, $existingManagers);
     $icExists = in_array($rowIc, $existingContractors);
 
     $rowErrors = [];
 
-    if (!$icExists) {
+    if($rowIc[0] === '*') {
+        $rowErrors[] = 'Vendor Card';
+        $vendorCardErrorCount++;
+    } else if (!$icExists) {
         $rowErrors[] = 'Contractor DNE';
         if (!in_array($rowIc, $missingIcs)) {
             $missingIcs[] = $rowIc;
@@ -163,6 +161,12 @@ foreach ($importData as $row) {
         }
     } else if (!$commitMode) { //preview mode
 
+        $existingBuildingsQuery = $conn->query("SELECT name, manager, ic, monday, tuesday, wednesday, thursday, friday, saturday, sunday FROM buildings");
+        $existingBuildings = [];
+        while($row = $existingBuildingsQuery->fetch_assoc()) {
+            $existingBuildings[$row['name']] = $row;
+        }
+
         if(isset($previewBuildings[$row['name']])) {
             if($previewBuildings[$row['name']] === $row) {
                 //exact duplicate in import
@@ -217,6 +221,7 @@ $output = [
     'errorCount' => $errorCount,
     'managerErrorCount' => $managerErrorCount,
     'icErrorCount' => $icErrorCount,
+    'vendorCardErrorCount' => $vendorCardErrorCount,
     'otherErrorCount' => $otherErrorCount,
     'numSuccesses' => $numSuccesses,
     'numRows' => $numRows,

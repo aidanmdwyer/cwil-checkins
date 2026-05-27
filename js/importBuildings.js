@@ -30,7 +30,9 @@ document.getElementById('csvFileInput').addEventListener('change', function(even
                 } else if(header.includes("Independent Contractor")) {
                     headerIndices.ic = i;
                 } else if(header.includes("FSM")) {
-                    headerIndices.manager = i;
+                    headerIndices.fsm = i;
+                } else if(header.includes("Night Manager")) {
+                    headerIndices.nightManager = i;
                 } else if(header.includes("Prospecting Notes")) {
                     headerIndices.days = i;
                 }
@@ -44,7 +46,7 @@ document.getElementById('csvFileInput').addEventListener('change', function(even
                 let buildingObj = {
                     name: rows[headerIndices.name],
                     ic: rows[headerIndices.ic],
-                    manager: rows[headerIndices.manager],
+                    manager: rows[headerIndices.nightManager] || rows[headerIndices.fsm], //night manager if exists, otherwise FSM
                     sunday: days.includes("Sun"),
                     monday: days.includes("Mon"),
                     tuesday: days.includes("Tue"),
@@ -199,7 +201,7 @@ function buildImportTable(commit) {
                 }
                 if(results['errorCount'] > 0) {
                     errorCountDiv.style.display = 'block';
-                    errorCountDiv.innerHTML = `<strong style="color: red">` + results['errorCount'] + ` Failed Insertions:</strong><br>` + results['managerErrorCount'] + ` Manager Errors<br>` + results['icErrorCount'] + ` Contractor Errors<br>` + results['otherErrorCount'] + ` Other Errors<br><br>`;
+                    errorCountDiv.innerHTML = `<strong style="color: red">` + results['errorCount'] + ` Failed Insertions:</strong><br>` + results['managerErrorCount'] + ` Manager Errors<br>` + results['icErrorCount'] + ` Contractor Errors<br>` + results['vendorCardErrorCount'] + ` Vendor Card Errors<br>` + results['otherErrorCount'] + ` Other Errors<br><br>`;
                 }
             }
 
