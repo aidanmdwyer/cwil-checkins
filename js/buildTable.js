@@ -59,58 +59,60 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                             (rowData, bgColor) =>
                                 `<td style="background-color: ${bgColor}">${encodeHTML(rowData['ic'])}</td>`
                         ],
-                    'Checked': [
-                        `<th>&#9989</th>`,
-                        (rowData, bgColor) =>
-                            `<td style="background-color: ${bgColor}">
-                              <button
-                                type="button"
-                                style="text-align:center; background-color: transparent; border: none;"
-                                data-id="${rowData.id}"
-                                data-name="${encodeHTML(rowData.name)}"
-                                data-checked="${rowData.checked}"
-                                onclick="toggleCheck(
-                                  this.dataset.name,
-                                  this.dataset.checked
-                                )"
-                              >
-                                ${(rowData.checked === 0) ? '&#10060' : '&#9989'}
-                              </button>
-                            </td>`
-                    ],
-                    'Checked View Only' :
+                    'Checked':
+                        [
+                            `<th>&#9989</th>`,
+                            (rowData, bgColor) =>
+                                `<td style="background-color: ${bgColor}">
+                                  <button
+                                    type="button"
+                                    style="text-align:center; background-color: transparent; border: none;"
+                                    data-id="${rowData.id}"
+                                    data-name="${encodeHTML(rowData.name)}"
+                                    data-checked="${rowData.checked}"
+                                    onclick="toggleCheck(
+                                      this.dataset.name,
+                                      this.dataset.checked
+                                    )"
+                                  >
+                                    ${(rowData.checked === 0) ? '&#10060' : '&#9989'}
+                                  </button>
+                                </td>`
+                        ],
+                    'Checked View Only':
                         [
                             `<th>&#9989</th>`,
                             (rowData, bgColor) =>
                                 `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;">${(rowData['checked'] === 0) ? '&#10060' : '&#9989'}</button></td>`
                         ],
-                    'Time Checked': [
-                        `<th>Time Checked</th>`,
-                        (rowData, bgColor) => {
-                            const rawTime = rowData['checkedTime'];
-                            let formatted = '';
+                    'Time Checked':
+                        [
+                            `<th>Time Checked</th>`,
+                            (rowData, bgColor) => {
+                                const rawTime = rowData['checkedTime'];
+                                let formatted = '';
 
-                            if (rawTime) {
-                                const date = new Date(rawTime);
-                                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                                const month = monthNames[date.getMonth()];
-                                const day = date.getDate();
+                                if (rawTime) {
+                                    const date = new Date(rawTime);
+                                    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                    const month = monthNames[date.getMonth()];
+                                    const day = date.getDate();
 
-                                let hours = date.getHours();
-                                const minutes = date.getMinutes();
-                                const ampm = hours >= 12 ? 'PM' : 'AM';
+                                    let hours = date.getHours();
+                                    const minutes = date.getMinutes();
+                                    const ampm = hours >= 12 ? 'PM' : 'AM';
 
-                                hours = hours % 12;
-                                hours = hours ? hours : 12;
-                                const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+                                    hours = hours % 12;
+                                    hours = hours ? hours : 12;
+                                    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
 
-                                formatted = `${month} ${day}, ${hours}:${minutesStr} ${ampm}`;
+                                    formatted = `${month} ${day}, ${hours}:${minutesStr} ${ampm}`;
+                                }
+
+                                return `<td style="background-color: ${bgColor}; text-align: center; font-family: 'Arial', sans-serif;">${formatted}</td>`;
                             }
-
-                            return `<td style="background-color: ${bgColor}; text-align: center; font-family: 'Arial', sans-serif;">${formatted}</td>`;
-                        }
-                    ],
+                        ],
                     'Days' :
                         [
                             `<th style="font-size: 10px; padding: 0;">M</th>

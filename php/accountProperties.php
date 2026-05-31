@@ -12,7 +12,7 @@ $accountProperties = [
         'Managers',
         'Check-In Archives (right)',
         'Import Buildings',
-        'All Accounts',
+        'Accounts',
 
         'Filter Manager',
         'Filter IC',
@@ -35,7 +35,7 @@ $accountProperties = [
         'Contractors',
         'Managers',
         'Check-In Archives (right)',
-        'All Accounts',
+        'Accounts',
 
         'Filter Manager',
         'Filter IC',

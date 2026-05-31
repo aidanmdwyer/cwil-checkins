@@ -31,7 +31,7 @@ if (!accountProperties('Home')) {
     <div>
         <button onclick="window.location.href='./php/checkInArchives.php'" class="big" style="display: <?php echo accountProperties('Check-In Archives (right)') ? '' : 'none';?>;">Archives</button>
         <button onclick="window.location.href='./php/importBuildings.php'" class="big" style="display: <?php echo accountProperties('Import Buildings') ? '' : 'none';?>;">Import</button>
-        <button onclick="window.location.href='./php/allAccounts.php'" class="big" style="display: <?php echo accountProperties('All Accounts') ? '' : 'none';?>;">All Accounts</button>
+        <button onclick="window.location.href='./php/allAccounts.php'" class="big" style="display: <?php echo accountProperties('Accounts') ? '' : 'none';?>;">Accounts</button>
         <div style="display: inline-block;">
             <button onclick="window.location.href = '/index.php?logout=logout';" class="big">Logout</button>
             <div style="display: inline-block; vertical-align: middle; line-height: 90%;">

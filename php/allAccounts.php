@@ -93,124 +93,200 @@ $conn->close();
 </header>
 <main>
     <div class="contentContainer">
-        <div class="card">
-            <h2>Create New Admin Account</h2>
-            <p>Enter the username and then have the user reset the password (they cannot login until the password is set).</p>
-            <form method="POST" action="allAccounts.php">
-                <label for="username">Username:</label><br>
-                <input id="username" type="text" name="username" style="width: 240px;">
-                <input type="submit">
-            </form>
-            <?php
-            if(isset($insertSuccess)) {
-                echo '<br><div style="color: green;">' . $insertSuccess . '</div>';
-            } else if (isset($insertError)) {
-                echo '<br><div style="color: red;">' . $insertError . '</div>';
-            }
-            ?>
-        </div>
-        <div class="card">
-            <h2>All Accounts</h2>
-            <?php
-            if (isset($_GET['deleted'])) {
-                echo '<div style="color: green;">Successfully deleted "' . $_GET['deleted'] . '"</div><br>';
-            }
-            ?>
-            <table style="width: 650px; border-collapse: collapse;">
-                <tbody>
-                <?php
+        <div style="display: flex; flex-direction: row;">
+            <div style="display: flex; flex-direction: column;">
+                <div class="card">
+                    <h2>Create New Admin Account</h2>
+                    <p>Enter the username and then have the user reset the password (they cannot login until the password is set).</p>
+                    <form method="POST" action="allAccounts.php">
+                        <label for="username">Username:</label><br>
+                        <input id="username" type="text" name="username" style="width: 240px;">
+                        <input type="submit">
+                    </form>
+                    <?php
+                    if(isset($insertSuccess)) {
+                        echo '<br><div style="color: green;">' . $insertSuccess . '</div>';
+                    } else if (isset($insertError)) {
+                        echo '<br><div style="color: red;">' . $insertError . '</div>';
+                    }
+                    ?>
+                </div>
+                <div class="card">
+                    <h2>All Accounts</h2>
+                    <?php
+                    if (isset($_GET['deleted'])) {
+                        echo '<div style="color: green;">Successfully deleted "' . $_GET['deleted'] . '"</div><br>';
+                    }
+                    ?>
+                    <table style="width: 650px; border-collapse: collapse;">
+                        <tbody>
+                        <?php
 
-                foreach (['admin', 'manager', 'contractor'] as $accountType) {
+                        foreach (['admin', 'manager', 'contractor'] as $accountType) {
 
-                    $accountTypeArg = '"' . $accountType . '"';
+                            $accountTypeArg = '"' . $accountType . '"';
 
-                    // Type header row
-                    echo "<tr style='background-color: #ccc;'>";
-                    echo "<th style='text-align: left; padding: 25px; text-transform: uppercase;'>" . htmlspecialchars($accountType) . "</th>";
-                    echo "<th style='text-align: center; width:30px; font-size: 12px;'>Account Link</th>";
-                    echo "<th style='text-align: center; width:30px; font-size: 10px;'>Password Reset Link</th>";
-                    echo "<th style='text-align: center; width:80px; font-size: 12px;'>Status</th>";
-                    echo "<th style='text-align: center; width:30px; font-size: 12px;'>Delete</th>";
-                    echo "</tr>";
-
-                    $switch = false;
-
-                    if (!empty($usersByType[$accountType])) {
-                        foreach ($usersByType[$accountType] as $row) {
-                            $bgColor = $switch ? '#F3F3F3' : '#E5E5E5';
-                            $usernameRaw = $row['username'];
-                            $usernameEsc = htmlspecialchars($usernameRaw);
-
-                            // --- compute status ---
-                            $statusText  = '';
-                            $statusColor = '';
-
-                            if (!empty($row['resetTimer'])) {
-                                $resetTs   = strtotime($row['resetTimer']);
-                                $deadline  = $resetTs + 23 * 3600;
-                                $remaining = $deadline - time();
-
-                                if ($remaining > 3600) {
-                                    $hoursLeft = (int)ceil($remaining / 3600);
-                                    $statusText = $hoursLeft . 'h until link expires';
-                                    $statusColor = 'green';
-                                } else if ($remaining > 0) {
-                                    $minutesLeft = (int)ceil($remaining / 60);
-                                    $statusText = $minutesLeft . 'm until link expires';
-                                    $statusColor = 'green';
-                                }
-                            } else if ($row['passwordHash'] === '' || is_null($row['passwordHash'])) {
-                                $statusText  = 'Password not set';
-                                $statusColor = 'red';
-                            }
-
-                            echo "<tr>";
-                            // username
-                            echo "<td style='padding: 6px 12px; background-color: {$bgColor};'>" . $usernameEsc . "</td>";
-
-                            // account link button
-                            echo "<td style='text-align: center; background-color: {$bgColor};'>
-                        <button style='border: none; background-color: transparent' 
-                                onclick='copyLoginLink(" . json_encode(rawurlencode($usernameRaw)) . ", " . $accountTypeArg . ", this)'>&#128203</button>
-                      </td>";
-
-                            // reset link button
-                            echo "<td style='text-align: center; background-color: {$bgColor};'>
-                        <button style='border: none; background-color: transparent' 
-                                onclick='copyResetLink(" . json_encode(rawurlencode($usernameRaw)) . ", this)'>&#128260</button>
-                      </td>";
-
-                            // status cell
-                            $styleColor = $statusColor ? "color: {$statusColor};" : '';
-                            echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; {$styleColor}'>"
-                                . htmlspecialchars($statusText)
-                                . "</td>";
-
-                            // delete form cell
-                            echo "<td style='text-align: center; background-color: {$bgColor};'>
-                        <form method='POST' action='deleteAccount.php' style='display:inline;' data-name='" . $usernameEsc . "'>
-                            <input type='hidden' name='deleteName' value='" . htmlspecialchars($usernameRaw) . "'>
-                            <button type='submit' style='border: none; background-color: transparent' onclick='return confirmDelete(this)'>&#128465</button>
-                        </form>
-                      </td>";
-
+                            // Type header row
+                            echo "<tr style='background-color: #ccc;'>";
+                            echo "<th style='text-align: left; padding: 25px; text-transform: uppercase;'>" . htmlspecialchars($accountType) . "</th>";
+                            echo "<th style='text-align: center; width:30px; font-size: 12px;'>Account Link</th>";
+                            echo "<th style='text-align: center; width:30px; font-size: 10px;'>Password Reset Link</th>";
+                            echo "<th style='text-align: center; width:80px; font-size: 12px;'>Status</th>";
+                            echo "<th style='text-align: center; width:30px; font-size: 12px;'>Delete</th>";
                             echo "</tr>";
 
-                            $switch = !$switch;
+                            $switch = false;
+
+                            if (!empty($usersByType[$accountType])) {
+                                foreach ($usersByType[$accountType] as $row) {
+                                    $bgColor = $switch ? '#F3F3F3' : '#E5E5E5';
+                                    $usernameRaw = $row['username'];
+                                    $usernameEsc = htmlspecialchars($usernameRaw);
+
+                                    // --- compute status ---
+                                    $statusText  = '';
+                                    $statusColor = '';
+
+                                    if (!empty($row['resetTimer'])) {
+                                        $resetTs   = strtotime($row['resetTimer']);
+                                        $deadline  = $resetTs + 23 * 3600;
+                                        $remaining = $deadline - time();
+
+                                        if ($remaining > 3600) {
+                                            $hoursLeft = (int)ceil($remaining / 3600);
+                                            $statusText = $hoursLeft . 'h until link expires';
+                                            $statusColor = 'green';
+                                        } else if ($remaining > 0) {
+                                            $minutesLeft = (int)ceil($remaining / 60);
+                                            $statusText = $minutesLeft . 'm until link expires';
+                                            $statusColor = 'green';
+                                        }
+                                    } else if ($row['passwordHash'] === '' || is_null($row['passwordHash'])) {
+                                        $statusText  = 'Password not set';
+                                        $statusColor = 'red';
+                                    }
+
+                                    echo "<tr>";
+                                    // username
+                                    echo "<td style='padding: 6px 12px; background-color: {$bgColor};'>" . $usernameEsc . "</td>";
+
+                                    // account link button
+                                    echo "<td style='text-align: center; background-color: {$bgColor};'>
+                                <button style='border: none; background-color: transparent' 
+                                        onclick='copyLoginLink(" . json_encode(rawurlencode($usernameRaw)) . ", " . $accountTypeArg . ", this)'>&#128203</button>
+                              </td>";
+
+                                    // reset link button
+                                    echo "<td style='text-align: center; background-color: {$bgColor};'>
+                                <button style='border: none; background-color: transparent' 
+                                        onclick='copyResetLink(" . json_encode(rawurlencode($usernameRaw)) . ", this)'>&#128260</button>
+                              </td>";
+
+                                    // status cell
+                                    $styleColor = $statusColor ? "color: {$statusColor};" : '';
+                                    echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; {$styleColor}'>"
+                                        . htmlspecialchars($statusText)
+                                        . "</td>";
+
+                                    // delete form cell
+                                    echo "<td style='text-align: center; background-color: {$bgColor};'>
+                                <form method='POST' action='deleteAccount.php' style='display:inline;' data-name='" . $usernameEsc . "'>
+                                    <input type='hidden' name='deleteName' value='" . htmlspecialchars($usernameRaw) . "'>
+                                    <button type='submit' style='border: none; background-color: transparent' onclick='return confirmDelete(this)'>&#128465</button>
+                                </form>
+                              </td>";
+
+                                    echo "</tr>";
+
+                                    $switch = !$switch;
+                                }
+                            } else {
+                                echo "<tr>
+                            <td style='padding: 6px 12px; background-color: #E5E5E5'>No users</td>
+                            <td style='background-color: #E5E5E5'></td>
+                            <td style='background-color: #E5E5E5'></td>
+                            <td style='background-color: #E5E5E5'></td>
+                            <td style='background-color: #E5E5E5'></td>
+                          </tr>";
+                            }
                         }
-                    } else {
-                        echo "<tr>
-                    <td style='padding: 6px 12px; background-color: #E5E5E5'>No users</td>
-                    <td style='background-color: #E5E5E5'></td>
-                    <td style='background-color: #E5E5E5'></td>
-                    <td style='background-color: #E5E5E5'></td>
-                    <td style='background-color: #E5E5E5'></td>
-                  </tr>";
-                    }
-                }
-                ?>
-                </tbody>
-            </table>
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <div class="card">
+                    <h2>Account Permissions</h2>
+                    <form style="display: flex; flex-direction: column; justify-content: flex-start;">
+                        <label for="accountTypeSelect">
+                            Account Type
+                            <select name="accountType" id="accountTypeSelect" style="width: 100px;">
+                                <option value="admin">Admin</option>
+                                <option value="manager">Manager</option>
+                                <option value="contractor">Contractor</option>
+                            </select>
+                        </label>
+
+                        <table style="width: 650px; border-collapse: collapse;">
+                            <tbody>
+                                <?php
+                                $propertyData = [
+                                    "Pages" => [
+                                        "Home",
+                                        "Add Building",
+                                        "Contractors",
+                                        "Managers",
+                                        "Archives",
+                                        "Import",
+                                        "Accounts"
+                                    ],
+                                    "Filter Options" => [
+                                        "Search",
+                                        "Filter Manager",
+                                        "Filter IC",
+                                        "Today Only",
+                                        "Show Inactive"
+                                    ],
+                                    "Table Columns" => [
+                                        "Select",
+                                        "Name",
+                                        "Manager",
+                                        "IC",
+                                        "Check-in Status (Togglable)",
+                                        "Check-in Status (View Only)",
+                                        "Check-in Time",
+                                        "Days",
+                                        "QR",
+                                        "Edit"
+                                    ]
+                                ];
+
+                                foreach ($propertyData as $section => $list) {
+                                    echo "
+                                    <tr style='background-color: #ccc;'>
+                                        <th style='text-align: left; padding: 25px;' colspan='2'>$section</th>
+                                    </tr>";
+
+                                    $switch = false;
+                                    forEach($list as $value) {
+                                        $bgColor = $switch ? '#F3F3F3' : '#E5E5E5';
+                                        echo "
+                                        <tr>
+                                            <td style='background-color: $bgColor;'>$value</td>
+                                            <td style='background-color: $bgColor;'>
+                                                <input type='checkbox' name='$value'>
+                                            </td>
+                                        </tr>";
+                                        $switch = !$switch;
+                                    }
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>
