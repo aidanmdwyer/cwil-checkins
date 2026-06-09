@@ -41,13 +41,13 @@ if (!accountProperties('Home Page')) {
 </header>
 <main>
     <div id="tableMenu" style="display: none; position: fixed; top: 0; left: 0; right: 0; border-bottom: 2px solid black; align-items: center; padding: 15px; background-color: lightgrey; z-index: 10; overflow-x: auto;">
-        <div style="margin-right: 40px;">
+        <div style="margin-right: 20px;">
             <a href="/index.php"><img src="/imgs/logoSmall.png" style="width: 100px;"></a>
         </div>
         <div style="display: flex; justify-content: space-between; width: 100%; gap: 10px;">
             <div style="display: flex; align-items: center; gap: 15px;">
-                <div class="vr"></div>
-                <form id="searchBuildingsForm">
+                <div class="vr" style="<?php echo accountProperties('Search Building Name') ? 'display: block' : 'display: none';?>;"></div>
+                <form id="searchBuildingsForm" style="<?php echo accountProperties('Search Building Name') ? 'display: block' : 'display: none';?>;">
                     <label style="display: flex; flex-direction: column;">
                         Search Building Name
                         <span style="display: flex; flex-direction: row; gap: 5px; align-items: center;">
@@ -56,23 +56,23 @@ if (!accountProperties('Home Page')) {
                         </span>
                     </label>
                 </form>
-                <div class="vr" style="display: <?php echo accountProperties('Filter Manager') ? 'block' : 'none';?>;"></div>
-                <label style="display: <?php echo accountProperties('Filter Manager') ? 'flex; flex-direction: column' : 'none';?>;">
+                <div class="vr" style="<?php echo accountProperties('Filter Manager') ? 'display: block' : 'display: none';?>;"></div>
+                <label style="<?php echo accountProperties('Filter Manager') ? 'display: flex;' : 'display: none';?>; flex-direction: column;">
                     Filter Manager
                     <select id="filterManager" name="filterManager"></select>
                 </label>
-                <div class="vr" style="display: <?php echo accountProperties('Filter IC') ? 'block' : 'none';?>;"></div>
-                <label style="display: <?php echo accountProperties('Filter IC') ? 'flex; flex-direction: column' : 'none';?>;" >
+                <div class="vr" style="<?php echo accountProperties('Filter IC') ? 'display: block' : 'display: none';?>;"></div>
+                <label style="<?php echo accountProperties('Filter IC') ? 'display: flex' : 'display: none';?>; flex-direction: column;">
                     Filter IC
                     <select id="filterIC" name="filterIC"></select>
                 </label>
-                <div class="vr"></div>
-                <label style="display: flex; flex-direction: column; align-items: center; white-space: nowrap;">
+                <div class="vr" style="<?php echo accountProperties('Filter Today Only') ? 'display: block' : 'display: none';?>;"></div>
+                <label style="<?php echo accountProperties('Filter Today Only') ? 'display: flex' : 'display: none';?> flex-direction: column; align-items: center; white-space: nowrap;">
                     Today Only
                     <input id="todayOnly" type="checkbox" name="todayOnly">
                 </label>
-                <div class="vr" style="display: <?php echo accountProperties('Access Inactive Buildings') ? 'block' : 'none';?>;"></div>
-                <div style="<?php echo accountProperties('Access Inactive Buildings') ? 'display: flex; align-items: center; gap: 15px' : 'display: none';?>;">
+                <div class="vr" style="<?php echo accountProperties('Access Inactive Buildings') ? 'display: block' : 'display: none';?>;"></div>
+                <div style="<?php echo accountProperties('Access Inactive Buildings') ? 'display: flex' : 'display: none';?>; align-items: center; gap: 15px;">
                     <div style="text-align: center;">Show<br>Inactive</div>
                     <label class="switch">
                         <input id="showActive" type="checkbox" checked>
@@ -83,7 +83,7 @@ if (!accountProperties('Home Page')) {
                 <div class="vr"></div>
                 <button id="refreshButton" class="big">Refresh</button>
             </div>
-            <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="<?php echo accountProperties('Export Buildings') ? 'display: flex' : 'display: none';?>; align-items: center; gap: 15px;">
                 <button id="mainExportButton" class="big" onclick="exportBuildingsSheet('buildingsTable', new Date().toISOString().slice(0,10) + '_buildings.xlsx')">Export</button>
             </div>
         </div>

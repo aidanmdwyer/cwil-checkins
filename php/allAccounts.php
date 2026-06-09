@@ -18,6 +18,8 @@ if(isset($_POST['username'])) {
 
     if($username === "") {
         $insertError = 'Username cannot be empty.';
+    } else if(strtolower($username) === "developer" || strtolower($username) === "admin" || strtolower($username) === "manager" || strtolower($username) === "contractor") {
+        $insertError = 'Username forbidden.';
     } else if(strlen($username) > $maxLength) {
         $insertError = 'Username cannot exceed ' . $maxLength . ' characters.';
     } else {
@@ -257,13 +259,15 @@ $conn->close();
                                         "Edit Buildings",
                                         "Access Inactive Buildings"
                                     ],
-                                    "Data Options" => [
+                                    "Filter Options" => [
                                         "Search Building Name",
                                         "Filter Manager",
                                         "Filter IC",
-                                        "Show Today Only",
-                                        "Export Buildings"
+                                        "Filter Today Only"
                                     ],
+                                    "Other" => [
+                                        "Export Buildings"
+                                    ]
                                 ];
 
                                 foreach ($propertyData as $section => $list) {

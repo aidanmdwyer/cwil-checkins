@@ -29,7 +29,7 @@ $accountProperties = [
         'Search Building Name',
         'Filter Manager',
         'Filter IC',
-        'Show Today Only',
+        'Filter Today Only',
         'Export Buildings'
     ],
     'admin' => [
@@ -55,7 +55,7 @@ $accountProperties = [
         'Search Building Name',
         'Filter Manager',
         'Filter IC',
-        'Show Today Only',
+        'Filter Today Only',
         'Export Buildings'
     ],
     'manager' => [
@@ -73,7 +73,7 @@ $accountProperties = [
         'Search Building Name',
         'Filter Manager',
         'Filter IC',
-        'Show Today Only',
+        'Filter Today Only',
         'Export Buildings'
     ],
     'contractor' => [
@@ -88,7 +88,7 @@ $accountProperties = [
         'See Days',
 
         'Search Building Name',
-        'Show Today Only',
+        'Filter Today Only',
         'Export Buildings'
     ],
     '' => []

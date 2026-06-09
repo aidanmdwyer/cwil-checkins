@@ -126,7 +126,7 @@ async function printAll() {
     let icIndex = -1;
     Array.from(tableRows[0].cells).forEach((cell, index) => {
         const headerText = cell.textContent.trim();
-        if (headerText === 'Name') {
+        if (headerText === 'Building Name') {
             nameIndex = index;
         } else if (headerText === 'IC') {
             icIndex = index;
