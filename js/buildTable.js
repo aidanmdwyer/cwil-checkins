@@ -9,7 +9,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     selected = [],
                     showLoadingText = true) {
 
-    accountProperties = [];
+    let accountProperties = [];
     if(respectLoadAll) fetchStr += '&loadAll=' + (document.getElementById('loadAll').style.display === 'none' ? 'true' : 'false');
 
     fetch('/php/accountProperties.php', {
