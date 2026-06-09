@@ -1,7 +1,7 @@
 <?php
 include 'accountProperties.php';
 
-if (!accountProperties('All Accounts')) {
+if (!accountProperties('Accounts Page')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to perform this action.');
 }

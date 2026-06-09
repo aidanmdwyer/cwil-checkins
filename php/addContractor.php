@@ -2,7 +2,7 @@
 include 'login.php';
 include 'accountProperties.php';
 
-if (!accountProperties('Contractors')) {
+if (!accountProperties('Contractors Page')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to access this page.');
 }
@@ -65,21 +65,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <main>
     <div class="contentContainer">
-        <div class="card">
-            <h2>Add New Contractor</h2>
-            <form action="addContractor.php" method="post">
-                <label for="Contractor Name">Contractor Name</label><br>
-                <input type="text" id="Contractor Name" placeholder="Bob's Cleaning LLC" name="name" value="<?php echo (isset($_POST['name']) && isset($insertError)) ? htmlspecialchars($_POST['name']) : ''; ?>" style="width: 370px">
-                <input type="submit">
-            </form>
-            <?php
-            if(isset($insertSuccess)) {
-                echo '<br><div style="color: green;">' . $insertSuccess . '</div>';
-            } else if(isset($insertError)) {
-                echo '<br><div style="color: red;">' . $insertError . '</div>';
-            }
-            ?>
-        </div>
+
         <div class="card">
             <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
                 <h2>All Contractors</h2>
@@ -189,6 +175,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $conn->close();
 
+            ?>
+        </div>
+        <div class="card">
+            <h2>Add New Contractor</h2>
+            <form action="addContractor.php" method="post">
+                <label for="Contractor Name">Contractor Name</label><br>
+                <input type="text" id="Contractor Name" placeholder="Bob's Cleaning LLC" name="name" value="<?php echo (isset($_POST['name']) && isset($insertError)) ? htmlspecialchars($_POST['name']) : ''; ?>" style="width: 370px">
+                <input type="submit">
+            </form>
+            <?php
+            if(isset($insertSuccess)) {
+                echo '<br><div style="color: green;">' . $insertSuccess . '</div>';
+            } else if(isset($insertError)) {
+                echo '<br><div style="color: red;">' . $insertError . '</div>';
+            }
             ?>
         </div>
     </div>

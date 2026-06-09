@@ -29,7 +29,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                 console.log(data);
 
                 const tableColumns = {
-                    'Select' :
+                    'Select/Edit Multiple Buildings' :
                         [
                             `<th><input id="selectAll" type="checkBox" onclick="handleSelectAll(this.checked)"></th>`,
                             (rowData, bgColor) =>
@@ -41,25 +41,25 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     //         (rowData, bgColor) =>
                     //             `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="copyText(this.dataset.row, this)" data-row="${rowData['id']}">&#128203</button></td>`
                     //     ],
-                    'Name' :
+                    'See Building Name' :
                         [
-                            `<th>Name</th>`,
+                            `<th>Building Name</th>`,
                             (rowData, bgColor) =>
                                 `<td style="background-color: ${bgColor}">${encodeHTML(rowData['name'])}</td>`
                         ],
-                    'Manager' :
+                    'See Manager' :
                         [
                             `<th>Manager</th>`,
                             (rowData, bgColor) =>
                                 `<td style="background-color: ${bgColor}">${encodeHTML(rowData['manager'])}</td>`
                         ],
-                    'IC' :
+                    'See IC' :
                         [
                             `<th>IC</th>`,
                             (rowData, bgColor) =>
                                 `<td style="background-color: ${bgColor}">${encodeHTML(rowData['ic'])}</td>`
                         ],
-                    'Checked':
+                    'See Check-in Status':
                         [
                             `<th>&#9989</th>`,
                             (rowData, bgColor) =>
@@ -85,7 +85,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                             (rowData, bgColor) =>
                                 `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;">${(rowData['checked'] === 0) ? '&#10060' : '&#9989'}</button></td>`
                         ],
-                    'Time Checked':
+                    'See Check-in Time':
                         [
                             `<th>Time Checked</th>`,
                             (rowData, bgColor) => {
@@ -113,7 +113,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                                 return `<td style="background-color: ${bgColor}; text-align: center; font-family: 'Arial', sans-serif;">${formatted}</td>`;
                             }
                         ],
-                    'Days' :
+                    'See Days' :
                         [
                             `<th style="font-size: 10px; padding: 0;">M</th>
                     <th style="font-size: 10px; padding: 0; min">T</th>
@@ -133,13 +133,13 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         <td style="text-align: center; width: 25px; background-color: ${bgColor}; padding: 0;">${(rowData['sunday'] === 1) ? '<span style="font-size: 10px;">Sun</span>' : ''}</td>
                         `
                         ],
-                    'QR' :
+                    'Print QR' :
                         [
                             `<th>QR</th>`,
                             (rowData, bgColor) =>
                                 `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="openQr(JSON.parse(decodeURIComponent(this.dataset.row)))" data-row="${encodeURIComponent(JSON.stringify(rowData))}"><span style="font-size:15px;">&#9635</span></button></td>`
                         ],
-                    'Edit' :
+                    'Edit Buildings' :
                         [
                             `<th>Edit</th>`,
                             (rowData, bgColor) =>

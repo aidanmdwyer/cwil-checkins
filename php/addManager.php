@@ -2,7 +2,7 @@
 include 'login.php';
 include 'accountProperties.php';
 
-if (!accountProperties('Managers')) {
+if (!accountProperties('Managers Page')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to access this page.');
 }
@@ -64,21 +64,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <main>
     <div class="contentContainer">
-        <div class="card">
-            <h2>Add New Manager</h2>
-            <form action="addManager.php" method="post">
-                <label for="Manager Name">Manager Name</label><br>
-                <input type="text" id="Manager Name" placeholder="John Doe" name="name" value="<?php echo (isset($_POST['name']) && isset($insertError)) ? htmlspecialchars($_POST['name']) : ''; ?>" style="width: 240px">
-                <input type="submit">
-            </form>
-            <?php
-            if(isset($insertSuccess)) {
-                echo '<br><div style="color: green;">' . $insertSuccess . '</div>';
-            } else if(isset($insertError)) {
-                echo '<br><div style="color: red;">' . $insertError . '</div>';
-            }
-            ?>
-        </div>
+
         <div class="card">
             <h2>All Managers</h2>
             <?php
@@ -172,6 +158,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $conn->close();
 
+            ?>
+        </div>
+        <div class="card">
+            <h2>Add New Manager</h2>
+            <form action="addManager.php" method="post">
+                <label for="Manager Name">Manager Name</label><br>
+                <input type="text" id="Manager Name" placeholder="John Doe" name="name" value="<?php echo (isset($_POST['name']) && isset($insertError)) ? htmlspecialchars($_POST['name']) : ''; ?>" style="width: 240px">
+                <input type="submit">
+            </form>
+            <?php
+            if(isset($insertSuccess)) {
+                echo '<br><div style="color: green;">' . $insertSuccess . '</div>';
+            } else if(isset($insertError)) {
+                echo '<br><div style="color: red;">' . $insertError . '</div>';
+            }
             ?>
         </div>
     </div>

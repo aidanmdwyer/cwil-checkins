@@ -2,7 +2,7 @@
 include 'php/login.php';
 include 'php/accountProperties.php';
 
-if (!accountProperties('Home')) {
+if (!accountProperties('Home Page')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to access this page.');
 }
@@ -22,16 +22,15 @@ if (!accountProperties('Home')) {
 <body>
 <header>
     <div>
-        <button onclick="window.location.href='./php/addBuilding.php'" class="big" style="display: <?php echo accountProperties('Add Building') ? '' : 'none';?>;">Add Building</button>
-        <button onclick="window.location.href='./php/addContractor.php'" class="big" style="display: <?php echo accountProperties('Contractors') ? '' : 'none';?>;">Contractors</button>
-        <button onclick="window.location.href='./php/addManager.php'" class="big" style="display: <?php echo accountProperties('Managers') ? '' : 'none';?>;">Managers</button>
-        <button onclick="window.location.href='./php/checkInArchives.php'" class="big" style="display: <?php echo accountProperties('Check-In Archives (left)') ? '' : 'none';?>;">Archives</button>
+        <button onclick="window.location.href='./php/addBuilding.php'" class="big" style="display: <?php echo accountProperties('Add Building Page') ? '' : 'none';?>;">Add Building</button>
+        <button onclick="window.location.href='./php/addContractor.php'" class="big" style="display: <?php echo accountProperties('Contractors Page') ? '' : 'none';?>;">Contractors</button>
+        <button onclick="window.location.href='./php/addManager.php'" class="big" style="display: <?php echo accountProperties('Managers Page') ? '' : 'none';?>;">Managers</button>
     </div>
     <h3>City Wide Check-Ins <a href="./instructions/<?php echo $_SESSION['accountType'] === 'developer' ? 'admin' : $_SESSION['accountType'] ?>_instructions.pdf" target="_blank"><img src="./imgs/help_icon.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
     <div>
-        <button onclick="window.location.href='./php/checkInArchives.php'" class="big" style="display: <?php echo accountProperties('Check-In Archives (right)') ? '' : 'none';?>;">Archives</button>
-        <button onclick="window.location.href='./php/importBuildings.php'" class="big" style="display: <?php echo accountProperties('Import Buildings') ? '' : 'none';?>;">Import</button>
-        <button onclick="window.location.href='./php/allAccounts.php'" class="big" style="display: <?php echo accountProperties('Accounts') ? '' : 'none';?>;">Accounts</button>
+        <button onclick="window.location.href='./php/checkInArchives.php'" class="big" style="display: <?php echo accountProperties('Archives Page') ? '' : 'none';?>;">Archives</button>
+        <button onclick="window.location.href='./php/importBuildings.php'" class="big" style="display: <?php echo accountProperties('Import Page') ? '' : 'none';?>;">Import</button>
+        <button onclick="window.location.href='./php/allAccounts.php'" class="big" style="display: <?php echo accountProperties('Accounts Page') ? '' : 'none';?>;">Accounts</button>
         <div style="display: inline-block;">
             <button onclick="window.location.href = '/index.php?logout=logout';" class="big">Logout</button>
             <div style="display: inline-block; vertical-align: middle; line-height: 90%;">
@@ -50,7 +49,7 @@ if (!accountProperties('Home')) {
                 <div class="vr"></div>
                 <form id="searchBuildingsForm">
                     <label style="display: flex; flex-direction: column;">
-                        Search
+                        Search Building Name
                         <span style="display: flex; flex-direction: row; gap: 5px; align-items: center;">
                             <input type="text" id="searchBuildings" name="searchBuildings"/>
                             <button type="submit" class="big">Enter</button>
@@ -72,8 +71,8 @@ if (!accountProperties('Home')) {
                     Today Only
                     <input id="todayOnly" type="checkbox" name="todayOnly">
                 </label>
-                <div class="vr" style="display: <?php echo accountProperties('Show Inactive') ? 'block' : 'none';?>;"></div>
-                <div style="<?php echo accountProperties('Show Inactive') ? 'display: flex; align-items: center; gap: 15px' : 'display: none';?>;">
+                <div class="vr" style="display: <?php echo accountProperties('Access Inactive Buildings') ? 'block' : 'none';?>;"></div>
+                <div style="<?php echo accountProperties('Access Inactive Buildings') ? 'display: flex; align-items: center; gap: 15px' : 'display: none';?>;">
                     <div style="text-align: center;">Show<br>Inactive</div>
                     <label class="switch">
                         <input id="showActive" type="checkbox" checked>

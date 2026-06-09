@@ -2,7 +2,7 @@
 include 'login.php';
 include 'accountProperties.php';
 
-if (!accountProperties('Import Buildings')) {
+if (!accountProperties('Import Page')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to access this page.');
 }

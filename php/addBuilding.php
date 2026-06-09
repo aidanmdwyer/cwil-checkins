@@ -2,7 +2,7 @@
 include 'login.php';
 include 'accountProperties.php';
 
-if (!accountProperties('Add Building')) {
+if (!accountProperties('Add Building Page')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to access this page.');
 }

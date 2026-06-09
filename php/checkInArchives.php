@@ -2,7 +2,7 @@
 include 'login.php';
 include 'accountProperties.php';
 
-if (!accountProperties('Check-In Archives (right)') && !accountProperties('Check-In Archives (left)')) {
+if (!accountProperties('Archives Page')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to access this page.');
 }

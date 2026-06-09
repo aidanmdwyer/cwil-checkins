@@ -2,7 +2,7 @@
 include 'login.php';
 include 'accountProperties.php';
 
-if (!accountProperties('All Accounts')) {
+if (!accountProperties('Accounts Page')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to access this page.');
 }
@@ -97,7 +97,8 @@ $conn->close();
             <div style="display: flex; flex-direction: column;">
                 <div class="card">
                     <h2>Create New Admin Account</h2>
-                    <p>Enter the username and then have the user reset the password (they cannot login until the password is set).</p>
+                    <p style="width: fit-content;">Enter the username and then have the user reset the password.
+                        <br>(they cannot log in until the password is set)</p>
                     <form method="POST" action="allAccounts.php">
                         <label for="username">Username:</label><br>
                         <input id="username" type="text" name="username" style="width: 240px;">
@@ -228,38 +229,41 @@ $conn->close();
                             </select>
                         </label>
 
-                        <table style="width: 650px; border-collapse: collapse;">
+                        <br>
+
+                        <table style="border-collapse: collapse;">
                             <tbody>
                                 <?php
                                 $propertyData = [
-                                    "Pages" => [
-                                        "Home",
-                                        "Add Building",
-                                        "Contractors",
-                                        "Managers",
-                                        "Archives",
-                                        "Import",
-                                        "Accounts"
+                                    "Page Access" => [
+                                        "Home Page",
+                                        "Add Building Page",
+                                        "Contractors Page",
+                                        "Managers Page",
+                                        "Archives Page",
+                                        "Import Page",
+                                        "Accounts Page"
                                     ],
-                                    "Filter Options" => [
-                                        "Search",
+                                    "Data Access" => [
+                                        "Select/Edit Multiple Buildings",
+                                        "See Building Name",
+                                        "See Manager",
+                                        "See IC",
+                                        "See Check-in Status",
+                                        "See Check-in Time",
+                                        "Can Toggle Check-ins",
+                                        "See Days",
+                                        "Print QR",
+                                        "Edit Buildings",
+                                        "Access Inactive Buildings"
+                                    ],
+                                    "Data Options" => [
+                                        "Search Building Name",
                                         "Filter Manager",
                                         "Filter IC",
-                                        "Today Only",
-                                        "Show Inactive"
+                                        "Show Today Only",
+                                        "Export Buildings"
                                     ],
-                                    "Table Columns" => [
-                                        "Select",
-                                        "Name",
-                                        "Manager",
-                                        "IC",
-                                        "Check-in Status (Togglable)",
-                                        "Check-in Status (View Only)",
-                                        "Check-in Time",
-                                        "Days",
-                                        "QR",
-                                        "Edit"
-                                    ]
                                 ];
 
                                 foreach ($propertyData as $section => $list) {

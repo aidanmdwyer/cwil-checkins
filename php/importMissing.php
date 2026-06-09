@@ -3,7 +3,7 @@ include 'requireKey.php'; isKeyValid();
 
 include 'accountProperties.php';
 
-if (!accountProperties('Import Buildings')) {
+if (!accountProperties('Import Page')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to perform this action.');
 }
