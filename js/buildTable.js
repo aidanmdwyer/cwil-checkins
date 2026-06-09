@@ -9,7 +9,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     selected = [],
                     showLoadingText = true) {
 
-    let accountProperties = [];
+    let accountProperties;
     if(respectLoadAll) fetchStr += '&loadAll=' + (document.getElementById('loadAll').style.display === 'none' ? 'true' : 'false');
 
     fetch('/php/accountProperties.php', {
@@ -26,8 +26,6 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
             }
             fetch(fetchStr).then(response => response.json()).then(data => {
 
-                console.log(data);
-
                 const tableColumns = {
                     'Select/Edit Multiple Buildings' :
                         [
@@ -35,12 +33,6 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                             (rowData, bgColor) =>
                                 `<td style="background-color: ${bgColor}; text-align: center;"><input class="selectBox" type="checkbox" name="checkedNames[]" value="${rowData['name']}" onclick="handleSelect()"></td>`
                         ],
-                    // 'ID' :
-                    //     [
-                    //         `<th>ID</th>`,
-                    //         (rowData, bgColor) =>
-                    //             `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="copyText(this.dataset.row, this)" data-row="${rowData['id']}">&#128203</button></td>`
-                    //     ],
                     'See Building Name' :
                         [
                             `<th>Building Name</th>`,
@@ -70,20 +62,16 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                                     data-id="${rowData.id}"
                                     data-name="${encodeHTML(rowData.name)}"
                                     data-checked="${rowData.checked}"
+                                    ${(accountProperties.includes('Can Toggle Check-ins') || accountProperties === '*') ? `
                                     onclick="toggleCheck(
                                       this.dataset.name,
                                       this.dataset.checked
                                     )"
+                                    ` : ``}
                                   >
                                     ${(rowData.checked === 0) ? '&#10060' : '&#9989'}
                                   </button>
                                 </td>`
-                        ],
-                    'Checked View Only':
-                        [
-                            `<th>&#9989</th>`,
-                            (rowData, bgColor) =>
-                                `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;">${(rowData['checked'] === 0) ? '&#10060' : '&#9989'}</button></td>`
                         ],
                     'See Check-in Time':
                         [
@@ -155,7 +143,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                 if(data['rows'].length > 0) {
                     let tableHeader = '';
                     Object.keys(tableColumns).forEach(label => {
-                        if(accountProperties.includes(label)) {
+                        if(accountProperties.includes(label) || accountProperties === '*') {
                             tableHeader += tableColumns[label][0];
                         }
                     });
@@ -201,7 +189,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         tr.setAttribute('data-name', rowData['name']);
 
                         Object.keys(tableColumns).forEach(label => {
-                            if(accountProperties.includes(label)) {
+                            if(accountProperties.includes(label) || accountProperties === '*') {
                                 tr.innerHTML += tableColumns[label][1](rowData, bgColor);
                             }
                         });

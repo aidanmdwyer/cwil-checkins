@@ -59,6 +59,12 @@ button.big:disabled {
     margin-top: 0;
     padding-top: 0;
 }
+.card p {
+    width: 0;
+    min-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+}
 
 input[type="text"] {
     width: 180px;

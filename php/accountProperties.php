@@ -5,33 +5,7 @@ $accountType = $_SESSION['accountType'] ?? '';
 
 $accountProperties = [
     'accountType' => $accountType,
-    'developer' => [
-        'Home Page',
-        'Add Building Page',
-        'Contractors Page',
-        'Managers Page',
-        'Archives Page',
-        'Import Page',
-        'Accounts Page',
-
-        'Select/Edit Multiple Buildings',
-        'See Building Name',
-        'See Manager',
-        'See IC',
-        'See Check-in Status',
-        'See Check-in Time',
-        'Can Toggle Check-ins',
-        'See Days',
-        'Print QR',
-        'Edit Buildings',
-        'Access Inactive Buildings',
-
-        'Search Building Name',
-        'Filter Manager',
-        'Filter IC',
-        'Filter Today Only',
-        'Export Buildings'
-    ],
+    'developer' => '*',
     'admin' => [
         'Home Page',
         'Add Building Page',
@@ -107,7 +81,9 @@ if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'applicati
 function accountProperties($property) {
     global $accountProperties;
     global $accountType;
-    if($property === 'get') {
+    if($accountType === 'developer') {
+        return true;
+    } else if($property === 'get') {
         return $accountProperties[$accountType];
     } else {
         return in_array($property, $accountProperties[$accountType]);
