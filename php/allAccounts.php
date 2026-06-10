@@ -233,6 +233,10 @@ $maxRows = max(array_map('count', $usersByType));
             </div>
             <div style="display: flex; flex-direction: column;">
                 <div class="card" style="min-width: 400px;">
+                    <?php 
+                    $accountType = rawurldecode($_GET['accountType']);
+                    $accountName = rawurldecode($_GET['accountName']);
+                    ?>
 
                     <h2>Account Permissions</h2>
 
@@ -243,19 +247,19 @@ $maxRows = max(array_map('count', $usersByType));
                             <label>
                                 <select name="accountType" id="accountTypeSelect" onchange="(() => {document.getElementById('accountNameSelect').selectedIndex = 0; this.form.submit()})()">
                                     <option value="---">---</option>
-                                    <option value="admin" <?php echo rawurldecode($_GET['accountType']) === 'admin' ? 'selected' : ''?>>Admin</option>
-                                    <option value="manager" <?php echo rawurldecode($_GET['accountType']) === 'manager' ? 'selected' : ''?>>Manager</option>
-                                    <option value="contractor" <?php echo rawurldecode($_GET['accountType']) === 'contractor' ? 'selected' : ''?>>Contractor</option>
+                                    <option value="admin" <?php echo $accountType === 'admin' ? 'selected' : ''?>>Admin</option>
+                                    <option value="manager" <?php echo $accountType === 'manager' ? 'selected' : ''?>>Manager</option>
+                                    <option value="contractor" <?php echo $accountType === 'contractor' ? 'selected' : ''?>>Contractor</option>
                                 </select>
                             </label>
-                            <label style="<?php echo (!isset($_GET['accountType']) || rawurldecode($_GET['accountType']) === '---') ? 'display: none;' : ''?>">
+                            <label style="<?php echo (!isset($_GET['accountType']) || $accountType === '---') ? 'display: none;' : ''?>">
                                 <select name="accountName" id="accountNameSelect" onchange="this.form.submit()">
-                                    <option value="default" <?php echo rawurldecode($_GET['accountName']) === 'default' ? 'selected' : ''?>>Default Permissions</option>
+                                    <option value="default" <?php echo $accountName === 'default' ? 'selected' : ''?>>Default Permissions</option>
                                     <?php
                                     if(isset($_GET['accountType'])) {
-                                        foreach ($usersByType[$_GET['accountType']] as $userRow) {
+                                        foreach ($usersByType[$accountType] as $userRow) {
                                             $usernameRaw = $userRow['username'];
-                                            echo '<option value="' . rawurlencode($usernameRaw) . '"' . (rawurldecode($_GET['accountName']) === $usernameRaw ? 'selected' : '') . '>' . htmlspecialchars($usernameRaw) . '</option>';
+                                            echo '<option value="' . rawurlencode($usernameRaw) . '"' . ($accountName === $usernameRaw ? 'selected' : '') . '>' . htmlspecialchars($usernameRaw) . '</option>';
                                         }
                                     }
                                     ?>
@@ -269,10 +273,10 @@ $maxRows = max(array_map('count', $usersByType));
                     <form method="POST"
                           action="editAccountProperties.php"
                           onsubmit="return confirm('<?php echo
-                              (rawurldecode($_GET['accountName']) === 'default') ?
-                                  'Are you sure you want to edit the default permissions for ' . rawurldecode($_GET['accountType']) . ' accounts?' :
-                                  'Are you sure you want to edit the account permissions of ' . rawurldecode($_GET['accountName']) . '?'; ?>')"
-                          style="display: flex; flex-direction: column; justify-content: flex-start; <?php echo (!$_GET['accountType'] || $_GET['accountType'] === '---') ? 'display: none;' : ''?>"
+                              ($accountName === 'default') ?
+                                  'Are you sure you want to edit the default permissions for ' . $accountType . ' accounts?' :
+                                  'Are you sure you want to edit the account permissions of ' . $accountName . '?'; ?>')"
+                          style="display: flex; flex-direction: column; justify-content: flex-start; <?php echo (!$_GET['accountType'] || $accountType === '---') ? 'display: none;' : ''?>"
                     >
 
                         <?php
@@ -284,12 +288,12 @@ $maxRows = max(array_map('count', $usersByType));
                         ?>
 
                         <input type="hidden" name="resetToDefaults" id="resetToDefaultsInput" value="false">
-                        <input type="hidden" name="accountType" value="<?php echo rawurldecode($_GET['accountType'])?>">
-                        <input type="hidden" name="accountName" value="<?php echo rawurldecode($_GET['accountName'])?>">
+                        <input type="hidden" name="accountType" value="<?php echo $accountType?>">
+                        <input type="hidden" name="accountName" value="<?php echo $accountName?>">
                                 <?php
-                                if(isset($_GET['accountName']) && isset($_GET['accountType']) && $_GET['accountType'] !== '---') {
+                                if(isset($_GET['accountName']) && isset($_GET['accountType']) && $accountType !== '---') {
                                     $propertiesStmt = $conn->prepare("SELECT property, permission FROM account_properties WHERE accountName = ?");
-                                    $insName = rawurldecode($_GET['accountName']) === 'default' ? rawurldecode($_GET['accountType']) : rawurldecode($_GET['accountName']);
+                                    $insName = $accountName === 'default' ? $accountType : $accountName;
                                     $propertiesStmt->bind_param("s", $insName);
                                     $propertiesStmt->execute();
                                     $propertiesResult = $propertiesStmt->get_result();
@@ -301,7 +305,7 @@ $maxRows = max(array_map('count', $usersByType));
                                         }
                                     } else { //else use default properties
                                         $defaultPropertiesStmt = $conn->prepare("SELECT property, permission FROM account_properties WHERE accountName = ?");
-                                        $accountType = rawurldecode($_GET['accountType']);
+                                        $accountType = $accountType;
                                         $defaultPropertiesStmt->bind_param("s", $accountType);
                                         $defaultPropertiesStmt->execute();
                                         $defaultPropertiesResult = $defaultPropertiesStmt->get_result();
@@ -319,7 +323,7 @@ $maxRows = max(array_map('count', $usersByType));
                                             ["Add Building Page", true],
                                             ["Import Page", true],
                                             ["Managers Page", true],
-                                            ["Accounts Page", !(($_GET['accountName'] === 'default') || ($_GET['accountName'] === $_SESSION['username']))],
+                                            ["Accounts Page", !(($accountName === 'default') || ($accountName === $_SESSION['username']))],
                                             ["Contractors Page", true],
                                         ],
                                         "Data Access" => [
@@ -385,10 +389,10 @@ $maxRows = max(array_map('count', $usersByType));
                         <div style="display: flex; flex-direction: row; gap: 15px;">
                             <button type="submit" class="big">Submit</button>
                         <?php
-                        if(rawurldecode($_GET['accountName']) !== 'default') { //don't show reset to defaults button for default permissions
+                        if($accountName !== 'default') { //don't show reset to defaults button for default permissions
                             ?>
                             <button type="button" class="big" onclick="(() => {
-                                    if(confirm('Are you sure you want to reset the account permissions of <?php echo rawurldecode($_GET['accountName']); ?> to the <?php echo rawurldecode($_GET['accountType']); ?> defaults?')) {
+                                    if(confirm('Are you sure you want to reset the account permissions of <?php echo $accountName; ?> to the <?php echo $accountType; ?> defaults?')) {
                                     document.getElementById('resetToDefaultsInput').value = 'true';
                                     this.form.submit();
                                     }

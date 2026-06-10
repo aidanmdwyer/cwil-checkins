@@ -223,7 +223,11 @@ if (!accountProperties('Home Page')) {
             <h1 id="selectedBuildings"></h1>
 
             <div style="border-bottom: 2px solid black; padding-bottom: 20px;">
+                <?php
+                if(accountProperties("Print QR")) {
+                ?>
                 <button type="button" form="tableSelectedForm" class="big" style="background-color: blue; color: white;" onclick="printAll()">Print Selected</button>
+                <?php } ?>
                 <button type="button" form="tableSelectedForm" class="big" style="background-color: darkred; color: white;" onclick="showDeletePopup(event)">Delete Selected</button>
             </div>
 

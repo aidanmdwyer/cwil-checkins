@@ -12,6 +12,10 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
     let accountProperties;
     if(respectLoadAll) fetchStr += '&loadAll=' + (document.getElementById('loadAll').style.display === 'none' ? 'true' : 'false');
 
+    if(showLoadingText) {
+        refreshButton.disabled = true;
+        refreshButton.innerText = 'Loading';
+    }
     fetch('/php/accountProperties.php', {
         headers: {'Accept': 'application/json'}
     })
@@ -20,10 +24,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
             accountProperties = data;
 
             if(cancelSidebar) cancel();
-            if(showLoadingText) {
-                refreshButton.disabled = true;
-                refreshButton.innerText = 'Loading';
-            }
+
             fetch(fetchStr).then(response => response.json()).then(data => {
 
                 const tableColumns = {
