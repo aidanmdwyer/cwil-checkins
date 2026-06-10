@@ -67,7 +67,7 @@ if (!accountProperties('Home Page')) {
                     <select id="filterIC" name="filterIC"></select>
                 </label>
                 <div class="vr" style="<?php echo accountProperties('Filter Today Only') ? 'display: block' : 'display: none';?>;"></div>
-                <label style="<?php echo accountProperties('Filter Today Only') ? 'display: flex' : 'display: none';?> flex-direction: column; align-items: center; white-space: nowrap;">
+                <label style="<?php echo accountProperties('Filter Today Only') ? 'display: flex' : 'display: none';?>; flex-direction: column; align-items: center; white-space: nowrap;">
                     Today Only
                     <input id="todayOnly" type="checkbox" name="todayOnly">
                 </label>

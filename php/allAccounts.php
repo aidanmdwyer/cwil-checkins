@@ -333,6 +333,7 @@ $maxRows = max(array_map('count', $usersByType));
                                             ["See Check-in Status", true],
                                             ["Access Inactive Buildings", true],
                                             ["See Check-in Time", true],
+                                            ["Export Buildings", true],
                                         ],
                                         "Filter Options" => [
                                             ["Search Building Name", true],
@@ -340,9 +341,6 @@ $maxRows = max(array_map('count', $usersByType));
                                             ["Filter Manager", true],
                                             ["Filter Today Only", true],
                                         ],
-                                        "Other" => [
-                                            ["Export Buildings", true],
-                                        ]
                                     ];
 
                                     foreach ($propertyData as $section => $list) {

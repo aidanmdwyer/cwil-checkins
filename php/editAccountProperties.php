@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include 'login.php';
 include 'accountProperties.php';
 
@@ -6,6 +8,8 @@ if (!accountProperties('Accounts Page')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to access this page.');
 }
+
+unset($_SESSION['accountProperties']);
 
 // Connect to database
 require_once 'db.php';
