@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 10, 2026 at 10:44 AM
+-- Generation Time: Jun 10, 2026 at 11:18 AM
 -- Server version: 11.4.10-MariaDB-cll-lve
 -- PHP Version: 8.4.21
 
@@ -42,7 +42,6 @@ INSERT INTO `account_properties` (`accountName`, `property`, `permission`) VALUE
 ('admin', 'Accounts Page', 1),
 ('admin', 'Add Building Page', 1),
 ('admin', 'Archives Page', 1),
-('admin', 'Can Toggle Check-ins', 1),
 ('admin', 'Contractors Page', 1),
 ('admin', 'Edit Buildings', 1),
 ('admin', 'Export Buildings', 1),
@@ -61,11 +60,11 @@ INSERT INTO `account_properties` (`accountName`, `property`, `permission`) VALUE
 ('admin', 'See IC', 1),
 ('admin', 'See Manager', 1),
 ('admin', 'Select/Edit Multiple Buildings', 1),
+('admin', 'Toggle Check-ins', 1),
 ('contractor', 'Access Inactive Buildings', 0),
 ('contractor', 'Accounts Page', 0),
 ('contractor', 'Add Building Page', 0),
 ('contractor', 'Archives Page', 1),
-('contractor', 'Can Toggle Check-ins', 1),
 ('contractor', 'Contractors Page', 0),
 ('contractor', 'Edit Buildings', 0),
 ('contractor', 'Export Buildings', 1),
@@ -84,11 +83,11 @@ INSERT INTO `account_properties` (`accountName`, `property`, `permission`) VALUE
 ('contractor', 'See IC', 0),
 ('contractor', 'See Manager', 1),
 ('contractor', 'Select/Edit Multiple Buildings', 0),
+('contractor', 'Toggle Check-ins', 1),
 ('manager', 'Access Inactive Buildings', 0),
 ('manager', 'Accounts Page', 0),
 ('manager', 'Add Building Page', 0),
 ('manager', 'Archives Page', 1),
-('manager', 'Can Toggle Check-ins', 0),
 ('manager', 'Contractors Page', 0),
 ('manager', 'Edit Buildings', 0),
 ('manager', 'Export Buildings', 1),
@@ -106,7 +105,8 @@ INSERT INTO `account_properties` (`accountName`, `property`, `permission`) VALUE
 ('manager', 'See Days', 1),
 ('manager', 'See IC', 1),
 ('manager', 'See Manager', 1),
-('manager', 'Select/Edit Multiple Buildings', 0);
+('manager', 'Select/Edit Multiple Buildings', 0),
+('manager', 'Toggle Check-ins', 0);
 
 -- --------------------------------------------------------
 

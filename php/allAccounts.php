@@ -324,7 +324,7 @@ $maxRows = max(array_map('count', $usersByType));
                                         ],
                                         "Data Access" => [
                                             ["Select/Edit Multiple Buildings", true],
-                                            ["Can Toggle Check-ins", true],
+                                            ["Toggle Check-ins", true],
                                             ["See Building Name", true],
                                             ["See Days", true],
                                             ["See Manager", true],
