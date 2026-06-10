@@ -315,40 +315,55 @@ $maxRows = max(array_map('count', $usersByType));
                                         }
                                     }
 
-                                    //[property name, whether it can be changed]
                                     $propertyData = [
                                         "Page Access" => [
+                                            //[property name, whether it can be changed]
                                             ["Home Page", false],
-                                            ["Archives Page", true],
                                             ["Add Building Page", true],
-                                            ["Import Page", true],
                                             ["Managers Page", true],
-                                            ["Accounts Page", !(($accountName === 'default') || ($accountName === $_SESSION['username']))],
                                             ["Contractors Page", true],
+                                            ["Archives Page", true],
+                                            ["Import Page", true],
+                                            ["Accounts Page", !(($accountName === 'default') || ($accountName === $_SESSION['username']))],
                                         ],
                                         "Data Access" => [
-                                            ["Select/Edit Multiple Buildings", true],
-                                            ["Toggle Check-ins", true],
+                                            ["Select Buildings", true],
                                             ["See Building Name", true],
-                                            ["See Days", true],
                                             ["See Manager", true],
-                                            ["Print QR", true],
                                             ["See IC", true],
-                                            ["Edit Buildings", true],
                                             ["See Check-in Status", true],
-                                            ["Access Inactive Buildings", true],
                                             ["See Check-in Time", true],
+                                            ["Toggle Check-ins", true],
+                                            ["See Days", true],
+                                            ["Print QR", true],
+                                            ["Edit Buildings", true],
+                                            ["Delete Buildings", true],
+                                            ["Access Inactive Buildings", true],
                                             ["Export Buildings", true],
                                         ],
                                         "Filter Options" => [
                                             ["Search Building Name", true],
-                                            ["Filter IC", true],
                                             ["Filter Manager", true],
+                                            ["Filter IC", true],
                                             ["Filter Today Only", true],
                                         ],
                                     ];
 
                                     foreach ($propertyData as $section => $list) {
+
+                                        //stagger the list so that it appears in proper columns.
+                                        $staggeredList = [];
+                                        $jumpValue = ceil(count($list)/2);
+                                        $staggerSwitch = false;
+                                        for($i = 0;
+                                            $i < count($list);
+                                            $i = $staggerSwitch ?
+                                                $i + $jumpValue :
+                                                $i - $jumpValue + 1
+                                        ) {
+                                            $staggeredList[] = $list[$i];
+                                            $staggerSwitch = !$staggerSwitch;
+                                        }
 
                                         echo "
                             <table style='background-color: white; border-collapse: collapse; border: 1px solid black; margin-bottom: 15px;'>
@@ -358,7 +373,7 @@ $maxRows = max(array_map('count', $usersByType));
                                     </tr>";
 
                                         $switch = false;
-                                        foreach ($list as $value) {
+                                        foreach ($staggeredList as $value) {
                                             if(!$switch) {
                                                 echo "<tr style='background: transparent; border: none;'>";
                                             }

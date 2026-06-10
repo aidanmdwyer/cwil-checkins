@@ -38,8 +38,7 @@ async function editAll(event, type) {
 
         if (type === 'activate' || type === 'deactivate') {
             cancel();
-        } else {
-            const message = document.getElementById('editAllMessage');
+        } else if(editAllMessage) {
             let messageColor = 'black';
             switch (data['status']) {
                 case 'success':
@@ -52,9 +51,9 @@ async function editAll(event, type) {
                     messageColor = 'darkorange';
                     break;
             }
-            message.style.color = messageColor;
-            message.style.display = 'block';
-            message.innerText = data['message'];
+            editAllMessage.style.color = messageColor;
+            editAllMessage.style.display = 'block';
+            editAllMessage.innerText = data['message'];
         }
 
         buildTable(undefined, true, false, data['updated']);
@@ -64,23 +63,23 @@ async function editAll(event, type) {
 function changeManager(event) {
     event.preventDefault();
 
-    document.getElementById('changeManagerDiv').style.display = 'block';
-    document.getElementById('changeICDiv').style.display = 'none';
+    if(changeManagerDiv) changeManagerDiv.style.display = 'block';
+    if(changeICDiv) changeICDiv.style.display = 'none';
     resetChangeValues();
 }
 
 function changeIC(event) {
     event.preventDefault();
 
-    document.getElementById('changeManagerDiv').style.display = 'none';
-    document.getElementById('changeICDiv').style.display = 'block';
+    if(changeManagerDiv) changeManagerDiv.style.display = 'none';
+    if(changeICDiv) changeICDiv.style.display = 'block';
     resetChangeValues();
 }
 
 function resetChangeValues() {
     document.getElementById('Manager').value = '';
     document.getElementById('Contractor').value = '';
-    document.getElementById('editAllMessage').innerHTML = '';
+    if(editAllMessage) editAllMessage.innerHTML = '';
 
     cloneElement('filterManager', 'changeManager', 'changeManager');
     cloneElement('Contractor', 'changeIC', 'changeIC');

@@ -28,7 +28,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
             fetch(fetchStr).then(response => response.json()).then(data => {
 
                 const tableColumns = {
-                    'Select/Edit Multiple Buildings' :
+                    'Select Buildings' :
                         [
                             `<th><input id="selectAll" type="checkBox" onclick="handleSelectAll(this.checked)"></th>`,
                             (rowData, bgColor) =>

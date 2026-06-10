@@ -227,11 +227,17 @@ if (!accountProperties('Home Page')) {
                 if(accountProperties("Print QR")) {
                 ?>
                 <button type="button" form="tableSelectedForm" class="big" style="background-color: blue; color: white;" onclick="printAll()">Print Selected</button>
-                <?php } ?>
+                <?php }
+                if(accountProperties("Delete Buildings")) {
+                ?>
                 <button type="button" form="tableSelectedForm" class="big" style="background-color: darkred; color: white;" onclick="showDeletePopup(event)">Delete Selected</button>
+                <?php } ?>
             </div>
 
-            <div style="border-bottom: 2px solid black; margin-bottom: 20px; padding-bottom: 20px;">
+            <?php
+            if(accountProperties("Edit Buildings")) {
+            ?>
+            <div style="border-bottom: 2px solid black; padding-bottom: 20px;">
                 <h3>Edit All</h3>
 
                 <div style="margin-bottom: 10px;">
@@ -271,8 +277,9 @@ if (!accountProperties('Home Page')) {
 
                 <div id="editAllMessage" style="display: none; margin-top: 10px;"></div>
             </div>
+            <?php } ?>
 
-            <button type="button" class="big" onclick="cancel()">Cancel</button><br>
+            <button type="button" class="big" onclick="cancel()" style="margin-top: 20px;">Cancel</button><br>
             <p style="color: red">actions performed on large selections may take a long time.</p>
         </div>
     </div>

@@ -14,6 +14,11 @@ let loadAll = document.getElementById('loadAll');
 let contractorList = [];
 let selectedNames = [];
 
+let resultMessage = document.getElementById('resultMessage');
+let changeManagerDiv = document.getElementById('changeManagerDiv');
+let changeICDiv = document.getElementById('changeICDiv');
+let editAllMessage = document.getElementById('editAllMessage');
+
 let accessKey = null;
 
 //promise that resolves once we first have a token

@@ -9,17 +9,16 @@ document.getElementById('editForm').addEventListener('submit', function(e) {
     })
         .then(response => response.json())
         .then(data => {
-            const resultDiv = document.getElementById('resultMessage');
-            if (data.status === 'success') {
-                resultDiv.style.color = 'green';
-                resultDiv.innerHTML = data.message;
+            if (data.status === 'success' && resultMessage) {
+                resultMessage.style.color = 'green';
+                resultMessage.innerHTML = data.message;
                 buildTable(undefined, true, false);
             } else if(data.status === 'info') {
-                resultDiv.style.color = 'darkorange';
-                resultDiv.innerHTML = data.message;
+                resultMessage.style.color = 'darkorange';
+                resultMessage.innerHTML = data.message;
             } else {
-                resultDiv.style.color = 'red';
-                resultDiv.innerHTML = data.message;
+                resultMessage.style.color = 'red';
+                resultMessage.innerHTML = data.message;
             }
         })
         .catch(err => {

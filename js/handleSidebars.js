@@ -50,9 +50,9 @@ function cancel() {
     qrForm.style.display = 'none';
     selectSubmits.style.display = 'none';
     tableSelectedForm.reset();
-    document.getElementById('resultMessage').innerHTML = '';
-    document.getElementById('changeManagerDiv').style.display = 'none';
-    document.getElementById('changeICDiv').style.display = 'none';
-    document.getElementById('editAllMessage').innerHTML = '';
+    if(resultMessage) resultMessage.innerHTML = '';
+    if(changeManagerDiv) changeManagerDiv.style.display = 'none';
+    if(changeICDiv) changeICDiv.style.display = 'none';
+    if(editAllMessage) editAllMessage.innerHTML = '';
     selectedNames = [];
 }
