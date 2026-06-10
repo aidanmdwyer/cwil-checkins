@@ -316,7 +316,7 @@ if (!accountProperties('Home Page')) {
 
                         const urlParams = new URLSearchParams(window.location.search);
                         const selectedManager = urlParams.get('manager');
-                        const todayOnly = urlParams.has('todayOnly') ? urlParams.get('todayOnly') : 'true';
+                        const todayOnly = urlParams.has('todayOnly') ? urlParams.get('todayOnly') : '<?php echo accountProperties('Filter Today Only') ? 'true' : 'false'?>';
                         const ic = urlParams.get('ic');
                         if(selectedManager) filterManager.value = selectedManager;
                         if(ic) filterIC.value = ic;
