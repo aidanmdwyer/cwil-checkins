@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 22, 2026 at 06:29 AM
+-- Generation Time: Jun 10, 2026 at 10:44 AM
 -- Server version: 11.4.10-MariaDB-cll-lve
 -- PHP Version: 8.4.21
 
@@ -18,8 +18,95 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cwiltoo1_checkins`
+-- Database: `cwiltoo1_checkintesting`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account_properties`
+--
+
+CREATE TABLE `account_properties` (
+  `accountName` varchar(80) NOT NULL,
+  `property` varchar(32) NOT NULL,
+  `permission` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `account_properties`
+--
+
+INSERT INTO `account_properties` (`accountName`, `property`, `permission`) VALUES
+('admin', 'Access Inactive Buildings', 1),
+('admin', 'Accounts Page', 1),
+('admin', 'Add Building Page', 1),
+('admin', 'Archives Page', 1),
+('admin', 'Can Toggle Check-ins', 1),
+('admin', 'Contractors Page', 1),
+('admin', 'Edit Buildings', 1),
+('admin', 'Export Buildings', 1),
+('admin', 'Filter IC', 1),
+('admin', 'Filter Manager', 1),
+('admin', 'Filter Today Only', 1),
+('admin', 'Home Page', 1),
+('admin', 'Import Page', 0),
+('admin', 'Managers Page', 1),
+('admin', 'Print QR', 1),
+('admin', 'Search Building Name', 1),
+('admin', 'See Building Name', 1),
+('admin', 'See Check-in Status', 1),
+('admin', 'See Check-in Time', 1),
+('admin', 'See Days', 1),
+('admin', 'See IC', 1),
+('admin', 'See Manager', 1),
+('admin', 'Select/Edit Multiple Buildings', 1),
+('contractor', 'Access Inactive Buildings', 0),
+('contractor', 'Accounts Page', 0),
+('contractor', 'Add Building Page', 0),
+('contractor', 'Archives Page', 1),
+('contractor', 'Can Toggle Check-ins', 1),
+('contractor', 'Contractors Page', 0),
+('contractor', 'Edit Buildings', 0),
+('contractor', 'Export Buildings', 1),
+('contractor', 'Filter IC', 0),
+('contractor', 'Filter Manager', 0),
+('contractor', 'Filter Today Only', 1),
+('contractor', 'Home Page', 1),
+('contractor', 'Import Page', 0),
+('contractor', 'Managers Page', 0),
+('contractor', 'Print QR', 0),
+('contractor', 'Search Building Name', 1),
+('contractor', 'See Building Name', 1),
+('contractor', 'See Check-in Status', 1),
+('contractor', 'See Check-in Time', 1),
+('contractor', 'See Days', 1),
+('contractor', 'See IC', 0),
+('contractor', 'See Manager', 1),
+('contractor', 'Select/Edit Multiple Buildings', 0),
+('manager', 'Access Inactive Buildings', 0),
+('manager', 'Accounts Page', 0),
+('manager', 'Add Building Page', 0),
+('manager', 'Archives Page', 1),
+('manager', 'Can Toggle Check-ins', 0),
+('manager', 'Contractors Page', 0),
+('manager', 'Edit Buildings', 0),
+('manager', 'Export Buildings', 1),
+('manager', 'Filter IC', 1),
+('manager', 'Filter Manager', 1),
+('manager', 'Filter Today Only', 1),
+('manager', 'Home Page', 1),
+('manager', 'Import Page', 0),
+('manager', 'Managers Page', 0),
+('manager', 'Print QR', 1),
+('manager', 'Search Building Name', 1),
+('manager', 'See Building Name', 1),
+('manager', 'See Check-in Status', 1),
+('manager', 'See Check-in Time', 1),
+('manager', 'See Days', 1),
+('manager', 'See IC', 1),
+('manager', 'See Manager', 1),
+('manager', 'Select/Edit Multiple Buildings', 0);
 
 -- --------------------------------------------------------
 
@@ -106,6 +193,12 @@ CREATE TABLE `users` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `account_properties`
+--
+ALTER TABLE `account_properties`
+  ADD PRIMARY KEY (`accountName`,`property`) USING BTREE;
 
 --
 -- Indexes for table `archive`
