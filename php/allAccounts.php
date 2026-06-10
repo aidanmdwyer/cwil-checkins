@@ -124,12 +124,12 @@ $maxRows = max(array_map('count', $usersByType));
                         echo '<div style="color: green;">Successfully deleted "' . $_GET['deleted'] . '"</div><br>';
                     }
                     ?>
-                    <table style="width: 650px; border-collapse: collapse;">
-                        <tbody>
+
                         <?php
 
                         foreach (['admin', 'manager', 'contractor'] as $accountType) {
-
+                            echo '<table style="width: 650px; border-collapse: collapse; margin-bottom: 15px;">
+                        <tbody>';
                             $accountTypeArg = '"' . $accountType . '"';
 
                             // Type header row
@@ -225,9 +225,10 @@ $maxRows = max(array_map('count', $usersByType));
                           </tr>";
                             }
                         }
+
+                        echo '</tbody>
+                    </table>';
                         ?>
-                        </tbody>
-                    </table>
                 </div>
             </div>
             <div style="display: flex; flex-direction: column;">
