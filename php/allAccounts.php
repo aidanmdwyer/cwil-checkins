@@ -39,10 +39,13 @@ if(isset($_POST['username'])) {
 }
 
 // Fetch all users
-$result = $conn->query("
-    SELECT username, accountType, passwordHash, resetTimer
-    FROM users
-    ORDER BY accountType, username
+$usersResult = $conn->query("
+    SELECT username, accountType, passwordHash, resetTimer, 
+        EXISTS (
+            SELECT 1 FROM account_properties ap WHERE ap.accountName = u.username
+        ) AS permissionsChanged
+        FROM users u
+        ORDER BY accountType, username
 ");
 
 $usersByType = [
@@ -52,10 +55,10 @@ $usersByType = [
     'contractor' => [],
 ];
 
-while ($row = $result->fetch_assoc()) {
+while ($row = $usersResult->fetch_assoc()) {
     $type = strtolower($row['accountType']);
     if (isset($usersByType[$type])) {
-        $usersByType[$type][] = $row['username'];
+        $usersByType[$type][] = $row;
     }
 }
 
@@ -130,8 +133,8 @@ $maxRows = max(array_map('count', $usersByType));
                             $accountTypeArg = '"' . $accountType . '"';
 
                             // Type header row
-                            echo "<tr style='background-color: #ccc;'>";
-                            echo "<th style='text-align: left; padding: 25px; text-transform: uppercase;'>" . htmlspecialchars($accountType) . "</th>";
+                            echo "<tr>";
+                            echo "<th style='text-align: left; padding: 20px; text-transform: capitalize;'>" . htmlspecialchars($accountType) . "</th>";
                             echo "<th style='text-align: center; width:30px; font-size: 12px;'>Account Link</th>";
                             echo "<th style='text-align: center; width:30px; font-size: 10px;'>Password Reset Link</th>";
                             echo "<th style='text-align: center; width:80px; font-size: 12px;'>Status</th>";
@@ -142,8 +145,9 @@ $maxRows = max(array_map('count', $usersByType));
                             $switch = false;
 
                             if (!empty($usersByType[$accountType])) {
-                                foreach ($usersByType[$accountType] as $usernameRaw) {
+                                foreach ($usersByType[$accountType] as $userRow) {
                                     $bgColor = $switch ? '#F3F3F3' : '#E5E5E5';
+                                    $usernameRaw = $userRow['username'];
                                     $usernameEsc = htmlspecialchars($usernameRaw);
                                     $usernameEncoded = rawurlencode($usernameRaw);
 
@@ -151,8 +155,8 @@ $maxRows = max(array_map('count', $usersByType));
                                     $statusText  = '';
                                     $statusColor = '';
 
-                                    if (!empty($row['resetTimer'])) {
-                                        $resetTs   = strtotime($row['resetTimer']);
+                                    if (!empty($userRow['resetTimer'])) {
+                                        $resetTs   = strtotime($userRow['resetTimer']);
                                         $deadline  = $resetTs + 23 * 3600;
                                         $remaining = $deadline - time();
 
@@ -165,7 +169,7 @@ $maxRows = max(array_map('count', $usersByType));
                                             $statusText = $minutesLeft . 'm until link expires';
                                             $statusColor = 'green';
                                         }
-                                    } else if ($row['passwordHash'] === '' || is_null($row['passwordHash'])) {
+                                    } else if ($userRow['passwordHash'] === '' || is_null($userRow['passwordHash'])) {
                                         $statusText  = 'Password not set';
                                         $statusColor = 'red';
                                     }
@@ -195,7 +199,7 @@ $maxRows = max(array_map('count', $usersByType));
                                     // edit permissions cell
                                     echo "<td style='text-align: center; background-color: {$bgColor};'>
                                 <button style='border: none; background-color: transparent' 
-                                        onclick='(() => {window.location.href = `/php/allAccounts.php?accountType=` + `$accountType` + `&accountName=` + `$usernameEncoded`})()'>&#128394</button>
+                                        onclick='(() => {window.location.href = `/php/allAccounts.php?accountType=` + `$accountType` + `&accountName=` + `$usernameEncoded`})()'>&#128394 " . ($userRow['permissionsChanged'] === "1" ? "<span style='color: green; font-weight: bold;'>Custom</span>" : "<span style='opacity: 0.5;'>Default</span>") . "</button>
                               </td>";
 
                                     // delete form cell
@@ -227,29 +231,29 @@ $maxRows = max(array_map('count', $usersByType));
                 </div>
             </div>
             <div style="display: flex; flex-direction: column;">
-                <div class="card">
+                <div class="card" style="min-width: 400px;">
 
                     <h2>Account Permissions</h2>
 
-                    <p>Select an account type and either edit the default permissions or the permissions of an individual account.</p>
+                    <p>Select an account type. You may either edit the default permissions for that account type, or the permissions of an individual account.</p>
 
                     <form method="GET" action="allAccounts.php">
                         <div style="display: flex; flex-direction: row; gap: 5px;">
                             <label>
-                                <select name="accountType" id="accountTypeSelect" onchange="((thisElement) => {document.getElementById('accountNameSelect').selectedIndex = 0; thisElement.form.submit()})(this)">
+                                <select name="accountType" id="accountTypeSelect" onchange="(() => {document.getElementById('accountNameSelect').selectedIndex = 0; this.form.submit()})()">
                                     <option value="---">---</option>
-                                    <option value="admin" style="<?php echo accountProperties('get' === '*' ? '' : 'display: none');?>" <?php echo rawurldecode($_GET['accountType']) === 'admin' ? 'selected' : ''?>>Admin</option>
+                                    <option value="admin" <?php echo rawurldecode($_GET['accountType']) === 'admin' ? 'selected' : ''?>>Admin</option>
                                     <option value="manager" <?php echo rawurldecode($_GET['accountType']) === 'manager' ? 'selected' : ''?>>Manager</option>
                                     <option value="contractor" <?php echo rawurldecode($_GET['accountType']) === 'contractor' ? 'selected' : ''?>>Contractor</option>
                                 </select>
                             </label>
-                            <label style="<?php echo (!isset($_GET['accountType']) || $_GET['accountType'] === '---') ? 'display: none;' : ''?>">
+                            <label style="<?php echo (!isset($_GET['accountType']) || rawurldecode($_GET['accountType']) === '---') ? 'display: none;' : ''?>">
                                 <select name="accountName" id="accountNameSelect" onchange="this.form.submit()">
-                                    <option value="---">---</option>
-                                    <option value="default" <?php echo $_GET['accountName'] === 'default' ? 'selected' : ''?>>Default Permissions</option>
+                                    <option value="default" <?php echo rawurldecode($_GET['accountName']) === 'default' ? 'selected' : ''?>>Default Permissions</option>
                                     <?php
                                     if(isset($_GET['accountType'])) {
-                                        foreach ($usersByType[$_GET['accountType']] as $usernameRaw) {
+                                        foreach ($usersByType[$_GET['accountType']] as $userRow) {
+                                            $usernameRaw = $userRow['username'];
                                             echo '<option value="' . rawurlencode($usernameRaw) . '"' . (rawurldecode($_GET['accountName']) === $usernameRaw ? 'selected' : '') . '>' . htmlspecialchars($usernameRaw) . '</option>';
                                         }
                                     }
@@ -259,95 +263,140 @@ $maxRows = max(array_map('count', $usersByType));
                         </div>
                     </form>
 
-                    <?php
-                    if (isset($_GET['editPropertiesSuccess'])) {
-                        echo '<p style="color: green;">' . $_GET['editPropertiesSuccess'] . '</p>';
-                    } else if (isset($_GET['editPropertiesError'])) {
-                        echo '<p style="color: red;">' . $_GET['editPropertiesError'] . '</p>';
-                    }
-                    ?>
-
                     <br>
 
-                    <form method="POST" action="editAccountProperties.php" style="display: flex; flex-direction: column; justify-content: flex-start; <?php echo (!$_GET['accountName'] || $_GET['accountName'] === '---') ? 'display: none;' : ''?>">
+                    <form method="POST"
+                          action="editAccountProperties.php"
+                          onsubmit="return confirm('<?php echo
+                              (rawurldecode($_GET['accountName']) === 'default') ?
+                                  'Are you sure you want to edit the default permissions for ' . rawurldecode($_GET['accountType']) . ' accounts?' :
+                                  'Are you sure you want to edit the account permissions of ' . rawurldecode($_GET['accountName']) . '?'; ?>')"
+                          style="display: flex; flex-direction: column; justify-content: flex-start; <?php echo (!$_GET['accountType'] || $_GET['accountType'] === '---') ? 'display: none;' : ''?>"
+                    >
+
+                        <?php
+                        if (isset($_GET['editPropertiesSuccess'])) {
+                            echo '<p style="color: green; margin-top: 0;">' . htmlspecialchars($_GET['editPropertiesSuccess']) . '</p>';
+                        } else if (isset($_GET['editPropertiesError'])) {
+                            echo '<p style="color: red; margin-top: 0;">' . htmlspecialchars($_GET['editPropertiesError']) . '</p>';
+                        }
+                        ?>
+
+                        <input type="hidden" name="resetToDefaults" id="resetToDefaultsInput" value="false">
                         <input type="hidden" name="accountType" value="<?php echo rawurldecode($_GET['accountType'])?>">
                         <input type="hidden" name="accountName" value="<?php echo rawurldecode($_GET['accountName'])?>">
-                        <table style="border-collapse: collapse;">
-                            <tbody>
                                 <?php
-                                if((isset($_GET['accountName']) && $_GET['accountName'] !== '---')) {
-                                    $stmt = $conn->prepare("SELECT property, permission FROM accountProperties WHERE accountName = ?");
+                                if(isset($_GET['accountName']) && isset($_GET['accountType']) && $_GET['accountType'] !== '---') {
+                                    $propertiesStmt = $conn->prepare("SELECT property, permission FROM account_properties WHERE accountName = ?");
                                     $insName = rawurldecode($_GET['accountName']) === 'default' ? rawurldecode($_GET['accountType']) : rawurldecode($_GET['accountName']);
-                                    $stmt->bind_param("s", $insName);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-
+                                    $propertiesStmt->bind_param("s", $insName);
+                                    $propertiesStmt->execute();
+                                    $propertiesResult = $propertiesStmt->get_result();
                                     $properties = [];
-                                    while ($row = $result->fetch_assoc()) {
-                                        $properties[$row['property']] = $row['permission'];
+
+                                    if($propertiesResult->num_rows > 0) { //if the account has properties defined
+                                        while ($row = $propertiesResult->fetch_assoc()) {
+                                            $properties[$row['property']] = $row['permission'];
+                                        }
+                                    } else { //else use default properties
+                                        $defaultPropertiesStmt = $conn->prepare("SELECT property, permission FROM account_properties WHERE accountName = ?");
+                                        $accountType = rawurldecode($_GET['accountType']);
+                                        $defaultPropertiesStmt->bind_param("s", $accountType);
+                                        $defaultPropertiesStmt->execute();
+                                        $defaultPropertiesResult = $defaultPropertiesStmt->get_result();
+
+                                        while ($row = $defaultPropertiesResult->fetch_assoc()) {
+                                            $properties[$row['property']] = $row['permission'];
+                                        }
                                     }
 
+                                    //[property name, whether it can be changed]
                                     $propertyData = [
                                         "Page Access" => [
-                                            "Home Page",
-                                            "Add Building Page",
-                                            "Contractors Page",
-                                            "Managers Page",
-                                            "Archives Page",
-                                            "Import Page",
-                                            "Accounts Page"
+                                            ["Home Page", false],
+                                            ["Archives Page", true],
+                                            ["Add Building Page", true],
+                                            ["Import Page", true],
+                                            ["Managers Page", true],
+                                            ["Accounts Page", !(($_GET['accountName'] === 'default') || ($_GET['accountName'] === $_SESSION['username']))],
+                                            ["Contractors Page", true],
                                         ],
                                         "Data Access" => [
-                                            "Select/Edit Multiple Buildings",
-                                            "See Building Name",
-                                            "See Manager",
-                                            "See IC",
-                                            "See Check-in Status",
-                                            "See Check-in Time",
-                                            "Can Toggle Check-ins",
-                                            "See Days",
-                                            "Print QR",
-                                            "Edit Buildings",
-                                            "Access Inactive Buildings"
+                                            ["Select/Edit Multiple Buildings", true],
+                                            ["Can Toggle Check-ins", true],
+                                            ["See Building Name", true],
+                                            ["See Days", true],
+                                            ["See Manager", true],
+                                            ["Print QR", true],
+                                            ["See IC", true],
+                                            ["Edit Buildings", true],
+                                            ["See Check-in Status", true],
+                                            ["Access Inactive Buildings", true],
+                                            ["See Check-in Time", true],
                                         ],
                                         "Filter Options" => [
-                                            "Search Building Name",
-                                            "Filter Manager",
-                                            "Filter IC",
-                                            "Filter Today Only"
+                                            ["Search Building Name", true],
+                                            ["Filter IC", true],
+                                            ["Filter Manager", true],
+                                            ["Filter Today Only", true],
                                         ],
                                         "Other" => [
-                                            "Export Buildings"
+                                            ["Export Buildings", true],
                                         ]
                                     ];
 
                                     foreach ($propertyData as $section => $list) {
+
                                         echo "
-                                    <tr style='background-color: #ccc;'>
-                                        <th style='text-align: left; padding: 25px;' colspan='2'>$section</th>
+                            <table style='background-color: white; border-collapse: collapse; border: 1px solid black; margin-bottom: 15px;'>
+                                <tbody>
+                                    <tr style='background: transparent; border: none;'>
+                                        <th style='background: transparent; border: none; text-align: center; padding: 10px; text-decoration: underline;' colspan='2'>$section</th>
                                     </tr>";
 
                                         $switch = false;
                                         foreach ($list as $value) {
-                                            $bgColor = $switch ? '#F3F3F3' : '#E5E5E5';
+                                            if(!$switch) {
+                                                echo "<tr style='background: transparent; border: none;'>";
+                                            }
                                             echo "
-                                        <tr>
-                                            <td style='background-color: $bgColor;'>" . htmlspecialchars($value) . "</td>
-                                            <td style='background-color: $bgColor;'>
-                                                <input type='hidden' name='properties[" . rawurlencode($value) . "]' value='0'>
-                                                <input type='checkbox' name='properties[" . rawurlencode($value) . "]' value='1'" . ($properties[$value] === 1 ? ' checked' : '') . ">
-                                            </td>
-                                        </tr>";
+                                            <td style='background: transparent; border: none; padding: 2px 10px 6px 10px;'>
+                                                <input type='hidden' name='properties[" . rawurlencode($value[0]) . "]' value='0'>
+                                                <label" . ($value[1] ? "" : " style='opacity: 0.5;'") . ">
+                                                <input type='checkbox' name='properties[" . rawurlencode($value[0]) . "]' value='1'" . ($value[1] ? "" : " onclick='return false;'") .
+                                                ($properties[$value[0]] === 1 ? ' checked' : '') .
+                                                "> " . htmlspecialchars($value[0]) . "</label></td>";
+                                            if($switch) {
+                                                echo "</tr>";
+                                            }
                                             $switch = !$switch;
                                         }
+                                        if($switch) {
+                                            echo "<td style='background: transparent; border: none;'></td></tr>";
+                                        }
+                                        echo "
+                                            </tbody>
+                                        </table>
+                                        ";
                                     }
                                 }
                                 ?>
-                            </tbody>
-                        </table>
 
                         <br>
-                        <button type="submit" class="big">Submit</button>
+                        <div style="display: flex; flex-direction: row; gap: 15px;">
+                            <button type="submit" class="big">Submit</button>
+                        <?php
+                        if(rawurldecode($_GET['accountName']) !== 'default') { //don't show reset to defaults button for default permissions
+                            ?>
+                            <button type="button" class="big" onclick="(() => {
+                                    if(confirm('Are you sure you want to reset the account permissions of <?php echo rawurldecode($_GET['accountName']); ?> to the <?php echo rawurldecode($_GET['accountType']); ?> defaults?')) {
+                                    document.getElementById('resetToDefaultsInput').value = 'true';
+                                    this.form.submit();
+                                    }
+                                    })()">Reset to Defaults</button>
+                            <br>
+                        <?php } ?>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -356,14 +405,6 @@ $maxRows = max(array_map('count', $usersByType));
 </main>
 
 </body>
-
-<style>
-    label {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-</style>
 </html>
 
 <?php

@@ -11,43 +11,92 @@ if (!accountProperties('Accounts Page')) {
 require_once 'db.php';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['properties']) && isset($_POST['accountName']) && isset($_POST['accountType'])) {
+
     $accountName = rawurldecode($_POST['accountName']);
     $accountType = rawurldecode($_POST['accountType']);
 
-    if($_POST['accountName'] === 'default') {
-        $insName = rawurldecode($_POST['accountType']);
-    } else {
-        $insName = rawurldecode($_POST['accountName']);
-    }
-
-    $params = [];
-
-    $sql = "INSERT INTO accountProperties (accountName, property, permission) VALUES ";
-
-    $propertyCount = 0;
-    foreach($_POST['properties'] as $property => $permission) {
-        $propertyCount++;
-        $params[] = $insName;
-        $params[] = rawurldecode($property);
-        $params[] = (int) $permission;
-    }
-    $sql .= implode(',', array_fill(0, $propertyCount, "(?, ?, ?)"));
-    $typesStr = str_repeat('ssi' , $propertyCount);
-
-    $sql .= "ON DUPLICATE KEY UPDATE permission = VALUES(permission)";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param($typesStr, ...$params);
-
     $headerStr = "Location: /php/allAccounts.php?accountType=" . rawurlencode($accountType) . "&accountName=" . rawurlencode($accountName);
-    if($stmt->execute()) {
-        if($stmt->affected_rows > 0) {
-            $headerStr .= "&editPropertiesSuccess=" . rawurlencode('Account properties updated successfully.');
+
+    $doInsert = true;
+
+    if($_POST['resetToDefaults'] === 'true') {
+        $doInsert = false;
+    } else if ($_POST['accountName'] !== 'default') {
+        $doInsert = false;
+
+        $defaultStmt = $conn->prepare("SELECT property, permission FROM account_properties WHERE accountName = ?");
+        $defaultStmt->bind_param("s", $accountType);
+        $defaultStmt->execute();
+        $defaultResult = $defaultStmt->get_result();
+
+        $defaultPermissions = [];
+        while ($row = $defaultResult->fetch_assoc()) {
+            $defaultPermissions[$row['property']] = (int)$row['permission'];
+        }
+
+        foreach ($_POST['properties'] as $property => $permission) {
+            $property = rawurldecode($property);
+            $permission = (int)$permission;
+
+            if (!isset($defaultPermissions[$property]) || $defaultPermissions[$property] !== $permission) {
+                $doInsert = true;
+                break;
+            }
+        }
+    }
+
+    if($doInsert) {
+        if ($_POST['accountName'] === 'default') {
+            $insName = $accountType;
         } else {
-            $headerStr .= "&editPropertiesError=" . rawurlencode('No changes were made.');
+            $insName = $accountName;
+        }
+
+        $insertParams = [];
+
+        $insertSql = "INSERT INTO account_properties (accountName, property, permission) VALUES ";
+
+        $propertyCount = 0;
+        foreach ($_POST['properties'] as $property => $permission) {
+            $propertyCount++;
+            $insertParams[] = $insName;
+            $insertParams[] = rawurldecode($property);
+            $insertParams[] = (int)$permission;
+        }
+        $insertSql .= implode(',', array_fill(0, $propertyCount, "(?, ?, ?)"));
+        $insertTypes = str_repeat('ssi', $propertyCount);
+
+        $insertSql .= "ON DUPLICATE KEY UPDATE permission = VALUES(permission)";
+
+        $insertStmt = $conn->prepare($insertSql);
+        $insertStmt->bind_param($insertTypes, ...$insertParams);
+
+        if ($insertStmt->execute()) {
+            if ($insertStmt->affected_rows > 0) {
+                $headerStr .= "&editPropertiesSuccess=" . rawurlencode('Account permissions for ' . $insName . ' were updated successfully.');
+            } else {
+                $headerStr .= "&editPropertiesError=" . rawurlencode('No changes were made to the account permissions for ' . $insName . '.');
+            }
+        } else {
+            $headerStr .= "&editPropertiesError=" . rawurlencode('Failed to update account permissions for ' . $insName . '.');
         }
     } else {
-        $headerStr .= "&editPropertiesError=" . rawurlencode('Failed to update account properties.');
+        $existingStmt = $conn->prepare("SELECT 1 FROM account_properties WHERE accountName = ?");
+        $existingStmt->bind_param("s", $accountName);
+        $existingStmt->execute();
+        $existingResult = $existingStmt->get_result();
+
+        if ($existingResult->num_rows > 0) {
+            $deleteStmt = $conn->prepare("DELETE FROM account_properties WHERE accountName = ?");
+            $deleteStmt->bind_param("s", $accountName);
+            if ($deleteStmt->execute()) {
+                $headerStr .= "&editPropertiesSuccess=" . rawurlencode('Account permissions for ' . $accountName . ' set to ' . $accountType . ' defaults.');
+            } else {
+                $headerStr .= "&editPropertiesError=" . rawurlencode('SQL Error: No changes were made to the account permissions for ' . $accountName . '.');
+            }
+        } else {
+            $headerStr .= "&editPropertiesError=" . rawurlencode('No changes were made, the account permissions for ' . $accountName . ' remain the ' . $accountType . ' defaults.');
+        }
     }
     header($headerStr);
 }

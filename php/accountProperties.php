@@ -1,92 +1,54 @@
 <?php
 session_start();
 
-$accountType = $_SESSION['accountType'] ?? '';
+// Connect to database
+require_once 'db.php';
 
-$accountProperties = [
-    'accountType' => $accountType,
-    'developer' => '*',
-    'admin' => [
-        'Home Page',
-        'Add Building Page',
-        'Contractors Page',
-        'Managers Page',
-        'Archives Page',
-        'Accounts Page',
+$accountType = $_SESSION['accountType'];
+$username = $_SESSION['username'];
 
-        'Select/Edit Multiple Buildings',
-        'See Building Name',
-        'See Manager',
-        'See IC',
-        'See Check-in Status',
-        'See Check-in Time',
-        'Can Toggle Check-ins',
-        'See Days',
-        'Print QR',
-        'Edit Buildings',
-        'Access Inactive Buildings',
+if($accountType && $username) {
 
-        'Search Building Name',
-        'Filter Manager',
-        'Filter IC',
-        'Filter Today Only',
-        'Export Buildings'
-    ],
-    'manager' => [
-        'Home Page',
-        'Archives Page',
+    if($accountType === 'developer') {
+        $accountProperties = '*';
+    } else {
+        $accountProperties = [];
 
-        'See Building Name',
-        'See Manager',
-        'See IC',
-        'See Check-in Status',
-        'See Check-in Time',
-        'See Days',
-        'Print QR',
+        $checkCustomStmt = $conn->prepare("SELECT 1 FROM account_properties WHERE accountName = ?");
+        $checkCustomStmt->bind_param("s", $username);
+        $checkCustomStmt->execute();
+        $checkCustomResult = $checkCustomStmt->get_result();
+        if ($checkCustomResult->num_rows > 0) {
+            $selectPropertiesName = $username;
+        } else {
+            $selectPropertiesName = $accountType;
+        }
 
-        'Search Building Name',
-        'Filter Manager',
-        'Filter IC',
-        'Filter Today Only',
-        'Export Buildings'
-    ],
-    'contractor' => [
-        'Home Page',
-        'Archives Page',
-
-        'See Building Name',
-        'See Manager',
-        'See Check-in Status',
-        'See Check-in Time',
-        'Can Toggle Check-ins',
-        'See Days',
-
-        'Search Building Name',
-        'Filter Today Only',
-        'Export Buildings'
-    ],
-    '' => []
-];
-
-// --- Dual Mode: JSON API or Inline PHP ---
+        $selectPropertiesStmt = $conn->prepare("SELECT property, permission FROM account_properties WHERE accountName = ?");
+        $selectPropertiesStmt->bind_param("s", $selectPropertiesName);
+        $selectPropertiesStmt->execute();
+        $selectPropertiesResult = $selectPropertiesStmt->get_result();
+        while ($row = $selectPropertiesResult->fetch_assoc()) {
+            if((int)$row['permission'] === 1) {
+                $accountProperties[] = $row['property'];
+            }
+        }
+    }
+}
 
 // If the request has header Accept: application/json, return JSON
 if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) {
     header('Content-Type: application/json');
-    echo json_encode($accountProperties[$accountType]);
+    echo json_encode($accountProperties);
     exit;
 }
 
 // Else, allow this file to be included and used in PHP
-function accountProperties($property) {
+function accountProperties($property = NULL) {
     global $accountProperties;
-    global $accountType;
-    if($accountType === 'developer') {
+    if($accountProperties === '*') {
         return true;
-    } else if($property === 'get') {
-        return $accountProperties[$accountType];
-    } else {
-        return in_array($property, $accountProperties[$accountType]);
     }
+    return in_array($property, $accountProperties);
 }
 ?>
