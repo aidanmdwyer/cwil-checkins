@@ -63,7 +63,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                                     data-id="${rowData.id}"
                                     data-name="${encodeHTML(rowData.name)}"
                                     data-checked="${rowData.checked}"
-                                    ${(accountProperties.includes('Can Toggle Check-ins') || accountProperties === '*') ? `
+                                    ${(accountProperties.includes('Toggle Check-ins') || accountProperties === '*') ? `
                                     onclick="toggleCheck(
                                       this.dataset.name,
                                       this.dataset.checked
