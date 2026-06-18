@@ -199,7 +199,7 @@ $maxRows = max(array_map('count', $usersByType));
                                     // edit permissions cell
                                     echo "<td style='text-align: center; background-color: {$bgColor};'>
                                 <button style='border: none; background-color: transparent' 
-                                        onclick='(() => {window.location.href = `/php/allAccounts.php?accountType=` + `$accountType` + `&accountName=` + `$usernameEncoded`})()'>&#128394 " . ($userRow['permissionsChanged'] === "1" ? "<span style='color: green; font-weight: bold;'>Custom</span>" : "<span style='opacity: 0.5;'>Default</span>") . "</button>
+                                        onclick='window.location.href = `/php/allAccounts.php?accountType=` + `$accountType` + `&accountName=` + `$usernameEncoded`'>&#128394 " . ($userRow['permissionsChanged'] === "1" ? "<span style='color: green; font-weight: bold;'>Custom</span>" : "<span style='opacity: 0.5;'>Default</span>") . "</button>
                               </td>";
 
                                     // delete form cell
@@ -415,6 +415,7 @@ $maxRows = max(array_map('count', $usersByType));
                             <br>
                         <?php } ?>
                         </div>
+                        <button type="button" onclick="window.location.href = '/php/allAccounts.php'">Cancel</button>
                     </form>
                 </div>
             </div>
