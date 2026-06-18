@@ -1,6 +1,5 @@
 function toggleCheck(name, checked) {
-
-    if(confirm('Are you sure you want to ' + ((checked === 0) ? 'check' : 'uncheck') + ' ' + name + '?')) {
+    if(confirm('Are you sure you want to ' + ((checked == 0) ? 'check' : 'uncheck') + ' ' + name + '?')) {
         refreshButton.disabled = true;
         refreshButton.innerHTML = 'Loading';
         fetch('/php/toggleCheck.php', {
