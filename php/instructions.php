@@ -76,6 +76,9 @@ $accountType = $_SESSION['accountType'];
         background-color: lightgrey;
         margin: 10px;
         padding: 0;
+
+        font-family: "Times New Roman", times, serif;
+        font-size: 1.2rem;
     }
     #page {
         background-color: white;
@@ -162,8 +165,6 @@ $accountType = $_SESSION['accountType'];
         padding: 0;
     }
     p {
-        font-family: "Times New Roman", times, serif;
-        font-size: 1.2rem;
         margin: 0;
         padding: 0;
     }
