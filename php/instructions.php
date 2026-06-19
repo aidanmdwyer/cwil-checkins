@@ -33,9 +33,6 @@ $accountType = $_SESSION['accountType'];
 <style>
     body {
         background-color: lightgrey;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
         margin: 10px;
         padding: 0;
     }
@@ -48,6 +45,7 @@ $accountType = $_SESSION['accountType'];
         flex-direction: column;
         gap: 0;
         padding: 50px 30px;
+        margin: 0 auto;
     }
 
 
