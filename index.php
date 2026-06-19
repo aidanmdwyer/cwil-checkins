@@ -81,7 +81,7 @@ if (!accountProperties('Home Page')) {
                     <div style="text-align: center;">Show<br>Active</div>
                 </div>
                 <div class="vr"></div>
-                <button id="refreshButton" class="big">Refresh</button>
+                <button id="refreshButton" class="big" style="display: none;">Refresh</button>
             </div>
             <div style="<?php echo accountProperties('Export Buildings') ? 'display: flex' : 'display: none';?>; align-items: center; gap: 15px;">
                 <button id="mainExportButton" class="big" onclick="exportBuildingsSheet('buildingsTable', new Date().toISOString().slice(0,10) + '_buildings.xlsx')">Export</button>

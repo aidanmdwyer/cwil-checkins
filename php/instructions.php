@@ -50,6 +50,11 @@ $accountType = $_SESSION['accountType'];
                     <?php if(accountProperties("Search Building Name")) { ?><li><strong>Search: </strong>search buildings by name</li><?php } ?>
                     <?php if(accountProperties("Access Inactive Buildings")) { ?><li><strong>Show Inactive: </strong>switch to view buildings marked inactive</li><?php } ?>
                 </ul>
+                <?php if(accountProperties("Access Inactive Buildings")) { ?>
+                    <p>
+                        You can also export the currently shown building data to a spreadsheet with the export button.
+                    </p><br>
+                <?php } ?>
                 <p>
                     When the table contains a lot of buildings, only the first 20 will be loaded and a “Load All” button will appear below the table.
                     Click the button to see the rest of the buildings.
