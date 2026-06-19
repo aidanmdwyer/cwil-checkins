@@ -15,21 +15,27 @@ $accountType = $_SESSION['accountType'];
     <title>Instructions</title>
 </head>
 <body>
-<header>
-    <img src="../imgs/logo.png" style="min-width: 400px; width: 30%;">
-    <h1>Check-in App Instructions</h1>
-    <p>Please refer to these instructions on how to use the City Wide Check-ins App as an <?php echo $accountType ?>.</p>
-</header>
-<main>
-    <?php if(accountProperties("Home Page")) { ?>
-        <h2>Home Page</h2>
-        <p>Home Page!!!</p>
-    <?php } ?>
-</main>
+<div id="page">
+    <header>
+        <img src="../imgs/logo.png" style="min-width: 400px; width: 30%;">
+        <h1>Check-in App Instructions</h1>
+        <p>Please refer to these instructions on how to use the City Wide Check-ins App as an <?php echo $accountType ?>.</p>
+    </header>
+    <main>
+        <?php if(accountProperties("Home Page")) { ?>
+            <h2>Home Page</h2>
+            <p>Home Page!!!</p>
+        <?php } ?>
+    </main>
+</div>
 </body>
 
 <style>
     body {
+        margin: 0 auto;
+        padding: 0;
+    }
+    #page {
         width: 8.5in;
         display: flex;
         flex-direction: column;
