@@ -29,11 +29,25 @@ $accountType = $_SESSION['accountType'];
 </body>
 
 <style>
+    body {
+        width: 8.5in;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+
+
     header {
         display: flex;
         flex-direction: column;
         gap: 15px;
         align-items: center;
+        margin: 20px;
+    }
+    header img {
+        margin: 10px;
+        padding: 0;
     }
     header h1 {
         margin: 0;
@@ -42,6 +56,8 @@ $accountType = $_SESSION['accountType'];
     header p {
         font-size: 1.5rem;
     }
+
+
 
     main {
         display: flex;
