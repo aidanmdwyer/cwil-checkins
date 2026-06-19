@@ -101,6 +101,7 @@ $accountType = $_SESSION['accountType'];
         gap: 15px;
         align-items: center;
         text-align: center;
+        width: 75%;
     }
     header img {
         margin: 0 0 10px 0;
