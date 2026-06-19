@@ -41,13 +41,29 @@ $accountType = $_SESSION['accountType'];
                     <?php if(accountProperties("See Check-in Time")) { ?><li>the time the crew checked in</li><?php } ?>
                 </ul>
                 <p>
-                    By default, the “Today Only” filter will be turned on, showing only buildings that are scheduled to get
-                    cleaned on the current day. You can uncheck this to see all buildings. You can also use the manager and
-                    IC filters to view only buildings that are assigned to a specific manager or contractor.
+                    <?php if(accountProperties("Filter Today Only")) { ?>
+                        By default, the “Today Only” filter will be turned on, showing only buildings that are scheduled to get cleaned on
+                        the current day. You can uncheck this to see all buildings regardless of the days they are cleaned.
+                    <?php } ?>
+
+                    <?php
+                    $managerAndIC = [];
+                    if(accountProperties("Filter Manager")) $managerAndIC[] = "manager";
+                    if(accountProperties("Filter IC")) $managerAndIC[] = "IC";
+                    if(!empty($managerAndIC)) {
+                        ?>
+                        You can use the <?php echo implode("and the ", $managerAndIC) ?> filter to view only buildings that are assigned to a specific <?php echo implode("or ", $managerAndIC) ?>.
+                    <?php } ?>
+
+                    <?php if(accountProperties("Search Building Name")) { ?>
+                        You can also search by building name with the search bar.
+                    <?php } ?>
+
                 </p>
+                <br>
                 <p>
-                    When more than 20 buildings exist for the current filter, a “Load All” button will appear. Click this to view
-                    the entire list of buildings for that filter.
+                    When the table contains a lot of buildings, only the first 20 will be loaded and a “Load All” button will appear below.
+                    Click the button to see the rest of the buildings.
                 </p>
             </div>
         <?php } ?>
