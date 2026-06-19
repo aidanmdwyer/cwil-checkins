@@ -33,7 +33,9 @@ $accountType = $_SESSION['accountType'];
 <style>
     body {
         display: flex;
+        flex-direction: row;
         align-items: center;
+        justify-content: center;
         margin: 0;
         padding: 0;
     }
