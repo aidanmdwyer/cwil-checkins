@@ -28,6 +28,7 @@ $accountType = $_SESSION['accountType'];
         display: flex;
         flex-direction: column;
         gap: 15px;
+        align-items: center;
     }
 </style>
 </html>
