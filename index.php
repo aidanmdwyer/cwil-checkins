@@ -265,15 +265,23 @@ if (!accountProperties('Home Page')) {
                     </div>
                 </div>
 
+                <?php
+                if(accountProperties("Toggle Check-ins")) {
+                ?>
                 <div style="margin-bottom: 10px; margin-top: 10px;">
                     <button id="checkAll" type="button" class="big" onclick="editAll(event, 'checkAll')">Check All</button>
                     <button id="uncheckAll" type="button" class="big" onclick="editAll(event, 'uncheckAll')">Uncheck All</button>
                 </div>
+                <?php } ?>
 
+                <?php
+                if(accountProperties("Access Inactive Buildings")) {
+                ?>
                 <div style="margin-top: 10px;">
                     <button id="deactivateButton" type="button" class="big" onclick="editAll(event, 'deactivate')">Deactivate</button>
                     <button id="activateButton" type="button" class="big" onclick="editAll(event, 'activate')" style="display: none">Activate</button>
                 </div>
+                <?php } ?>
 
                 <div id="editAllMessage" style="display: none; margin-top: 10px;"></div>
             </div>

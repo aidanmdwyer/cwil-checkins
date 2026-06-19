@@ -3,6 +3,17 @@ include 'login.php';
 include 'accountProperties.php';
 
 $accountType = $_SESSION['accountType'];
+
+function implodeCommas(array $items, string $finalSeparator): string {
+    $count = count($items);
+    if ($count === 0) return '';
+    if ($count === 1) return $items[0];
+    if ($count === 2) return $items[0] . ' ' . $finalSeparator . ' ' . $items[1];
+    //3+ items
+    return implode(', ', array_slice($items, 0, -1))
+        . ', ' . $finalSeparator . ' '
+        . end($items);
+}
 ?>
 
 <!doctype html>
@@ -19,7 +30,7 @@ $accountType = $_SESSION['accountType'];
     <header>
         <img src="../imgs/logo.png">
         <h1>Check-in App Instructions</h1>
-        <p>Please refer to these instructions on how to use the City Wide Check-ins App as an <?php echo $accountType ?>.</p>
+        <p>Please refer to these instructions on how to use the City Wide Check-ins App.</p>
     </header>
     <div id="index">
         <h2>Index</h2>
@@ -52,13 +63,33 @@ $accountType = $_SESSION['accountType'];
                 </ul>
                 <?php if(accountProperties("Access Inactive Buildings")) { ?>
                     <p>
-                        You can also export the currently shown building data to a spreadsheet with the export button.
+                        You can also use the export button to export the current building data to a spreadsheet.
                     </p><br>
                 <?php } ?>
                 <p>
                     When the table contains a lot of buildings, only the first 20 will be loaded and a “Load All” button will appear below the table.
                     Click the button to see the rest of the buildings.
                 </p>
+            </div>
+        <?php } ?>
+        <?php if(accountProperties("Edit Buildings")) { ?>
+            <div id="Editing Buildings" class="section">
+                <h2>Editing Buildings</h2>
+                <p>
+                    You can edit building information by clicking the pen symbol in the rightmost column of the table.
+                    This will open a menu where you can change the buildings manager, IC, and the days it is cleaned.
+                </p>
+                <?php if(accountProperties("Select Buildings")) {
+                    $editAllOptions = [];
+                    if(accountProperties("Toggle Check-ins")) $editAllOptions[] = "check/uncheck";
+                    if(accountProperties("Access Inactive Buildings")) $editAllOptions[] = "activate/deactivate";
+                    $editAllOptions[] = "change the manager and ic of";
+                    ?>
+                    <br><p>
+                        You can edit multiple buildings at once by selecting them with the checkboxes in the leftmost column.
+                        Here you can <?php echo implodeCommas($editAllOptions, "or"); ?> multiple buildings at a time.
+                    </p>
+                <?php } ?>
             </div>
         <?php } ?>
     </main>
