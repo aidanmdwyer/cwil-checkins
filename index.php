@@ -26,7 +26,7 @@ if (!accountProperties('Home Page')) {
         <button onclick="window.location.href='./php/addContractor.php'" class="big" style="display: <?php echo accountProperties('Contractors Page') ? '' : 'none';?>;">Contractors</button>
         <button onclick="window.location.href='./php/addManager.php'" class="big" style="display: <?php echo accountProperties('Managers Page') ? '' : 'none';?>;">Managers</button>
     </div>
-    <h3>City Wide Check-Ins <a href="./instructions/<?php echo $_SESSION['accountType'] === 'developer' ? 'admin' : $_SESSION['accountType'] ?>_instructions.pdf" target="_blank"><img src="./imgs/help_icon.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
+    <h3>City Wide Check-Ins <a href="./php/instructions.php" target="_blank"><img src="./imgs/help_icon.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
     <div>
         <button onclick="window.location.href='./php/checkInArchives.php'" class="big" style="display: <?php echo accountProperties('Archives Page') ? '' : 'none';?>;">Archives</button>
         <button onclick="window.location.href='./php/importBuildings.php'" class="big" style="display: <?php echo accountProperties('Import Page') ? '' : 'none';?>;">Import</button>
