@@ -30,13 +30,23 @@ $accountType = $_SESSION['accountType'];
             <div id="Home Page (Viewing Buildings)" class="section">
                 <h2>Home Page (Viewing Buildings)</h2>
                 <p>
-                    Once logged in, you will see a table of buildings. Here, you can see the building name, which City Wide
-                    manager is responsible for it, the IC assigned to it, the days it gets cleaned, and whether the crew has arrived
-                    today
-                    <br><br>By default, the “Today Only” filter will be turned on, showing only buildings that are scheduled to get
+                    Once logged in, you will see a table of buildings. Here, you can see:
+                </p>
+                <ul>
+                    <?php if(accountProperties("See Building Name")) { ?><li>the building name</li><?php } ?>
+                    <?php if(accountProperties("See Manager")) { ?><li>which City Wide manager is responsible for it</li><?php } ?>
+                    <?php if(accountProperties("See IC")) { ?><li>the IC assigned to it</li><?php } ?>
+                    <?php if(accountProperties("See Days")) { ?><li>the days it gets cleaned</li><?php } ?>
+                    <?php if(accountProperties("See Check-in Status")) { ?><li>whether the crew has for the day</li><?php } ?>
+                    <?php if(accountProperties("See Check-in Time")) { ?><li>the time the crew checked in</li><?php } ?>
+                </ul>
+                <p>
+                    By default, the “Today Only” filter will be turned on, showing only buildings that are scheduled to get
                     cleaned on the current day. You can uncheck this to see all buildings. You can also use the manager and
                     IC filters to view only buildings that are assigned to a specific manager or contractor.
-                    <br><br>When more than 20 buildings exist for the current filter, a “Load All” button will appear. Click this to view
+                </p>
+                <p>
+                    When more than 20 buildings exist for the current filter, a “Load All” button will appear. Click this to view
                     the entire list of buildings for that filter.
                 </p>
             </div>
