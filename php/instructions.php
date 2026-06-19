@@ -132,6 +132,9 @@ $accountType = $_SESSION['accountType'];
     }
     #indexBody ul {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     #indexBody li {
         text-align: left;
