@@ -416,8 +416,8 @@ $maxRows = max(array_map('count', $usersByType));
                                         }
                                         })()">Reset to Defaults</button>
                             <?php } ?>
-                            <br>
                         </div>
+                        <br>
                     </form>
                 </div>
             </div>
