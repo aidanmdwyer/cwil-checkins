@@ -28,7 +28,7 @@ $accountType = $_SESSION['accountType'];
     <main>
         <?php if(accountProperties("Home Page")) { ?>
             <div id="Viewing Buildings" class="section">
-                <h2></h2>
+                <h2>Viewing Buildings</h2>
                 <p>
                     On the home page you will see a table of buildings, including the following information for each one:
                 </p>
@@ -153,9 +153,6 @@ $accountType = $_SESSION['accountType'];
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-    }
-    .section > h2:first-child {
-        content: attr(id);
     }
     h1 {
         font-family: Tahoma, sans-serif;
