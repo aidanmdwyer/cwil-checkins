@@ -46,7 +46,7 @@ $accountType = $_SESSION['accountType'];
         display: flex;
         flex-direction: column;
         gap: 0;
-        padding: 15px 15px 15px 30px;
+        padding: 30px 15px;
     }
 
 
