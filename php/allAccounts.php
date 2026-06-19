@@ -403,7 +403,7 @@ $maxRows = max(array_map('count', $usersByType));
                         <br>
                         <div style="display: flex; flex-direction: row; justify-content: space-between;">
                             <div style="display: flex; flex-direction: row; gap: 15px;">
-                                <button type="button" onclick="window.location.href = '/php/allAccounts.php'">Cancel</button>
+                                <button type="button" class="big" onclick="window.location.href = '/php/allAccounts.php'">Cancel</button>
                                 <button type="submit" class="big">Submit</button>
                             </div>
                             <?php
