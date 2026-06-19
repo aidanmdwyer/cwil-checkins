@@ -41,26 +41,14 @@ $accountType = $_SESSION['accountType'];
                     <?php if(accountProperties("See Check-in Time")) { ?><li>the time the crew checked in</li><?php } ?>
                 </ul>
                 <p>
-                    <?php if(accountProperties("Filter Today Only")) { ?>
-                        By default, the “Today Only” filter will be turned on, showing only buildings that are scheduled to get cleaned on
-                        the current day. You can uncheck this to see all buildings regardless of the days they are cleaned.
-                    <?php } ?>
-
-                    <?php
-                    $managerAndIC = [];
-                    if(accountProperties("Filter Manager")) $managerAndIC[] = "manager";
-                    if(accountProperties("Filter IC")) $managerAndIC[] = "IC";
-                    if(!empty($managerAndIC)) {
-                        ?>
-                        You can use the <?php echo implode(" and the ", $managerAndIC) ?> filter to view only buildings that are assigned to a specific <?php echo implode(" or ", $managerAndIC) ?>.
-                    <?php } ?>
-
-                    <?php if(accountProperties("Search Building Name")) { ?>
-                        You can also search by building name with the search bar.
-                    <?php } ?>
-
+                    You can also filter the buildings the following ways:
                 </p>
-                <br>
+                <ul>
+                    <?php if(accountProperties("Filter Today Only")) { ?><li><strong>Today Only: </strong>show only buildings that are scheduled to be cleaned on the current day</li><?php } ?>
+                    <?php if(accountProperties("Filter Manager")) { ?><li><strong>Filter Manager: </strong>show only buildings managed by a specific City Wide manager</li><?php } ?>
+                    <?php if(accountProperties("Filter IC")) { ?><li><strong>Filter IC: </strong>show only buildings cleaned by a specific contractor</li><?php } ?>
+                    <?php if(accountProperties("Search Building Name")) { ?><li><strong>Search: </strong>search buildings by name</li><?php } ?>
+                </ul>
                 <p>
                     When the table contains a lot of buildings, only the first 20 will be loaded and a “Load All” button will appear below.
                     Click the button to see the rest of the buildings.
