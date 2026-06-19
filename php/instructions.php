@@ -23,8 +23,10 @@ $accountType = $_SESSION['accountType'];
     </header>
     <main>
         <?php if(accountProperties("Home Page")) { ?>
-            <h2>Home Page</h2>
-            <p>Home Page!!!</p>
+            <h2>Home Page (Viewing Buildings)</h2>
+            <p>Once logged in, you will see a table of buildings. Here, you can see the building name, which City Wide
+                manager is responsible for it, the IC assigned to it, the days it gets cleaned, whether the crew has arrived
+                today, and the time they checked in.</p>
         <?php } ?>
     </main>
 </div>
