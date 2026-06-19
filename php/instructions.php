@@ -27,8 +27,8 @@ $accountType = $_SESSION['accountType'];
     </div>
     <main>
         <?php if(accountProperties("Home Page")) { ?>
-            <div id="Home Page (Viewing Buildings)" class="section">
-                <h2>Home Page (Viewing Buildings)</h2>
+            <div id="Viewing Buildings" class="section">
+                <h2></h2>
                 <p>
                     On the home page you will see a table of buildings, including the following information for each one:
                 </p>
@@ -37,7 +37,7 @@ $accountType = $_SESSION['accountType'];
                     <?php if(accountProperties("See Manager")) { ?><li>which City Wide manager is responsible for it</li><?php } ?>
                     <?php if(accountProperties("See IC")) { ?><li>the IC assigned to it</li><?php } ?>
                     <?php if(accountProperties("See Days")) { ?><li>the days it gets cleaned</li><?php } ?>
-                    <?php if(accountProperties("See Check-in Status")) { ?><li>whether the crew has for the day</li><?php } ?>
+                    <?php if(accountProperties("See Check-in Status")) { ?><li>whether the crew has checked in for the day</li><?php } ?>
                     <?php if(accountProperties("See Check-in Time")) { ?><li>the time the crew checked in</li><?php } ?>
                 </ul>
                 <p>
@@ -153,6 +153,9 @@ $accountType = $_SESSION['accountType'];
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+    }
+    .section > h2:first-child {
+        content: attr(id);
     }
     h1 {
         font-family: Tahoma, sans-serif;
