@@ -170,9 +170,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
 
     #index {
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
         align-items: center;
         text-align: center;
     }
