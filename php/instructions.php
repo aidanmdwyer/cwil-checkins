@@ -42,7 +42,7 @@ $accountType = $_SESSION['accountType'];
     #page {
         background-color: white;
         width: 80%;
-        min-width: 1500px;
+        min-width: 1000px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -63,8 +63,7 @@ $accountType = $_SESSION['accountType'];
     header img {
         margin: 0 0 10px 0;
         padding: 0;
-        min-width: 500px;
-        width: 30%;
+        width: 400px;
     }
     header h1 {
         margin: 0;
