@@ -121,15 +121,16 @@ $accountType = $_SESSION['accountType'];
         padding: 0;
     }
     #indexBody {
-        width: 100%;
+        width: 75%;
     }
     #indexBody ul {
         margin: 0;
         padding: 0;
         column-count: 3;
+        list-style-position: inside;
     }
     #indexBody li {
-        text-align: left;
+        text-align: center;
         text-wrap: nowrap;
     }
 
