@@ -21,6 +21,10 @@ $accountType = $_SESSION['accountType'];
         <h1>Check-in App Instructions</h1>
         <p>Please refer to these instructions on how to use the City Wide Check-ins App as an <?php echo $accountType ?>.</p>
     </header>
+    <div id="index">
+        <h1>Index</h1>
+        <div id="indexBody"></div>
+    </div>
     <main>
         <?php if(accountProperties("Home Page")) { ?>
             <h2>Home Page (Viewing Buildings)</h2>
@@ -39,6 +43,38 @@ $accountType = $_SESSION['accountType'];
 </div>
 </body>
 
+<script>
+    const indexBody = document.getElementById("indexBody");
+    const sections = [
+        "Home Page (Viewing Buildings)",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+    ];
+    let indexLists = [];
+    const numLists = 3;
+    for(let i = 0; i < numLists; i++) indexLists.push([]);
+    for(let i = 0; i < sections.length; i++) {
+        indexLists[i % numLists].push(sections[i]);
+    }
+    indexLists.forEach(list => {
+        let ul = document.createElement("ul");
+        list.forEach(item => {
+            let li = document.createElement("li");
+            li.innerText = item;
+            ul.appendChild(li);
+        });
+        indexBody.appendChild(ul);
+    });
+</script>
+
 <style>
     body {
         background-color: lightgrey;
@@ -52,7 +88,7 @@ $accountType = $_SESSION['accountType'];
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        gap: 0;
+        gap: 20px;
         padding: 50px 30px;
         margin: 0 auto;
     }
@@ -64,7 +100,6 @@ $accountType = $_SESSION['accountType'];
         flex-direction: column;
         gap: 15px;
         align-items: center;
-        margin: 20px;
         text-align: center;
     }
     header img {
@@ -75,6 +110,25 @@ $accountType = $_SESSION['accountType'];
     header h1 {
         margin: 0;
         padding: 0;
+    }
+
+
+
+    #index {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        text-align: center;
+    }
+    #index h1 {
+        margin: 0;
+        padding: 0;
+    }
+    #indexBody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 
 
