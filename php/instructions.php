@@ -22,22 +22,24 @@ $accountType = $_SESSION['accountType'];
         <p>Please refer to these instructions on how to use the City Wide Check-ins App as an <?php echo $accountType ?>.</p>
     </header>
     <div id="index">
-        <h1>Index</h1>
+        <h2>Index</h2>
         <div id="indexBody"></div>
     </div>
     <main>
         <?php if(accountProperties("Home Page")) { ?>
-            <h2 id="Home Page (Viewing Buildings)">Home Page (Viewing Buildings)</h2>
-            <p>
-                Once logged in, you will see a table of buildings. Here, you can see the building name, which City Wide
-                manager is responsible for it, the IC assigned to it, the days it gets cleaned, whether the crew has arrived
-                today, and the time they checked in.
-                <br><br>By default, the “Today Only” filter will be turned on, showing only buildings that are scheduled to get
-                cleaned on the current day. You can uncheck this to see all buildings. You can also use the manager and
-                IC filters to view only buildings that are assigned to a specific manager or contractor.
-                <br><br>When more than 20 buildings exist for the current filter, a “Load All” button will appear. Click this to view
-                the entire list of buildings for that filter.
-            </p>
+            <div id="Home Page (Viewing Buildings)" class="section">
+                <h2>Home Page (Viewing Buildings)</h2>
+                <p>
+                    Once logged in, you will see a table of buildings. Here, you can see the building name, which City Wide
+                    manager is responsible for it, the IC assigned to it, the days it gets cleaned, whether the crew has arrived
+                    today, and the time they checked in.
+                    <br><br>By default, the “Today Only” filter will be turned on, showing only buildings that are scheduled to get
+                    cleaned on the current day. You can uncheck this to see all buildings. You can also use the manager and
+                    IC filters to view only buildings that are assigned to a specific manager or contractor.
+                    <br><br>When more than 20 buildings exist for the current filter, a “Load All” button will appear. Click this to view
+                    the entire list of buildings for that filter.
+                </p>
+            </div>
         <?php } ?>
     </main>
 </div>
@@ -45,25 +47,14 @@ $accountType = $_SESSION['accountType'];
 
 <script>
     const indexBody = document.getElementById("indexBody");
-    const sections = [
-        "Home Page (Viewing Buildings)",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11"
-    ];
+    const sections = document.getElementsByClassName("section");
     let ul = document.createElement("ul");
     sections.forEach(item => {
+        const sectionName = item.id;
         let li = document.createElement("li");
         let link = document.createElement("a");
-        link.href = "#" + encodeURIComponent(item);
-        link.innerText = item;
+        link.href = "#" + encodeURIComponent(sectionName);
+        link.innerText = sectionName;
         li.appendChild(link);
         ul.appendChild(li);
     });
