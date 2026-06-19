@@ -41,16 +41,17 @@ $accountType = $_SESSION['accountType'];
                     <?php if(accountProperties("See Check-in Time")) { ?><li>the time the crew checked in</li><?php } ?>
                 </ul>
                 <p>
-                    You can also filter the buildings the following ways:
+                    You can also filter the buildings the following ways via the filter bar at the top:
                 </p>
                 <ul>
                     <?php if(accountProperties("Filter Today Only")) { ?><li><strong>Today Only: </strong>show only buildings that are scheduled to be cleaned on the current day</li><?php } ?>
                     <?php if(accountProperties("Filter Manager")) { ?><li><strong>Filter Manager: </strong>show only buildings managed by a specific City Wide manager</li><?php } ?>
                     <?php if(accountProperties("Filter IC")) { ?><li><strong>Filter IC: </strong>show only buildings cleaned by a specific contractor</li><?php } ?>
                     <?php if(accountProperties("Search Building Name")) { ?><li><strong>Search: </strong>search buildings by name</li><?php } ?>
+                    <?php if(accountProperties("Access Inactive Buildings")) { ?><li><strong>Show Inactive: </strong>switch to view buildings marked inactive</li><?php } ?>
                 </ul>
                 <p>
-                    When the table contains a lot of buildings, only the first 20 will be loaded and a “Load All” button will appear below.
+                    When the table contains a lot of buildings, only the first 20 will be loaded and a “Load All” button will appear below the table.
                     Click the button to see the rest of the buildings.
                 </p>
             </div>
