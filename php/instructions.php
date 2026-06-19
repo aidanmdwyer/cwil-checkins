@@ -30,7 +30,7 @@ $accountType = $_SESSION['accountType'];
             <div id="Home Page (Viewing Buildings)" class="section">
                 <h2>Home Page (Viewing Buildings)</h2>
                 <p>
-                    Once logged in, you will see a table of buildings. Here, you can see:
+                    On the home page you will see a table of buildings, including the following information for each one:
                 </p>
                 <ul>
                     <?php if(accountProperties("See Building Name")) { ?><li>the building name</li><?php } ?>
@@ -41,7 +41,7 @@ $accountType = $_SESSION['accountType'];
                     <?php if(accountProperties("See Check-in Time")) { ?><li>the time the crew checked in</li><?php } ?>
                 </ul>
                 <p>
-                    You can also filter the buildings the following ways via the filter bar at the top:
+                    You can also filter the buildings via the filter bar at the top with the following options:
                 </p>
                 <ul>
                     <?php if(accountProperties("Filter Today Only")) { ?><li><strong>Today Only: </strong>show only buildings that are scheduled to be cleaned on the current day</li><?php } ?>
