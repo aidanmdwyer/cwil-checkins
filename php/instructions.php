@@ -17,7 +17,7 @@ $accountType = $_SESSION['accountType'];
 <body>
 <div id="page">
     <header>
-        <img src="../imgs/logo.png" style="min-width: 400px; width: 30%;">
+        <img src="../imgs/logo.png">
         <h1>Check-in App Instructions</h1>
         <p>Please refer to these instructions on how to use the City Wide Check-ins App as an <?php echo $accountType ?>.</p>
     </header>
@@ -41,12 +41,13 @@ $accountType = $_SESSION['accountType'];
     }
     #page {
         background-color: white;
-        width: 8.5in;
+        width: 80%;
+        min-width: 1500px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         gap: 0;
-        padding: 30px 15px;
+        padding: 50px 30px;
     }
 
 
@@ -62,13 +63,15 @@ $accountType = $_SESSION['accountType'];
     header img {
         margin: 0 0 10px 0;
         padding: 0;
+        min-width: 500px;
+        width: 30%;
     }
     header h1 {
         margin: 0;
         padding: 0;
     }
     header p {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
 
@@ -96,7 +99,7 @@ $accountType = $_SESSION['accountType'];
     }
     p {
         font-family: "Times New Roman", times, serif;
-        font-size: 1.2rem;
+        font-size: 1rem;
         margin: 0;
         padding: 0;
     }
