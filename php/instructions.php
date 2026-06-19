@@ -76,9 +76,6 @@ $accountType = $_SESSION['accountType'];
         margin: 0;
         padding: 0;
     }
-    header p {
-        font-size: 1.5rem;
-    }
 
 
 
@@ -89,17 +86,17 @@ $accountType = $_SESSION['accountType'];
     }
     h1 {
         font-family: Tahoma, sans-serif;
-        margin: 1rem 0 2rem 0;
+        margin: 0 0 2rem 0;
         padding: 0;
     }
     h2 {
         font-family: Tahoma, sans-serif;
-        margin: 0.5rem 0 1rem 0;
+        margin: 0 0 1rem 0;
         padding: 0;
     }
     h3 {
         font-family: Tahoma, sans-serif;
-        margin: 0.5rem 0 1rem 0;
+        margin: 0 0 1rem 0;
         padding: 0;
     }
     p {
