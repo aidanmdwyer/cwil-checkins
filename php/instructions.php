@@ -58,21 +58,13 @@ $accountType = $_SESSION['accountType'];
         "10",
         "11"
     ];
-    let indexLists = [];
-    const numLists = 3;
-    for(let i = 0; i < numLists; i++) indexLists.push([]);
-    for(let i = 0; i < sections.length; i++) {
-        indexLists[i % numLists].push(sections[i]);
-    }
-    indexLists.forEach(list => {
-        let ul = document.createElement("ul");
-        list.forEach(item => {
-            let li = document.createElement("li");
-            li.innerText = item;
-            ul.appendChild(li);
-        });
-        indexBody.appendChild(ul);
+    let ul = document.createElement("ul");
+    sections.forEach(item => {
+        let li = document.createElement("li");
+        li.innerText = item;
+        ul.appendChild(li);
     });
+    indexBody.appendChild(ul);
 </script>
 
 <style>
@@ -130,16 +122,11 @@ $accountType = $_SESSION['accountType'];
     }
     #indexBody {
         width: 100%;
-        display: flex;
-        flex-direction: row;
     }
     #indexBody ul {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         margin: 0;
         padding: 0;
+        column-count: 3;
     }
     #indexBody li {
         text-align: left;
