@@ -28,10 +28,10 @@ $accountType = $_SESSION['accountType'];
                 Once logged in, you will see a table of buildings. Here, you can see the building name, which City Wide
                 manager is responsible for it, the IC assigned to it, the days it gets cleaned, whether the crew has arrived
                 today, and the time they checked in.
-                By default, the “Today Only” filter will be turned on, showing only buildings that are scheduled to get
+                <br>By default, the “Today Only” filter will be turned on, showing only buildings that are scheduled to get
                 cleaned on the current day. You can uncheck this to see all buildings. You can also use the manager and
                 IC filters to view only buildings that are assigned to a specific manager or contractor.
-                When more than 20 buildings exist for the current filter, a “Load All” button will appear. Click this to view
+                <br>When more than 20 buildings exist for the current filter, a “Load All” button will appear. Click this to view
                 the entire list of buildings for that filter.
             </p>
         <?php } ?>
@@ -95,12 +95,12 @@ $accountType = $_SESSION['accountType'];
     }
     h2 {
         font-family: Tahoma, sans-serif;
-        margin: 1rem 0 2rem 0;
+        margin: 0.5rem 0 1rem 0;
         padding: 0;
     }
     h3 {
         font-family: Tahoma, sans-serif;
-        margin: 1rem 0 2rem 0;
+        margin: 0.5rem 0 1rem 0;
         padding: 0;
     }
     p {
