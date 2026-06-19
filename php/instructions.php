@@ -31,11 +31,9 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <img src="../imgs/logo.png">
         <h1>Check-in App Instructions</h1>
         <p>Please refer to these instructions on how to use the City Wide Check-ins App.</p>
+        <div id="index">
+        </div>
     </header>
-    <div id="index">
-        <h2>Index</h2>
-        <div id="indexBody"></div>
-    </div>
     <main>
 
         <?php if(accountProperties("Home Page")) { ?>
@@ -182,16 +180,13 @@ function implodeCommas(array $items, string $finalSeparator): string {
         margin: 0;
         padding: 0;
     }
-    #indexBody {
-        width: 75%;
-    }
-    #indexBody ul {
+    #index ul {
         margin: 0;
         padding: 0;
         column-count: 3;
         list-style-position: inside;
     }
-    #indexBody li {
+    #index li {
         text-align: center;
         text-wrap: nowrap;
         color:
