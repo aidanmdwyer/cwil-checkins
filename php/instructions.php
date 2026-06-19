@@ -200,7 +200,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     h2 {
         font-family: Tahoma, sans-serif;
-        margin: 0 0 1rem 30px;
+        margin: 0 0 1rem 0;
         padding: 0;
     }
     h3 {
