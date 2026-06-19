@@ -109,7 +109,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
 </body>
 
 <script>
-    const indexBody = document.getElementById("indexBody");
+    const index = document.getElementById("index");
     const sections = document.getElementsByClassName("section");
     let ul = document.createElement("ul");
     Array.from(sections).forEach(element => {
@@ -121,7 +121,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         li.appendChild(link);
         ul.appendChild(li);
     });
-    indexBody.appendChild(ul);
+    index.appendChild(ul);
 </script>
 
 <style>
