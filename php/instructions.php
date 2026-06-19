@@ -41,7 +41,8 @@ $accountType = $_SESSION['accountType'];
     }
     #page {
         background-color: white;
-        width: 1000px;
+        width: 80%;
+        min-width: 8.5in;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
