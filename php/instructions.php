@@ -52,7 +52,7 @@ $accountType = $_SESSION['accountType'];
                     if(accountProperties("Filter IC")) $managerAndIC[] = "IC";
                     if(!empty($managerAndIC)) {
                         ?>
-                        You can use the <?php echo implode("and the ", $managerAndIC) ?> filter to view only buildings that are assigned to a specific <?php echo implode("or ", $managerAndIC) ?>.
+                        You can use the <?php echo implode(" and the ", $managerAndIC) ?> filter to view only buildings that are assigned to a specific <?php echo implode(" or ", $managerAndIC) ?>.
                     <?php } ?>
 
                     <?php if(accountProperties("Search Building Name")) { ?>
