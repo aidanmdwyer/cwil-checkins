@@ -353,16 +353,15 @@ $maxRows = max(array_map('count', $usersByType));
 
                                         //stagger the list so that it appears in proper columns.
                                         $staggeredList = [];
-                                        $jumpValue = ceil(count($list)/2);
-                                        $staggerSwitch = false;
-                                        for($i = 0;
-                                            $i < count($list);
-                                            $i = $staggerSwitch ?
-                                                $i + $jumpValue :
-                                                $i - $jumpValue + 1
-                                        ) {
+
+                                        $mid = (int) ceil(count($list) / 2);
+
+                                        for ($i = 0; $i < $mid; $i++) {
                                             $staggeredList[] = $list[$i];
-                                            $staggerSwitch = !$staggerSwitch;
+
+                                            if (isset($list[$i + $mid])) {
+                                                $staggeredList[] = $list[$i + $mid];
+                                            }
                                         }
 
                                         echo "

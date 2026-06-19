@@ -202,7 +202,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     main {
         display: flex;
         flex-direction: column;
-        gap: 25px;
+        gap: 30px;
         align-items: flex-start;
     }
     h1 {
