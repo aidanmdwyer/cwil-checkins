@@ -401,21 +401,23 @@ $maxRows = max(array_map('count', $usersByType));
                                 ?>
 
                         <br>
-                        <div style="display: flex; flex-direction: row; gap: 15px;">
-                            <button type="submit" class="big">Submit</button>
-                        <?php
-                        if($accountName !== 'default') { //don't show reset to defaults button for default permissions
-                            ?>
-                            <button type="button" class="big" onclick="(() => {
-                                    if(confirm('Are you sure you want to reset the account permissions of <?php echo $accountName; ?> to the <?php echo $accountType; ?> defaults?')) {
-                                    document.getElementById('resetToDefaultsInput').value = 'true';
-                                    this.form.submit();
-                                    }
-                                    })()">Reset to Defaults</button>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <div style="display: flex; flex-direction: row; gap: 15px;">
+                                <button type="button" onclick="window.location.href = '/php/allAccounts.php'">Cancel</button>
+                                <button type="submit" class="big">Submit</button>
+                            </div>
+                            <?php
+                            if($accountName !== 'default') { //don't show reset to defaults button for default permissions
+                                ?>
+                                <button type="button" class="big" onclick="(() => {
+                                        if(confirm('Are you sure you want to reset the account permissions of <?php echo $accountName; ?> to the <?php echo $accountType; ?> defaults?')) {
+                                        document.getElementById('resetToDefaultsInput').value = 'true';
+                                        this.form.submit();
+                                        }
+                                        })()">Reset to Defaults</button>
+                            <?php } ?>
                             <br>
-                        <?php } ?>
                         </div>
-                        <button type="button" onclick="window.location.href = '/php/allAccounts.php'">Cancel</button>
                     </form>
                 </div>
             </div>
