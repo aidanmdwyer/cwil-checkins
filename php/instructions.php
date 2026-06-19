@@ -27,7 +27,7 @@ $accountType = $_SESSION['accountType'];
     </div>
     <main>
         <?php if(accountProperties("Home Page")) { ?>
-            <h2>Home Page (Viewing Buildings)</h2>
+            <h2 id="Home Page (Viewing Buildings)">Home Page (Viewing Buildings)</h2>
             <p>
                 Once logged in, you will see a table of buildings. Here, you can see the building name, which City Wide
                 manager is responsible for it, the IC assigned to it, the days it gets cleaned, whether the crew has arrived
@@ -61,7 +61,10 @@ $accountType = $_SESSION['accountType'];
     let ul = document.createElement("ul");
     sections.forEach(item => {
         let li = document.createElement("li");
-        li.innerText = item;
+        let link = document.createElement("a");
+        link.href = "#" + encodeURIComponent(item);
+        link.innerText = item;
+        li.appendChild(link);
         ul.appendChild(li);
     });
     indexBody.appendChild(ul);
@@ -132,6 +135,7 @@ $accountType = $_SESSION['accountType'];
     #indexBody li {
         text-align: center;
         text-wrap: nowrap;
+        color:
     }
 
 
