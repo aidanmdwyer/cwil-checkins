@@ -47,7 +47,7 @@ $accountType = $_SESSION['accountType'];
     }
     #page {
         background-color: white;
-        width: 80%;
+        width: 70%;
         min-width: 8.5in;
         box-sizing: border-box;
         display: flex;
@@ -77,7 +77,7 @@ $accountType = $_SESSION['accountType'];
         padding: 0;
     }
     header p {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
 
 
@@ -104,7 +104,7 @@ $accountType = $_SESSION['accountType'];
     }
     p {
         font-family: "Times New Roman", times, serif;
-        font-size: 1rem;
+        font-size: 1.2rem;
         margin: 0;
         padding: 0;
     }
