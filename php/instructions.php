@@ -88,6 +88,7 @@ $accountType = $_SESSION['accountType'];
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 20px;
         padding: 50px 30px;
         margin: 0 auto;
@@ -139,6 +140,7 @@ $accountType = $_SESSION['accountType'];
     }
     #indexBody li {
         text-align: left;
+        text-wrap: nowrap;
     }
 
 
