@@ -32,7 +32,9 @@ $accountType = $_SESSION['accountType'];
 
 <style>
     body {
-        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        margin: 0;
         padding: 0;
     }
     #page {
@@ -50,6 +52,7 @@ $accountType = $_SESSION['accountType'];
         gap: 15px;
         align-items: center;
         margin: 20px;
+        text-align: center;
     }
     header img {
         margin: 10px;
