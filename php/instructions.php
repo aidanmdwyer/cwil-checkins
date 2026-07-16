@@ -176,6 +176,13 @@ function implodeCommas(array $items, string $finalSeparator): string {
         margin: 0;
         padding: 0;
     }
+    @media (max-width: 1100px) {
+        header {
+            width: 85%;
+        }
+    }
+
+
 
     #index {
         width: 100%;
@@ -195,9 +202,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
         color:
     }
     @media (max-width: 800px) {
-        header {
-            width: 85%;
-        }
         #index ul {
             column-count: 2;
         }
