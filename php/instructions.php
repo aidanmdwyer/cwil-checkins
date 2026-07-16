@@ -63,7 +63,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                 <?php if(accountProperties("Access Inactive Buildings")) { ?>
                     <p>
                         You can also use the export button to export the current building data to a spreadsheet.
-                    </p><br>
+                    </p>
                 <?php } ?>
                 <p>
                     When the table contains a lot of buildings, only the first 20 will be loaded and a “Load All” button will appear below the table.
@@ -88,7 +88,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     if(accountProperties("Access Inactive Buildings")) $editAllOptions[] = "activate/deactivate";
                     $editAllOptions[] = "change the manager and ic of";
                     ?>
-                    <br>
                     <p>
                         You can edit multiple buildings at once by selecting them with the checkboxes in the leftmost column.
                         Here you can <?php echo implodeCommas($editAllOptions, "or"); ?> multiple buildings at a time.
@@ -219,6 +218,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
 
     .section {
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
     }
     .imgRow {
         display: flex;
@@ -227,7 +230,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         width: 100%;
         justify-content: flex-start;
         gap: 30px;
-        margin-bottom: 15px;
+        margin: 15px 0 30px 0;
     }
     .imgRow > img {
         height: 100%;
