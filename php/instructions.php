@@ -200,6 +200,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         flex-direction: column;
         gap: 50px;
         align-items: flex-start;
+        width: 100%;
     }
     h1 {
         font-family: Tahoma, sans-serif;
@@ -216,6 +217,9 @@ function implodeCommas(array $items, string $finalSeparator): string {
         padding: 0;
     }
 
+    .section {
+        width: 100%;
+    }
     .imgRow {
         display: flex;
         flex-direction: row;
