@@ -177,8 +177,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
         padding: 0;
     }
 
-
-
     #index {
         width: 100%;
         align-items: center;
@@ -190,15 +188,19 @@ function implodeCommas(array $items, string $finalSeparator): string {
         column-count: 3;
         list-style-position: inside;
     }
-    @media (max-width: 800px) {
-        #index ul {
-            column-count: 2;
-        }
-    }
+
     #index li {
         text-align: center;
         text-wrap: nowrap;
         color:
+    }
+    @media (max-width: 800px) {
+        header {
+            width: 85%;
+        }
+        #index ul {
+            column-count: 2;
+        }
     }
 
 
@@ -246,18 +248,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     .imgRow > img {
         height: 400px;
-    }
-    @media (max-width: 600px) {
-        .imgRow {
-            flex-direction: column;
-            height: auto;
-            width: 100%;
-            align-items: flex-start;
-        }
-        .imgRow > img {
-            height: auto;
-            width: 70%;
-        }
     }
 </style>
 </html>
