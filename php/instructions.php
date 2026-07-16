@@ -151,7 +151,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         padding: 80px 30px;
         margin: 0 auto;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 1000px) {
         #page {
             width: 95%;
         }
