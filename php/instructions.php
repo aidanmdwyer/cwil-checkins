@@ -43,12 +43,12 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     On the home page you will see a table of buildings, including the following information for each one:
                 </p>
                 <ul>
-                    <?php if(accountProperties("See Building Name")) { ?><li>the building name</li><?php } ?>
-                    <?php if(accountProperties("See Manager")) { ?><li>which City Wide manager is responsible for it</li><?php } ?>
-                    <?php if(accountProperties("See IC")) { ?><li>the IC assigned to it</li><?php } ?>
-                    <?php if(accountProperties("See Days")) { ?><li>the days it gets cleaned</li><?php } ?>
-                    <?php if(accountProperties("See Check-in Status")) { ?><li>whether the crew has checked in for the day</li><?php } ?>
-                    <?php if(accountProperties("See Check-in Time")) { ?><li>the time the crew checked in</li><?php } ?>
+                    <?php if(accountProperties("See Building Name")) { ?><li>The building name</li><?php } ?>
+                    <?php if(accountProperties("See Manager")) { ?><li>Which City Wide manager is responsible for it</li><?php } ?>
+                    <?php if(accountProperties("See IC")) { ?><li>The IC assigned to it</li><?php } ?>
+                    <?php if(accountProperties("See Days")) { ?><li>The days it gets cleaned</li><?php } ?>
+                    <?php if(accountProperties("See Check-in Status")) { ?><li>Whether the crew has checked in for the day</li><?php } ?>
+                    <?php if(accountProperties("See Check-in Time")) { ?><li>The time the crew checked in</li><?php } ?>
                 </ul>
                 <p>
                     You can also filter the buildings via the filter bar at the top with the following options:
@@ -79,16 +79,24 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     You can edit building information by clicking the pen symbol in the rightmost column of the table.
                     This will open a menu where you can change the buildings manager, IC, and the days it is cleaned.
                 </p>
+                <div class="imgRow">
+                    <img src="/imgs/instructions/EditBuilding.png">
+                </div>
                 <?php if(accountProperties("Select Buildings")) {
                     $editAllOptions = [];
                     if(accountProperties("Toggle Check-ins")) $editAllOptions[] = "check/uncheck";
                     if(accountProperties("Access Inactive Buildings")) $editAllOptions[] = "activate/deactivate";
                     $editAllOptions[] = "change the manager and ic of";
                     ?>
-                    <br><p>
+                    <br>
+                    <p>
                         You can edit multiple buildings at once by selecting them with the checkboxes in the leftmost column.
                         Here you can <?php echo implodeCommas($editAllOptions, "or"); ?> multiple buildings at a time.
                     </p>
+                    <div class="imgRow">
+                        <img src="/imgs/instructions/SelectAll.png">
+                        <img src="/imgs/instructions/SelectedBuildingsPrintDeleteEdit.png">
+                    </div>
                 <?php } ?>
             </div>
         <?php } ?>
@@ -198,12 +206,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         margin: 0 0 2rem 0;
         padding: 0;
     }
-    h2 {
-        font-family: Tahoma, sans-serif;
-        margin: 0 0 1rem 0;
-        padding: 0;
-    }
-    h3 {
+    h2, h3 {
         font-family: Tahoma, sans-serif;
         margin: 0 0 1rem 0;
         padding: 0;
@@ -211,6 +214,15 @@ function implodeCommas(array $items, string $finalSeparator): string {
     p {
         margin: 0;
         padding: 0;
+    }
+
+    .imgRow {
+        display: flex;
+        flex-direction: row;
+        max-height: 400px;
+    }
+    .imgRow > img {
+        flex: 1;
     }
 </style>
 </html>
