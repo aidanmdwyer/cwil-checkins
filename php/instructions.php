@@ -142,7 +142,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     #page {
         background-color: white;
-        width: 1200px;
+        width: 1100px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -151,7 +151,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         padding: 80px 30px;
         margin: 0 auto;
     }
-    @media (max-width: 1140px) {
+    @media (max-width: 1100px) {
         #page {
             width: 95%;
         }
@@ -233,6 +233,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     .imgRow {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         height: 400px;
         width: 100%;
         justify-content: flex-start;
