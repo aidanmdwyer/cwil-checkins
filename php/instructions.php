@@ -190,6 +190,11 @@ function implodeCommas(array $items, string $finalSeparator): string {
         column-count: 3;
         list-style-position: inside;
     }
+    @media (max-width: 800px) {
+        #index ul {
+            column-count: 2;
+        }
+    }
     #index li {
         text-align: center;
         text-wrap: nowrap;
@@ -234,14 +239,13 @@ function implodeCommas(array $items, string $finalSeparator): string {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        height: 400px;
         width: 100%;
         justify-content: flex-start;
         gap: 30px;
         margin: 15px 0 30px 0;
     }
     .imgRow > img {
-        height: 100%;
+        height: 400px;
     }
     @media (max-width: 600px) {
         .imgRow {
