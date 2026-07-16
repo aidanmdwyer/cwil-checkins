@@ -113,6 +113,17 @@ function implodeCommas(array $items, string $finalSeparator): string {
             </div>
         <?php } ?>
 
+        <?php if(accountProperties("Delete Buildings")) { ?>
+            <div id="Deleting Buildings" class="section">
+                <h2>Deleting Buildings</h2>
+                <p>
+                    You can edit delete a building by selecting it with the checkbox in the leftmost column and clicking "Delete Building".
+                    This action cannot be undone. Any QR slips associated with the deleted building will no longer function unless another
+                    building is created with the exact same name.
+                </p>
+            </div>
+        <?php } ?>
+
     </main>
 </div>
 </body>
