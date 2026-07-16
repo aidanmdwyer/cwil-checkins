@@ -4,6 +4,8 @@ include 'accountProperties.php';
 
 $accountType = $_SESSION['accountType'];
 
+$selectedBuildingsPath = "/imgs/instructions/SelectedBuildings" . (accountProperties("Print QR") ? "Print" : "") . (accountProperties("Delete Buildings") ? "Delete" : "") . (accountProperties("Edit Buildings") ? "Edit" : "") . ".png";
+
 function implodeCommas(array $items, string $finalSeparator): string {
     $count = count($items);
     if ($count === 0) return '';
@@ -94,7 +96,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     </p>
                     <div class="imgRow">
                         <img src="/imgs/instructions/SelectAll.png">
-                        <img src="/imgs/instructions/SelectedBuildingsPrintDeleteEdit.png">
+                        <img src="<?php echo $selectedBuildingsPath; ?>">
                     </div>
                 <?php } ?>
             </div>
