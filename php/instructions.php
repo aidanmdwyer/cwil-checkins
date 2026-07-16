@@ -220,7 +220,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 8px;
         align-items: flex-start;
     }
     .imgRow {
