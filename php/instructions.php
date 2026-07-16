@@ -245,6 +245,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
             width: 100%;
             align-items: flex-start;
         }
+        .imgRow > img {
+            height: auto;
+            width: 100%;
+        }
     }
 </style>
 </html>
