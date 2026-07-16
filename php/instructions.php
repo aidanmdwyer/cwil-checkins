@@ -225,10 +225,11 @@ function implodeCommas(array $items, string $finalSeparator): string {
         flex-direction: row;
         height: 400px;
         width: 100%;
-        justify-content: space-evenly;
+        justify-content: flex-start;
     }
     .imgRow > img {
         height: 100%;
+        margin: 15px;
     }
 </style>
 </html>
