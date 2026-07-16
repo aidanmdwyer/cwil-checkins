@@ -226,10 +226,11 @@ function implodeCommas(array $items, string $finalSeparator): string {
         height: 400px;
         width: 100%;
         justify-content: flex-start;
+        gap: 30px;
+        margin-bottom: 15px;
     }
     .imgRow > img {
         height: 100%;
-        margin: 15px 15px 30px 15px;
     }
 </style>
 </html>
