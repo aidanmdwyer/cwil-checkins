@@ -227,7 +227,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         width: 100%;
     }
     .imgRow > img {
-
+        height: 100%;
     }
 </style>
 </html>
