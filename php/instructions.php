@@ -224,7 +224,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         align-items: flex-start;
     }
     .section ul {
-        margin: 10px 0 5px 0;
+        margin: 5px 0 15px 0;
     }
     .imgRow {
         display: flex;
