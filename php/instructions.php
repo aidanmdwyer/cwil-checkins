@@ -33,8 +33,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <img src="../imgs/logo.png">
         <h1>Check-in App Instructions</h1>
         <p>Please refer to these instructions on how to use the City Wide Check-ins App.</p>
-        <div id="index">
-        </div>
+        <div id="index"></div>
     </header>
     <main>
 
@@ -140,17 +139,13 @@ function implodeCommas(array $items, string $finalSeparator): string {
 <script>
     const index = document.getElementById("index");
     const sections = document.getElementsByClassName("section");
-    let ul = document.createElement("ul");
     Array.from(sections).forEach(element => {
         const sectionName = element.id;
-        let li = document.createElement("li");
         let link = document.createElement("a");
         link.href = "#" + encodeURIComponent(sectionName);
         link.innerText = sectionName;
-        li.appendChild(link);
-        ul.appendChild(li);
+        index.appendChild(link);
     });
-    index.appendChild(ul);
 </script>
 
 <style>
@@ -208,25 +203,8 @@ function implodeCommas(array $items, string $finalSeparator): string {
 
     #index {
         width: 100%;
-        align-items: center;
-        text-align: center;
-    }
-    #index ul {
-        margin: 0;
-        padding: 0;
-        column-count: 3;
-        list-style-position: inside;
-    }
-
-    #index li {
-        text-align: center;
-        text-wrap: nowrap;
-        color:
-    }
-    @media (max-width: 800px) {
-        #index ul {
-            column-count: 2;
-        }
+        display: flex;
+        flex-direction: row;
     }
 
 
