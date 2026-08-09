@@ -334,7 +334,8 @@ function implodeCommas(array $items, string $finalSeparator): string {
         margin: 15px 0 30px 0;
     }
     .imgRow > img {
-        height: 400px;
+        max-height: 400px;
+        max-width: 40%;
         border: 2px solid #222222;
     }
 </style>
