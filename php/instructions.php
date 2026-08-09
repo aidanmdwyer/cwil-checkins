@@ -104,6 +104,24 @@ function implodeCommas(array $items, string $finalSeparator): string {
             </div>
         <?php } ?>
 
+        <?php if(accountProperties("Add Building Page")) { ?>
+            <div id="Adding New Buildings" class="section">
+                <h2>Adding New Buildings</h2>
+                <p>
+                    This system is not automatically synced with any of our other client management software.
+                    When we get new buildings, contractors, or managers, they must be added to this system separately.
+                </p>
+                <p>
+                    To add a new building to the system, click the “Add Building” button on the home page.
+                    Enter a building name, select it's manager, and search for your desired contractor.
+                    Select the days the building is scheduled to be cleaned, use the common case checkboxes for convenience if one of them applies.
+                </p>
+                <div class="imgRow">
+                    <img src="/imgs/instructions/AddBuilding.png">
+                </div>
+            </div>
+        <?php } ?>
+
         <?php if(accountProperties("Edit Buildings")) { ?>
             <div id="Editing Buildings" class="section">
                 <h2>Editing Buildings</h2>
@@ -132,21 +150,14 @@ function implodeCommas(array $items, string $finalSeparator): string {
             </div>
         <?php } ?>
 
-        <?php if(accountProperties("Add Building Page")) { ?>
-            <div id="Adding New Buildings" class="section">
-                <h2>Adding New Buildings</h2>
+        <?php if(accountProperties("Delete Buildings")) { ?>
+            <div id="Deleting Buildings" class="section">
+                <h2>Deleting Buildings</h2>
                 <p>
-                    This system is not automatically synced with any of our other client management software.
-                    When we get new buildings, contractors, or managers, they must be added to this system separately.
+                    You can edit delete a building by selecting it with the checkbox in the leftmost column and clicking "Delete Building".
+                    This action cannot be undone. Any QR slips associated with the deleted building will no longer function unless another
+                    building is created with the exact same name.
                 </p>
-                <p>
-                    To add a new building to the system, click the “Add Building” button on the home page.
-                    Enter a building name, select it's manager, and search for your desired contractor.
-                    Select the days the building is scheduled to be cleaned, use the common case checkboxes for convenience if one of them applies.
-                </p>
-                <div class="imgRow">
-                    <img src="/imgs/instructions/AddBuilding.png">
-                </div>
             </div>
         <?php } ?>
 
@@ -197,20 +208,50 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     <?php if(accountProperties("Managers Page")) {?><img src="/imgs/instructions/ManagerList.png"><?php }?>
                     <?php if(accountProperties("Contractors Page")) {?><img src="/imgs/instructions/ContractorList.png"><?php }?>
                 </div>
-            </div>
-        <?php } ?>
-
-        <?php if(accountProperties("Delete Buildings")) { ?>
-            <div id="Deleting Buildings" class="section">
-                <h2>Deleting Buildings</h2>
                 <p>
-                    You can edit delete a building by selecting it with the checkbox in the leftmost column and clicking "Delete Building".
-                    This action cannot be undone. Any QR slips associated with the deleted building will no longer function unless another
-                    building is created with the exact same name.
+                    If a contractor or manager reaches out to have their password reset, click the button under “Password Reset Link” to copy their link, and send it to them.
+                    They will have 24 hours to reset their password with this link.
+                    If they fail to do it in 24 hours, click the button again and send them the new link.
+                </p>
+                <p>
+                    You can also delete contractors and managers as long as there are no longer any buildings assigned to them.
+                    Deleting a name will automatically delete the associated account, ensuring the user no longer has access to our system.
                 </p>
             </div>
         <?php } ?>
 
+        <?php if(accountProperties("Accounts Page")) { ?>
+            <div id="Adding a New Admin Account" class="section">
+                <h2>Adding a New Admin Account</h2>
+                <p>
+                    To add a new account for an administrator, click on the "Accounts" button on the home page.
+                    Then type their name into the "Create New Admin Account" box and click submit.
+                    In order for them to activate and access their account, you must send them their password reset link, which you can copy with the button under "Password Rest Link".
+                </p>
+                <div class="imgRow">
+                    <img src="/imgs/instructions/AddNewAdmin.png">
+                </div>
+            </div>
+        <?php } ?>
+
+        <?php if(accountProperties("Accounts Page")) { ?>
+            <div id="Changing Account Permissions" class="section">
+                <h2>Changing Account Permissions</h2>
+                <p>
+                    You can change account permissions of individual accounts or of an entire account type in the "Accounts" page.
+                    To edit an individual account's permissions, click on the pen symbol by their name in the "All Accounts" list.
+                    Their permissions will appear on the screen, where you can check/uncheck whichever permissions they should/shouldn't have.
+                </p>
+                <p>
+                    You can also change the default permissions of an entire account type by using the dropdown menus in the "Account Permissions" box.
+                    Select the account type you want to edit in the first dropdown, and select "Default Permissions" in the second dropdown.
+                    When you change these permissions, any account of that type that doesn't have their own custom permissions set will have those permissions applied.
+                </p>
+                <div class="imgRow">
+                    <img src="/imgs/instructions/AccountPermissions.png">
+                </div>
+            </div>
+        <?php } ?>
     </main>
 </div>
 </body>
