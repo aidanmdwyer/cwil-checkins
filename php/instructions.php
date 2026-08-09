@@ -256,7 +256,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
                 </p>
                 <div class="imgRow">
                     <img src="/imgs/instructions/AllAccountsTable.png">
-                    <img src="/imgs/instructions/AccountPermissions.png">
+                </div>
+                <div class="imgRow">
+                    <img src="/imgs/instructions/AccountDefaultPermissions.png">
+                    <img src="/imgs/instructions/AccountIndividualPermissions.png">
                 </div>
             </div>
         <?php } ?>
@@ -359,7 +362,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         padding: 0;
     }
     p {
-        margin: 0;
+        margin: 0 0 10px 0;
         padding: 0;
     }
 
