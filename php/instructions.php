@@ -330,6 +330,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         flex-wrap: wrap;
         width: 100%;
         justify-content: flex-start;
+        align-items: flex-start;
         gap: 30px;
         margin: 15px 0 30px 0;
     }
