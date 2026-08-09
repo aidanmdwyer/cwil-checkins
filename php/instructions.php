@@ -4,7 +4,7 @@ include 'accountProperties.php';
 
 $accountType = $_SESSION['accountType'];
 
-$selectedBuildingsPath = "/imgs/instructions/SelectedBuildings" . (accountProperties("Print QR") ? "Print" : "") . (accountProperties("Delete Buildings") ? "Delete" : "") . (accountProperties("Edit Buildings") ? "Edit" : "") . ".png";
+$selectedBuildingsImgPath = "/imgs/instructions/SelectedBuildings" . (accountProperties("Print QR") ? "Print" : "") . (accountProperties("Delete Buildings") ? "Delete" : "") . (accountProperties("Edit Buildings") ? "Edit" : "") . ".png";
 
 function implodeCommas(array $items, string $finalSeparator): string {
     $count = count($items);
@@ -64,7 +64,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                 </ul>
                 <?php if(accountProperties("Access Inactive Buildings")) { ?>
                     <p>
-                        You can also use the export button to export the current building data to a spreadsheet.
+                        You can also use the export button to export data to a spreadsheet.
                     </p>
                 <?php } ?>
                 <p>
@@ -96,11 +96,31 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     </p>
                     <div class="imgRow">
                         <img src="/imgs/instructions/SelectAll.png">
-                        <img src="<?php echo $selectedBuildingsPath; ?>">
+                        <img src="<?php echo $selectedBuildingsImgPath; ?>">
                     </div>
                 <?php } ?>
             </div>
         <?php } ?>
+
+        <div id="Checking In" class="section">
+            <h2>Checking In</h2>
+            <p>
+                Cleaning crews are responsible for checking in via one of our QR codes when they arrive at a job site.
+                This code will be found in a janitors closet or somewhere else easily accessible by the crew.
+            </p>
+            <div class="imgRow">
+                <img src="/imgs/instructions/QRSlip.png">
+            </div>
+            <p>
+                In order to check in, one member of the cleaning crew will scan the code with their phone's camera app.
+                Then, they will be taken to a confirmation page with a green checkmark indicating the check in was successful.
+                If the confirmation page displays an error, the crew should reach out to their City Wide point of contact to make sure they get checked in.
+            </p>
+            <div class="imgRow">
+                <img src="/imgs/instructions/CheckInSuccess.png">
+                <img src="/imgs/instructions/CheckInFailure.png">
+            </div>
+        </div>
 
         <?php if(accountProperties("Delete Buildings")) { ?>
             <div id="Deleting Buildings" class="section">
@@ -254,6 +274,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     .imgRow > img {
         height: 400px;
+        border: 2px solid #222222;
     }
 </style>
 </html>
