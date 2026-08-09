@@ -132,6 +132,74 @@ function implodeCommas(array $items, string $finalSeparator): string {
             </div>
         <?php } ?>
 
+        <?php if(accountProperties("Add Building Page")) { ?>
+            <div id="Adding New Buildings" class="section">
+                <h2>Adding New Buildings</h2>
+                <p>
+                    This system is not automatically synced with any of our other client management software.
+                    When we get new buildings, contractors, or managers, they must be added to this system separately.
+                </p>
+                <p>
+                    To add a new building to the system, click the “Add Building” button on the home page.
+                    Enter a building name, select it's manager, and search for your desired contractor.
+                    Select the days the building is scheduled to be cleaned, use the common case checkboxes for convenience if one of them applies.
+                </p>
+                <div class="imgRow">
+                    <img src="/imgs/instructions/AddBuilding.png">
+                </div>
+            </div>
+        <?php } ?>
+
+        <?php if(accountProperties("Managers Page") || accountProperties("Contractors Page")) {
+            $addOptions = [];
+            if(accountProperties("Managers Page")) $addOptions[] = "manager";
+            if(accountProperties("Contractors Page")) $addOptions[] = "contractor";
+            ?>
+            <div id="Adding New <?php echo
+            implode('/', array_map(function($item) {
+                return ucfirst($item) . 's';
+            }, $addOptions));
+            ?>" class="section">
+                <h2>Adding New <?php echo
+                    implode('/', array_map(function($item) {
+                        return ucfirst($item) . 's';
+                    }, $addOptions));
+                    ?></h2>
+                <p>
+                    To add a new <?php echo
+                    implode('/', array_map(function($item) {
+                        return $item;
+                    }, $addOptions));
+                    ?> to the system, click on the <?php echo
+                    implode(' or ', array_map(function($item) {
+                        return '"' . ucfirst($item) . 's"';
+                    }, $addOptions));
+                    ?> button on the home page.
+                    Then type their name into the <?php echo
+                    implode(' or ', array_map(function($item) {
+                        return '"Add New ' . ucfirst($item) . '"';
+                    }, $addOptions));
+                    ?> box and click submit.
+                </p>
+                <div class="imgRow">
+                    <img src="/imgs/instructions/AddNewManager.png">
+                </div>
+                <p>
+                    Adding a manager to the list allows you to assign buildings to them, but they will still need to make an account to access the system themselves.
+                    To have them create an account, you must click on the button under "Account Link" to copy their account link, and send it to them.
+                </p>
+                <div class="imgRow">
+                    <img src="/imgs/instructions/ManagerList.png">
+                </div>
+            </div>
+        <?php } ?>
+
+        <?php if(accountProperties("Contractors page")) { ?>
+            <div id="Adding New Contractors" class="section">
+                <h2>Adding New Contractors</h2>
+            </div>
+        <?php } ?>
+
         <?php if(accountProperties("Delete Buildings")) { ?>
             <div id="Deleting Buildings" class="section">
                 <h2>Deleting Buildings</h2>
@@ -218,6 +286,8 @@ function implodeCommas(array $items, string $finalSeparator): string {
         flex-direction: row;
         justify-content: space-evenly;
         align-items: center;
+        gap: 20px 50px;
+        flex-wrap: wrap;
     }
 
 
