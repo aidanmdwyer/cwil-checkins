@@ -73,6 +73,37 @@ function implodeCommas(array $items, string $finalSeparator): string {
             </div>
         <?php } ?>
 
+        <div id="QR Check-in" class="section">
+            <h2>QR Check-in</h2>
+            <p>
+                Cleaning crews are responsible for checking in via one of our QR codes when they arrive at a job site.
+                This code will be found in a janitors closet or somewhere else easily accessible by the crew.
+            </p>
+            <div class="imgRow">
+                <img src="/imgs/instructions/QRSlip.png">
+            </div>
+            <p>
+                In order to check in, one member of the cleaning crew will scan the code with their phone's camera app.
+                Then, they will be taken to a confirmation page with a green checkmark indicating the check in was successful.
+                If the confirmation page displays an error, the crew should reach out to their City Wide point of contact to make sure they get checked in.
+            </p>
+            <div class="imgRow">
+                <img src="/imgs/instructions/CheckInSuccess.png">
+                <img src="/imgs/instructions/CheckInFailure.png">
+            </div>
+        </div>
+
+        <?php if(accountProperties("Toggle Check-ins")) { ?>
+            <div id="Manual Check-in" class="section">
+                <h2>Manual Check-in</h2>
+                <p>
+                    If need be, you may also manually check in cleaning crews on the home page.
+                    Just click on the red X (&#10060) for the building you'd like to mark checked in.
+                    You can also uncheck buildings that are already checked in by clicking on the checkmark (&#9989).
+                </p>
+            </div>
+        <?php } ?>
+
         <?php if(accountProperties("Edit Buildings")) { ?>
             <div id="Editing Buildings" class="section">
                 <h2>Editing Buildings</h2>
@@ -100,26 +131,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
                 <?php } ?>
             </div>
         <?php } ?>
-
-        <div id="Checking In" class="section">
-            <h2>Checking In</h2>
-            <p>
-                Cleaning crews are responsible for checking in via one of our QR codes when they arrive at a job site.
-                This code will be found in a janitors closet or somewhere else easily accessible by the crew.
-            </p>
-            <div class="imgRow">
-                <img src="/imgs/instructions/QRSlip.png">
-            </div>
-            <p>
-                In order to check in, one member of the cleaning crew will scan the code with their phone's camera app.
-                Then, they will be taken to a confirmation page with a green checkmark indicating the check in was successful.
-                If the confirmation page displays an error, the crew should reach out to their City Wide point of contact to make sure they get checked in.
-            </p>
-            <div class="imgRow">
-                <img src="/imgs/instructions/CheckInSuccess.png">
-                <img src="/imgs/instructions/CheckInFailure.png">
-            </div>
-        </div>
 
         <?php if(accountProperties("Delete Buildings")) { ?>
             <div id="Deleting Buildings" class="section">
@@ -205,7 +216,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
         width: 100%;
         display: flex;
         flex-direction: row;
-        gap: 30px;
         justify-content: space-evenly;
         align-items: center;
     }
