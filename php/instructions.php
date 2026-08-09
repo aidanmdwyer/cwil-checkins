@@ -205,6 +205,9 @@ function implodeCommas(array $items, string $finalSeparator): string {
         width: 100%;
         display: flex;
         flex-direction: row;
+        gap: 30px;
+        justify-content: space-evenly;
+        align-items: center;
     }
 
 
