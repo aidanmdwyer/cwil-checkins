@@ -226,10 +226,11 @@ function implodeCommas(array $items, string $finalSeparator): string {
                 <p>
                     To add a new account for an administrator, click on the "Accounts" button on the home page.
                     Then type their name into the "Create New Admin Account" box and click submit.
-                    In order for them to activate and access their account, you must send them their password reset link, which you can copy with the button under "Password Rest Link".
+                    In order for them to activate and access their account, you must send them their password reset link, which you can copy with the button under "Password Rest Link" in the "All Accounts" table.
                 </p>
                 <div class="imgRow">
                     <img src="/imgs/instructions/AddNewAdmin.png">
+                    <img src="/imgs/instructions/AllAccountsTable.png">
                 </div>
             </div>
         <?php } ?>
@@ -248,6 +249,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     When you change these permissions, any account of that type that doesn't have their own custom permissions set will have those permissions applied.
                 </p>
                 <div class="imgRow">
+                    <img src="/imgs/instructions/AllAccountsTable.png">
                     <img src="/imgs/instructions/AccountPermissions.png">
                 </div>
             </div>
