@@ -185,7 +185,11 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     <img src="/imgs/instructions/AddNewManager.png">
                 </div>
                 <p>
-                    Adding a manager to the list allows you to assign buildings to them, but they will still need to make an account to access the system themselves.
+                    Adding a <?php echo
+                    implode('/', array_map(function($item) {
+                        return $item;
+                    }, $addOptions));
+                    ?> to the list allows you to assign buildings to them, but they will still need to make an account to access the system themselves.
                     To have them create an account, you must click on the button under "Account Link" to copy their account link, and send it to them.
                 </p>
                 <div class="imgRow">
@@ -335,6 +339,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     .imgRow > img {
         height: 400px;
+        max-width: 50%;
         border: 2px solid #222222;
     }
 </style>
