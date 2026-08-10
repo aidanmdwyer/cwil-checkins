@@ -331,10 +331,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
         font-size: 1.2rem;
     }
     .printButton {
-        font-size: 15px;
+        font-size: 20px;
         text-align: center;
         font-family: inherit;
-        padding: 5px 10px;
+        padding: 2px 6px;
         border-color: #2c2c24;
     }
     #page {
