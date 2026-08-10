@@ -66,11 +66,11 @@ function implodeCommas(array $items, string $finalSeparator): string {
                 </ul>
                 <?php if(accountProperties("Access Inactive Buildings")) { ?>
                     <p>
-                        You can also use the export button to export data to a spreadsheet.
+                        You can also use the export button to export the data to a spreadsheet.
                     </p>
                 <?php } ?>
                 <p>
-                    When the table contains a lot of buildings, only the first 20 will be loaded and a “Load All” button will appear below the table.
+                    When the table contains more than 20 buildings, only the first 20 will be loaded and a “Load All” button will appear below the table.
                     Click the button to see the rest of the buildings.
                 </p>
             </div>
@@ -116,7 +116,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                 </p>
                 <p>
                     To add a new building to the system, click the “Add Building” button on the home page.
-                    Enter a building name, select it's manager, and search for your desired contractor.
+                    Enter a building name, select the correct manager, and search for the correct contractor.
                     Select the days the building is scheduled to be cleaned, use the common case checkboxes for convenience if one of them applies.
                 </p>
                 <div class="imgRow">
@@ -139,7 +139,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     $editAllOptions = [];
                     if(accountProperties("Toggle Check-ins")) $editAllOptions[] = "check/uncheck";
                     if(accountProperties("Access Inactive Buildings")) $editAllOptions[] = "activate/deactivate";
-                    $editAllOptions[] = "change the manager and ic of";
+                    $editAllOptions[] = "change the manager/ic of";
                     ?>
                     <p>
                         You can edit multiple buildings at once by selecting them with the checkboxes in the leftmost column.
@@ -157,7 +157,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
             <div id="Deleting Buildings" class="section column">
                 <h2>Deleting Buildings</h2>
                 <p>
-                    You can edit delete a building by selecting it with the checkbox in the leftmost column and clicking "Delete Building".
+                    You can delete a building by selecting it with the checkbox in the leftmost column and clicking "Delete Building".
                     This action cannot be undone. Any QR slips associated with the deleted building will no longer function unless another
                     building is created with the exact same name.
                 </p>
@@ -223,7 +223,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                 <p>
                     You can also delete <?php echo
                     implode(' and ', array_map(function($item) {
-                        return $item;
+                        return $item . 's';
                     }, $addOptions));
                     ?> as long as there are no longer any buildings assigned to them.
                     Deleting a name will automatically delete the associated account, ensuring the user no longer has access to our system.
@@ -253,7 +253,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     <div class="column">
                         <p>
                             You can edit the permissions of individual accounts, or of an entire account type, in the "Accounts" page.
-                            Doing so will limit which pages and what data the users can and cannot access on the app.
+                            Doing so will limit which pages and what data the users can and cannot access.
                         </p>
                         <p>
                             To edit an individual account's permissions, click on the pen symbol by their name in the "All Accounts" list.
@@ -270,7 +270,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                         <p>
                             You can also change the default permissions of an entire account type by using the dropdown menus in the "Account Permissions" box.
                             Select the account type you want to edit in the first dropdown, and select "Default Permissions" in the second dropdown.
-                            When you change these permissions, any account of that type that doesn't have their own custom permissions set will have those permissions applied.
+                            When you change these permissions, any account of that type that doesn't have its own custom permissions set will have the default permissions applied.
                         </p>
                     </div>
                     <img src="/imgs/instructions/AccountDefaultPermissions.png">
@@ -282,7 +282,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
             <div id="Archives" class="section column">
                 <h2>Archives</h2>
                 <p>
-                    You are also able to access check-in archives of any previous day.
+                    You can access the archived check-in data of any previous day.
                     Click the “Archives” button on the home page and select a date to see the check-in records from that day.
                 </p>
                 <p class="note">
