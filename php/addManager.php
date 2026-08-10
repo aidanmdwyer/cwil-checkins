@@ -27,7 +27,7 @@ if (!accountProperties('Managers Page')) {
 
 <header>
     <button onclick="window.location.href='../index.php'" class="big"><span style="font-size: 20px;">&#8592</span> Back to Home</button>
-    <h3>Managers <a href="../php/instructions.php#Adding%20New%20Managers%2FContractors" target="_blank"><img src="../imgs/help_icon.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
+    <h3>Managers <a href="../php/instructions.php#Adding%20New%20Managers%2FContractors" target="_blank"><img src="../imgs/helpIconWhite.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
     <div>
         <button onclick="window.location.href = '/index.php?logout=logout';" class="big">Logout</button>
         <div style="display: inline-block; vertical-align: middle; line-height: 90%;">

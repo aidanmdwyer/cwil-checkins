@@ -85,7 +85,7 @@ $maxRows = max(array_map('count', $usersByType));
 
 <header>
     <button onclick="window.location.href='../index.php'" class="big"><span style="font-size: 20px;">&#8592</span> Back to Home</button>
-    <h3>All Accounts <a href="../php/instructions.php#Adding%20a%20New%20Admin%20Account" target="_blank"><img src="../imgs/help_icon.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
+    <h3>All Accounts <a href="../php/instructions.php#Adding%20a%20New%20Admin%20Account" target="_blank"><img src="../imgs/helpIconWhite.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
     <div>
         <button onclick="window.location.href = '/index.php?logout=logout';" class="big">Logout</button>
         <div style="display: inline-block; vertical-align: middle; line-height: 90%;">
@@ -98,7 +98,7 @@ $maxRows = max(array_map('count', $usersByType));
         <div style="display: flex; flex-direction: row;">
             <div style="display: flex; flex-direction: column;">
                 <div class="card">
-                    <h2>Create New Admin Account</h2>
+                    <h2>Create New Admin Account <a href="../php/instructions.php#Adding%20a%20New%20Admin%20Account" target="_blank"><img src="../imgs/helpIconBlack.png" alt="help" style="width: 15px; height: 15px;"></a></h2>
                     <p>Enter the username and then have the user reset the password (they cannot log in until the password is set).</p>
                     <form method="POST" action="allAccounts.php">
                         <label>
@@ -238,7 +238,7 @@ $maxRows = max(array_map('count', $usersByType));
                     $accountName = rawurldecode($_GET['accountName']);
                     ?>
 
-                    <h2>Account Permissions</h2>
+                    <h2>Account Permissions <a href="../php/instructions.php#Changing%20Account%20Permissions" target="_blank"><img src="../imgs/helpIconBlack.png" alt="help" style="width: 15px; height: 15px;"></a></h2>
 
                     <p>Select an account type. You may either edit the default permissions for that account type, or the permissions of an individual account.</p>
 
