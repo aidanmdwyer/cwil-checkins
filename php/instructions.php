@@ -309,6 +309,9 @@ function implodeCommas(array $items, string $finalSeparator): string {
 </script>
 
 <style>
+    html, body {
+        scroll-behavior: smooth;
+    }
     body {
         background-color: lightgrey;
         margin: 10px;
