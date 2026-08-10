@@ -359,7 +359,11 @@ function implodeCommas(array $items, string $finalSeparator): string {
 
     #index {
         width: 100%;
-        column-count: 3;
+        column-count: 2;
+    }
+    #index li {
+        margin-bottom: 10px;
+        list-style-position: inside;
     }
 
 
