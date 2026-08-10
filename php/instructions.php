@@ -389,7 +389,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         padding: 0;
     }
     p.note {
-        font-size: 0.75rem;
+        font-size: 0.8em;
         color: red;
     }
 
@@ -415,7 +415,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     .imgRow > img {
         max-height: 450px;
-        max-width: 40%;
+        max-width: 45%;
         border: 2px solid #222222;
     }
     .imgRow > div {
