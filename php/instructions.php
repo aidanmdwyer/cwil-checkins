@@ -37,7 +37,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
             <h3>*Quick Reference*</h3>
         </div>
     </header>
-    <main class="column">
+    <main>
 
         <?php if(accountProperties("Home Page")) { ?>
             <div id="Viewing Buildings" class="section column">
@@ -317,13 +317,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
 </script>
 
 <style>
-    .column {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        align-items: flex-start;
-    }
-
     html {
         -webkit-print-color-adjust: exact;
         scroll-behavior: smooth;
@@ -335,21 +328,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
 
         font-family: "Times New Roman", times, serif;
         font-size: 1.2rem;
-    }
-    @media print {
-        body {
-            margin: 0;
-        }
-        #index {
-            display: none;
-        }
-        .section {
-            break-inside: avoid !important;
-            page-break-inside: avoid !important;
-        }
-        main {
-            display: block;
-        }
     }
     #page {
         background-color: white;
@@ -419,7 +397,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
 
 
     main {
+        display: flex;
+        flex-direction: column;
         gap: 50px;
+        align-items: flex-start;
         width: 100%;
     }
     h1 {
@@ -450,6 +431,12 @@ function implodeCommas(array $items, string $finalSeparator): string {
         color: red;
     }
 
+    .column {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
     .section {
         width: 100%;
     }
@@ -473,6 +460,22 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     .imgRow > div {
         flex: 1;
+    }
+
+    @media print {
+        body {
+            margin: 0;
+        }
+        #index {
+            display: none;
+        }
+        .section {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+        }
+        main {
+            display: block;
+        }
     }
 </style>
 </html>
