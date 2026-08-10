@@ -38,7 +38,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     <main>
 
         <?php if(accountProperties("Home Page")) { ?>
-            <div id="Viewing Buildings" class="section">
+            <div id="Viewing Buildings" class="section column">
                 <h2>Viewing Buildings</h2>
                 <p>
                     On the home page you will see a table of buildings, including the following information for each one:
@@ -73,7 +73,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
             </div>
         <?php } ?>
 
-        <div id="QR Check-in" class="section">
+        <div id="QR Check-in" class="section column">
             <h2>QR Check-in</h2>
             <p>
                 Cleaning crews are responsible for checking in via one of our QR codes when they arrive at a job site.
@@ -94,7 +94,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         </div>
 
         <?php if(accountProperties("Toggle Check-ins")) { ?>
-            <div id="Manual Check-in" class="section">
+            <div id="Manual Check-in" class="section column">
                 <h2>Manual Check-in</h2>
                 <p>
                     If need be, you may also manually check in cleaning crews on the home page.
@@ -105,7 +105,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <?php } ?>
 
         <?php if(accountProperties("Add Building Page")) { ?>
-            <div id="Adding New Buildings" class="section">
+            <div id="Adding New Buildings" class="section column">
                 <h2>Adding New Buildings</h2>
                 <p>
                     This system is not automatically synced with any of our other client management software.
@@ -123,7 +123,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <?php } ?>
 
         <?php if(accountProperties("Edit Buildings")) { ?>
-            <div id="Editing Buildings" class="section">
+            <div id="Editing Buildings" class="section column">
                 <h2>Editing Buildings</h2>
                 <p>
                     You can edit building information by clicking the pen symbol in the rightmost column of the table.
@@ -151,7 +151,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <?php } ?>
 
         <?php if(accountProperties("Delete Buildings")) { ?>
-            <div id="Deleting Buildings" class="section">
+            <div id="Deleting Buildings" class="section column">
                 <h2>Deleting Buildings</h2>
                 <p>
                     You can edit delete a building by selecting it with the checkbox in the leftmost column and clicking "Delete Building".
@@ -170,7 +170,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
             implode('/', array_map(function($item) {
                 return ucfirst($item) . 's';
             }, $addOptions));
-            ?>" class="section">
+            ?>" class="section column">
                 <h2>Adding New <?php echo
                     implode('/', array_map(function($item) {
                         return ucfirst($item) . 's';
@@ -221,7 +221,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <?php } ?>
 
         <?php if(accountProperties("Accounts Page")) { ?>
-            <div id="Adding a New Admin Account" class="section">
+            <div id="Adding a New Admin Account" class="section column">
                 <h2>Adding a New Admin Account</h2>
                 <p>
                     To add a new account for an administrator, click on the "Accounts" button on the home page.
@@ -236,10 +236,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <?php } ?>
 
         <?php if(accountProperties("Accounts Page")) { ?>
-            <div id="Changing Account Permissions" class="section">
+            <div id="Changing Account Permissions" class="section column">
                 <h2>Changing Account Permissions</h2>
                 <div class="imgRow">
-                    <div>
+                    <div class="column">
                         <p>
                             You can edit the permissions of individual accounts, or of an entire account type, in the "Accounts" page.
                             Doing so will limit which pages and what data the users can and cannot access on the app.
@@ -268,7 +268,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <?php } ?>
 
         <?php if(accountProperties("Accounts Page")) { ?>
-            <div id="Archives" class="section">
+            <div id="Archives" class="section column">
                 <h2>Archives</h2>
                 <p>
                     You are also able to access check-in archives of any previous day.
@@ -393,12 +393,14 @@ function implodeCommas(array $items, string $finalSeparator): string {
         color: red;
     }
 
-    .section {
-        width: 100%;
+    .column {
         display: flex;
         flex-direction: column;
         gap: 8px;
         align-items: flex-start;
+    }
+    .section {
+        width: 100%;
     }
     .section ul {
         margin: 5px 0 15px 0;
