@@ -360,6 +360,8 @@ function implodeCommas(array $items, string $finalSeparator): string {
     #index {
         width: 100%;
         column-count: 2;
+        background-color: lightgray;
+        border-radius: 6px;
     }
     #index li {
         margin-bottom: 10px;
