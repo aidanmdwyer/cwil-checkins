@@ -238,16 +238,20 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <?php if(accountProperties("Accounts Page")) { ?>
             <div id="Changing Account Permissions" class="section">
                 <h2>Changing Account Permissions</h2>
-                <p>
-                    You can edit the permissions of individual accounts, or of an entire account type, in the "Accounts" page.
-                    Doing so will limit which pages and what data the users can and cannot access on the app.
-                </p>
-                <p>
-                    To edit an individual account's permissions, click on the pen symbol by their name in the "All Accounts" list.
-                    Their permissions will appear on the screen, where you can check/uncheck whichever permissions they should/shouldn't have.
-                </p>
                 <div class="imgRow">
-                    <img src="/imgs/instructions/AllAccountsTable.png">
+                    <div>
+                        <p>
+                            You can edit the permissions of individual accounts, or of an entire account type, in the "Accounts" page.
+                            Doing so will limit which pages and what data the users can and cannot access on the app.
+                        </p>
+                        <p>
+                            To edit an individual account's permissions, click on the pen symbol by their name in the "All Accounts" list.
+                            Their permissions will appear on the screen, where you can check/uncheck whichever permissions they should/shouldn't have.
+                        </p>
+                        <div class="imgRow">
+                            <img src="/imgs/instructions/AllAccountsTable.png">
+                        </div>
+                    </div>
                     <img src="/imgs/instructions/AccountIndividualPermissions.png">
                 </div>
                 <div class="imgRow">
@@ -387,12 +391,12 @@ function implodeCommas(array $items, string $finalSeparator): string {
         margin: 15px 0 30px 0;
     }
     .imgRow > img {
-        max-height: 500px;
+        max-height: 450px;
         max-width: 40%;
         border: 2px solid #222222;
     }
-    .imgRow > p {
-        max-width: 40%;
+    .imgRow > p, .imgRow > div {
+        flex: 1;
     }
 </style>
 </html>
