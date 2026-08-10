@@ -340,6 +340,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         text-align: center;
         font-family: inherit;
         padding: 5px 10px;
+        border-color: #2c2c24;
     }
     #page {
         background-color: white;
