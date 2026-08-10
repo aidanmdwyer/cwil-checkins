@@ -217,7 +217,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     }, $addOptions));
                     ?> reaches out to have their password reset, click the button under “Password Reset Link” to copy their link, and send it to them.
                     They will have 24 hours to reset their password with this link.
-                    If they fail to do it in 24 hours, click the button again and send them the new link.
+                    If they fail to do this in 24 hours, click the button again and send them the new link.
                 </p>
                 <p>
                     You can also delete <?php echo
