@@ -105,7 +105,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     'See Days' :
                         [
                             `<th style="font-size: 10px; padding: 0;">M</th>
-                    <th style="font-size: 10px; padding: 0; min">T</th>
+                    <th style="font-size: 10px; padding: 0;">T</th>
                     <th style="font-size: 10px; padding: 0;">W</th>
                     <th style="font-size: 10px; padding: 0;">Th</th>
                     <th style="font-size: 10px; padding: 0;">F</th>
