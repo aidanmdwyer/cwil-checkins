@@ -333,9 +333,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
     .printButton {
         position: fixed;
         top: 20px;
-        left: 20px;
+        left: 50%;
+        transform: translateX(-50%);
 
-        font-size: 15px;
+        font-size: 20px;
         text-align: center;
         background-color: white;
         color: black;
