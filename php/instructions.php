@@ -485,6 +485,9 @@ function implodeCommas(array $items, string $finalSeparator): string {
         }
     }
     @media(max-width: 700px) {
+        body {
+            margin: 0;
+        }
         #index ul {
             column-count: 1;
         }
