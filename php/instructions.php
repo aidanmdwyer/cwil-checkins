@@ -317,7 +317,8 @@ function implodeCommas(array $items, string $finalSeparator): string {
 </script>
 
 <style>
-    html, body {
+    html {
+        -webkit-print-color-adjust: exact;
         scroll-behavior: smooth;
     }
     body {
@@ -327,6 +328,11 @@ function implodeCommas(array $items, string $finalSeparator): string {
 
         font-family: "Times New Roman", times, serif;
         font-size: 1.2rem;
+    }
+    @media print {
+        body {
+            margin: 0;
+        }
     }
     #page {
         background-color: white;
