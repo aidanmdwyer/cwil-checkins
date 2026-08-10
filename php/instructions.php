@@ -37,7 +37,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
             <h3>*Quick Reference*</h3>
         </div>
     </header>
-    <main>
+    <main class="column">
 
         <?php if(accountProperties("Home Page")) { ?>
             <div id="Viewing Buildings" class="section column">
@@ -317,6 +317,13 @@ function implodeCommas(array $items, string $finalSeparator): string {
 </script>
 
 <style>
+    .column {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
     html {
         -webkit-print-color-adjust: exact;
         scroll-behavior: smooth;
@@ -339,6 +346,9 @@ function implodeCommas(array $items, string $finalSeparator): string {
         .section {
             break-inside: avoid !important;
             page-break-inside: avoid !important;
+        }
+        main {
+            display: block;
         }
     }
     #page {
@@ -409,10 +419,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
 
 
     main {
-        display: flex;
-        flex-direction: column;
         gap: 50px;
-        align-items: flex-start;
         width: 100%;
     }
     h1 {
@@ -443,12 +450,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
         color: red;
     }
 
-    .column {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        align-items: flex-start;
-    }
     .section {
         width: 100%;
     }
