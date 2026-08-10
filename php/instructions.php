@@ -331,7 +331,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         font-size: 1.2rem;
     }
     .printButton {
-        font-size: 25px;
+        font-size: 15px;
         text-align: center;
         font-family: inherit;
         padding: 5px 10px;
@@ -345,7 +345,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         flex-direction: column;
         align-items: center;
         gap: 50px;
-        padding: 80px 30px;
+        padding: 40px 30px;
         margin: 0 auto;
     }
     @media (max-width: 1100px) {
@@ -363,6 +363,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         align-items: center;
         text-align: center;
         width: 75%;
+        padding-top: 40px;
     }
     header img {
         margin: 0 0 10px 0;
