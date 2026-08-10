@@ -93,19 +93,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="contentContainer">
         <div class="card">
             <h2>Add New Building <a href="../php/instructions.php#Adding%20New%20Buildings" target="_blank"><img src="../imgs/helpIconBlack.png" alt="help" style="width: 15px; height: 15px;"></a></h2>
-            <?php if (!empty($errors)): ?>
+            <?php if (!empty($errors)) { ?>
                 <div style="color: red; margin-bottom: 1em;">
-                    <?php foreach ($errors as $error): ?>
+                    <?php foreach ($errors as $error) { ?>
                         <p><?php echo htmlspecialchars($error); ?></p>
-                    <?php endforeach; ?>
+                    <?php } ?>
                 </div>
-            <?php endif; ?>
+            <?php } ?>
 
-            <?php if ($successMessage !== ''): ?>
+            <?php if ($successMessage !== '') { ?>
                 <div style="color: green; margin-bottom: 1em;">
                     <?php echo htmlspecialchars($successMessage); ?>
                 </div>
-            <?php endif; ?>
+            <?php } ?>
 
             <form action="addBuilding.php" method="post">
                 <label for="Building Name">Building Name</label><br>
