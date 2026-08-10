@@ -365,6 +365,11 @@ function implodeCommas(array $items, string $finalSeparator): string {
         margin-bottom: 10px;
         list-style-position: inside;
     }
+    @media(max-width: 700px) {
+        #index {
+            column-count: 1;
+        }
+    }
 
 
 
