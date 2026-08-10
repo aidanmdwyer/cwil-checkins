@@ -379,10 +379,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
         margin: 0 0 2rem 0;
         padding: 0;
     }
-    h2 {
-        border-bottom: 4px solid;
-        border-image: linear-gradient(to right, #2c2c24 70%, #bf3232 80%) 1;
-    }
     h2, h3 {
         font-family: Tahoma, sans-serif;
         margin: 0 0 1rem 0;
@@ -405,6 +401,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     .section {
         width: 100%;
+        background: linear-gradient(to bottom, #2c2c24 0.8rem, #bf3232 1rem, transparent 1.2rem);
     }
     .section ul {
         margin: 5px 0 15px 0;
