@@ -381,7 +381,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     h2 {
         border-bottom: 4px solid;
-        border-image: linear-gradient(to right, #2c2c24 75%, transparent 80%, #bf3232 85%) 1;
+        border-image: linear-gradient(to right, #2c2c24 75%, transparent 75%, transparent 80%, #bf3232 80%) 1;
     }
     h2, h3 {
         font-family: Tahoma, sans-serif;
