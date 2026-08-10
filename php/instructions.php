@@ -465,6 +465,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     @media print {
         body {
             margin: 0;
+            background-color: white;
         }
         #index {
             display: none;
