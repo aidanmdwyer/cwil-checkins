@@ -161,7 +161,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             ?>
         </div>
         <div class="card">
-            <h2>Add New Manager</h2>
+            <h2>Add New Manager <a href="../php/instructions.php#Adding%20New%20Managers%2FContractors" target="_blank"><img src="../imgs/helpIconBlack.png" alt="help" style="width: 15px; height: 15px;"></a></h2>
             <form action="addManager.php" method="post">
                 <label for="Manager Name">Manager Name</label><br>
                 <input type="text" id="Manager Name" placeholder="John Doe" name="name" value="<?php echo (isset($_POST['name']) && isset($insertError)) ? htmlspecialchars($_POST['name']) : ''; ?>" style="width: 240px">
