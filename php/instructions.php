@@ -248,9 +248,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
                             To edit an individual account's permissions, click on the pen symbol by their name in the "All Accounts" list.
                             Their permissions will appear on the screen, where you can check/uncheck whichever permissions they should/shouldn't have.
                         </p>
-                        <div class="imgRow">
-                            <img src="/imgs/instructions/AllAccountsTable.png">
-                        </div>
+                        <img src="/imgs/instructions/AllAccountsTable.png" style="width: 100%;">
                     </div>
                     <img src="/imgs/instructions/AccountIndividualPermissions.png">
                 </div>
