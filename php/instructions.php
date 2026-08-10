@@ -336,12 +336,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
         left: 50%;
         transform: translateX(-50%);
 
-        font-size: 20px;
+        font-size: 25px;
         text-align: center;
-        background-color: #2c2c24;
-        color: white;
         font-family: inherit;
-        padding: 3px;
+        padding: 5px 10px;
     }
     #page {
         background-color: white;
