@@ -338,8 +338,9 @@ function implodeCommas(array $items, string $finalSeparator): string {
 
         font-size: 20px;
         text-align: center;
-        background-color: white;
-        color: black;
+        background-color: #2c2c24;
+        color: white;
+        font-family: inherit;
     }
     #page {
         background-color: white;
@@ -468,7 +469,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     .imgRow > img {
         max-height: 450px;
         max-width: 45%;
-        border: 2px solid #222222;
+        border: 2px solid #2c2c24;
     }
     .imgRow > div {
         flex: 1;
