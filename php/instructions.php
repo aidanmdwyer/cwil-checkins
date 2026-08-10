@@ -250,12 +250,12 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     <img src="/imgs/instructions/AllAccountsTable.png">
                     <img src="/imgs/instructions/AccountIndividualPermissions.png">
                 </div>
-                <p>
-                    You can also change the default permissions of an entire account type by using the dropdown menus in the "Account Permissions" box.
-                    Select the account type you want to edit in the first dropdown, and select "Default Permissions" in the second dropdown.
-                    When you change these permissions, any account of that type that doesn't have their own custom permissions set will have those permissions applied.
-                </p>
                 <div class="imgRow">
+                    <p>
+                        You can also change the default permissions of an entire account type by using the dropdown menus in the "Account Permissions" box.
+                        Select the account type you want to edit in the first dropdown, and select "Default Permissions" in the second dropdown.
+                        When you change these permissions, any account of that type that doesn't have their own custom permissions set will have those permissions applied.
+                    </p>
                     <img src="/imgs/instructions/AccountDefaultPermissions.png">
                 </div>
                 <p>
@@ -387,9 +387,12 @@ function implodeCommas(array $items, string $finalSeparator): string {
         margin: 15px 0 30px 0;
     }
     .imgRow > img {
-        max-height: 400px;
+        max-height: 500px;
         max-width: 40%;
         border: 2px solid #222222;
+    }
+    .imgRow > p {
+        max-width: 40%;
     }
 </style>
 </html>
