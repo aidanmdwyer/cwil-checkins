@@ -33,7 +33,9 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <img src="../imgs/logo.png">
         <h1>Check-in App Instructions</h1>
         <p>Please refer to these instructions on how to use the City Wide Check-ins App.</p>
-        <li id="index"></li>
+        <li id="index">
+            <h3>Quick Reference</h3>
+        </li>
     </header>
     <main>
 
@@ -396,6 +398,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
         text-align: start;
         background-color: #2c2c24;
         color: white;
+    }
+    h3 {
+        font-family: Tahoma, sans-serif;
+        margin: 0 0 0.5rem 0;
     }
     p {
         margin: 0 0 10px 0;
