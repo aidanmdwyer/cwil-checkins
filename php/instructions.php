@@ -336,6 +336,9 @@ function implodeCommas(array $items, string $finalSeparator): string {
         #index {
             display: none;
         }
+        img {
+            display: table;
+        }
     }
     #page {
         background-color: white;
