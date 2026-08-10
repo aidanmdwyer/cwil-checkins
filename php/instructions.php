@@ -277,7 +277,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
             </div>
         <?php } ?>
 
-        <?php if(accountProperties("Accounts Page")) { ?>
+        <?php if(accountProperties("Archives Page")) { ?>
             <div id="Archives" class="section column">
                 <h2>Archives</h2>
                 <p>
