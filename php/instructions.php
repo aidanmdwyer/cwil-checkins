@@ -426,6 +426,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         text-align: start;
         background-color: #2c2c24;
         color: white;
+        box-sizing: border-box;
     }
     h3 {
         font-family: Tahoma, sans-serif;
