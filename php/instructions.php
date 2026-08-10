@@ -34,7 +34,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <h1>Check-in App Instructions</h1>
         <p>Please refer to these instructions on how to use the City Wide Check-ins App.</p>
         <div id="index">
-            <h3>Quick Reference</h3>
+            <h3>*Quick Reference*</h3>
         </div>
     </header>
     <main>
@@ -405,7 +405,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     h3 {
         font-family: Tahoma, sans-serif;
-        margin: 0 0 0.5rem 0;
+        margin: 0.5rem;
     }
     p {
         margin: 0 0 10px 0;
