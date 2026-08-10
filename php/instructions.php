@@ -363,11 +363,11 @@ function implodeCommas(array $items, string $finalSeparator): string {
         align-items: center;
         text-align: center;
         width: 75%;
-        padding-top: 40px;
+
     }
     header img {
         margin: 0 0 10px 0;
-        padding: 0;
+        padding: 40px 0 0 0;
         width: 400px;
     }
     header h1 {
