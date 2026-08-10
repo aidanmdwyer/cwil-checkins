@@ -280,6 +280,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
                 <div class="imgRow">
                     <img src="/imgs/instructions/Archives.png">
                 </div>
+                <p>
+                    Instead of resetting the check-ins at midnight as the day switches over, this system resets at 3AM to account for late night services.
+                    Every day at 3AM, all check-ins get reset and the records for the day are put into the archives.
+                </p>
             </div>
         <?php } ?>
     </main>
