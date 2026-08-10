@@ -30,7 +30,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
 <body>
 <div id="page">
     <header>
-        <button onclick="window.print();" class="printButton">Print Instructions</button>
+        <button onclick="setTimeout(() => {window.print();}, 0);" class="printButton">Print Instructions</button>
         <img src="../imgs/logo.png">
         <h1>Check-in App Instructions</h1>
         <p>Please refer to these instructions on how to use the City Wide Check-ins App.</p>
