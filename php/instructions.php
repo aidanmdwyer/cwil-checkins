@@ -401,6 +401,8 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     .section {
         width: 100%;
+        border-top: 3px solid black;
+        border-image: linear-gradient(to right, black 0%, black 25%, transparent 50%);
     }
     .section ul {
         margin: 5px 0 15px 0;
