@@ -33,7 +33,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         <img src="../imgs/logo.png">
         <h1>Check-in App Instructions</h1>
         <p>Please refer to these instructions on how to use the City Wide Check-ins App.</p>
-        <div id="index"></div>
+        <li id="index"></li>
     </header>
     <main>
 
@@ -295,10 +295,12 @@ function implodeCommas(array $items, string $finalSeparator): string {
     const sections = document.getElementsByClassName("section");
     Array.from(sections).forEach(element => {
         const sectionName = element.id;
+        let li = document.createElement("li");
         let link = document.createElement("a");
         link.href = "#" + encodeURIComponent(sectionName);
         link.innerText = sectionName;
-        index.appendChild(link);
+        li.appendChild(link);
+        index.appendChild(li);
     });
 </script>
 
