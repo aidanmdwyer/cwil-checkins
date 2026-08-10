@@ -85,7 +85,7 @@ $maxRows = max(array_map('count', $usersByType));
 
 <header>
     <button onclick="window.location.href='../index.php'" class="big"><span style="font-size: 20px;">&#8592</span> Back to Home</button>
-    <h3>All Accounts</h3>
+    <h3>All Accounts <a href="../php/instructions.php#Adding%20a%20New%20Admin%20Account" target="_blank"><img src="../imgs/help_icon.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
     <div>
         <button onclick="window.location.href = '/index.php?logout=logout';" class="big">Logout</button>
         <div style="display: inline-block; vertical-align: middle; line-height: 90%;">
