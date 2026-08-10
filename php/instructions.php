@@ -28,7 +28,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
     <title>Instructions</title>
 </head>
 <body>
-<button onclick="window.print();" class="printButton">Print</button>
+<button onclick="window.print();" class="printButton">Print Instructions</button>
 <div id="page">
     <header>
         <img src="../imgs/logo.png">
@@ -331,9 +331,14 @@ function implodeCommas(array $items, string $finalSeparator): string {
         font-size: 1.2rem;
     }
     .printButton {
-        position: absolute;
+        position: fixed;
         top: 20px;
         left: 20px;
+
+        font-size: 15px;
+        text-align: center;
+        background-color: white;
+        color: black;
     }
     #page {
         background-color: white;
