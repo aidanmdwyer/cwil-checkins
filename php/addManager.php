@@ -27,7 +27,12 @@ if (!accountProperties('Managers Page')) {
 
 <header>
     <button onclick="window.location.href='../index.php'" class="big"><span style="font-size: 20px;">&#8592</span> Back to Home</button>
-    <h3>Managers <a href="../php/instructions.php#Adding%20New%20Managers%2FContractors" target="_blank"><img src="../imgs/helpIconWhite.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
+    <h3>Managers <a href="../php/instructions.php#Adding%20New%20<?php
+        $addOptions = [];
+        if(accountProperties("Managers Page")) $addOptions[] = "Managers";
+        if(accountProperties("Contractors Page")) $addOptions[] = "Contractors";
+        echo implode('%2f', $addOptions);
+        ?>" target="_blank"><img src="../imgs/helpIconWhite.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
     <div>
         <button onclick="window.location.href = '/index.php?logout=logout';" class="big">Logout</button>
         <div style="display: inline-block; vertical-align: middle; line-height: 90%;">
@@ -161,7 +166,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             ?>
         </div>
         <div class="card">
-            <h2>Add New Manager <a href="../php/instructions.php#Adding%20New%20Managers%2FContractors" target="_blank"><img src="../imgs/helpIconBlack.png" alt="help" style="width: 15px; height: 15px;"></a></h2>
+            <h2>Add New Manager <a href="../php/instructions.php#Adding%20New%20<?php
+                $addOptions = [];
+                if(accountProperties("Managers Page")) $addOptions[] = "Managers";
+                if(accountProperties("Contractors Page")) $addOptions[] = "Contractors";
+                echo implode('%2f', $addOptions);
+                ?>" target="_blank"><img src="../imgs/helpIconBlack.png" alt="help" style="width: 15px; height: 15px;"></a></h2>
             <form action="addManager.php" method="post">
                 <label for="Manager Name">Manager Name</label><br>
                 <input type="text" id="Manager Name" placeholder="John Doe" name="name" value="<?php echo (isset($_POST['name']) && isset($insertError)) ? htmlspecialchars($_POST['name']) : ''; ?>" style="width: 240px">

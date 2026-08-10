@@ -211,12 +211,20 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     <?php if(accountProperties("Contractors Page")) {?><img src="/imgs/instructions/ContractorList.png"><?php }?>
                 </div>
                 <p>
-                    If a contractor or manager reaches out to have their password reset, click the button under “Password Reset Link” to copy their link, and send it to them.
+                    If a <?php echo
+                    implode(' or ', array_map(function($item) {
+                        return $item;
+                    }, $addOptions));
+                    ?> reaches out to have their password reset, click the button under “Password Reset Link” to copy their link, and send it to them.
                     They will have 24 hours to reset their password with this link.
                     If they fail to do it in 24 hours, click the button again and send them the new link.
                 </p>
                 <p>
-                    You can also delete contractors and managers as long as there are no longer any buildings assigned to them.
+                    You can also delete <?php echo
+                    implode(' and ', array_map(function($item) {
+                        return $item;
+                    }, $addOptions));
+                    ?> as long as there are no longer any buildings assigned to them.
                     Deleting a name will automatically delete the associated account, ensuring the user no longer has access to our system.
                 </p>
             </div>
