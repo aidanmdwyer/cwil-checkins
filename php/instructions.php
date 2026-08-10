@@ -255,7 +255,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
                     <img src="/imgs/instructions/AccountIndividualPermissions.png">
                 </div>
                 <div class="imgRow">
-                    <img src="/imgs/instructions/AccountDefaultPermissions.png">
                     <div>
                         <p>
                             You can also change the default permissions of an entire account type by using the dropdown menus in the "Account Permissions" box.
@@ -263,6 +262,23 @@ function implodeCommas(array $items, string $finalSeparator): string {
                             When you change these permissions, any account of that type that doesn't have their own custom permissions set will have those permissions applied.
                         </p>
                     </div>
+                    <img src="/imgs/instructions/AccountDefaultPermissions.png">
+                </div>
+            </div>
+        <?php } ?>
+
+        <?php if(accountProperties("Accounts Page")) { ?>
+            <div id="Archives" class="section">
+                <h2>Archives</h2>
+                <p>
+                    You are also able to access check-in archives of any previous day.
+                    Click the “Archives” button on the home page and select a date to see the check-in records from that day.
+                </p>
+                <p class="note">
+                    *Please note that the archives only show buildings that were scheduled to be cleaned on the selected day.
+                </p>
+                <div class="imgRow">
+                    <img src="/imgs/instructions/Archives.png">
                 </div>
             </div>
         <?php } ?>
@@ -367,6 +383,10 @@ function implodeCommas(array $items, string $finalSeparator): string {
     p {
         margin: 0 0 10px 0;
         padding: 0;
+    }
+    p.note {
+        font-size: 0.75rem;
+        color: red;
     }
 
     .section {
