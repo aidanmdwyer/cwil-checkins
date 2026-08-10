@@ -333,8 +333,8 @@ function implodeCommas(array $items, string $finalSeparator): string {
         body {
             margin: 0;
         }
-        main, div, body {
-            page-break-inside: avoid;
+        #index {
+            display: none;
         }
     }
     #page {
