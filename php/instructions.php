@@ -341,6 +341,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         background-color: #2c2c24;
         color: white;
         font-family: inherit;
+        padding: 3px;
     }
     #page {
         background-color: white;
