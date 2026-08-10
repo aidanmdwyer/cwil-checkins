@@ -348,11 +348,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
         padding: 40px 30px;
         margin: 0 auto;
     }
-    @media (max-width: 1100px) {
-        #page {
-            width: 95%;
-        }
-    }
 
 
 
@@ -374,11 +369,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
         margin: 0;
         padding: 0;
     }
-    @media (max-width: 1100px) {
-        header {
-            width: 85%;
-        }
-    }
 
 
 
@@ -396,11 +386,6 @@ function implodeCommas(array $items, string $finalSeparator): string {
         list-style-position: inside;
         padding: 0;
         margin: 0 0 10px 0;
-    }
-    @media(max-width: 700px) {
-        #index ul {
-            column-count: 1;
-        }
     }
 
 
@@ -489,6 +474,27 @@ function implodeCommas(array $items, string $finalSeparator): string {
         }
         .printButton {
             display: none;
+        }
+    }
+    @media (max-width: 1100px) {
+        header {
+            width: 85%;
+        }
+        #page {
+            width: 95%;
+        }
+    }
+    @media(max-width: 700px) {
+        #index ul {
+            column-count: 1;
+        }
+        header img {
+            width: 90%;
+        }
+        .imgRow > img {
+            width: 90%;
+            max-height: none;
+            max-width: none;
         }
     }
 </style>
