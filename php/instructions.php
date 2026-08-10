@@ -248,21 +248,21 @@ function implodeCommas(array $items, string $finalSeparator): string {
                             To edit an individual account's permissions, click on the pen symbol by their name in the "All Accounts" list.
                             Their permissions will appear on the screen, where you can check/uncheck whichever permissions they should/shouldn't have.
                         </p>
+                        <p>
+                            If you have given an account custom permissions but wish to restore their permissions to the defaults for their account type, click on "Reset to Defaults" in their permissions page.
+                        </p>
                         <img src="/imgs/instructions/AllAccountsTable.png" style="width: 100%;">
                     </div>
                     <img src="/imgs/instructions/AccountIndividualPermissions.png">
                 </div>
                 <div class="imgRow">
+                    <img src="/imgs/instructions/AccountDefaultPermissions.png">
                     <p>
                         You can also change the default permissions of an entire account type by using the dropdown menus in the "Account Permissions" box.
                         Select the account type you want to edit in the first dropdown, and select "Default Permissions" in the second dropdown.
                         When you change these permissions, any account of that type that doesn't have their own custom permissions set will have those permissions applied.
                     </p>
-                    <img src="/imgs/instructions/AccountDefaultPermissions.png">
                 </div>
-                <p>
-                    If you have given an account custom permissions but wish to restore their permissions to the defaults for their account type, click on "Reset to Defaults" in their permissions page.
-                </p>
             </div>
         <?php } ?>
     </main>
