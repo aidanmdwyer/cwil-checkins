@@ -336,7 +336,7 @@ function implodeCommas(array $items, string $finalSeparator): string {
         #index {
             display: none;
         }
-        img {
+        img, .section {
             page-break-inside: avoid;
             break-inside: avoid;
         }
