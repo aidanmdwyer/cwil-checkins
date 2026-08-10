@@ -368,10 +368,13 @@ function implodeCommas(array $items, string $finalSeparator): string {
     }
     #index ul {
         column-count: 2;
+        padding: 0;
+        margin: 0;
     }
     #index li {
-        margin-bottom: 10px;
         list-style-position: inside;
+        padding: 0;
+        margin: 0 0 10px 0;
     }
     @media(max-width: 700px) {
         #index ul {
