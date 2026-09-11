@@ -223,10 +223,10 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         loadAll.onclick = () => {
                             buildTable(fetchStr + '&loadAll=true')
                         }
-                        checkInCounterHTML += ' &#8212 Please click "Load All" to see check in statistics for this set of filters.';
+                        checkInCounterHTML += ' \t Please click "Load All" to see check in statistics for this set of filters.';
                     } else {
                         const percentageChecked = Math.round(numChecked/numBuildings*10)/10
-                        checkInCounterHTML += " &#8212 &#9989 " + numChecked + "/" + numBuildings + ", " + numChecked/numBuildings + "% &#8212 &#10060 " + (numBuildings - numChecked) + "/" + numBuildings + ", " + (100 - percentageChecked) + "%";
+                        checkInCounterHTML += " \t &#9989 " + numChecked + "/" + numBuildings + ", " + numChecked/numBuildings + "% \t &#10060 " + (numBuildings - numChecked) + "/" + numBuildings + ", " + (100 - percentageChecked) + "%";
                     }
 
                     document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
