@@ -235,5 +235,6 @@ input:checked + .slider:before {
 #checkInCounter {
     color: rgba(0, 0, 0, 0.5);
     font-family: sans-serif;
+    font-size: 0.8rem;
     margin: 0 20px;
 }
