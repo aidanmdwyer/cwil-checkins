@@ -79,6 +79,7 @@ if (!accountProperties('Archives Page')) {
 
     <div class="card">
         <h2 id="archiveText">No Date Selected</h2>
+        <div id="checkInCounter"></div>
         <div id="tableContainer" style="display: inline-block;">
             <table id="archiveTable" style="display: inline-block;">
             </table>
@@ -182,6 +183,13 @@ if (!accountProperties('Archives Page')) {
 
                 let colorSwitch = false;
                 filteredData.forEach(rowData => {
+                    const numBuildings = data.length;
+                    const percentageChecked = Math.round(numChecked/numBuildings*10)/10
+                    let checkInCounterHTML = 
+                    "<span style='margin-right: 30px;'>" + numBuildings + " buildings loaded</span>" + 
+                    "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + numChecked/numBuildings + "%)" + 
+                    "</span>" + (numBuildings - numChecked) + "/" + numBuildings + " &#10060 (" + (100 - percentageChecked) + "%)";
+                    document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
 
                     let trStr = `<tr class="` + (colorSwitch ? 'odd' : 'even') + `">`;
 
