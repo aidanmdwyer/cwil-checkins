@@ -7,7 +7,7 @@ function adjustMainMargin() {
     if(tableMenu) {
         tableMenu.style.display = 'flex';
         tableMenu.style.top = header.offsetHeight + "px";
-        mainMargin += tableMenu.offsetHeight;
+        mainMargin += tableMenu.offsetHeight + 8;
     } else {
         mainMargin += 30;
     }
