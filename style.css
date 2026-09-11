@@ -230,3 +230,10 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+
+#checkInCounter {
+    color: rgba(0, 0, 0, 0.7);
+    font-family: sans-serif;
+    margin: 0 20px;
+}
