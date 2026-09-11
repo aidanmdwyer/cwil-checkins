@@ -227,8 +227,8 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     } else {
                         const percentageChecked = Math.round(numChecked/numBuildings*1000)/10
                         checkInCounterHTML += 
-                        "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + percentageChecked + "%)" + 
-                        "</span>" + (numBuildings - numChecked) + "/" + numBuildings + " &#10060 (" + (100 - percentageChecked) + "%)";
+                            "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + percentageChecked + "%)" + 
+                            "</span>" + (numBuildings - numChecked) + "/" + numBuildings + " &#10060 (" + (100 - percentageChecked) + "%)";
                     }
 
                     document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
