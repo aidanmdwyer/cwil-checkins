@@ -233,7 +233,7 @@ input:checked + .slider:before {
 
 
 #checkInCounter {
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(0, 0, 0, 0.5);
     font-family: sans-serif;
     margin: 0 20px;
 }

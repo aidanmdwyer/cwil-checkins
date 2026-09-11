@@ -215,7 +215,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     }
 
                     const numBuildings = data['rows'].length;
-                    let checkInCounterText = numBuildings + " buildings loaded"
+                    let checkInCounterHTML = numBuildings + " buildings loaded"
 
                     loadAll.style.display = 'none';
                     if(!fetchStr.includes('loadAll=true') && data['hasMore'] === true) {
@@ -223,13 +223,13 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         loadAll.onclick = () => {
                             buildTable(fetchStr + '&loadAll=true')
                         }
-                        checkInCounterText += ' | Please click "Load All" to see check in statistics for this set of filters.';
+                        checkInCounterHTML += ' | Please click "Load All" to see check in statistics for this set of filters.';
                     } else {
                         const percentageChecked = Math.round(numChecked/numBuildings*10)/10
-                        checkInCounterText += " | &#9989 " + numChecked + " (" + numChecked/numBuildings + "%) | &#10060 " + (numBuildings - numChecked) + " (" + (100 - percentageChecked) + "%)";
+                        checkInCounterHTML += " | &#9989 " + numChecked + " (" + numChecked/numBuildings + "%) | &#10060 " + (numBuildings - numChecked) + " (" + (100 - percentageChecked) + "%)";
                     }
 
-                    document.getElementById("checkInCounter").innerText = checkInCounterText;
+                    document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
 
                     refreshButton.disabled = false;
                     refreshButton.innerHTML = 'Refresh';
