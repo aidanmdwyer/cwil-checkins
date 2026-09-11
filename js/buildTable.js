@@ -226,7 +226,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         checkInCounterHTML += 'Please click "Load All" to see check in statistics for this set of filters.';
                     } else {
                         const percentageChecked = Math.round(numChecked/numBuildings*10)/10
-                        checkInCounterHTML += "<span style='margin-right: 30px;'> &#9989 " + numChecked + "/" + numBuildings + " (" + numChecked/numBuildings + "%)</span>&#10060 " + (numBuildings - numChecked) + "/" + numBuildings + " (" + (100 - percentageChecked) + "%)";
+                        checkInCounterHTML += "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + numChecked/numBuildings + "%)</span>" + (numBuildings - numChecked) + "/" + numBuildings + " &#10060 (" + (100 - percentageChecked) + "%)";
                     }
 
                     document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
