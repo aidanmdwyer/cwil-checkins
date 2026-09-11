@@ -89,7 +89,7 @@ if (!accountProperties('Home Page')) {
         </div>
     </div>
 
-    <div id="checkInCounter"></div>
+    <div id="checkInCounter" style="margin: 0 20px;"></div>
 
     <div style="display: flex; align-items: flex-start;">
         <!--        Table-->

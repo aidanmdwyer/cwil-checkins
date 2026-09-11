@@ -236,5 +236,4 @@ input:checked + .slider:before {
     color: rgba(0, 0, 0, 0.5);
     font-family: sans-serif;
     font-size: 0.9rem;
-    margin: 0 20px;
 }
