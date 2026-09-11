@@ -142,6 +142,8 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                 document.getElementById('inactiveText').style.display = (document.getElementById('showActive').checked) ? 'none' : 'block';
 
                 if(data['rows'].length > 0) {
+
+
                     let tableHeader = '';
                     Object.keys(tableColumns).forEach(label => {
                         if(accountProperties.includes(label) || accountProperties === '*') {
@@ -181,10 +183,11 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         }
                     }
 
-                    //buildingsTable.innerHTML += `<tbody>`;
                     let allSelected = true;
+                    let numChecked = 0;
                     data['rows'].forEach(rowData => {
                         let bgColor = colorSwitch ? '#F3F3F3' : '#E5E5E5';
+                        if(rowData.checked) numChecked++;
 
                         let tr = document.createElement('tr');
                         tr.setAttribute('data-name', rowData['name']);
@@ -206,11 +209,13 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
 
                         colorSwitch = !colorSwitch;
                     });
+
                     if(allSelected) {
                         document.getElementById('selectAll').checked = true;
                     }
 
-                    //buildingsTable.innerHTML += `</tbody>`;
+                    const numBuildings = data['rows'].length;
+                    let checkInCounterText = numBuildings + " buildings loaded"
 
                     loadAll.style.display = 'none';
                     if(!fetchStr.includes('loadAll=true') && data['hasMore'] === true) {
@@ -218,7 +223,13 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         loadAll.onclick = () => {
                             buildTable(fetchStr + '&loadAll=true')
                         }
+                        checkInCounterText += ' | Please click "Load All" to see check in statistics for this set of filters.';
+                    } else {
+                        const percentageChecked = Math.round(numChecked/numBuildings*10)/10
+                        checkInCounterText += " | &#9989 " + numChecked + " (" + numChecked/numBuildings + "%) | &#10060 " + (numBuildings - numChecked) + " (" + (100 - percentageChecked) + "%)";
                     }
+
+                    document.getElementById("checkInCounter").innerText = checkInCounterText;
 
                     refreshButton.disabled = false;
                     refreshButton.innerHTML = 'Refresh';
