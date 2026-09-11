@@ -78,7 +78,7 @@ if (!accountProperties('Archives Page')) {
     </div>
 
     <div class="card">
-        <h2 id="archiveText">No Date Selected</h2>
+        <h2 id="archiveText" style="margin-bottom: 0;">No Date Selected</h2>
         <div id="checkInCounter"></div>
         <div id="tableContainer" style="display: inline-block;">
             <table id="archiveTable" style="display: inline-block;">
