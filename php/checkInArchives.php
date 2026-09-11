@@ -184,7 +184,7 @@ if (!accountProperties('Archives Page')) {
                 let colorSwitch = false;
                 filteredData.forEach(rowData => {
                     const numBuildings = data.length;
-                    const percentageChecked = Math.round(numChecked/numBuildings*10)/10
+                    const percentageChecked = Math.round(numChecked/numBuildings*1000)/10
                     let checkInCounterHTML = 
                     "<span style='margin-right: 30px;'>" + numBuildings + " buildings loaded</span>" + 
                     "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + numChecked/numBuildings + "%)" + 
