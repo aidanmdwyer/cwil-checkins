@@ -215,7 +215,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     }
 
                     const numBuildings = data['rows'].length;
-                    let checkInCounterHTML = numBuildings + " buildings loaded"
+                    let checkInCounterHTML = "<span style='margin-right: 30px;'>" + numBuildings + " buildings loaded</span>"
 
                     loadAll.style.display = 'none';
                     if(!fetchStr.includes('loadAll=true') && data['hasMore'] === true) {
@@ -223,10 +223,10 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         loadAll.onclick = () => {
                             buildTable(fetchStr + '&loadAll=true')
                         }
-                        checkInCounterHTML += ' \t Please click "Load All" to see check in statistics for this set of filters.';
+                        checkInCounterHTML += 'Please click "Load All" to see check in statistics for this set of filters.';
                     } else {
                         const percentageChecked = Math.round(numChecked/numBuildings*10)/10
-                        checkInCounterHTML += " \t &#9989 " + numChecked + "/" + numBuildings + ", " + numChecked/numBuildings + "% \t &#10060 " + (numBuildings - numChecked) + "/" + numBuildings + ", " + (100 - percentageChecked) + "%";
+                        checkInCounterHTML += "<span style='margin-right: 30px;'> &#9989 " + numChecked + "/" + numBuildings + ", " + numChecked/numBuildings + "%</span>&#10060 " + (numBuildings - numChecked) + "/" + numBuildings + ", " + (100 - percentageChecked) + "%";
                     }
 
                     document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
