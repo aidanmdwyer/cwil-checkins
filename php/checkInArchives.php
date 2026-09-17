@@ -131,9 +131,14 @@ if (!accountProperties('Archives Page')) {
     let archiveData = [];
 
     function resetArchiveTable() {
-        document.getElementById("archiveText").innerHTML = "No Date Selected";
         document.getElementById("checkInCounter").innerHTML = "";
-        document.getElementById("archiveTable").innerHTML = "<br>Select a date above to see archive.";
+        if(document.getElementById('singleDateButton').checked) { //single date
+            document.getElementById("archiveText").innerHTML = "No Date Selected";
+            document.getElementById("archiveTable").innerHTML = "<br>Select a date above to see archive.";
+        } else { //range
+            document.getElementById("archiveText").innerHTML = "No Date Range Selected";
+            document.getElementById("archiveTable").innerHTML = "<br>Select a From Date and a To Date above to see archive.";
+        }
     }
     resetArchiveTable();
 
@@ -160,9 +165,12 @@ if (!accountProperties('Archives Page')) {
                 singleDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
         } else { //range
             const fromInput = document.getElementById('archiveFromDate').value; //"2025-07-08"
+            const toInput = document.getElementById('archiveToDate').value;
+            if(!fromInput || !toInput) {
+                return;
+            }
             const [fromYear, fromMonth, fromDay] = fromInput.split('-');
             const fromDate = new Date(fromYear, fromMonth - 1, fromDay); //Note: month is 0-indexed
-            const toInput = document.getElementById('archiveToDate').value;
             const [toYear, toMonth, toDay] = toInput.split('-');
             const toDate = new Date(toYear, toMonth - 1, toDay);
 
