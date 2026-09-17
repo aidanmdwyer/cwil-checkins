@@ -144,7 +144,7 @@ if (!accountProperties('Archives Page')) {
                     fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
                     " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
             } else {
-                document.getElementById('archiveText').innerText = "<br>To Date must be later than From Date"
+                document.getElementById('archiveText').innerText = "To Date must be later than From Date"
             }
         } else {
             document.getElementById('archiveText').innerText = 
@@ -273,7 +273,7 @@ if (!accountProperties('Archives Page')) {
             filterICBox.style.display = 'none';
             filterICVr.style.display = 'none';
             document.getElementById("checkInCounter").innerHTML = "";
-            htmlStr = "<br>No buildings archived for this date.";
+            htmlStr = "<br>No buildings archived for this " + (toInput) ? "range." : "date.";
         }
         archiveTable.innerHTML = htmlStr;
     }
