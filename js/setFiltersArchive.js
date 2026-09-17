@@ -1,9 +1,9 @@
-document.getElementById("singleDateButton").onclick(function() {
+document.getElementById("singleDateButton").addEventListener('input', function() {
     document.getElementById("archiveFromDate").style.display = "default";
     document.getElementById("archiveToDate").style.display = "default";
     document.getElementById("archiveSingleDate").style.display = "none";
 });
-document.getElementById("dateRangeButton").onclick(function() {
+document.getElementById("dateRangeButton").addEventListener('input', function() {
     document.getElementById("archiveFromDate").style.display = "none";
     document.getElementById("archiveToDate").style.display = "none";
     document.getElementById("archiveSingleDate").style.display = "default";
