@@ -45,6 +45,7 @@ document.getElementById('archiveToDate').addEventListener('input', async functio
 async function getArchiveData() {
     const response = await fetch(
         '/php/getDataArchive.php?key=' + accessKey +
+        '&archiveSingleDate=' + document.getElementById('archiveSingleDate').value +
         '&archiveFromDate=' + document.getElementById('archiveFromDate').value +
         '&archiveToDate=' + document.getElementById('archiveToDate').value
     );

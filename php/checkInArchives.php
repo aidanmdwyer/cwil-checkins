@@ -302,7 +302,7 @@ if (!accountProperties('Archives Page')) {
             hideArchiveFilters();
             archiveTable.innerHTML = "";
             document.getElementById("checkInCounter").innerHTML = "";
-            htmlStr = "<br>No buildings archived for this " + ((toInput) ? "range." : "date.");
+            htmlStr = "<br>No buildings archived for this " + ((document.getElementById('singleDateButton').checked) ? "date." : "range.");
         }
         archiveTable.innerHTML = htmlStr;
     }
