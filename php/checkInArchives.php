@@ -273,7 +273,7 @@ if (!accountProperties('Archives Page')) {
             filterICBox.style.display = 'none';
             filterICVr.style.display = 'none';
             document.getElementById("checkInCounter").innerHTML = "";
-            htmlStr = "<br>No buildings archived for this " + (toInput) ? "range." : "date.";
+            htmlStr = "<br>No buildings archived for this " + ((toInput) ? "range." : "date.");
         }
         archiveTable.innerHTML = htmlStr;
     }
