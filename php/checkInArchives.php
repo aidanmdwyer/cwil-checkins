@@ -261,6 +261,7 @@ if (!accountProperties('Archives Page')) {
                 filterICBox.style.display = "<?php echo accountProperties('Filter IC') ? 'block' : 'none';?>";
                 filterICVr.style.display = "<?php echo accountProperties('Filter IC') ? 'block' : 'none';?>";
                 archiveExportButton.style.display = 'inline-block';
+                archiveTable.innerHTML = "";
                 document.getElementById("checkInCounter").innerHTML = "";
                 htmlStr = "<br>No buildings found with this filter.";
             }
@@ -272,6 +273,7 @@ if (!accountProperties('Archives Page')) {
             archiveExportButton.style.display = 'none';
             filterICBox.style.display = 'none';
             filterICVr.style.display = 'none';
+            archiveTable.innerHTML = "";
             document.getElementById("checkInCounter").innerHTML = "";
             htmlStr = "<br>No buildings archived for this " + ((toInput) ? "range." : "date.");
         }
