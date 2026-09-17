@@ -50,15 +50,15 @@ if (!accountProperties('Archives Page')) {
                         Date Range
                     </label>
                 </div>
-                <label style="display: flex; flex-direction: column;">
+                <label id="archiveSingleDateLabel" style="display: flex; flex-direction: column;">
                     Archive Date
                     <input type="date" id="archiveSingleDate" name="archiveSingleDate">
                 </label>
-                <label style="display: flex; flex-direction: column; display: none;">
+                <label id="archiveFromDateLabel" style="display: flex; flex-direction: column; display: none;">
                     From Date
                     <input type="date" id="archiveFromDate" name="archiveFromDate">
                 </label>
-                <label style="display: flex; flex-direction: column; display: none;">
+                <label id="archiveToDateLabel" style="display: flex; flex-direction: column; display: none;">
                     To Date
                     <input type="date" id="archiveToDate" name="archiveToDate">
                 </label>
