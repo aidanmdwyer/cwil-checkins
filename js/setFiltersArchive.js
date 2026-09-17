@@ -1,12 +1,12 @@
 document.getElementById("singleDateButton").onClick(function() {
-    document.getElementById("archiveFromDate").hidden = true;
-    document.getElementById("archiveToDate").hidden = true;
-    document.getElementById("archiveSingleDate").hidden = false;
+    document.getElementById("archiveFromDate").style.display = "default";
+    document.getElementById("archiveToDate").style.display = "default";
+    document.getElementById("archiveSingleDate").style.display = "none";
 });
 document.getElementById("dateRangeButton").onClick(function() {
-    document.getElementById("archiveFromDate").hidden = false;
-    document.getElementById("archiveToDate").hidden = false;
-    document.getElementById("archiveSingleDate").hidden = true;
+    document.getElementById("archiveFromDate").style.display = "none";
+    document.getElementById("archiveToDate").style.display = "none";
+    document.getElementById("archiveSingleDate").style.display = "default";
 });
 
 document.getElementById('filterManager').addEventListener('input', function() {
