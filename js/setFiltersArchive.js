@@ -1,3 +1,14 @@
+document.getElementById("singleDateButton").onClick(function() {
+    document.getElementById("archiveFromDate").hidden = true;
+    document.getElementById("archiveToDate").hidden = true;
+    document.getElementById("archiveSingleDate").hidden = false;
+});
+document.getElementById("dateRangeButton").onClick(function() {
+    document.getElementById("archiveFromDate").hidden = false;
+    document.getElementById("archiveToDate").hidden = false;
+    document.getElementById("archiveSingleDate").hidden = true;
+});
+
 document.getElementById('filterManager').addEventListener('input', function() {
     buildTableArchive(archiveData);
 });
