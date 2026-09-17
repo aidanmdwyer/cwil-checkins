@@ -227,7 +227,7 @@ if (!accountProperties('Archives Page')) {
                     colorSwitch = !colorSwitch;
                 });
 
-                const numBuildings = data.length;
+                const numBuildings = filteredData.length;
                 const percentageChecked = Math.round(numChecked/numBuildings*1000)/10
                 let checkInCounterHTML = 
                     "<span style='margin-right: 30px;'>" + numBuildings + " buildings loaded</span>" + 
