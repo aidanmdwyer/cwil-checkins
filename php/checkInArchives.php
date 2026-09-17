@@ -245,7 +245,7 @@ if (!accountProperties('Archives Page')) {
                 filterICVr.style.display = "<?php echo accountProperties('Filter IC') ? 'block' : 'none';?>";
                 archiveExportButton.style.display = 'inline-block';
                 document.getElementById("checkInCounter").innerHTML = "";
-                htmlStr = "No buildings found with this filter.";
+                htmlStr = "<br>No buildings found with this filter.";
             }
         } else {
             filterManagerBox.style.display = 'none';
@@ -256,7 +256,7 @@ if (!accountProperties('Archives Page')) {
             filterICBox.style.display = 'none';
             filterICVr.style.display = 'none';
             document.getElementById("checkInCounter").innerHTML = "";
-            htmlStr = "No buildings archived for this date.";
+            htmlStr = "<br>No buildings archived for this date.";
         }
         archiveTable.innerHTML = htmlStr;
     }
