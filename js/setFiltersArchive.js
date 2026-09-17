@@ -2,6 +2,8 @@ document.getElementById("singleDateButton").addEventListener('input', function()
     document.getElementById("archiveFromDateLabel").style.display = "none";
     document.getElementById("archiveToDateLabel").style.display = "none";
     document.getElementById("archiveSingleDateLabel").style.display = "flex";
+    document.getElementById("archiveFromDate").value = "";
+    document.getElementById("archiveToDate").value = "";
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
     resetArchiveTable();
@@ -10,6 +12,7 @@ document.getElementById("dateRangeButton").addEventListener('input', function() 
     document.getElementById("archiveFromDateLabel").style.display = "flex";
     document.getElementById("archiveToDateLabel").style.display = "flex";
     document.getElementById("archiveSingleDateLabel").style.display = "none";
+    document.getElementById("archiveSingleDate").value = "";
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
     resetArchiveTable();
