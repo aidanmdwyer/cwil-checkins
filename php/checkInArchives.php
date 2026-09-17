@@ -41,11 +41,11 @@ if (!accountProperties('Archives Page')) {
             <div style="display: flex; align-items: center; gap: 15px;">
                 <div class="vr"></div>
                 <label style="display: flex; flex-direction: column;">
-                    From
+                    From Date
                     <input type="date" id="archiveFromDate" name="archiveFromDate">
                 </label>
                 <label style="display: flex; flex-direction: column;">
-                    To
+                    To Date
                     <input type="date" id="archiveToDate" name="archiveToDate">
                 </label>
                 <div id="searchVr" class="vr" style="display: none;"></div>
@@ -139,9 +139,13 @@ if (!accountProperties('Archives Page')) {
             const [toYear, toMonth, toDay] = toInput.split('-');
             const toDate = new Date(toYear, toMonth - 1, toDay);
 
-            document.getElementById('archiveText').innerText = 
-                fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
-                " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+            if(toDate > fromDate) {
+                document.getElementById('archiveText').innerText = 
+                    fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
+                    " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+            } else {
+                document.getElementById('archiveText').innerText = "<br>To Date must be later than From Date"
+            }
         } else {
             document.getElementById('archiveText').innerText = 
                 fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
