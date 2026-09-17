@@ -254,6 +254,7 @@ if (!accountProperties('Archives Page')) {
             archiveExportButton.style.display = 'none';
             filterICBox.style.display = 'none';
             filterICVr.style.display = 'none';
+            document.getElementById("checkInCounter").innerHTML = "";
             htmlStr = "No buildings archived for this date.";
         }
         archiveTable.innerHTML = htmlStr;
