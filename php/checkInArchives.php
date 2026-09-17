@@ -94,7 +94,7 @@ if (!accountProperties('Archives Page')) {
 <script src="/js/fillSelectMenu.js"></script>
 <script>
     let archiveTable = document.getElementById('archiveTable');
-    archiveTable.innerHTML = "Select a date above to see archive.";
+    archiveTable.innerHTML = "<br>Select a date above to see archive.";
     const defaultManagerFilter = ("<?php echo $_SESSION['accountType']?>" === 'manager') ? "<?php echo $_SESSION['username']?>" : '---';
 
     accessKeyReady.then(() => {
