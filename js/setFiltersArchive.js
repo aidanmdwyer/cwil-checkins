@@ -7,6 +7,7 @@ document.getElementById("singleDateButton").addEventListener('input', function()
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
     resetArchiveTable();
+    hideArchiveFilters();
 });
 document.getElementById("dateRangeButton").addEventListener('input', function() {
     document.getElementById("archiveFromDateLabel").style.display = "flex";
@@ -16,6 +17,7 @@ document.getElementById("dateRangeButton").addEventListener('input', function() 
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
     resetArchiveTable();
+    hideArchiveFilters();
 });
 
 document.getElementById('filterManager').addEventListener('input', function() {

@@ -285,18 +285,22 @@ if (!accountProperties('Archives Page')) {
                 htmlStr = "<br>No buildings found with this filter.";
             }
         } else {
-            filterManagerBox.style.display = 'none';
-            filterManagerVr.style.display = 'none';
-            searchBox.style.display = 'none';
-            searchVr.style.display = 'none';
-            archiveExportButton.style.display = 'none';
-            filterICBox.style.display = 'none';
-            filterICVr.style.display = 'none';
+            hideArchiveFilters();
             archiveTable.innerHTML = "";
             document.getElementById("checkInCounter").innerHTML = "";
             htmlStr = "<br>No buildings archived for this " + ((toInput) ? "range." : "date.");
         }
         archiveTable.innerHTML = htmlStr;
+    }
+
+    function hideArchiveFilters() {
+        filterManagerBox.style.display = 'none';
+        filterManagerVr.style.display = 'none';
+        searchBox.style.display = 'none';
+        searchVr.style.display = 'none';
+        archiveExportButton.style.display = 'none';
+        filterICBox.style.display = 'none';
+        filterICVr.style.display = 'none';
     }
 </script>
 <script src="/js/setFiltersArchive.js"></script>
