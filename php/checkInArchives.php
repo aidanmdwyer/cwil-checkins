@@ -40,8 +40,10 @@ if (!accountProperties('Archives Page')) {
         <div style="display: flex; justify-content: space-between; width: 100%;">
             <div style="display: flex; align-items: center; gap: 15px;">
                 <div class="vr"></div>
-                <input type="radio" id="singleDateButton" name="dateType">Single Date</input>
-                <input type="radio" id="dateRangeButton" name="dateType">Date Range</input>
+                <div style="display: flex; flex-direction: column;">
+                    <input type="radio" id="singleDateButton" name="dateType">Single Date</input>
+                    <input type="radio" id="dateRangeButton" name="dateType">Date Range</input>
+                </div>
                 <div class="vr"></div>
                 <label style="display: flex; flex-direction: column;">
                     From Date
