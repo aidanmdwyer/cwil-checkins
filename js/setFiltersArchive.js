@@ -7,9 +7,9 @@ document.getElementById('filterIC').addEventListener('input', function() {
 });
 
 document.getElementById('archiveFromDate').addEventListener('input', async () => {
-    const archiveToDate = document.getElementById("archiveToDate").value;
-    if(!archiveToDate) {
-        archiveToDate = this.value;
+    const archiveToInput = document.getElementById("archiveToDate");
+    if(!archiveToInput.value) {
+        archiveToInput.value = this.value;
     }
     archiveData = await getArchiveData();
     document.getElementById('filterManager').value = defaultManagerFilter;
