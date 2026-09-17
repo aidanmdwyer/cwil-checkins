@@ -154,7 +154,7 @@ if (!accountProperties('Archives Page')) {
         if(document.getElementById('singleDateButton')) { //single date
             const singleInput = document.getElementById('archiveSingleDate').value; //"2025-07-08"
             const [singleYear, singleMonth, singleDay] = singleInput.split('-');
-            const singleDate = new Date(fromYear, fromMonth - 1, fromDay); //Note: month is 0-indexed
+            const singleDate = new Date(singleYear, singleMonth - 1, singleDay); //Note: month is 0-indexed
 
             archiveText.innerText = 
                 singleDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
