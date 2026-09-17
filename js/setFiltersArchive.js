@@ -6,7 +6,7 @@ document.getElementById('filterIC').addEventListener('input', function() {
     buildTableArchive(archiveData);
 });
 
-document.getElementById('archiveFromDate').addEventListener('input', async function() {
+document.getElementById('archiveFromDate').addEventListener('input', async () => {
     const archiveToDate = document.getElementById("archiveToDate").value;
     if(!archiveToDate) {
         archiveToDate = this.value;
@@ -17,7 +17,7 @@ document.getElementById('archiveFromDate').addEventListener('input', async funct
     buildTableArchive(archiveData);
 });
 
-document.getElementById('archiveToDate').addEventListener('input', async function() {
+document.getElementById('archiveToDate').addEventListener('input', async () => {
     archiveData = await getArchiveData();
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
