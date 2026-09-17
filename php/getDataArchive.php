@@ -9,16 +9,30 @@ $archiveFromDate = $_GET['archiveFromDate'] ?? '';
 $archiveToDate = $_GET['archiveToDate'] ?? '';
 
 //Build SQL query
-if($_SESSION['accountType'] === 'contractor') {
-    $filterIc = $_SESSION['username'];
-    $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate = ? AND ic = ? ORDER BY name");
-    $stmt->bind_param("ss", $archiveDate, $filterIc);
-} else {
-    $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate = ? ORDER BY name");
-    $stmt->bind_param("s", $archiveDate);
+
+if($archiveToDate) { //range
+    if($_SESSION['accountType'] === 'contractor') {
+        $filterIc = $_SESSION['username'];
+        $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
+        $stmt->bind_param("sss", $archiveFromDate, $archiveToDate, $filterIc);
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
+        $stmt->bind_param("ss", $archiveFromDate, $archiveToDate);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else { //single day
+    if($_SESSION['accountType'] === 'contractor') {
+        $filterIc = $_SESSION['username'];
+        $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate = ? AND ic = ? ORDER BY name");
+        $stmt->bind_param("ss", $archiveFromDate, $filterIc);
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate = ? ORDER BY name");
+        $stmt->bind_param("s", $archiveFromDate);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
 }
-$stmt->execute();
-$result = $stmt->get_result();
 
 //Fetch and return rows
 $rows = [];
