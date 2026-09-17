@@ -96,11 +96,10 @@ if (!accountProperties('Archives Page')) {
     </div>
 
     <div class="card">
-        <h2 id="archiveText" style="margin-bottom: 0;">No Date Selected</h2>
+        <h2 id="archiveText" style="margin-bottom: 0;"></h2>
         <div id="checkInCounter"></div>
         <div id="tableContainer" style="display: inline-block;">
-            <table id="archiveTable" style="display: inline-block;">
-            </table>
+            <table id="archiveTable" style="display: inline-block;"></table>
         </div>
     </div>
 </main>
@@ -111,8 +110,9 @@ if (!accountProperties('Archives Page')) {
 <script src="/js/encodeHTML.js"></script>
 <script src="/js/fillSelectMenu.js"></script>
 <script>
+    resetArchiveTable();
+    
     let archiveTable = document.getElementById('archiveTable');
-    archiveTable.innerHTML = "<br>Select a date above to see archive.";
     const defaultManagerFilter = ("<?php echo $_SESSION['accountType']?>" === 'manager') ? "<?php echo $_SESSION['username']?>" : '---';
 
     accessKeyReady.then(() => {
@@ -131,6 +131,12 @@ if (!accountProperties('Archives Page')) {
 </script>
 <script>
     let archiveData = [];
+
+    function resetArchiveTable() {
+        document.getElementById("archiveText").innerHTML = "No Date Selected";
+        document.getElementById("checkInCounter").innerHTML = "";
+        document.getElementById("archiveTable").innerHTML = "<br>Select a date above to see archive.";
+    }
 
     function buildTableArchive(data) {
         let htmlStr = "";
