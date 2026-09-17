@@ -244,6 +244,7 @@ if (!accountProperties('Archives Page')) {
                 filterICBox.style.display = "<?php echo accountProperties('Filter IC') ? 'block' : 'none';?>";
                 filterICVr.style.display = "<?php echo accountProperties('Filter IC') ? 'block' : 'none';?>";
                 archiveExportButton.style.display = 'inline-block';
+                document.getElementById("checkInCounter").innerHTML = "";
                 htmlStr = "No buildings found with this filter.";
             }
         } else {
