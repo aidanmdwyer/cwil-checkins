@@ -1,11 +1,11 @@
 document.getElementById("singleDateButton").addEventListener('input', function() {
     document.getElementById("archiveFromDateLabel").style.display = "none";
     document.getElementById("archiveToDateLabel").style.display = "none";
-    document.getElementById("archiveSingleDateLabel").style.display = "default";
+    document.getElementById("archiveSingleDateLabel").style.display = "flex";
 });
 document.getElementById("dateRangeButton").addEventListener('input', function() {
-    document.getElementById("archiveFromDateLabel").style.display = "default";
-    document.getElementById("archiveToDateLabel").style.display = "default";
+    document.getElementById("archiveFromDateLabel").style.display = "flex";
+    document.getElementById("archiveToDateLabel").style.display = "flex";
     document.getElementById("archiveSingleDateLabel").style.display = "none";
 });
 
