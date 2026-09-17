@@ -151,7 +151,7 @@ if (!accountProperties('Archives Page')) {
         const archiveExportButton = document.getElementById('archiveExportButton');
         const archiveText = document.getElementById("archiveText");
 
-        if(document.getElementById('singleDateButton')) { //single date
+        if(document.getElementById('singleDateButton').checked) { //single date
             const singleInput = document.getElementById('archiveSingleDate').value; //"2025-07-08"
             const [singleYear, singleMonth, singleDay] = singleInput.split('-');
             const singleDate = new Date(singleYear, singleMonth - 1, singleDay); //Note: month is 0-indexed
