@@ -147,8 +147,7 @@ if (!accountProperties('Archives Page')) {
                     fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
                     " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
             } else {
-                document.getElementById('archiveText').innerText = 
-                    fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+                document.getElementById('archiveText').innerText = "To Date must be later than From Date."
             }
         }
 
