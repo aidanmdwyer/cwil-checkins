@@ -110,8 +110,6 @@ if (!accountProperties('Archives Page')) {
 <script src="/js/encodeHTML.js"></script>
 <script src="/js/fillSelectMenu.js"></script>
 <script>
-    resetArchiveTable();
-    
     let archiveTable = document.getElementById('archiveTable');
     const defaultManagerFilter = ("<?php echo $_SESSION['accountType']?>" === 'manager') ? "<?php echo $_SESSION['username']?>" : '---';
 
@@ -137,6 +135,7 @@ if (!accountProperties('Archives Page')) {
         document.getElementById("checkInCounter").innerHTML = "";
         document.getElementById("archiveTable").innerHTML = "<br>Select a date above to see archive.";
     }
+    resetArchiveTable();
 
     function buildTableArchive(data) {
         let htmlStr = "";
