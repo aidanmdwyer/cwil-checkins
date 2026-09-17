@@ -134,14 +134,18 @@ if (!accountProperties('Archives Page')) {
         const fromInput = document.getElementById('archiveFromDate').value; //"2025-07-08"
         const [fromYear, fromMonth, fromDay] = fromInput.split('-');
         const fromDate = new Date(fromYear, fromMonth - 1, fromDay); //Note: month is 0-indexed
-        
         const toInput = document.getElementById('archiveToDate').value;
-        const [toYear, toMonth, toDay] = toInput.split('-');
-        const toDate = new Date(toYear, toMonth - 1, toDay);
+        if(toInput) {
+            const [toYear, toMonth, toDay] = toInput.split('-');
+            const toDate = new Date(toYear, toMonth - 1, toDay);
 
-        document.getElementById('archiveText').innerText = 
-            "Showing archives from " + fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
-            " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+            document.getElementById('archiveText').innerText = 
+                fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
+                " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+        } else {
+            document.getElementById('archiveText').innerText = 
+                fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+        }
 
         archiveTable.style.display = 'inline-block';
         archiveTable.innerHTML = "";

@@ -7,10 +7,6 @@ document.getElementById('filterIC').addEventListener('input', function() {
 });
 
 document.getElementById('archiveFromDate').addEventListener('input', async function() {
-    const archiveToInput = document.getElementById("archiveToDate");
-    if(!archiveToInput.value) {
-        archiveToInput.value = this.value;
-    }
     archiveData = await getArchiveData();
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
