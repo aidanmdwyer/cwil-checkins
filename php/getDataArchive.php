@@ -5,11 +5,10 @@ isKeyValid();
 
 require_once 'db.php';
 
-$archiveDate = $_GET['archiveDate'] ?? '';
+$archiveFromDate = $_GET['archiveFromDate'] ?? '';
+$archiveToDate = $_GET['archiveToDate'] ?? '';
 
 //Build SQL query
-
-
 if($_SESSION['accountType'] === 'contractor') {
     $filterIc = $_SESSION['username'];
     $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate = ? AND ic = ? ORDER BY name");

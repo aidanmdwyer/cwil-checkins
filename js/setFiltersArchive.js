@@ -6,7 +6,18 @@ document.getElementById('filterIC').addEventListener('input', function() {
     buildTableArchive(archiveData);
 });
 
-document.getElementById('archiveDate').addEventListener('input', async function() {
+document.getElementById('archiveFromDate').addEventListener('input', async function() {
+    const archiveToDate = document.getElementById("archiveToDate").value;
+    if(!archiveToDate) {
+        archiveToDate = this.value;
+    }
+    archiveData = await getArchiveData();
+    document.getElementById('filterManager').value = defaultManagerFilter;
+    document.getElementById('filterIC').value = '---';
+    buildTableArchive(archiveData);
+});
+
+document.getElementById('archiveToDate').addEventListener('input', async function() {
     archiveData = await getArchiveData();
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
@@ -16,7 +27,8 @@ document.getElementById('archiveDate').addEventListener('input', async function(
 async function getArchiveData() {
     const response = await fetch(
         '/php/getDataArchive.php?key=' + accessKey +
-        '&archiveDate=' + document.getElementById('archiveDate').value
+        '&archiveFromDate=' + document.getElementById('archiveFromDate').value +
+        '&archiveToDate=' + document.getElementById('archiveToDate').value
     );
     const data = await response.json();
     return data;

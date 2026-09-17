@@ -41,8 +41,12 @@ if (!accountProperties('Archives Page')) {
             <div style="display: flex; align-items: center; gap: 15px;">
                 <div class="vr"></div>
                 <label style="display: flex; flex-direction: column;">
-                    Date
-                    <input type="date" id="archiveDate" name="archiveDate">
+                    From
+                    <input type="date" id="archiveFromDate" name="archiveFromDate">
+                </label>
+                <label style="display: flex; flex-direction: column;">
+                    To
+                    <input type="date" id="archiveToDate" name="archiveToDate">
                 </label>
                 <div id="searchVr" class="vr" style="display: none;"></div>
                 <div id="searchBox" style="display: none;">
@@ -127,12 +131,17 @@ if (!accountProperties('Archives Page')) {
         const searchBox = document.getElementById('searchBox');
         const archiveExportButton = document.getElementById('archiveExportButton');
 
-        const inputValue = document.getElementById('archiveDate').value; //"2025-07-08"
-        const [year, month, day] = inputValue.split('-');
-        const date = new Date(year, month - 1, day); //Note: month is 0-indexed
+        const fromInput = document.getElementById('archiveFromDate').value; //"2025-07-08"
+        const [fromYear, fromMonth, fromDay] = fromInput.split('-');
+        const fromDate = new Date(fromYear, fromMonth - 1, fromDay); //Note: month is 0-indexed
+        
+        const toInput = document.getElementById('archiveToDate').value;
+        const [toYear, toMonth, toDay] = toInput.split('-');
+        const toDate = new Date(toYear, toMonth - 1, toDay);
 
-        const formattedDate = date.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
-        document.getElementById('archiveText').innerText = 'Archive: ' + formattedDate;
+        document.getElementById('archiveText').innerText = 
+            "Showing archives from " + fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
+            " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
 
         archiveTable.style.display = 'inline-block';
         archiveTable.innerHTML = "";
