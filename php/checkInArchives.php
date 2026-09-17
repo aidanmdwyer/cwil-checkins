@@ -135,7 +135,10 @@ if (!accountProperties('Archives Page')) {
         const [fromYear, fromMonth, fromDay] = fromInput.split('-');
         const fromDate = new Date(fromYear, fromMonth - 1, fromDay); //Note: month is 0-indexed
         const toInput = document.getElementById('archiveToDate').value;
-        if(toInput) {
+        if(!toInput || toInput === fromInput) {
+            document.getElementById('archiveText').innerText = 
+                fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+        } else {
             const [toYear, toMonth, toDay] = toInput.split('-');
             const toDate = new Date(toYear, toMonth - 1, toDay);
 
@@ -144,11 +147,9 @@ if (!accountProperties('Archives Page')) {
                     fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
                     " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
             } else {
-                document.getElementById('archiveText').innerText = "To Date must be later than From Date"
+                document.getElementById('archiveText').innerText = 
+                    fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
             }
-        } else {
-            document.getElementById('archiveText').innerText = 
-                fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
         }
 
         archiveTable.style.display = 'inline-block';
