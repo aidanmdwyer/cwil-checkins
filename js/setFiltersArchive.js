@@ -38,25 +38,15 @@ document.getElementById('archiveSingleDate').addEventListener('input', async fun
 document.getElementById('archiveFromDate').addEventListener('input', async function() {
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
-
-    const fromDate = new Date(this.value);
-    const toDate = new Date(document.getElementById("archiveToDate").value);
-    if(toDate > fromDate) {
-        archiveData = await getArchiveData();
-        buildTableArchive(archiveData);
-    }
+    archiveData = await getArchiveData();
+    buildTableArchive(archiveData);
 });
 
 document.getElementById('archiveToDate').addEventListener('input', async function() {
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
-
-    const fromDate = new Date(document.getElementById("archiveFromDate").value);
-    const toDate = new Date(this.value);
-    if(toDate > fromDate) {
-        archiveData = await getArchiveData();
-        buildTableArchive(archiveData);
-    }
+    archiveData = await getArchiveData();
+    buildTableArchive(archiveData);
 });
 
 async function getArchiveData() {

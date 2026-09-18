@@ -9,8 +9,6 @@ $archiveSingleDate = $_GET['archiveSingleDate'] ?? '';
 $archiveFromDate = $_GET['archiveFromDate'] ?? '';
 $archiveToDate = $_GET['archiveToDate'] ?? '';
 
-//Build SQL query
-
 if($archiveSingleDate) { //single day
     if($_SESSION['accountType'] === 'contractor') {
         $filterIc = $_SESSION['username'];
@@ -22,7 +20,7 @@ if($archiveSingleDate) { //single day
     }
     $stmt->execute();
     $result = $stmt->get_result();
-} else if($archvieToDate > $archiveFromDate) {
+} else if($archiveToDate > $archiveFromDate) { //range
     if($_SESSION['accountType'] === 'contractor') {
         $filterIc = $_SESSION['username'];
         $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
@@ -33,6 +31,11 @@ if($archiveSingleDate) { //single day
     }
     $stmt->execute();
     $result = $stmt->get_result();
+} else {
+    echo json_encode([]);
+    $stmt->close();
+    $conn->close();
+    return;
 }
 
 //Fetch and return rows
