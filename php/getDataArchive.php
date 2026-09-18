@@ -20,7 +20,7 @@ if($archiveSingleDate) { //single day
     }
     $stmt->execute();
     $result = $stmt->get_result();
-} else if($archiveToDate > $archiveFromDate) { //range
+} else if($archiveToDate > $archiveFromDate && ($archiveToDate - $archiveFromDate) <= 31) { //range
     if($_SESSION['accountType'] === 'contractor') {
         $filterIc = $_SESSION['username'];
         $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
