@@ -325,8 +325,9 @@ if (!accountProperties('Archives Page')) {
         const trs = Array.from(tbody.children);
 
         // filter rows
+        const colNum = (document.getElementById('singleDateButton').checked) ? 0 : 1;
         trs.forEach(tr => {
-            tr.style.display = tr.children[0].textContent.toLowerCase().includes(searchTerm)
+            tr.style.display = tr.children[colNum].textContent.toLowerCase().includes(searchTerm)
                 ? 'table-row'
                 : 'none';
         });
