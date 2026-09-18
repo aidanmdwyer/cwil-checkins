@@ -216,7 +216,7 @@ if (!accountProperties('Archives Page')) {
                 htmlStr += `<th>Name</th>
                     <th>Manager</th>`;
 
-                if ("<?php echo htmlspecialchars($_SESSION['accountType'])?>" === "contractor") htmlStr += `<th>IC</th>`;
+                if ("<?php echo htmlspecialchars($_SESSION['accountType'])?>" !== "contractor") htmlStr += `<th>IC</th>`;
 
                 htmlStr += `<th>&#9989</th>
                             <th>Time Checked</th>
@@ -231,7 +231,7 @@ if (!accountProperties('Archives Page')) {
 
                     let trStr = `<tr class="` + (colorSwitch ? 'odd' : 'even') + `">`;
 
-                    if(document.getElementById('dateRangeButton').checked) trStr += `<td>${rowData['archiveDate']}</td>`;
+                    if(document.getElementById('dateRangeButton').checked) trStr += `<td>${rowData['archiveDate'].subtsring(0, 10)}</td>`;
 
                     trStr += `<td>${rowData['name']}</td>`;
 
