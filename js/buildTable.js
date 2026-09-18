@@ -225,10 +225,11 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         }
                         checkInCounterHTML += 'Please click "Load All" to see check in statistics for this set of filters.';
                     } else {
-                        const percentageChecked = Math.round(numChecked/numBuildings*1000)/10
+                        const percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
+                        const percentageUnchecked = Math.round((100 - percentageChecked)*100)/100;
                         checkInCounterHTML += 
                             "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + percentageChecked + "%)" + 
-                            "</span>" + (numBuildings - numChecked) + "/" + numBuildings + " &#10060 (" + (100 - percentageChecked) + "%)";
+                            "</span>" + (numBuildings - numChecked) + "/" + numBuildings + " &#10060 (" + percentageUnchecked + "%)";
                     }
 
                     document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
@@ -240,6 +241,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     refreshButton.disabled = false;
                     refreshButton.innerHTML = 'Refresh';
                     buildingsTable.innerHTML = 'No buildings matching filter.';
+                    document.getElementById("checkInCounter").innerHTML = "";
                     selectSubmits.style.display = 'none';
                 }
             }).catch(error => {

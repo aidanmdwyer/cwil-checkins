@@ -278,10 +278,11 @@ if (!accountProperties('Archives Page')) {
                 });
 
                 const numBuildings = filteredData.length;
-                const percentageChecked = Math.round(numChecked/numBuildings*1000)/10
+                const percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
+                const percentageUnchecked = Math.round((100 - percentageChecked)*100)/100;
                 let checkInCounterHTML = 
                     "<span style='margin-right: 30px;'>" + numBuildings + " buildings loaded</span>" + 
-                    "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + percentageChecked + "%)</span>" + 
+                    "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + percentageUnchecked + "%)</span>" + 
                     (numBuildings - numChecked) + "/" + numBuildings + " &#10060 (" + (100 - percentageChecked) + "%)";
                 document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
 
