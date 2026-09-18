@@ -175,7 +175,7 @@ if (!accountProperties('Archives Page')) {
             const toDate = new Date(toYear, toMonth - 1, toDay);
 
             if(toDate > fromDate) { //valid
-                if((toDate - fromDate) / (1000 * 3600 * 24) <= 31) {
+                if((toDate - fromDate) / (1000 * 3600 * 24) < 31) {
                     document.getElementById('archiveText').innerText = 
                         fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
                         " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
