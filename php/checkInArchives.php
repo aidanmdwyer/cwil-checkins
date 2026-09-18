@@ -175,9 +175,13 @@ if (!accountProperties('Archives Page')) {
             const toDate = new Date(toYear, toMonth - 1, toDay);
 
             if(toDate > fromDate) { //valid
-                document.getElementById('archiveText').innerText = 
-                    fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
-                    " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+                if((toDate - fromDate) <= 31) {
+                    document.getElementById('archiveText').innerText = 
+                        fromDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) + 
+                        " to " + toDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+                } else {
+                    archiveText.innerText = "Archive range must not exceed 31 days.";
+                }
             } else { //invalid
                 archiveText.innerText = "To Date must be later than From Date.";
             }
