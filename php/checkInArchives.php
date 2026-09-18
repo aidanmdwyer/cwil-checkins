@@ -208,32 +208,21 @@ if (!accountProperties('Archives Page')) {
                 }
             })
             if (filteredData.length > 0) {
-                if ("<?php echo htmlspecialchars($_SESSION['accountType'])?>" === "contractor") {
-                    htmlStr = `
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Manager</th>
-                                <th>&#9989</th>
-                                <th>Time Checked</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                    `;
-                } else {
-                    htmlStr = `
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Manager</th>
-                                <th>IC</th>
-                                <th>&#9989</th>
-                                <th>Time Checked</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                    `;
-                }
+                htmlStr = `<thead>
+                            <tr>`;
+
+                if(document.getElementById('dateRangeButton').checked) htmlStr += `<th>Date</th>`;
+
+                htmlStr += `<th>Name</th>
+                    <th>Manager</th>`;
+
+                if ("<?php echo htmlspecialchars($_SESSION['accountType'])?>" === "contractor") htmlStr += `<th>IC</th>`;
+
+                htmlStr += `<th>&#9989</th>
+                            <th>Time Checked</th>
+                        </tr>
+                    </thead>
+                    <tbody>`
 
                 let colorSwitch = false;
                 let numChecked = 0;
@@ -241,6 +230,8 @@ if (!accountProperties('Archives Page')) {
                     if(rowData.checked) numChecked++;
 
                     let trStr = `<tr class="` + (colorSwitch ? 'odd' : 'even') + `">`;
+
+                    if(document.getElementById('dateRangeButton').checked) trStr += `<td>${rowData['archiveDate']}</td>`;
 
                     trStr += `<td>${rowData['name']}</td>`;
 
