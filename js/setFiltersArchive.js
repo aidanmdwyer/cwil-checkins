@@ -28,27 +28,52 @@ document.getElementById('filterIC').addEventListener('input', function() {
     buildTableArchive(archiveData);
 });
 
-document.getElementById('archiveFromDate').addEventListener('input', async function() {
-    archiveData = await getArchiveData();
+document.getElementById('archiveSingleDate').addEventListener('input', async function() {
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
+    archiveData = await getArchiveData();
     buildTableArchive(archiveData);
+});
+
+document.getElementById('archiveFromDate').addEventListener('input', async function() {
+    document.getElementById('filterManager').value = defaultManagerFilter;
+    document.getElementById('filterIC').value = '---';
+
+    const fromDate = new Date(this.value);
+    const toDate = new Date(document.getElementById("archiveToDate").value);
+    if(toDate > fromDate) {
+        archiveData = await getArchiveData();
+        buildTableArchive(archiveData);
+    }
 });
 
 document.getElementById('archiveToDate').addEventListener('input', async function() {
-    archiveData = await getArchiveData();
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
-    buildTableArchive(archiveData);
+
+    const fromDate = new Date(document.getElementById("archiveFromDate").value);
+    const toDate = new Date(this.value);
+    if(toDate > fromDate) {
+        archiveData = await getArchiveData();
+        buildTableArchive(archiveData);
+    }
 });
 
 async function getArchiveData() {
-    const response = await fetch(
-        '/php/getDataArchive.php?key=' + accessKey +
-        '&archiveSingleDate=' + document.getElementById('archiveSingleDate').value +
-        '&archiveFromDate=' + document.getElementById('archiveFromDate').value +
-        '&archiveToDate=' + document.getElementById('archiveToDate').value
-    );
+    let response;
+    if(document.getElementById('singleDateButton').checked) { //single date
+        response = await fetch(
+            '/php/getDataArchive.php?key=' + accessKey +
+            '&archiveSingleDate=' + document.getElementById('archiveSingleDate').value
+        );
+    } else { //range
+        response = await fetch(
+            '/php/getDataArchive.php?key=' + accessKey +
+            '&archiveFromDate=' + document.getElementById('archiveFromDate').value +
+            '&archiveToDate=' + document.getElementById('archiveToDate').value
+        );
+    }
+    
     const data = await response.json();
     return data;
 }
