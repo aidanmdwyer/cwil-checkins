@@ -31,17 +31,14 @@ if($archiveSingleDate) { //single day
     }
     $stmt->execute();
     $result = $stmt->get_result();
-} else {
-    echo json_encode([]);
-    $stmt->close();
-    $conn->close();
-    return;
 }
 
 //Fetch and return rows
 $rows = [];
-while ($row = $result->fetch_assoc()) {
-    $rows[] = $row;
+if($result) {
+    while ($row = $result->fetch_assoc()) {
+        $rows[] = $row;
+    }
 }
 
 echo json_encode($rows);
