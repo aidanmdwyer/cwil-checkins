@@ -20,7 +20,10 @@ if($archiveSingleDate) { //single day
     }
     $stmt->execute();
     $result = $stmt->get_result();
-} else if($archiveToDate > $archiveFromDate && ($archiveToDate - $archiveFromDate) <= 31) { //range
+} else { //range
+    $fromDateObject = new DateTime($archiveFromDate);
+    $toDateObject = new DateTime($archiveToDate);
+    if($toDateObject > $fromDateObject && ($toDateObject - $fromDateObject) <= 31) {
     if($_SESSION['accountType'] === 'contractor') {
         $filterIc = $_SESSION['username'];
         $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
@@ -31,6 +34,7 @@ if($archiveSingleDate) { //single day
     }
     $stmt->execute();
     $result = $stmt->get_result();
+    }
 }
 
 //Fetch and return rows
