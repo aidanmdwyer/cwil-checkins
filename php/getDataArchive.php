@@ -27,7 +27,7 @@ if($archiveSingleDate) { //single day
     if($toDateObject > $fromDateObject && $dateDiff->days < 31) {
         if($_SESSION['accountType'] === 'contractor') {
             $filterIc = $_SESSION['username'];
-            $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
+            $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? AND ic = ? ORDER BY archiveDate, name");
             $stmt->bind_param("sss", $archiveFromDate, $archiveToDate, $filterIc);
         } else {
             $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
