@@ -23,7 +23,8 @@ if($archiveSingleDate) { //single day
 } else if($archiveFromDate && $archiveToDate) { //range
     $fromDateObject = new DateTime($archiveFromDate);
     $toDateObject = new DateTime($archiveToDate);
-    if($toDateObject > $fromDateObject && $toDateObject->diff($fromDateObject) <= 31) {
+    $dateDiff = $fromDateObject->diff($toDateObject);
+    if($toDateObject > $fromDateObject && $dateDiff->days <= 31) {
         if($_SESSION['accountType'] === 'contractor') {
             $filterIc = $_SESSION['username'];
             $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
