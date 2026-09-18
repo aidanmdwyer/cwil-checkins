@@ -20,20 +20,20 @@ if($archiveSingleDate) { //single day
     }
     $stmt->execute();
     $result = $stmt->get_result();
-} else { //range
+} else if($archiveFromDate && $archiveToDate) { //range
     $fromDateObject = new DateTime($archiveFromDate);
     $toDateObject = new DateTime($archiveToDate);
-    if($toDateObject > $fromDateObject && ($toDateObject - $fromDateObject) <= 31) {
-    if($_SESSION['accountType'] === 'contractor') {
-        $filterIc = $_SESSION['username'];
-        $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
-        $stmt->bind_param("sss", $archiveFromDate, $archiveToDate, $filterIc);
-    } else {
-        $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
-        $stmt->bind_param("ss", $archiveFromDate, $archiveToDate);
-    }
-    $stmt->execute();
-    $result = $stmt->get_result();
+    if($toDateObject > $fromDateObject && $toDateObject->diff($fromDateObject) <= 31) {
+        if($_SESSION['accountType'] === 'contractor') {
+            $filterIc = $_SESSION['username'];
+            $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
+            $stmt->bind_param("sss", $archiveFromDate, $archiveToDate, $filterIc);
+        } else {
+            $stmt = $conn->prepare("SELECT * FROM archive WHERE archiveDate >= ? AND archiveDate <= ? ORDER BY archiveDate, name");
+            $stmt->bind_param("ss", $archiveFromDate, $archiveToDate);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
     }
 }
 
