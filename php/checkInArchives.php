@@ -231,7 +231,7 @@ if (!accountProperties('Archives Page')) {
 
                     let trStr = `<tr class="` + (colorSwitch ? 'odd' : 'even') + `">`;
 
-                    if(document.getElementById('dateRangeButton').checked) trStr += `<td>${rowData['archiveDate'].subtsring(0, 10)}</td>`;
+                    if(document.getElementById('dateRangeButton').checked) trStr += `<td>${rowData['archiveDate'].slice(0, 10)}</td>`;
 
                     trStr += `<td>${rowData['name']}</td>`;
 
