@@ -105,8 +105,6 @@ if (!accountProperties('Archives Page')) {
 </main>
 </body>
 
-
-<script src="/js/loadElementVariables.js"></script>
 <script src="/js/encodeHTML.js"></script>
 <script src="/js/fillSelectMenu.js"></script>
 <script>
