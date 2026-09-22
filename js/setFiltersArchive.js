@@ -40,8 +40,8 @@ document.getElementById('archiveFromDate').addEventListener('input', async funct
     document.getElementById('filterIC').value = '---';
     if(document.getElementById('archiveToDate').value) {
         archiveData = await getArchiveData();
+        buildTableArchive(archiveData);
     }
-    buildTableArchive(archiveData);
 });
 
 document.getElementById('archiveToDate').addEventListener('input', async function() {
@@ -49,8 +49,8 @@ document.getElementById('archiveToDate').addEventListener('input', async functio
     document.getElementById('filterIC').value = '---';
     if(document.getElementById('archiveFromDate').value) {
         archiveData = await getArchiveData();
+        buildTableArchive(archiveData);
     }
-    buildTableArchive(archiveData);
 });
 
 async function getArchiveData() {
