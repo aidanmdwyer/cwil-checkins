@@ -128,7 +128,11 @@ if (!accountProperties('Archives Page')) {
     });
 </script>
 <script>
-    let archiveData = [];
+    let numBuildings = 0;
+    let numChecked = 0;
+    let numUnchecked = 0;
+    let percentageChecked = 0;
+    let percentageUnchecked = 0;
 
     function resetArchiveTable() {
         document.getElementById("checkInCounter").innerHTML = "";
@@ -221,7 +225,7 @@ if (!accountProperties('Archives Page')) {
                     <tbody>`
 
                 let colorSwitch = false;
-                let numChecked = 0;
+                numChecked = 0;
                 filteredData.forEach(rowData => {
                     if(rowData.checked) numChecked++;
 
@@ -268,13 +272,15 @@ if (!accountProperties('Archives Page')) {
                     colorSwitch = !colorSwitch;
                 });
 
-                const numBuildings = filteredData.length;
-                const percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
-                const percentageUnchecked = Math.round((100 - percentageChecked)*100)/100;
+                numBuildings = filteredData.length;
+                numUnchecked = numBuildings - numChecked;
+                percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
+                percentageUnchecked = Math.round((100 - percentageChecked)*100)/100;
+
                 let checkInCounterHTML = 
                     "<span style='margin-right: 30px;'>" + numBuildings + " buildings loaded</span>" + 
                     "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + percentageChecked + "%)</span>" + 
-                    (numBuildings - numChecked) + "/" + numBuildings + " &#10060 (" + percentageUnchecked + "%)";
+                    numUnchecked + "/" + numBuildings + " &#10060 (" + percentageUnchecked + "%)";
                 document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
 
                 htmlStr += `</tbody>`;
@@ -311,27 +317,33 @@ if (!accountProperties('Archives Page')) {
 
     function exportArchiveTable() {
         let fileName = 'archive.xlsx';
-        let filterData = {};
+        let metadata = {};
 
         if(document.getElementById('singleDateButton').checked) { //single date
             const singleDate = document.getElementById('archiveSingleDate').value
             fileName = singleDate + '_archive.xlsx';
-            filterData['Date'] = singleDate;
+            metadata['Date'] = singleDate;
         } else { //range
             const fromDate = document.getElementById('archiveFromDate').value;
             const toDate = document.getElementById("archiveToDate").value;
             fileName = fromDate + "_to_" + toDate + '_archive.xlsx';
-            filterData['Date Range'] = fromDate + " to " + toDate;
+            metadata['Date Range'] = fromDate + " to " + toDate;
         }
+
+        metadata['# of Buildings'] = numBuildings;
+        metadata['# Checked'] = numChecked;
+        metadata['# Unchecked'] = numUnchecked;
+        metadata['% Checked'] = percentageChecked;
+        metadata['% Unchecked'] = percentageUnchecked;
 
         const searchTerm = document.getElementById("searchArchives").value;
         const managerFilter = document.getElementById('filterManager').value;
         const icFilter = document.getElementById('filterIC').value;
-        if(searchTerm) filterData['Search Filter'] = searchTerm;
-        if(managerFilter !== "---") filterData['Manager Filter'] = managerFilter;
-        if(icFilter !== "---") filterData['IC Filter'] = icFilter;
+        if(searchTerm) metadata['Search Filter'] = searchTerm;
+        if(managerFilter !== "---") metadata['Manager Filter'] = managerFilter;
+        if(icFilter !== "---") metadata['IC Filter'] = icFilter;
 
-        exportBuildingsSheet('archiveTable', fileName, filterData);
+        exportBuildingsSheet('archiveTable', fileName, metadata);
     }
 
     function stringToDate(dateStr) { //converts string formatted like "2025-07-08" to Date object

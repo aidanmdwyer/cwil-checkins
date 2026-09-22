@@ -1,7 +1,7 @@
-function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", filterData = {}) {
+function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", metadata = {}) {
     let table = document.getElementById(tableId);
     if(table.rows.length > 0) {
-        sheetName = filterData.sheetName ?? "Sheet1";
+        sheetName = "Sheet1";
 
         let wb = XLSX.utils.table_to_book(table, {sheet: sheetName});
         const ws = wb.Sheets[sheetName];
@@ -22,15 +22,15 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", filterData =
         autoFitColumn(ws, "Sat", -5);
         autoFitColumn(ws, "Sun", -5);
 
-        writeFilterData(ws, filterData);
+        writeMetadata(ws, metadata);
 
         // enable cellStyles so alignment works
         XLSX.writeFile(wb, fileName, {bookType: "xlsx", cellStyles: true});
     }
 }
 
-function writeFilterData(ws, filterData) {
-    const entries = Object.entries(filterData).filter(([key]) => key !== "sheetName");
+function writeMetadata(ws, metadata) {
+    const entries = Object.entries(metadata).filter(([key]) => key !== "sheetName");
     if (entries.length === 0) return;
 
     const range = XLSX.utils.decode_range(ws['!ref']);
