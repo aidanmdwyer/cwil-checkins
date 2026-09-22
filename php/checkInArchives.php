@@ -90,7 +90,7 @@ if (!accountProperties('Archives Page')) {
                 </div>
             </div>
             <div style="display: flex; align-items: center;">
-                <button id="archiveExportButton" class="big" onclick="exportBuildingsSheet('archiveTable', new Date().toISOString().slice(0,10) + '_archive.xlsx')" style="margin-left: 20px; display: none;">Export</button>
+                <button id="archiveExportButton" class="big" onclick="exportArchiveTable" style="margin-left: 20px; display: none;">Export</button>
             </div>
         </div>
     </div>
@@ -157,22 +157,18 @@ if (!accountProperties('Archives Page')) {
         const archiveText = document.getElementById("archiveText");
 
         if(document.getElementById('singleDateButton').checked) { //single date
-            const singleInput = document.getElementById('archiveSingleDate').value; //"2025-07-08"
-            const [singleYear, singleMonth, singleDay] = singleInput.split('-');
-            const singleDate = new Date(singleYear, singleMonth - 1, singleDay); //Note: month is 0-indexed
+            const singleDate = stringToDate(document.getElementById('archiveSingleDate').value);
 
             archiveText.innerText = 
                 singleDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
         } else { //range
-            const fromInput = document.getElementById('archiveFromDate').value; //"2025-07-08"
+            const fromInput = document.getElementById('archiveFromDate').value;
             const toInput = document.getElementById('archiveToDate').value;
             if(!fromInput || !toInput) {
                 return;
             }
-            const [fromYear, fromMonth, fromDay] = fromInput.split('-');
-            const fromDate = new Date(fromYear, fromMonth - 1, fromDay); //Note: month is 0-indexed
-            const [toYear, toMonth, toDay] = toInput.split('-');
-            const toDate = new Date(toYear, toMonth - 1, toDay);
+            const fromDate = stringToDate(fromInput);
+            const toDate = stringToDate(toInput);
 
             if(toDate > fromDate) { //valid
                 if((toDate - fromDate) / (1000 * 3600 * 24) < 31) {
@@ -311,6 +307,36 @@ if (!accountProperties('Archives Page')) {
         archiveExportButton.style.display = 'none';
         filterICBox.style.display = 'none';
         filterICVr.style.display = 'none';
+    }
+
+    function exportArchiveTable() {
+        let fileName = 'archive.xlsx';
+        let filterData = {};
+
+        if(document.getElementById('singleDateButton').checked) { //single date
+            const singleDate = document.getElementById('archiveSingleDate').value
+            fileName = singleDate + '_archive.xlsx';
+            filterData['Date'] = singleDate;
+        } else { //range
+            const fromDate = document.getElementById('archiveFromDate').value;
+            const toDate = document.getElementById("archiveToDate").value;
+            fileName = fromDate + "_to_" + toDate + '_archive.xlsx';
+            filterData['Date Range'] = fromDate + " to " + toDate;
+        }
+
+        const searchTerm = document.getElementById("searchArchives").value;
+        const managerFilter = document.getElementById('filterManager').value;
+        const icFilter = document.getElementById('filterIC').value;
+        if(searchTerm) filterData['Search Filter'] = searchTerm;
+        if(managerFilter) filterData['Manager Filter'] = managerFilter;
+        if(icFilter) filterData['IC Filter'] = icFilter;
+
+        exportBuildingsSheet('archiveTable', fileName, filterData);
+    }
+
+    function stringToDate(dateStr) { //converts string formatted like "2025-07-08" to Date object
+        const [y, m, d] = dateStr.split('-'); 
+        return new Date(y, m - 1, d);
     }
 </script>
 <script src="/js/setFiltersArchive.js"></script>

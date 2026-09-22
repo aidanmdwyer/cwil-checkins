@@ -84,17 +84,18 @@ if (!accountProperties('Home Page')) {
                 <button id="refreshButton" class="big" style="display: none;">Refresh</button>
             </div>
             <div style="<?php echo accountProperties('Export Buildings') ? 'display: flex' : 'display: none';?>; align-items: center; gap: 15px;">
-                <button id="mainExportButton" class="big" onclick="exportBuildingsSheet('buildingsTable', new Date().toISOString().slice(0,10) + '_buildings.xlsx')">Export</button>
+                <button id="mainExportButton" class="big" onclick="exportMainTable">Export</button>
             </div>
         </div>
     </div>
+
+    <h2 id="inactiveText" style="color: #bf3232; margin-top: 10px; display: none;">***INACTIVE BUILDINGS***</h2>
 
     <div id="checkInCounter" style="margin: 0 20px;"></div>
 
     <div style="display: flex; align-items: flex-start;">
         <!--        Table-->
         <div id="tableContainer" style="display: inline-block; margin: 0 20px;">
-            <h2 id="inactiveText" style="color: #bf3232; margin-top: 10px; display: none;">***INACTIVE BUILDINGS***</h2>
             <form id="tableSelectedForm" method="POST" action="php/handleSelect.php">
                 <table id="buildingsTable" style="display: none;"></table>
             </form>
@@ -350,6 +351,24 @@ if (!accountProperties('Home Page')) {
 <script>
     refreshButton.onclick = () => {
         buildTable();
+    }
+
+    function exportMainTable() {
+        let filterData = {};
+        
+        const searchTerm = document.getElementById("searchBuildings").value;
+        const managerFilter = document.getElementById('filterManager').value;
+        const icFilter = document.getElementById('filterIC').value;
+        const todayOnlyFilter = document.getElementById("todayOnly").checked;
+        const showActiveFilter = document.getElementById("showActive").checked;
+        
+        if(searchTerm) filterData['Search Filter'] = searchTerm;
+        if(managerFilter) filterData['Manager Filter'] = managerFilter;
+        if(icFilter) filterData['IC Filter'] = icFilter;
+        if(todayOnlyFilter) filterData['Today Only'] = "✅";
+        if(!showActive) filterData['INACTIVE BUILDINGS'] = "✅";
+
+        exportBuildingsSheet('buildingsTable', new Date().toISOString().slice(0,10) + '_buildings.xlsx', filterData);
     }
 </script>
 <script src="/js/adjustMainMargin.js"></script>

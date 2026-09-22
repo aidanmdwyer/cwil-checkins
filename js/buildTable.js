@@ -223,7 +223,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         loadAll.onclick = () => {
                             buildTable(fetchStr + '&loadAll=true')
                         }
-                        checkInCounterHTML += 'Please click "Load All" to see check in statistics for this set of filters.';
+                        checkInCounterHTML += 'Please click "Load All" to see check in statistics.';
                     } else {
                         const percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
                         const percentageUnchecked = Math.round((100 - percentageChecked)*100)/100;

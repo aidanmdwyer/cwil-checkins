@@ -1,8 +1,10 @@
-function exportBuildingsSheet(tableId, fileName = "buildings.xlsx") {
+function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", filterData = {}) {
     let table = document.getElementById(tableId);
     if(table.rows.length > 0) {
-        let wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
-        const ws = wb.Sheets["Sheet1"];
+        sheetName = filterData.sheetName ?? "Sheet1";
+
+        let wb = XLSX.utils.table_to_book(table, {sheet: sheetName});
+        const ws = wb.Sheets[sheetName];
 
         removeColumns(ws, ["", "ID", "QR", "Edit"]);
 
@@ -19,9 +21,44 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx") {
         autoFitColumn(ws, "Sat", -5);
         autoFitColumn(ws, "Sun", -5);
 
+        writeFilterData(ws, filterData);
+
         // enable cellStyles so alignment works
         XLSX.writeFile(wb, fileName, {bookType: "xlsx", cellStyles: true});
     }
+}
+
+function writeFilterData(ws, filterData) {
+    const entries = Object.entries(filterData).filter(([key]) => key !== "sheetName");
+    if (entries.length === 0) return;
+
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    const startCol = range.e.c + 2; // one empty column gap
+    const startRow = range.s.r;     // align with table's header row
+
+    entries.forEach(([key, value], i) => {
+        const row = startRow + i;
+
+        const keyAddr = XLSX.utils.encode_cell({ r: row, c: startCol });
+        ws[keyAddr] = { t: "s", v: key };
+
+        const valAddr = XLSX.utils.encode_cell({ r: row, c: startCol + 1 });
+        if (typeof value === "number") {
+            ws[valAddr] = { t: "n", v: value };
+        } else {
+            ws[valAddr] = { t: "s", v: value.toString() };
+        }
+    });
+
+    // Expand the sheet range so the new columns/rows are included in output
+    const newRange = {
+        s: { r: Math.min(range.s.r, startRow), c: Math.min(range.s.c, startCol) },
+        e: {
+            r: Math.max(range.e.r, startRow + entries.length - 1),
+            c: Math.max(range.e.c, startCol + 1)
+        }
+    };
+    ws['!ref'] = XLSX.utils.encode_range(newRange);
 }
 
 function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
