@@ -328,8 +328,8 @@ if (!accountProperties('Archives Page')) {
         const managerFilter = document.getElementById('filterManager').value;
         const icFilter = document.getElementById('filterIC').value;
         if(searchTerm) filterData['Search Filter'] = searchTerm;
-        if(managerFilter) filterData['Manager Filter'] = managerFilter;
-        if(icFilter) filterData['IC Filter'] = icFilter;
+        if(managerFilter !== "---") filterData['Manager Filter'] = managerFilter;
+        if(icFilter !== "---") filterData['IC Filter'] = icFilter;
 
         exportBuildingsSheet('archiveTable', fileName, filterData);
     }

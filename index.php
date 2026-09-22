@@ -363,8 +363,8 @@ if (!accountProperties('Home Page')) {
         const showActiveFilter = document.getElementById("showActive").checked;
         
         if(searchTerm) filterData['Search Filter'] = searchTerm;
-        if(managerFilter) filterData['Manager Filter'] = managerFilter;
-        if(icFilter) filterData['IC Filter'] = icFilter;
+        if(managerFilter !== "---") filterData['Manager Filter'] = managerFilter;
+        if(icFilter !== "---") filterData['IC Filter'] = icFilter;
         if(todayOnlyFilter) filterData['Today Only'] = "✅";
         if(!showActive) filterData['INACTIVE BUILDINGS'] = "✅";
 
