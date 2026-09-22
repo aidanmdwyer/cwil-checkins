@@ -354,7 +354,13 @@ if (!accountProperties('Home Page')) {
     }
 
     function exportMainTable() {
-        let filterData = {};
+        let metadata = {};
+
+        metadata['# of Buildings'] = numBuildings;
+        metadata['# Checked'] = numChecked;
+        metadata['# Unchecked'] = numUnchecked;
+        metadata['% Checked'] = percentageChecked;
+        metadata['% Unchecked'] = percentageUnchecked;
 
         const searchTerm = document.getElementById("searchBuildings").value;
         const managerFilter = document.getElementById('filterManager').value;
@@ -362,13 +368,13 @@ if (!accountProperties('Home Page')) {
         const todayOnlyFilter = document.getElementById("todayOnly").checked;
         const showActiveFilter = document.getElementById("showActive").checked;
         
-        if(searchTerm) filterData['Search Filter'] = searchTerm;
-        if(managerFilter !== "---") filterData['Manager Filter'] = managerFilter;
-        if(icFilter !== "---") filterData['IC Filter'] = icFilter;
-        if(todayOnlyFilter) filterData['Today Only'] = "✅";
-        if(!showActive) filterData['INACTIVE BUILDINGS'] = "✅";
+        if(searchTerm) metadata['Search Filter'] = searchTerm;
+        if(managerFilter !== "---") metadata['Manager Filter'] = managerFilter;
+        if(icFilter !== "---") metadata['IC Filter'] = icFilter;
+        if(todayOnlyFilter) metadata['Today Only'] = "✅";
+        if(!showActive) metadata['INACTIVE BUILDINGS'] = "✅";
 
-        exportBuildingsSheet('buildingsTable', new Date().toISOString().slice(0,10) + '_buildings.xlsx', filterData);
+        exportBuildingsSheet('buildingsTable', new Date().toISOString().slice(0,10) + '_buildings.xlsx', metadata);
     }
 </script>
 <script src="/js/adjustMainMargin.js"></script>

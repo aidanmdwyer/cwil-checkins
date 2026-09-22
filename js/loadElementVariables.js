@@ -1,3 +1,9 @@
+let numBuildings = 0;
+let numChecked = 0;
+let numUnchecked = 0;
+let percentageChecked = 0;
+let percentageUnchecked = 0;
+
 const refreshButton = document.getElementById('refreshButton');
 const exportButton = document.getElementById('mainExportButton');
 const buildingsTable = document.getElementById('buildingsTable');

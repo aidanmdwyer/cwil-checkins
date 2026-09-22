@@ -184,7 +184,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     }
 
                     let allSelected = true;
-                    let numChecked = 0;
+                    numChecked = 0;
                     data['rows'].forEach(rowData => {
                         let bgColor = colorSwitch ? '#F3F3F3' : '#E5E5E5';
                         if(rowData.checked) numChecked++;
@@ -214,7 +214,8 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         document.getElementById('selectAll').checked = true;
                     }
 
-                    const numBuildings = data['rows'].length;
+                    numBuildings = data['rows'].length;
+                    numUnchecked = numBuildings - numChecked;
                     let checkInCounterHTML = "<span style='margin-right: 30px;'>" + numBuildings + " buildings loaded</span>"
 
                     loadAll.style.display = 'none';
@@ -225,11 +226,11 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         }
                         checkInCounterHTML += 'Please click "Load All" to see check in statistics.';
                     } else {
-                        const percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
-                        const percentageUnchecked = Math.round((100 - percentageChecked)*100)/100;
+                        percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
+                        percentageUnchecked = Math.round((100 - percentageChecked)*100)/100;
                         checkInCounterHTML += 
                             "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + percentageChecked + "%)" + 
-                            "</span>" + (numBuildings - numChecked) + "/" + numBuildings + " &#10060 (" + percentageUnchecked + "%)";
+                            "</span>" + numUnchecked + "/" + numBuildings + " &#10060 (" + percentageUnchecked + "%)";
                     }
 
                     document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
