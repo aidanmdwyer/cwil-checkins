@@ -7,6 +7,7 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", filterData =
         const ws = wb.Sheets[sheetName];
 
         removeColumns(ws, ["", "ID", "QR", "Edit"]);
+        boldHeaderRow(ws);
 
         autoFitColumn(ws, "Name");
         autoFitColumn(ws, "Building Name");
@@ -24,8 +25,35 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", filterData =
 
         writeFilterData(ws, filterData);
 
-        // enable cellStyles so alignment works
+        // enable cellStyles so alignment/bold work
         XLSX.writeFile(wb, fileName, {bookType: "xlsx", cellStyles: true});
+    }
+}
+
+function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
+    let table = document.getElementById(tableId);
+    if(table.rows.length > 0) {
+        let wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+        const ws = wb.Sheets["Sheet1"];
+
+        removeColumns(ws, ["Account Link", "Password Reset Link", "Delete"]);
+        boldHeaderRow(ws);
+
+        autoFitColumn(ws, "Contractor Name");
+        autoFitColumn(ws, "Status");
+
+        // enable cellStyles so alignment/bold work
+        XLSX.writeFile(wb, fileName, {bookType: "xlsx", cellStyles: true});
+    }
+}
+
+function boldHeaderRow(ws) {
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+        const addr = XLSX.utils.encode_cell({ r: range.s.r, c: C });
+        const cell = ws[addr];
+        if (!cell) continue;
+        cell.s = { ...(cell.s || {}), font: { ...(cell.s?.font || {}), bold: true } };
     }
 }
 
@@ -44,7 +72,7 @@ function writeFilterData(ws, filterData) {
         const row = startRow + i;
 
         const keyAddr = XLSX.utils.encode_cell({ r: row, c: startCol });
-        ws[keyAddr] = { t: "s", v: key };
+        ws[keyAddr] = { t: "s", v: key, s: { font: { bold: true } } };
         maxKeyWidth = Math.max(maxKeyWidth, key.toString().length);
 
         const valAddr = XLSX.utils.encode_cell({ r: row, c: startCol + 1 });
@@ -71,22 +99,6 @@ function writeFilterData(ws, filterData) {
     if (!ws['!cols']) ws['!cols'] = [];
     ws['!cols'][startCol] = { wch: maxKeyWidth };
     ws['!cols'][startCol + 1] = { wch: maxValWidth };
-}
-
-function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
-    let table = document.getElementById(tableId);
-    if(table.rows.length > 0) {
-        let wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
-        const ws = wb.Sheets["Sheet1"];
-
-        removeColumns(ws, ["Account Link", "Password Reset Link", "Delete"]);
-
-        autoFitColumn(ws, "Contractor Name");
-        autoFitColumn(ws, "Status");
-
-        // enable cellStyles so alignment works
-        XLSX.writeFile(wb, fileName, {bookType: "xlsx", cellStyles: true});
-    }
 }
 
 // columns are 0-indexed (A=0, B=1, C=2, etc.)
