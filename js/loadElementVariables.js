@@ -1,4 +1,5 @@
 const refreshButton = document.getElementById('refreshButton');
+const exportButton = document.getElementById('mainExportButton');
 const buildingsTable = document.getElementById('buildingsTable');
 const editForm = document.getElementById('editForm');
 const qrTemplate = document.getElementById('qrTemplate');

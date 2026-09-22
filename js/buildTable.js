@@ -236,11 +236,12 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
 
                     refreshButton.disabled = false;
                     refreshButton.innerHTML = 'Refresh';
+                    exportButton.disabled = false;
                 } else {
                     loadAll.style.display = 'none';
                     refreshButton.disabled = false;
                     refreshButton.innerHTML = 'Refresh';
-                    document.getElementById("mainExportButton").disabled = true;
+                    exportButton.disabled = true;
                     buildingsTable.innerHTML = 'No buildings matching filter.';
                     document.getElementById("checkInCounter").innerHTML = "";
                     selectSubmits.style.display = 'none';
@@ -248,6 +249,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
             }).catch(error => {
                 buildingsTable.innerHTML = error;
                 buildingsTable.style.display = 'inline-block';
+                exportButton.disabled = true;
                 refreshButton.disabled = false;
                 refreshButton.innerHTML = 'Refresh';
                 loadAll.style.display = 'none';
