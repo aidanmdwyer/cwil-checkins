@@ -8,7 +8,6 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", metadata = {
 
         removeColumns(ws, ["", "ID", "QR", "Edit"]);
 
-        autoFitColumn(ws, "Name");
         autoFitColumn(ws, "Building Name");
         autoFitColumn(ws, "Manager");
         autoFitColumn(ws, "IC");
@@ -23,6 +22,22 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", metadata = {
         autoFitColumn(ws, "Sun", -5);
 
         writeMetadata(ws, metadata);
+
+        // enable cellStyles so alignment works
+        XLSX.writeFile(wb, fileName, {bookType: "xlsx", cellStyles: true});
+    }
+}
+
+function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
+    let table = document.getElementById(tableId);
+    if(table.rows.length > 0) {
+        let wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+        const ws = wb.Sheets["Sheet1"];
+
+        removeColumns(ws, ["Account Link", "Password Reset Link", "Delete"]);
+
+        autoFitColumn(ws, "Contractor Name");
+        autoFitColumn(ws, "Status");
 
         // enable cellStyles so alignment works
         XLSX.writeFile(wb, fileName, {bookType: "xlsx", cellStyles: true});
@@ -71,22 +86,6 @@ function writeMetadata(ws, metadata) {
     if (!ws['!cols']) ws['!cols'] = [];
     ws['!cols'][startCol] = { wch: maxKeyWidth };
     ws['!cols'][startCol + 1] = { wch: maxValWidth };
-}
-
-function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
-    let table = document.getElementById(tableId);
-    if(table.rows.length > 0) {
-        let wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
-        const ws = wb.Sheets["Sheet1"];
-
-        removeColumns(ws, ["Account Link", "Password Reset Link", "Delete"]);
-
-        autoFitColumn(ws, "Contractor Name");
-        autoFitColumn(ws, "Status");
-
-        // enable cellStyles so alignment works
-        XLSX.writeFile(wb, fileName, {bookType: "xlsx", cellStyles: true});
-    }
 }
 
 // columns are 0-indexed (A=0, B=1, C=2, etc.)

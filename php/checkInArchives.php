@@ -213,7 +213,7 @@ if (!accountProperties('Archives Page')) {
 
                 if(document.getElementById('dateRangeButton').checked) htmlStr += `<th>Date</th>`;
 
-                htmlStr += `<th>Name</th>
+                htmlStr += `<th>Building Name</th>
                     <th>Manager</th>`;
 
                 if ("<?php echo htmlspecialchars($_SESSION['accountType'])?>" !== "contractor") htmlStr += `<th>IC</th>`;
