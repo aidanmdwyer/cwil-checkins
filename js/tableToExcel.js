@@ -37,18 +37,24 @@ function writeFilterData(ws, filterData) {
     const startCol = range.e.c + 3; // one empty column gap
     const startRow = range.s.r;     // align with table's header row
 
+    let maxKeyWidth = 10;
+    let maxValWidth = 10;
+
     entries.forEach(([key, value], i) => {
         const row = startRow + i;
 
         const keyAddr = XLSX.utils.encode_cell({ r: row, c: startCol });
         ws[keyAddr] = { t: "s", v: key };
+        maxKeyWidth = Math.max(maxKeyWidth, key.toString().length);
 
         const valAddr = XLSX.utils.encode_cell({ r: row, c: startCol + 1 });
+        const valStr = value.toString();
         if (typeof value === "number") {
             ws[valAddr] = { t: "n", v: value };
         } else {
-            ws[valAddr] = { t: "s", v: value.toString() };
+            ws[valAddr] = { t: "s", v: valStr };
         }
+        maxValWidth = Math.max(maxValWidth, valStr.length);
     });
 
     // Expand the sheet range so the new columns/rows are included in output
@@ -60,6 +66,11 @@ function writeFilterData(ws, filterData) {
         }
     };
     ws['!ref'] = XLSX.utils.encode_range(newRange);
+
+    // Auto-fit the key/value columns
+    if (!ws['!cols']) ws['!cols'] = [];
+    ws['!cols'][startCol] = { wch: maxKeyWidth };
+    ws['!cols'][startCol + 1] = { wch: maxValWidth };
 }
 
 function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
