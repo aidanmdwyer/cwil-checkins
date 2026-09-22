@@ -240,6 +240,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     loadAll.style.display = 'none';
                     refreshButton.disabled = false;
                     refreshButton.innerHTML = 'Refresh';
+                    document.getElementById("mainExportButton").disabled = true;
                     buildingsTable.innerHTML = 'No buildings matching filter.';
                     document.getElementById("checkInCounter").innerHTML = "";
                     selectSubmits.style.display = 'none';
