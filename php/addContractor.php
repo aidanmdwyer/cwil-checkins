@@ -21,7 +21,7 @@ if (!accountProperties('Contractors Page')) {
 </head>
 <body>
 
-<script src="/js/loadElementVariables.js"></script>
+<script src="/js/accessKey.js"></script>
 <script src="/js/encodeHTML.js"></script>
 <script src="/js/copyAccountLink.js"></script>
 <script src="/js/adjustMainMargin.js"></script>

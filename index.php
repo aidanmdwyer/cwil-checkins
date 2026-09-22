@@ -306,6 +306,7 @@ if (!accountProperties('Home Page')) {
 
 
 <script src="/js/loadElementVariables.js"></script>
+<script src="/js/accessKey.js"></script>
 <script src="/js/editFormListener.js"></script>
 <script src="/js/editAll.js"></script>
 <script src="/js/encodeHTML.js"></script>

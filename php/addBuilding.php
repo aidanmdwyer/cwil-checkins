@@ -174,7 +174,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </main>
 
 <script src="/js/handleDayChecks.js"></script>
-<script src="/js/loadElementVariables.js"></script>
+<script src="/js/accessKey.js"></script>
 <script src="/js/encodeHTML.js"></script>
 <script src="/js/searchContractors.js"></script>
 <script>

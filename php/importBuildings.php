@@ -57,7 +57,7 @@ if (!accountProperties('Import Page')) {
     </div>
 </main>
 
-<script src="/js/loadElementVariables.js"></script>
+<script src="/js/accessKey.js"></script>
 <script src="/js/importBuildings.js"></script>
 <script src="/js/adjustMainMargin.js"></script>
 <script src="/js/encodeHTML.js"></script>
