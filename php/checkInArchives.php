@@ -90,7 +90,7 @@ if (!accountProperties('Archives Page')) {
                 </div>
             </div>
             <div style="display: flex; align-items: center;">
-                <button id="archiveExportButton" class="big" onclick="exportArchiveTable" style="margin-left: 20px; display: none;">Export</button>
+                <button id="archiveExportButton" class="big" onclick="exportArchiveTable()" style="margin-left: 20px; display: none;">Export</button>
             </div>
         </div>
     </div>

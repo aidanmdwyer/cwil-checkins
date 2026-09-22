@@ -9,6 +9,7 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", filterData =
         removeColumns(ws, ["", "ID", "QR", "Edit"]);
 
         autoFitColumn(ws, "Name");
+        autoFitColumn(ws, "Building Name");
         autoFitColumn(ws, "Manager");
         autoFitColumn(ws, "IC");
         autoFitColumn(ws, "✅", -5);
@@ -33,7 +34,7 @@ function writeFilterData(ws, filterData) {
     if (entries.length === 0) return;
 
     const range = XLSX.utils.decode_range(ws['!ref']);
-    const startCol = range.e.c + 2; // one empty column gap
+    const startCol = range.e.c + 3; // one empty column gap
     const startRow = range.s.r;     // align with table's header row
 
     entries.forEach(([key, value], i) => {
