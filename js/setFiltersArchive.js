@@ -38,14 +38,18 @@ document.getElementById('archiveSingleDate').addEventListener('input', async fun
 document.getElementById('archiveFromDate').addEventListener('input', async function() {
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
-    archiveData = await getArchiveData();
+    if(document.getElementById('archiveToDate').value) {
+        archiveData = await getArchiveData();
+    }
     buildTableArchive(archiveData);
 });
 
 document.getElementById('archiveToDate').addEventListener('input', async function() {
     document.getElementById('filterManager').value = defaultManagerFilter;
     document.getElementById('filterIC').value = '---';
-    archiveData = await getArchiveData();
+    if(document.getElementById('archiveFromDate').value) {
+        archiveData = await getArchiveData();
+    }
     buildTableArchive(archiveData);
 });
 
