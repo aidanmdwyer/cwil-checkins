@@ -225,6 +225,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                             buildTable(fetchStr + '&loadAll=true')
                         }
                         checkInCounterHTML += 'Please click "Load All" to see check in statistics.';
+                        exportButton.disabled = true;
                     } else {
                         percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
                         percentageUnchecked = Math.round((100 - percentageChecked)*100)/100;

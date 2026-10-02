@@ -356,7 +356,7 @@ if (!accountProperties('Home Page')) {
 
     function exportMainTable() {
         let metadata = {};
-
+        
         metadata['# of Buildings'] = numBuildings;
         metadata['# Checked'] = numChecked;
         metadata['# Unchecked'] = numUnchecked;
