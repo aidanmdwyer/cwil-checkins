@@ -333,8 +333,8 @@ if (!accountProperties('Archives Page')) {
         metadata['# of Buildings'] = numBuildings;
         metadata['# Checked'] = numChecked;
         metadata['# Unchecked'] = numUnchecked;
-        metadata['% Checked'] = percentageChecked;
-        metadata['% Unchecked'] = percentageUnchecked;
+        metadata['% Checked'] = percentageChecked + "%";
+        metadata['% Unchecked'] = percentageUnchecked + "%";
 
         const searchTerm = document.getElementById("searchArchives").value;
         const managerFilter = document.getElementById('filterManager').value;
