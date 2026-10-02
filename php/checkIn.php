@@ -1,6 +1,13 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
+    $bypassFork = $_GET['bypassFork'];
+
+    if (accountProperties('Closet Audit') && !$bypassFork) {
+        header("Location: closetAuditFork.php");
+        exit;
+    }
+
     require_once 'db.php';
 
     $name = $_GET['name'];
