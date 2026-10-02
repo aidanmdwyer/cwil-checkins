@@ -84,7 +84,7 @@ if (!accountProperties('Home Page')) {
                 <button id="refreshButton" class="big" style="display: none;">Refresh</button>
             </div>
             <div style="<?php echo accountProperties('Export Buildings') ? 'display: flex' : 'display: none';?>; align-items: center; gap: 15px;">
-                <button id="mainExportButton" class="big" onclick="exportMainTable()">Export</button>
+                <button id="mainExportButton" class="big" onclick="exportMainTable()" disabled>Export</button>
             </div>
         </div>
     </div>
@@ -356,7 +356,7 @@ if (!accountProperties('Home Page')) {
 
     function exportMainTable() {
         let metadata = {};
-        
+
         metadata['# of Buildings'] = numBuildings;
         metadata['# Checked'] = numChecked;
         metadata['# Unchecked'] = numUnchecked;
