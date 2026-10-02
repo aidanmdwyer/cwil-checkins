@@ -325,6 +325,7 @@ $maxRows = max(array_map('count', $usersByType));
                                             ["Archives Page", true],
                                             ["Import Page", true],
                                             ["Accounts Page", !(($accountName === 'default') || ($accountName === $_SESSION['username']))],
+                                            ["Closet Audit", true]
                                         ],
                                         "Data Access" => [
                                             ["Select Buildings", true],
