@@ -1,20 +1,18 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    include 'accountProperties.php';
-    
-    $bypassFork = $_GET['bypassFork'];
-
-    if (accountProperties('Closet Audit') && !$bypassFork) {
-        header("Location: closetAuditFork.php");
-        exit;
-    }
-
-    require_once 'db.php';
-
     $name = $_GET['name'];
 
     if(isset($name)) {
+        $bypassFork = $_GET['bypassFork'];
+
+        include 'accountProperties.php';
+        if (accountProperties('Closet Audit') && !$bypassFork) {
+            header("Location: closetAuditFork.php?name=" + $name);
+            exit;
+        }
+
+        require_once 'db.php';
         $existsStmt = $conn->prepare("SELECT COUNT(*) FROM buildings WHERE name = ?");
         $existsStmt->bind_param("s", $name);
         $existsStmt->execute();
