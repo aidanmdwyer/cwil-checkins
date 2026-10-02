@@ -1,6 +1,8 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
+    include 'accountProperties.php';
+    
     $bypassFork = $_GET['bypassFork'];
 
     if (accountProperties('Closet Audit') && !$bypassFork) {
