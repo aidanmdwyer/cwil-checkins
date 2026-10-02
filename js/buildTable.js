@@ -10,6 +10,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     showLoadingText = true) {
 
     let accountProperties;
+    exportButton.disabled = true;
     if(respectLoadAll) fetchStr += '&loadAll=' + (document.getElementById('loadAll').style.display === 'none' ? 'true' : 'false');
 
     if(showLoadingText) {
@@ -225,7 +226,6 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                             buildTable(fetchStr + '&loadAll=true')
                         }
                         checkInCounterHTML += 'Please click "Load All" to see check in statistics.';
-                        exportButton.disabled = true;
                     } else {
                         exportButton.disabled = false;
                         percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
@@ -243,7 +243,6 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     loadAll.style.display = 'none';
                     refreshButton.disabled = false;
                     refreshButton.innerHTML = 'Refresh';
-                    exportButton.disabled = true;
                     buildingsTable.innerHTML = 'No buildings matching filter.';
                     document.getElementById("checkInCounter").innerHTML = "";
                     selectSubmits.style.display = 'none';
@@ -251,7 +250,6 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
             }).catch(error => {
                 buildingsTable.innerHTML = error;
                 buildingsTable.style.display = 'inline-block';
-                exportButton.disabled = true;
                 refreshButton.disabled = false;
                 refreshButton.innerHTML = 'Refresh';
                 loadAll.style.display = 'none';
