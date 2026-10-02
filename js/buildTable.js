@@ -227,6 +227,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         checkInCounterHTML += 'Please click "Load All" to see check in statistics.';
                         exportButton.disabled = true;
                     } else {
+                        exportButton.disabled = false;
                         percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
                         percentageUnchecked = Math.round((100 - percentageChecked)*100)/100;
                         checkInCounterHTML += 
@@ -238,7 +239,6 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
 
                     refreshButton.disabled = false;
                     refreshButton.innerHTML = 'Refresh';
-                    exportButton.disabled = false;
                 } else {
                     loadAll.style.display = 'none';
                     refreshButton.disabled = false;
