@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Check-in or Closet Audit?</title>
+    <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/x-icon" href="/imgs/favicon.png">
     <link rel="manifest" href="/manifest.json">
 </head>
@@ -33,7 +34,7 @@
 
         box-sizing: border-box;
         padding: 20px;
-        margin: 50px;
+        margin: 30px;
 
         font-size: 50px;
         font-family: Georgia, serif;
