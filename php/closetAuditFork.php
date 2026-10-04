@@ -14,6 +14,10 @@
     <button onclick="window.location.href='closetAudit.php'">Click Here for Closet Audit.</button>
 </body>
 <style>
+    html {
+        width: 100%;
+        height: 100%;
+    }
     body {
         width: min(100%, 1000px);
         height: 100%;
@@ -28,7 +32,7 @@
         padding: 20px;
         margin: 50px;
 
-        font-size: 10vw;
+        font-size: 75px;
     }
 </style>
 </html>
