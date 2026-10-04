@@ -28,7 +28,7 @@
         padding: 20px;
         margin: 50px;
 
-        font-size: 50vw;
+        font-size: 10vw;
     }
 </style>
 </html>
