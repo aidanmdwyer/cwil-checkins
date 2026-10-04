@@ -37,6 +37,7 @@
 
         box-sizing: border-box;
         padding: 20px;
+        margin: 30px 0;
 
         font-size: 50px;
         font-family: Georgia, serif;
