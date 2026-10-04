@@ -10,8 +10,8 @@
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
-    <button onclick="window.location.href='checkIn.php?bypassFork=true&name=<?=$_GET['name']?>'">Click Here to <strong>Check In</strong></button>
-    <button onclick="window.location.href='closetAudit.php'">Click Here for <strong>Closet Audit</strong></button>
+    <button onclick="window.location.href='checkIn.php?bypassFork=true&name=<?=$_GET['name']?>'">Click Here to<br><strong>Check In</strong></button>
+    <button onclick="window.location.href='closetAudit.php'">Click Here for<br><strong>Closet Audit</strong></button>
 </body>
 <style>
     html {
