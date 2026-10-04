@@ -17,7 +17,6 @@
     html {
         width: 100%;
         height: 100%;
-        margin: 0 auto;
     }
     body {
         width: min(100%, 1000px);
@@ -25,6 +24,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin: 0 auto;
     }
     button {
         width: 100%;
