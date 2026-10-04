@@ -32,7 +32,7 @@
         padding: 20px;
         margin: 50px;
 
-        font-size: 75px;
+        font-size: 50px;
         font-family: Georgia, serif;
     }
 </style>
