@@ -17,12 +17,14 @@
     html {
         width: 100%;
         height: 100%;
+        margin: 0 auto;
     }
     body {
         width: min(100%, 1000px);
         height: 100%;
         display: flex;
         flex-direction: column;
+        align-items: center;
     }
     button {
         width: 100%;
