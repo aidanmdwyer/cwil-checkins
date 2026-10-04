@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Check-in or Closet Audit?</title>
-    <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/x-icon" href="/imgs/favicon.png">
     <link rel="manifest" href="/manifest.json">
 </head>
@@ -17,6 +16,8 @@
     html {
         width: 100%;
         height: 100%;
+        margin: 0;
+        padding: 0;
     }
     body {
         width: min(100%, 1000px);
