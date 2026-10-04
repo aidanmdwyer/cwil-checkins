@@ -26,7 +26,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 0;
+        margin: 0 auto;
     }
     button {
         width: 100%;
