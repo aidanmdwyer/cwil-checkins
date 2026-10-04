@@ -26,7 +26,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 0 max(20%, 20px);
+        margin: 0 max(25%, 20px);
+        box-sizing: border-box;
     }
     button {
         width: 100%;
