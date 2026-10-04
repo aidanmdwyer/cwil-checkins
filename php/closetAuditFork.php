@@ -33,6 +33,7 @@
         margin: 50px;
 
         font-size: 75px;
+        font-family: Georgia, serif;
     }
 </style>
 </html>
