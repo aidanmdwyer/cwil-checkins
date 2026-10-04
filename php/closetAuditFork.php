@@ -1,3 +1,13 @@
+<?php
+include 'login.php';
+include 'accountProperties.php';
+
+if (!accountProperties('Closet Audit')) {
+    http_response_code(403);
+    die('Forbidden: You do not have permission to access this page.');
+}
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,7 +21,7 @@
 </head>
 <body>
     <button onclick="window.location.href='checkIn.php?bypassFork=true&name=<?=$_GET['name']?>'">Click Here to<br><strong>Check In</strong></button>
-    <button onclick="window.location.href='closetAudit.php'">Click Here for<br><strong>Closet Audit</strong></button>
+    <button onclick="window.location.href='closetAudit.php?buildingName=<?=$_GET['name']?>'">Click Here for<br><strong>Closet Audit</strong></button>
 </body>
 <style>
     html {
