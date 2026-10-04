@@ -27,6 +27,9 @@
         flex-direction: column;
         align-items: center;
         margin: 0 auto;
+
+        box-sizing: border-box;
+        padding: 50px;
     }
     button {
         width: 100%;
@@ -34,7 +37,6 @@
 
         box-sizing: border-box;
         padding: 20px;
-        margin: 30px 0;
 
         font-size: 50px;
         font-family: Georgia, serif;
