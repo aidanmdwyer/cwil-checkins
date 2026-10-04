@@ -22,11 +22,13 @@
     }
     button {
         width: 100%;
-        flex: 1;
+        height: 50%;
 
         box-sizing: border-box;
         padding: 20px;
         margin: 50px;
+
+        font-size: 50vw;
     }
 </style>
 </html>
