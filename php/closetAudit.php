@@ -37,6 +37,8 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $lastDateResults = $lastDateStmt->get_result();
     $lastAuditDate = $lastDateResults->fetch_assoc()['ic'];
     $lastDateStmt->close();
+
+    $conn->close();
 ?>
 
 <!doctype html>
@@ -56,7 +58,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         <br><?= $buildingName?>
     </h1>
 
-    <form method="POST">
+    <form method="POST" style="margin-bottom: 250px;">
         <input type="hidden" name="buildingName" value="<?=$buildingName?>">
 
         <h3>Date: <?=$date?></h3>
@@ -152,7 +154,6 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         gap: 10px;
         align-items: center;
         justify-content: flex-start;
-        margin-bottom: 250px;
     }
 
     h1 {
@@ -173,6 +174,32 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $auditor = $_POST['auditor'];
     $ic = $_POST['ic'];
     $auditItems = $_POST['auditItems'];
+
+    require_once 'db.php';
+
+    $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (building_name, date, auditor, ic) VALUES (?, ?, ?, ?);");
+    $closetAuditInsertStmt->bind_param("ssss", $buildingName, $date, $auditor, $ic);
+    $closetAuditInsertStmt->execute();
+    $closetAuditInsertStmt->close();
+
+    // $auditItemsInsertSQL = "INSERT INTO closet_audits (building_name, date, auditor, ic) VALUES";
+    // $auditItemsInsertSQL .= str_repeat(" (?, ?, ?, ?),", count($auditItems));
+    // $auditItemsInsertSQL .= ";";
+
+    // foreach ($auditItems as $item => $value) {
+    //     $auditItemsInsertSQL .= " (?, ?, ?, ?),";
+    // }
+    
+
+    // $auditItemsInsertSQL = $conn->prepare($closetAuditInsertSQL);
+
+    // $auditItemsInsertStmt->bind_param("s", $buildingName);
+    // $auditItemsInsertStmt->execute();
+    // $auditItemsInsertResults = $auditItemsInsertStmt->get_result();
+    // $ic = $auditItemsInsertResults->fetch_assoc()['ic'];
+    // $auditItemsInsertStmt->close();
+
+    $conn->close();
 ?>
 
 <!doctype html>
@@ -187,17 +214,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
-    <?= $buildingName?>
-    <?= $date?>
-    <?= $auditor?>
-    <?= $ic?>
-    <br>
-    <?php 
-    foreach ($auditItems as $item => $value) {
-        $itemValue = $value === 'on';
-        echo $item . ", " . ($itemValue ? 'YES' : 'NO') . "<br>";
-    }
-    ?>
+
 </body>
 </html>
 <?php } ?>
