@@ -198,6 +198,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         border: none;
         background: transparent;
     }
+    textarea:focus {
+        border: none;
+    }
 
 </style>
 </html>
