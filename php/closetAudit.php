@@ -194,6 +194,8 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         height: 100%;
         resize: none;
         box-sizing: border-box;
+        padding: 0;
+        margin: 0;
         outline: none;
         border: none;
         background: transparent;
