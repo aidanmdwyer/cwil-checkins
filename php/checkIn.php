@@ -1,4 +1,7 @@
 <?php
+
+require_once 'db.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $name = $_GET['name'];
@@ -12,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             exit;
         }
 
-        require_once 'db.php';
+        
         $existsStmt = $conn->prepare("SELECT COUNT(*) FROM buildings WHERE name = ?");
         $existsStmt->bind_param("s", $name);
         $existsStmt->execute();
