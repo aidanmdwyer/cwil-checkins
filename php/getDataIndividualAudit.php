@@ -14,7 +14,7 @@ if (!$auditId) {
 require_once 'db.php';
 
 $selectAuditItemsStmt = $conn->prepare(
-    "SELECT * FROM closet_audits_items WHERE auditId = ?"
+    "SELECT * FROM closet_audit_items WHERE auditId = ?"
 );
 
 if (!$selectAuditItemsStmt) {
