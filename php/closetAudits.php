@@ -101,6 +101,7 @@ if (!accountProperties('Closet Audits Page')) {
         gap: 10px;
         padding: 10px;
         border-right: 2px solid black;
+        box-sizing: border-box;
     }
     #auditList > div {
         background: white;
