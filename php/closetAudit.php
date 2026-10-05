@@ -195,10 +195,10 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     foreach ($auditItems as $item => $value) {
         $auditItemsTypeString .= "iisi";
 
-        $auditItemsValuesList .= $auditId;
-        $auditItemsValuesList .= $itemId;
-        $auditItemsValuesList .= $item;
-        $auditItemsValuesList .= $value;
+        $auditItemsValuesList[] = $auditId;
+        $auditItemsValuesList[] = $itemId;
+        $auditItemsValuesList[] = $item;
+        $auditItemsValuesList[] = $value;
 
         $itemId++;
     }
