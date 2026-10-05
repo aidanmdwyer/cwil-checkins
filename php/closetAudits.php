@@ -236,10 +236,10 @@ if (!accountProperties('Closet Audits Page')) {
         box-sizing: border-box;
     }
     #auditTable div.checked::before {
-        content: ✅
+        content: "✅"'
     }
     #auditTable div.unchecked::before {
-        content: ❌
+        content: "❌";
     }
 </style>
 
