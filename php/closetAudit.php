@@ -139,7 +139,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                             $item
                         </label>
                     </td>
-                    <td>
+                    <td style='padding: 0; margin: 0;'>
                         <label>
                             <textarea name='comments[$item]' placeholder='Comment...' maxlength='160'></textarea>
                         </label>
@@ -182,10 +182,15 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     table {
         width: 100%;
     }
+    table, tr, td {
+        box-sizing: border-box;
+    }
     textarea {
         width: 250px;
         height: 30px;
         resize: none;
+        box-sizing: border-box;
+        border: none;
     }
 
 </style>
