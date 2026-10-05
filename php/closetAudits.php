@@ -79,6 +79,11 @@ if (!accountProperties('Closet Audits Page')) {
         overflow: hidden;
     }
 
+    main {
+        height: 100%;
+        overflow: hidden;
+    }
+
     .splitBox {
         display: flex;
         flex-direction: row;
