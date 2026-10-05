@@ -293,6 +293,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         height: 100%;
         margin: auto;
         padding: 30px;
+        box-sizing: border-box;
     }
     h2 {
         text-align: center;
