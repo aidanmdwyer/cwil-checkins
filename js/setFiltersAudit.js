@@ -20,5 +20,4 @@ async function buildTableAudit() {
     const data = await response.json();
 
     console.log(data);
-    // const auditList = document.getElementById("auditList");
 }

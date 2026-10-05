@@ -39,7 +39,7 @@ if(count($selectAuditsFilters) > 0) {
 }
 $selectAuditsStmt->execute();
 
-$selectAuditResult = $selectAuditStmt->get_result();
+$selectAuditResult = $selectAuditsStmt->get_result();
 
 $rows = [];
 if($selectAuditResult) {
