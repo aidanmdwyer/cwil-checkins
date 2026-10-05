@@ -186,24 +186,30 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
 
-    $insertId = $conn->insert_id;
+    $auditId = $conn->insert_id;
 
-    // $auditItemsInsertSQL = "INSERT INTO closet_audits (building_name, date, auditor, ic) VALUES";
-    // $auditItemsInsertSQL .= str_repeat(" (?, ?, ?, ?),", count($auditItems));
-    // $auditItemsInsertSQL .= ";";
+    $auditItemsInsertSQL = "INSERT INTO closet_audit_items (audit_id, item_id, item_description, item_value) VALUES";
 
-    // foreach ($auditItems as $item => $value) {
-    //     $auditItemsInsertSQL .= " (?, ?, ?, ?),";
-    // }
-    
+    $auditItemsValuesList = [];
+    $itemId = 0;
+    foreach ($auditItems as $item => $value) {
+        $auditItemsInsertSQL .= " (?, ?, ?, ?),";
+        $auditItemsTypeString .= "iisi";
 
-    // $auditItemsInsertSQL = $conn->prepare($closetAuditInsertSQL);
+        $auditItemsValuesList .= $auditId;
+        $auditItemsValuesList .= $itemId;
+        $auditItemsValuesList .= $item;
+        $auditItemsValuesList .= $value;
 
-    // $auditItemsInsertStmt->bind_param("s", $buildingName);
-    // $auditItemsInsertStmt->execute();
-    // $auditItemsInsertResults = $auditItemsInsertStmt->get_result();
-    // $ic = $auditItemsInsertResults->fetch_assoc()['ic'];
-    // $auditItemsInsertStmt->close();
+        $itemId++;
+    }
+    $auditItemsInsertSQL .= ";";
+
+    $auditItemsInsertStmt = $conn->prepare($auditItemsInsertSQL);
+    $auditItemsInsertStmt->bind_param($auditItemsTypeString, ...$auditItemsValuesList);
+    $auditItemsInsertStmt->execute();
+
+    $auditItemInsertStmt->close();
 
     $conn->close();
 ?>
@@ -220,7 +226,6 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
-    <?= $insertId ?>
 </body>
 </html>
 <?php } ?>
