@@ -43,6 +43,12 @@ if(!$buildingName) {
     body {
         width: 100%;
         margin: 0 auto;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-start;
     }
 </style>
 </html>
