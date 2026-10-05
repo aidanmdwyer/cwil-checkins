@@ -13,7 +13,7 @@ if(!$buildingName) {
     die('Page load failed.');
 }
 
-$auditor = $_SESSION['accountName'];
+$auditor = $_SESSION['username'];
 $now = new DateTime('now', new DateTimeZone('America/Chicago'));
 $date = $now->format("Y-m-d");
 
@@ -39,18 +39,18 @@ $date = $now->format("Y-m-d");
     </h1>
 
     <form>
-        <label>
-            Date: <?=$date?>
-            <input type="hidden" value="<?=$date?>">
-        </label>
-        <label>
-            Auditor: <?=$auditor?>
-            <input type="hidden" value="<?=$auditor?>">
-        </label>
-        <label>
-            Contractor: <?=$ic?>
-            <input type="hidden" value="<?=$ic?>">
-        </label>
+        <h3>Date: <?=$date?></h3>
+        <input type="hidden" name="date" value="<?=$date?>">
+        <br>
+
+        <h3>Auditor: <?=$auditor?></h3>
+        <input type="hidden" name="auditor" value="<?=$auditor?>">
+        <br>
+        
+        <h3>Contractor: <?=$ic?></h3>
+        <input type="hidden" name="ic" value="<?=$ic?>">
+        <br>
+
         <?php
         $auditItems = [
             "Closet Condition" => [
