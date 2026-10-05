@@ -133,7 +133,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         [
                             `<th>Audit</th>`,
                             (rowData, bgColor) =>
-                                `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="window.location.href='/php/closetAudit.php?buildingName=${rowData['name']}'"><span style="font-size:15px;">📝</span></button></td>`
+                                `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="window.open('/php/closetAudit.php?buildingName=${rowData['name']}', '_blank')"><span style="font-size:15px;">📝</span></button></td>`
                         ],
                     'Edit Buildings' :
                         [
