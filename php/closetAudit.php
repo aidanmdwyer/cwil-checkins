@@ -191,6 +191,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     table {
         width: 100%;
     }
+    label {
+        height: 100%;
+    }
     textarea {
         width: max(120px, 20vw);
         height: 100%;
