@@ -192,7 +192,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         width: 100%;
     }
     textarea {
-        width: 250px;
+        width: 50%;
         height: 30px;
         resize: none;
         box-sizing: border-box;
