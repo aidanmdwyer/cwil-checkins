@@ -128,14 +128,25 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         echo "<div class='hr'></div>";
         foreach ($auditItems as $section => $list) {
             echo "<h2>$section</h2>";
+            echo "<table>";
             foreach ($list as $item) {
                 echo "
-                <label>
-                    <input type='hidden' name='auditItems[$item]' value='0'>
-                    <input type='checkbox' name='auditItems[$item]'>
-                    $item
-                </label><br>";
+                <tr>
+                    <td>
+                        <label>
+                            <input type='hidden' name='auditItems[$item]' value='0'>
+                            <input type='checkbox' name='auditItems[$item]'>
+                            $item
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            <input type='text' name='comments[$item]' placeholder='Comment...'>
+                        </label>
+                    </td>
+                </tr>";
             }
+            echo "</table>";
             echo "<br><div class='hr'></div>";
         }
         ?>
@@ -178,6 +189,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $auditor = $_POST['auditor'];
     $ic = $_POST['ic'];
     $auditItems = $_POST['auditItems'];
+    $auditItemComments = $_POST['comments'];
 
     require_once 'db.php';
 
@@ -190,8 +202,10 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 
     $auditItemsInsertSQL = "INSERT INTO closet_audit_items (audit_id, item_id, item_description, item_value) VALUES";
     $auditItemsInsertSQL .= implode(',', array_fill(0, count($auditItems), " (?, ?, ?, ?)")) . ";";
+
     $auditItemsValuesList = [];
     $itemId = 0;
+    $auditItemCommentsList = [];
     foreach ($auditItems as $item => $value) {
         $auditItemsTypeString .= "iisi";
 
@@ -200,6 +214,10 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         $auditItemsValuesList[] = $item;
         $auditItemsValuesList[] = $value === 'on';
 
+        if($auditItemComments[$item]) {
+            $auditItemCommentsList[$itemId] = $auditItemComments[$item];
+        }
+
         $itemId++;
     }
 
@@ -207,7 +225,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $auditItemsInsertStmt->bind_param($auditItemsTypeString, ...$auditItemsValuesList);
     $auditItemsInsertStmt->execute();
 
-    $auditItemInsertStmt->close();
+    $auditItemsInsertStmt->close();
 
     $conn->close();
 ?>
@@ -225,6 +243,11 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 </head>
 <body>
     <p>thank you!<p>
+    <?php
+        foreach($auditItemCommentsList as $itemId => $comment) {
+            echo $comment;
+        }
+    ?>
 </body>
 </html>
 <?php } ?>
