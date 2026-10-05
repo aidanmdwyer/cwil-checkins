@@ -39,17 +39,17 @@ if (!accountProperties('Closet Audits Page')) {
             <div style="display: flex; justify-content: space-between; width: 100%; gap: 10px;">
                 <div style="display: flex; align-items: center; gap: 15px;">
                     <div class="vr"></div>
-                    <label style="flex-direction: column;">
+                    <label style="display: flex; flex-direction: column;">
                         Filter Building Name
                         <select id="filterBuildingName" name="filterBuildingName"></select>
                     </label>
                     <div class="vr"></div>
-                    <label style="flex-direction: column;">
+                    <label style="display: flex; flex-direction: column;">
                         Filter Auditor
                         <select id="filterAuditor" name="filterAuditor"></select>
                     </label>
                     <div class="vr"></div>
-                    <label style="flex-direction: column;">
+                    <label style="display: flex; flex-direction: column;">
                         Filter IC
                         <select id="filterIC" name="filterIC"></select>
                     </label>

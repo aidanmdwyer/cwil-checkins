@@ -58,7 +58,7 @@ if (!accountProperties('Home Page')) {
                     </label>
                 </form>
                 <div class="vr" style="<?php echo accountProperties('Filter Manager') ? 'display: block' : 'display: none';?>;"></div>
-                <label style="<?php echo accountProperties('Filter Manager') ? 'display: flex;' : 'display: none';?>; flex-direction: column;">
+                <label style="<?php echo accountProperties('Filter Manager') ? 'display: flex' : 'display: none';?>; flex-direction: column;">
                     Filter Manager
                     <select id="filterManager" name="filterManager"></select>
                 </label>
