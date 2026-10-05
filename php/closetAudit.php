@@ -182,9 +182,10 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     table {
         width: 100%;
     }
-    input[type='textarea'] {
+    textarea {
         width: 250px;
         height: 30px;
+        resize: none;
     }
 
 </style>
