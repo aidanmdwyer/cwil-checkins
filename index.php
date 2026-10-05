@@ -91,11 +91,11 @@ if (!accountProperties('Home Page')) {
 
     <h2 id="inactiveText" style="color: #bf3232; margin-top: 10px; display: none;">***INACTIVE BUILDINGS***</h2>
 
-    <div id="checkInCounter" style="margin: 0 20px;"></div>
+    <div id="checkInCounter" style="margin: 0 30px;"></div>
 
     <div style="display: flex; align-items: flex-start;">
         <!--        Table-->
-        <div id="tableContainer" style="display: inline-block; margin: 0 100px 0 20px;">
+        <div id="tableContainer" style="display: inline-block; padding: 0 30px;">
             <form id="tableSelectedForm" method="POST" action="php/handleSelect.php">
                 <table id="buildingsTable" style="display: none;"></table>
             </form>
