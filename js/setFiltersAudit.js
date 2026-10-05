@@ -55,7 +55,7 @@ async function buildAuditList() {
     const data = await response.json();
 
     auditList.innerHTML = "";
-    if(data.length > 0) {
+    if(Object.keys(data).length > 0) {
         data.forEach(audit => {
             const div = document.createElement("div");
             div.onclick = function () {openAudit(audit)};
