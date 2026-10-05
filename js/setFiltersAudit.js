@@ -55,22 +55,16 @@ async function buildAuditList() {
     const data = await response.json();
 
     auditList.innerHTML = "";
-    if(Object.keys(data).length > 0) {
-        data.forEach(audit => {
-            const div = document.createElement("div");
-            div.onclick = function () {openAudit(audit)};
-            audit['date'] = new Date(audit['date']).toLocaleDateString('en-CA');
-            div.innerHTML = `
-            <div><h3>` + audit['buildingName'] + `</h3><p>` + audit['auditor'] + `</p></div>` +
-            `<div><p>` + audit['date'] + "</p><p>" + audit['ic'] + `</p></div>`;
+    data.forEach(audit => {
+        const div = document.createElement("div");
+        div.onclick = function () {openAudit(audit)};
+        audit['date'] = new Date(audit['date']).toLocaleDateString('en-CA');
+        div.innerHTML = `
+        <div><h3>` + audit['buildingName'] + `</h3><p>` + audit['auditor'] + `</p></div>` +
+        `<div><p>` + audit['date'] + "</p><p>" + audit['ic'] + `</p></div>`;
 
-            auditList.appendChild(div);
-        });
-    } else {
-        const div = document.createElement(div);
-        div.innerHTML = "No audits were found.";
         auditList.appendChild(div);
-    }
+    });
 }
 
 async function openAudit({auditId, buildingName, auditor, date, ic}) {
