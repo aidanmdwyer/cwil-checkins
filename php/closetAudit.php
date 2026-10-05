@@ -165,7 +165,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     body {
         width: min(100%, 800px);
         margin: 0 auto;
-        padding: 0 30px 200px 0;
+        padding: 0 30px 200px 30px;
         box-sizing: border-box;
 
         display: flex;
