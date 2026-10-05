@@ -131,7 +131,7 @@ if (!accountProperties('Closet Audits Page')) {
                         foreach ($list as $item) {
                             echo "
                             <tr>
-                                <td style='width: 100%;'>
+                                <td class='valueBox'>
                                     <div id='" . $item . "'>$item</div>
                                 </td>
                                 <td class='commentBox'>
@@ -230,18 +230,13 @@ if (!accountProperties('Closet Audits Page')) {
         padding: 0 30px 200px 30px;
         box-sizing: border-box;
     }
-    #auditTable {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-
-        padding: 0 30px 200px 30px;
-        box-sizing: border-box;
+    .valueBox {
+        width: 100%;
     }
     .commentBox {
+        width: max(20%, 250px);
         padding: 5px 10px;
-        width: max(20%, 100px);
+        box-sizing: border-box;
     }
 </style>
 
