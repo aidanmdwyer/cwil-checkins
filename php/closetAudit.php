@@ -125,7 +125,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
             foreach ($list as $item) {
                 echo "
                 <label>
-                    <input type='checkbox' name='items[$item]'>
+                    <input type='checkbox' name='auditItems[$item]'>
                     $item
                 </label><br>";
             }
@@ -167,6 +167,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 <?php
 } else { //after submission
     $buildingName = $_POST['buildingName'];
+    $auditItems = $_POST['auditItems'];
 ?>
 
 <!doctype html>
@@ -182,7 +183,11 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 </head>
 <body>
     <?= $buildingName?>
-    <?= $items ?>
+    <?php 
+    foreach ($auditItems as $item => $value) {
+        echo $item . ", " . $value;
+    }
+    ?>
 </body>
 </html>
 <?php } ?>
