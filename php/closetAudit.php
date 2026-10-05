@@ -56,7 +56,7 @@ $lastDateStmt->close();
         <br><?= $buildingName?>
     </h1>
 
-    <form>
+    <form method="POST">
         <h3>Date: <?=$date?></h3>
         <input type="hidden" name="date" value="<?=$date?>">
         <br>
@@ -130,6 +130,8 @@ $lastDateStmt->close();
             echo "<br><div class='hr'></div>";
         }
         ?>
+
+        <input type="submit">
 
     </form>
 </body>
