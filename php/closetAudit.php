@@ -7,36 +7,36 @@ if (!accountProperties('Closet Audit')) {
     die('Forbidden: You do not have permission to access this page.');
 }
 
-$buildingName = $_GET['buildingName'];
-if(!$buildingName) {
-    http_response_code(404);
-    die('Page load failed.');
-}
+if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
+    $buildingName = $_GET['buildingName'];
+    if(!$buildingName) {
+        http_response_code(404);
+        die('Page load failed.');
+    }
 
-$auditor = $_SESSION['username'];
-$now = new DateTime('now', new DateTimeZone('America/Chicago'));
-$date = $now->format("Y-m-d");
+    $auditor = $_SESSION['username'];
+    $now = new DateTime('now', new DateTimeZone('America/Chicago'));
+    $date = $now->format("Y-m-d");
 
-require_once 'db.php';
+    require_once 'db.php';
 
-$contractorStmt = $conn->prepare("SELECT ic FROM buildings WHERE name = ?");
-$contractorStmt->bind_param("s", $buildingName);
-$contractorStmt->execute();
-$contractorResults = $contractorStmt->get_result();
-$ic = $contractorResults->fetch_assoc()['ic'];
-if(!$ic) {
-    http_response_code(404);
-    die('Page load failed.');
-}
-$contractorStmt->close();
+    $contractorStmt = $conn->prepare("SELECT ic FROM buildings WHERE name = ?");
+    $contractorStmt->bind_param("s", $buildingName);
+    $contractorStmt->execute();
+    $contractorResults = $contractorStmt->get_result();
+    $ic = $contractorResults->fetch_assoc()['ic'];
+    if(!$ic) {
+        http_response_code(404);
+        die('Page load failed.');
+    }
+    $contractorStmt->close();
 
-$lastDateStmt = $conn->prepare("SELECT date FROM closet_audits WHERE building_name = ? ORDER BY date DESC LIMIT 1");
-$lastDateStmt->bind_param("s", $buildingName);
-$lastDateStmt->execute();
-$lastDateResults = $lastDateStmt->get_result();
-$lastAuditDate = $lastDateResults->fetch_assoc()['ic'];
-$lastDateStmt->close();
-
+    $lastDateStmt = $conn->prepare("SELECT date FROM closet_audits WHERE building_name = ? ORDER BY date DESC LIMIT 1");
+    $lastDateStmt->bind_param("s", $buildingName);
+    $lastDateStmt->execute();
+    $lastDateResults = $lastDateStmt->get_result();
+    $lastAuditDate = $lastDateResults->fetch_assoc()['ic'];
+    $lastDateStmt->close();
 ?>
 
 <!doctype html>
@@ -57,6 +57,8 @@ $lastDateStmt->close();
     </h1>
 
     <form method="POST">
+        <input type="hidden" name="buildingName" value="<?=$buildingName?>">
+
         <h3>Date: <?=$date?></h3>
         <input type="hidden" name="date" value="<?=$date?>">
         <br>
@@ -161,3 +163,25 @@ $lastDateStmt->close();
 
 </style>
 </html>
+
+<?php
+} else { //after submission
+    $buildingName = $_POST['buildingName'];
+?>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Closet Audit</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/x-icon" href="/imgs/favicon.png">
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <?= $buildingName?>
+</body>
+</html>
+<?php } ?>
