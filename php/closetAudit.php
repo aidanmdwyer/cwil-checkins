@@ -125,8 +125,13 @@ $date = $now->format("Y-m-d");
         align-items: center;
         justify-content: flex-start;
     }
+
     h1 {
         text-align: center;
+    }
+    h3 {
+        margin: 5px 0;
+        padding: 0;
     }
 
 </style>
