@@ -68,79 +68,82 @@ if (!accountProperties('Closet Audits Page')) {
                 <div id="auditList"></div>
             </div>
             <div class="right">
-                <h1>
-                    Closet Audit -
-                    <br><span id="displayBuildingName"></span>
-                </h1>
+                <div id="noAuditSelectedText"><h1>Select an audit to view.</h1></div>
+                <div id="displayAudit">
+                    <h1>
+                        Closet Audit -
+                        <br><span id="displayBuildingName"></span>
+                    </h1>
 
-                <div class='hr'></div>
+                    <div class='hr'></div>
 
-                <h3>Date: <span id="displayDate"></span></h3><br>
-                <h3>Auditor: <span id="displayAuditor"></span></h3><br>
-                <h3>Contractor: <span id="displayIC"></span></h3><br>
+                    <h3>Date: <span id="displayDate"></span></h3><br>
+                    <h3>Auditor: <span id="displayAuditor"></span></h3><br>
+                    <h3>Contractor: <span id="displayIC"></span></h3><br>
 
-                <?php
-                $auditItems = [
-                    "Closet Condition" => [
-                        "Closet door secured and functioning properly",
-                        "Closet is clean and free of debris",
-                        "Floors are swept and free of spills",
-                        "Shelving is clean and organized",
-                        "No unnecessary personal items stored in closet",
-                        "QR Code properly stored in closet"
-                    ],
-                    "Chemical Storage & Safety" => [
-                        "All chemicals properly labeled",
-                        "SDS (Safety Data Sheets) available on-site",
-                        "Chemicals stored upright and secured",
-                        "No leaking or damaged containers",
-                        "Chemicals separated appropriately",
-                        "Spray bottles labeled with contents"
-                    ],
-                    "Equipment Condition" => [
-                        "Vacuum clean and operational",
-                        "Mop and bucket clean and in good condition",
-                        "Brooms and dustpans stored properly",
-                        "Extension cords properly wrapped and stored",
-                        "Equipment free from excessive wear or damage",
-                        "Equipment stored neatly and safely"
-                    ],
-                    "Inventory & Supplies" => [
-                        "Brut on cart with apron",
-                        "Minimum 2 Mop Heads",
-                        "Vacuum Cleaner",
-                        "Colored microfibers",
-                        "Dusting Tool/Dusting Mop",
-                        "Mop Bucket"
-                    ],
-                    "Compliance & Professional Standards" => [
-                        "Company-approved products being used",
-                        "No unauthorized chemicals present",
-                        "PPE available and accessible",
-                        "PPE being used appropriately",
-                        "Closet reflects company standards"
-                    ],
-                ];
+                    <?php
+                    $auditItems = [
+                        "Closet Condition" => [
+                            "Closet door secured and functioning properly",
+                            "Closet is clean and free of debris",
+                            "Floors are swept and free of spills",
+                            "Shelving is clean and organized",
+                            "No unnecessary personal items stored in closet",
+                            "QR Code properly stored in closet"
+                        ],
+                        "Chemical Storage & Safety" => [
+                            "All chemicals properly labeled",
+                            "SDS (Safety Data Sheets) available on-site",
+                            "Chemicals stored upright and secured",
+                            "No leaking or damaged containers",
+                            "Chemicals separated appropriately",
+                            "Spray bottles labeled with contents"
+                        ],
+                        "Equipment Condition" => [
+                            "Vacuum clean and operational",
+                            "Mop and bucket clean and in good condition",
+                            "Brooms and dustpans stored properly",
+                            "Extension cords properly wrapped and stored",
+                            "Equipment free from excessive wear or damage",
+                            "Equipment stored neatly and safely"
+                        ],
+                        "Inventory & Supplies" => [
+                            "Brut on cart with apron",
+                            "Minimum 2 Mop Heads",
+                            "Vacuum Cleaner",
+                            "Colored microfibers",
+                            "Dusting Tool/Dusting Mop",
+                            "Mop Bucket"
+                        ],
+                        "Compliance & Professional Standards" => [
+                            "Company-approved products being used",
+                            "No unauthorized chemicals present",
+                            "PPE available and accessible",
+                            "PPE being used appropriately",
+                            "Closet reflects company standards"
+                        ],
+                    ];
 
-                echo "<div class='hr'></div>";
-                foreach ($auditItems as $section => $list) {
-                    echo "<h2>$section</h2>";
-                    echo "<table id='auditTable'>";
-                    foreach ($list as $item) {
-                        echo "
-                        <tr>
-                            <td style='width: 100%;'>
-                                <div id='" . $item . "'>$item</div>
-                            </td>
-                            <td style='padding: 0; margin: 0;'>
-                                <div id='" . $item . "-comment" . "'></div>
-                            </td>
-                        </tr>";
+                    echo "<div class='hr'></div>";
+                    foreach ($auditItems as $section => $list) {
+                        echo "<h2>$section</h2>";
+                        echo "<table id='auditTable'>";
+                        foreach ($list as $item) {
+                            echo "
+                            <tr>
+                                <td style='width: 100%;'>
+                                    <div id='" . $item . "'>$item</div>
+                                </td>
+                                <td style='padding: 0; margin: 0;'>
+                                    <div id='" . $item . "-comment" . "'></div>
+                                </td>
+                            </tr>";
+                        }
+                        echo "</table>";
+                        echo "<br><div class='hr'></div>";
                     }
-                    echo "</table>";
-                    echo "<br><div class='hr'></div>";
-                }
-                ?>
+                    ?>
+                </div>
             </div>
         </div>
     </main>
@@ -175,6 +178,17 @@ if (!accountProperties('Closet Audits Page')) {
         flex: 2;
         height: 100%;
         overflow-y: scroll;
+    }
+
+    #displayAudit {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-start;
+
+        padding: 0 30px 200px 30px;
+        box-sizing: border-box;
     }
 
     #auditList {

@@ -7,6 +7,8 @@ const displayAuditor = document.getElementById("displayAuditor");
 const displayIC = document.getElementById("displayIC");
 const displayDate = document.getElementById("displayDate");
 const auditTable = document.getElementById("auditTable");
+const displayAudit = document.getElementById("displayAudit");
+const noAuditSelectedText = document.getElementById("noAuditSelectedText");
 
 filterBuildingName.addEventListener('input', function () {
     buildAuditList();
@@ -72,6 +74,9 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     displayAuditor.innerHTML = auditor;
     displayDate.innerHTML = date;
     displayIC.innerHTML = ic;
+
+    displayAudit.style.display = "flex";
+    noAuditSelectedText.style.display = "none";
 
     // let response;
     // response = await fetch(
