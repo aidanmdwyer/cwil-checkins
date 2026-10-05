@@ -134,7 +134,7 @@ if (!accountProperties('Closet Audits Page')) {
                                 <td style='width: 100%;'>
                                     <div id='" . $item . "'>$item</div>
                                 </td>
-                                <td style='padding: 0; margin: 0;'>
+                                <td class='commentBox'>
                                     <div id='" . $item . "-comment" . "'></div>
                                 </td>
                             </tr>";
@@ -193,16 +193,6 @@ if (!accountProperties('Closet Audits Page')) {
         overflow-y: scroll;
     }
 
-    #displayAudit {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-
-        padding: 0 30px 200px 30px;
-        box-sizing: border-box;
-    }
-
     #auditList {
         display: flex;
         flex-direction: column;
@@ -229,6 +219,29 @@ if (!accountProperties('Closet Audits Page')) {
     #auditList > div > div > h3, #auditList > div > div > p {
         margin: 0;
         padding: 0;
+    }
+
+    #displayAudit {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        padding: 0 30px 200px 30px;
+        box-sizing: border-box;
+    }
+    #auditTable {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        padding: 0 30px 200px 30px;
+        box-sizing: border-box;
+    }
+    .commentBox {
+        padding: 5px 10px;
+        width: max(20%, 100px);
     }
 </style>
 
