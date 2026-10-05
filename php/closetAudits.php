@@ -131,8 +131,11 @@ if (!accountProperties('Closet Audits Page')) {
                         foreach ($list as $item) {
                             echo "
                             <tr>
-                                <td class='valueBox'>
+                                <td class='itemBox'>
                                     <div id='" . $item . "'>$item</div>
+                                </td>
+                                <td class='valueBox'>
+                                    <div id='" . $item . "-value'></div>
                                 </td>
                                 <td class='commentBox'>
                                     <div id='" . $item . "-comment" . "'></div>
@@ -234,12 +237,6 @@ if (!accountProperties('Closet Audits Page')) {
         width: max(20%, 250px);
         padding: 5px 10px;
         box-sizing: border-box;
-    }
-    #auditTable div.checked::before {
-        content: "✅"'
-    }
-    #auditTable div.unchecked::before {
-        content: "❌";
     }
 </style>
 

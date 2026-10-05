@@ -85,9 +85,8 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
 
     data.forEach(item => {
         const desc = item['itemDescription'];
-        const itemElement = document.getElementById(desc);
-        itemElement.className = "";
-        itemElement.classList.add(item['value'] === 1 ? 'checked' : 'unchecked');
+        const valueElement = document.getElementById(desc + "-value");
+        valueElement.innerHTML = item['value'] === 1 ? '✅' : '❌'
         const commentElement = document.getElementById(desc + "-comment");
         if(item['comment']) {
             commentElement.innerHTML = item['comment'];
