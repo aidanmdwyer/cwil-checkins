@@ -52,11 +52,12 @@ async function buildTableAudit() {
     auditList.innerHTML = "";
     data.forEach(audit => {
         const div = document.createElement("div");
-        div.onClick = openAudit(audit);
+        div.onclick = function () {openAudit(audit)};
+        const date = new Date(audit['date']);
         div.innerHTML = `
-        <h3>` + audit['buildingName'] + `</h3><p>` + audit['date'] + `</p><br>` +
-        `<p>Auditor: ` + audit['auditor'] + `</p><br>` +
-        `<p>IC: ` + audit['ic'] + `</p>`;
+        <div><h3>` + audit['buildingName'] + `</h3>` + date.toLocaleDateString('en-CA') + `</div>` +
+        `<div>Auditor: ` + audit['auditor'] + `</div>` +
+        `<div>IC: ` + audit['ic'] + `</div>`;
 
         auditList.appendChild(div);
     });
