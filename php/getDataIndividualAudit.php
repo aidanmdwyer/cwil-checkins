@@ -6,39 +6,32 @@ isKeyValid();
 
 $auditId = $_GET['auditId'] ?? null;
 
+if (!$auditId) {
+    http_response_code(404);
+    die('Page load failed.');
+}
+
 require_once 'db.php';
 
-$stmt = $conn->prepare(
+$selectAuditItemsStmt = $conn->prepare(
     "SELECT * FROM closet_audit_items WHERE auditId = ?"
 );
 
-var_dump("prepare", $stmt);
-
 $auditId = (int)$auditId;
 
-var_dump("auditId", $auditId);
+$selectAuditItemsStmt->bind_param("i", $auditId);
+$selectAuditItemsStmt->execute();
 
-$bind = $stmt->bind_param("i", $auditId);
-
-var_dump("bind", $bind);
-
-$execute = $stmt->execute();
-
-var_dump("execute", $execute);
-var_dump("stmt error", $stmt->error);
-
-$result = $stmt->get_result();
-
-var_dump("result", $result);
-var_dump("conn error", $conn->error);
+$selectAuditItemsResult = $selectAuditItemsStmt->get_result();
 
 $rows = [];
 
-while ($row = $result->fetch_assoc()) {
+while ($row = $selectAuditItemsResult->fetch_assoc()) {
     $rows[] = $row;
 }
 
-var_dump("rows", $rows);
-
-$stmt->close();
+$selectAuditItemsStmt->close();
 $conn->close();
+
+header('Content-Type: application/json');
+echo json_encode($rows);
