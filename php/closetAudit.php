@@ -40,25 +40,54 @@ if(!$buildingName) {
                 "Floors are swept and free of spills",
                 "Shelving is clean and organized",
                 "No unnecessary personal items stored in closet",
-                "QR Code properly stored in closet "
+                "QR Code properly stored in closet"
             ],
-            "Closet Conditio" => [
-                "Closet door secured and functioning properly",
-                "Closet is clean and free of debris",
-                "Floors are swept and free of spills",
-                "Shelving is clean and organized",
-                "No unnecessary personal items stored in closet",
-                "QR Code properly stored in closet "
+            "Chemical Storage & Safety" => [
+                "All chemicals properly labeled",
+                "SDS (Safety Data Sheets) available on-site",
+                "Chemicals stored upright and secured",
+                "No leaking or damaged containers",
+                "Chemicals separated appropriately",
+                "Spray bottles labeled with contents"
+            ],
+            "Equipment Condition" => [
+                "Vacuum clean and operational",
+                "Mop and bucket clean and in good condition",
+                "Brooms and dustpans stored properly",
+                "Extension cords properly wrapped and stored",
+                "Equipment free from excessive wear or damage",
+                "Equipment stored neatly and safely"
+            ],
+            "Inventory & Supplies" => [
+                "Brut on cart with apron",
+                "Minimum 2 Mop Heads",
+                "Vacuum Cleaner",
+                "Colored microfibers",
+                "Dusting Tool/Dusting Mop",
+                "Mop Bucket"
+            ],
+            "Compliance & Professional Standards" => [
+                "Company-approved products being used",
+                "No unauthorized chemicals present",
+                "PPE available and accessible",
+                "PPE being used appropriately",
+                "Closet reflects company standards"
             ],
         ];
 
         foreach ($auditItems as $section => $list) {
             echo "<h2>$section</h2>";
             foreach ($list as $item) {
-                echo "<p>$item</p>";
+                echo "
+                <label>
+                    $item
+                    <input type='checkbox' name='$item'>
+                </label>";
             }
+            echo "<hr>";
         }
         ?>
+
     </form>
 </body>
 <style>
@@ -67,7 +96,7 @@ if(!$buildingName) {
         height: 100%;
     }
     body {
-        width: 100%;
+        width: min(100%, 800px);
         margin: 0 auto;
 
         display: flex;
