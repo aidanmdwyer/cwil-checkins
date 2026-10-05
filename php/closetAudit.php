@@ -187,10 +187,8 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     <br>
     <?php 
     foreach ($auditItems as $item => $value) {
-        $itemValue1 = $value === true;
-        $itemValue2 = $value === 1;
-        $itemValue3 = $value === 'on';
-        echo $item . ", " . $itemValue1 . ", " . $itemValue2 . ", " . $itemValue3 . "<br>";
+        $itemValue = $value === 'on';
+        echo $item . ", " . ($itemValue ? 'YES' : 'NO') . "<br>";
     }
     ?>
 </body>
