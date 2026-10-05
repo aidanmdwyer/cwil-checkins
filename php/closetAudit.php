@@ -132,7 +132,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
             foreach ($list as $item) {
                 echo "
                 <tr>
-                    <td>
+                    <td style='width: 100%;'>
                         <label>
                             <input type='hidden' name='auditItems[$item]' value='0'>
                             <input type='checkbox' name='auditItems[$item]'>
