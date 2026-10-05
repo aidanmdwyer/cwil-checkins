@@ -100,7 +100,7 @@ if (!accountProperties('Closet Audits Page')) {
         flex-direction: column;
         gap: 10px;
         padding: 10px;
-        box-shadow: 0 0 black;
+        border-right: 2px solid black;
     }
     #auditList > div {
         background: white;
