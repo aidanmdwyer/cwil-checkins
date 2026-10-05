@@ -70,13 +70,13 @@ if (!accountProperties('Closet Audits Page')) {
             <div class="right">
                 <div id="noAuditSelectedText"><h1>Select an audit to view.</h1></div>
                 <div id="displayAudit">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: flex-start; padding-top: 20px;">
-                        <button class="big">Delete</button>
+                    <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: flex-start;">
+                        <button class="big" style="padding-top: 20px;" onclick="window.location.href='/php/deleteAudit.php?buildingName=' + document.getElementById('displayBuildingName').innerText">Delete</button>
                         <h1>
                             Closet Audit -
                             <br><span id="displayBuildingName"></span>
                         </h1>
-                        <button class="big">Export</button>
+                        <button class="big" style="padding-top: 20px;">Export</button>
                     </div>
 
                     <div class='hr'></div>
@@ -176,7 +176,6 @@ if (!accountProperties('Closet Audits Page')) {
 
     h1 {
         text-align: center;
-        margin-top: 0;
     }
     h3 {
         margin: 0;
