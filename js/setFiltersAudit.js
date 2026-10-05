@@ -21,15 +21,18 @@ async function loadAuditFilterData() {
     const data = await response.json();
 
     data['buildingNames'].forEach(buildingName => {
-        const option = "<option>" + buildingName + "</option>";
+        const option = document.createElement("option");
+        option.innerHTML = buildingName;
         filterBuildingName.appendChild(option);
     });
     data['auditors'].forEach(auditor => {
-        const option = "<option>" + auditor + "</option>";
+        const option = document.createElement("option");
+        option.innerHTML = auditor;
         filterAuditor.appendChild(option);
     });
     data['ics'].forEach(ic => {
-        const option = "<option>" + ic + "</option>";
+        const option = document.createElement("option");
+        option.innerHTML = ic;
         filterIC.appendChild(option);
     });
 }
