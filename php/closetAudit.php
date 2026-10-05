@@ -182,9 +182,6 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     table {
         width: 100%;
     }
-    table, tr, td {
-        box-sizing: border-box;
-    }
     textarea {
         width: 250px;
         height: 30px;
