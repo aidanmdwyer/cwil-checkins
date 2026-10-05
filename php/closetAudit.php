@@ -282,7 +282,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
-    <h2>Closet audit successfully submitted for <?= $buildingName ?>.</h2>
+    <h2>Closet audit successfully submitted for </h2>
 </body>
 </html>
 <?php } ?>
