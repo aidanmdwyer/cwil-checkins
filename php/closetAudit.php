@@ -80,9 +80,10 @@ if(!$buildingName) {
             foreach ($list as $item) {
                 echo "
                 <label>
-                    $item
                     <input type='checkbox' name='$item'>
-                </label>";
+                    $item
+                </label>
+                <div class='hr'>";
             }
             echo "<hr>";
         }
