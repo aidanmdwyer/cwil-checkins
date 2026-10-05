@@ -62,7 +62,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         <br><?= $buildingName?>
     </h1>
 
-    <form method="POST" style="margin-bottom: 250px;">
+    <div class='hr'></div>
+
+    <form method="POST">
         <input type="hidden" name="buildingName" value="<?=$buildingName?>">
 
         <h3>Date: <?=$date?></h3>
@@ -163,7 +165,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     body {
         width: min(100%, 800px);
         margin: 0 auto;
-        padding: 30px;
+        padding: 0 30px 200px 0;
         box-sizing: border-box;
 
         display: flex;
