@@ -35,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $lastDateStmt->bind_param("s", $buildingName);
     $lastDateStmt->execute();
     $lastDateResults = $lastDateStmt->get_result();
-    $lastAuditDate = $lastDateResults->fetch_assoc()['ic'];
+    $lastAuditDate = $lastDateResults->fetch_assoc()['date'];
     $lastDateStmt->close();
 
     $conn->close();
