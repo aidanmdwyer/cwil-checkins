@@ -163,6 +163,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     body {
         width: min(100%, 800px);
         margin: 0 auto;
+        padding: 30px;
 
         display: flex;
         flex-direction: column;
