@@ -129,6 +129,12 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                             (rowData, bgColor) =>
                                 `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="openQr(JSON.parse(decodeURIComponent(this.dataset.row)))" data-row="${encodeURIComponent(JSON.stringify(rowData))}"><span style="font-size:15px;">&#9635</span></button></td>`
                         ],
+                    'Perform Closet Audits' :
+                        [
+                            `<th>Audit</th>`,
+                            (rowData, bgColor) =>
+                                `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="window.location.href='/php/closetAudit.php?buildingName=' + decodeURIComponent(this.dataset.row)['name']" data-row="${encodeURIComponent(JSON.stringify(rowData))}"><span style="font-size:15px;">📝</span></button></td>`
+                        ],
                     'Edit Buildings' :
                         [
                             `<th>Edit</th>`,
