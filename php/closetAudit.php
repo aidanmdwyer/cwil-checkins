@@ -35,10 +35,12 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $lastDateStmt->bind_param("s", $buildingName);
     $lastDateStmt->execute();
     $lastDateResults = $lastDateStmt->get_result();
-    $lastAuditDateTime = new DateTime(
-            $lastDateResults->fetch_assoc()['date']
-        );
-    $lastAuditDate = $lastAuditDateTime->format('Y-m-d');
+    if($lastDateStmt->num_rows > 0) {
+        $lastAuditDateTime = new DateTime(
+                $lastDateResults->fetch_assoc()['date']
+            );
+        $lastAuditDate = $lastAuditDateTime->format('Y-m-d');
+    }
 
     $lastDateStmt->close();
 
