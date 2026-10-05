@@ -101,6 +101,7 @@ if (!accountProperties('Closet Audits Page')) {
 <script src="/js/adjustMainMargin.js"></script>
 <script src="/js/setFiltersAudit.js"></script>
 <script>
+    loadAuditFilterData();
     buildTableAudit();
 </script>
 </html>
