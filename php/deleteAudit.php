@@ -24,17 +24,17 @@ if (isset($_GET['auditId']) && isset($_GET['buildingName'])) {
     $deleteAuditStmt3->execute();
 
     if($deleteAuditStmt1->affected_rows > 0 && $deleteAuditStmt2->affected_rows > 0) {
-        header("Location: /php/deleteAudit.php?deleted=" . urlencode($buildingName));
+        header("Location: /php/closetAudits.php?deleted=" . urlencode($buildingName));
         exit();
     } else {
         $errorMsg = "Failed to delete audit.";
-        header("Location: /php/deleteAudit.php?error=" . urlencode($errorMsg));
+        header("Location: /php/closetAudits.php?error=" . urlencode($errorMsg));
         exit();
     }
 
 } else {
     $errorMsg = "Invalid request.";
-    header("Location: /php/deleteAudit.php?error=" . urlencode($errorMsg));
+    header("Location: /php/closetAudits.php?error=" . urlencode($errorMsg));
     exit();
 }
 ?>
