@@ -230,7 +230,7 @@ if (!accountProperties('Closet Audits Page')) {
         padding: 0 30px 200px 30px;
         box-sizing: border-box;
     }
-    .valueBox {
+    #auditTable {
         width: 100%;
     }
     .commentBox {
