@@ -14,12 +14,18 @@ if (!$auditId) {
 require_once 'db.php';
 
 $selectAuditItemsStmt = $conn->prepare(
-    "SELECT * FROM closet_audit_items WHERE auditId = ?"
+    "SELECT a.auditId, a.itemId, a.itemDescription, a.itemValue, b.comment
+        FROM closet_audit_items a
+        LEFT JOIN closet_audit_comments b
+            ON a.auditId = b.auditId 
+        AND a.itemId = b.itemId
+        AND a.auditId = ?
+        WHERE a.auditId = ?;"
 );
 
 $auditId = (int)$auditId;
 
-$selectAuditItemsStmt->bind_param("i", $auditId);
+$selectAuditItemsStmt->bind_param("ii", $auditId, $auditId);
 $selectAuditItemsStmt->execute();
 
 $selectAuditItemsResult = $selectAuditItemsStmt->get_result();
