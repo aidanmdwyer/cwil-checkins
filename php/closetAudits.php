@@ -196,7 +196,6 @@ if (!accountProperties('Closet Audits Page')) {
     #displayAudit {
         display: none;
         flex-direction: column;
-        gap: 10px;
         align-items: center;
         justify-content: flex-start;
 

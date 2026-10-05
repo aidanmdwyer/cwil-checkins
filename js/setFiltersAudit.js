@@ -80,9 +80,17 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
         '/php/getDataIndividualAudit.php?key=' + accessKey +
         '&auditId=' + auditId
     );
-
-
     
     const data = await response.json();
-    console.log(data);
+
+    data.forEach(item => {
+        const desc = item['itemDescription'];
+        const itemElement = document.getElementById(desc);
+        itemElement.className = "";
+        itemElement.classList.add(item['value'] === 1 ? 'checked' : 'unchecked');
+        if(item['comment']) {
+            const commentElement = document.getElementById(desc + "-comment");
+            commentElement.innerHTML = item['comment'];
+        }
+    });
 }
