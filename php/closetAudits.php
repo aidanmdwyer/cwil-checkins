@@ -58,14 +58,16 @@ if (!accountProperties('Closet Audits Page')) {
             </div>
         </div>
         <div class="splitBox">
-            <div class="left contentContainer"></div>
+            <div class="left">
+                <div id="auditList"></div>
+            </div>
             <div class="right"></div>
         </div>
     </main>
 </body>
 
 <style>
-    html, body, main {
+    html, body {
         width: 100%;
         height: 100%;
     }
@@ -86,8 +88,16 @@ if (!accountProperties('Closet Audits Page')) {
         flex: 2;
         height: 100%;
     }
+
+    #auditList {
+        
+    }
+    #auditList div {
+
+    }
 </style>
 
 <script src="/js/accessKey.js"></script>
 <script src="/js/adjustMainMargin.js"></script>
+<script src="/js/setFiltersAudit.js"></script>
 </html>

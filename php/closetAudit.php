@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     }
     $contractorStmt->close();
 
-    $lastDateStmt = $conn->prepare("SELECT date FROM closet_audits WHERE building_name = ? ORDER BY date DESC LIMIT 1");
+    $lastDateStmt = $conn->prepare("SELECT date FROM closet_audits WHERE buildingName = ? ORDER BY date DESC LIMIT 1");
     $lastDateStmt->bind_param("s", $buildingName);
     $lastDateStmt->execute();
     $lastDateResults = $lastDateStmt->get_result();
@@ -215,7 +215,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 
     require_once 'db.php';
 
-    $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (building_name, date, auditor, ic) VALUES (?, ?, ?, ?);");
+    $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic) VALUES (?, ?, ?, ?);");
     $closetAuditInsertStmt->bind_param("ssss", $buildingName, $date, $auditor, $ic);
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
@@ -253,7 +253,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         $itemId++;
     }
 
-    $auditItemsInsertSQL = "INSERT INTO closet_audit_items (audit_id, item_id, item_description, item_value) VALUES";
+    $auditItemsInsertSQL = "INSERT INTO closet_audit_items (auditId, itemId, itemDescription, itemValue) VALUES";
     $auditItemsInsertSQL .= implode(',', array_fill(0, $auditItemCount, " (?, ?, ?, ?)")) . ";";
     $auditItemsInsertStmt = $conn->prepare($auditItemsInsertSQL);
     $auditItemsInsertStmt->bind_param($auditItemsTypeString, ...$auditItemsValuesList);
@@ -261,7 +261,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $auditItemsInsertStmt->close();
 
     if($auditCommentCount > 0) {
-        $auditCommentsInsertSQL = "INSERT INTO closet_audit_comments (audit_id, item_id, comment) VALUES";
+        $auditCommentsInsertSQL = "INSERT INTO closet_audit_comments (auditId, itemId, comment) VALUES";
         $auditCommentsInsertSQL .= implode(',', array_fill(0, $auditCommentCount, " (?, ?, ?)")) . ";";
         $auditCommentsInsertStmt = $conn->prepare($auditCommentsInsertSQL);
         $auditCommentsInsertStmt->bind_param($auditCommentsTypeString, ...$auditCommentsValuesList);
