@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $bypassFork = $_GET['bypassFork'];
 
         include 'accountProperties.php';
-        if (accountProperties('Closet Audit') && !$bypassFork) {
+        if (accountProperties('Perform Closet Audits') && !$bypassFork) {
             header("Location: closetAuditFork.php?name=" . $name);
             exit;
         }

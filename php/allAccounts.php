@@ -325,7 +325,7 @@ $maxRows = max(array_map('count', $usersByType));
                                             ["Archives Page", true],
                                             ["Import Page", true],
                                             ["Accounts Page", !(($accountName === 'default') || ($accountName === $_SESSION['username']))],
-                                            ["Closet Audit", true]
+                                            ["Closet Audits Page", true]
                                         ],
                                         "Data Access" => [
                                             ["Select Buildings", true],
@@ -341,12 +341,13 @@ $maxRows = max(array_map('count', $usersByType));
                                             ["Delete Buildings", true],
                                             ["Access Inactive Buildings", true],
                                             ["Export Buildings", true],
+                                            ["Perform Closet Audits", true]
                                         ],
                                         "Filter Options" => [
                                             ["Search Building Name", true],
                                             ["Filter Manager", true],
                                             ["Filter IC", true],
-                                            ["Filter Today Only", true],
+                                            ["Filter Today Only", true]
                                         ],
                                     ];
 
