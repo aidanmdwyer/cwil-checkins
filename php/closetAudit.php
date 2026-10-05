@@ -196,9 +196,11 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         box-sizing: border-box;
         padding: 5px;
         margin: 0;
-        outline: none;
         border: none;
         background: transparent;
+    }
+    textarea:focus {
+        border: none;
     }
 
 </style>
