@@ -130,7 +130,7 @@ $date = $now->format("Y-m-d");
         text-align: center;
     }
     h3 {
-        margin: 5px 0;
+        margin: 0;
         padding: 0;
     }
 
