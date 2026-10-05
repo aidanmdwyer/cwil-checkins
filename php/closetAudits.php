@@ -76,7 +76,6 @@ if (!accountProperties('Closet Audits Page')) {
     html, body {
         width: 100%;
         height: 100%;
-        overflow: none;
     }
 
     .splitBox {
@@ -90,12 +89,12 @@ if (!accountProperties('Closet Audits Page')) {
     .splitBox .left {
         flex: 1;
         height: 100%;
-        overflow: scroll;
+        overflow-y: scroll;
     }
     .splitBox .right {
         flex: 2;
         height: 100%;
-        overflow: scroll;
+        overflow-y: scroll;
     }
 
     #auditList {
