@@ -183,6 +183,11 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         padding: 0;
     }
 
+    form {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
     table {
         width: 100%;
     }
