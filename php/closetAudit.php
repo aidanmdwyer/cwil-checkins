@@ -83,7 +83,7 @@ if(!$buildingName) {
                     <input type='checkbox' name='$item'>
                     $item
                 </label>
-                <div class='hr'>";
+                <div class='hr'></div>";
             }
             echo "<hr>";
         }
@@ -106,5 +106,6 @@ if(!$buildingName) {
         align-items: center;
         justify-content: flex-start;
     }
+    
 </style>
 </html>
