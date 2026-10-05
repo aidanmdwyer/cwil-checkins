@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 
     $auditor = $_SESSION['username'];
     $now = new DateTime('now', new DateTimeZone('America/Chicago'));
-    $date = $now->format("Y-m-d");
+    $date = $now->format("Y-m-d H:i:s");
 
     require_once 'db.php';
 

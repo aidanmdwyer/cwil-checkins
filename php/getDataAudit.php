@@ -30,7 +30,7 @@ if($filterIC && $filterIC !== "---") {
 }
 
 if(count($selectAuditsFilters) > 0) {
-    $selectAuditsSQL .= " WHERE " . implode(" AND ", $selectAuditsFilters) . " ORDER BY date ASC;";
+    $selectAuditsSQL .= " WHERE " . implode(" AND ", $selectAuditsFilters) . " ORDER BY date DESC;";
 }
 
 $selectAuditsStmt = $conn->prepare($selectAuditsSQL);
