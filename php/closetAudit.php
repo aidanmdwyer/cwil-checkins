@@ -125,7 +125,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
             foreach ($list as $item) {
                 echo "
                 <label>
-                    <input type='checkbox' name='$item'>
+                    <input type='checkbox' name='items[$item]'>
                     $item
                 </label><br>";
             }
@@ -182,6 +182,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 </head>
 <body>
     <?= $buildingName?>
+    <?= $items ?>
 </body>
 </html>
 <?php } ?>
