@@ -12,6 +12,13 @@ if(!$buildingName) {
     http_response_code(404);
     die('Page load failed.');
 }
+
+$auditor = $_SESSION['accountName'];
+$now = new DateTime('now', new DateTimeZone('America/Chicago'));
+$date = $now->format("Y-m-d");
+
+// require_once 'db.php';
+
 ?>
 
 <!doctype html>
@@ -32,6 +39,18 @@ if(!$buildingName) {
     </h1>
 
     <form>
+        <label>
+            Date: <?=$date?>
+            <input type="hidden" value="<?=$date?>">
+        </label>
+        <label>
+            Auditor: <?=$auditor?>
+            <input type="hidden" value="<?=$auditor?>">
+        </label>
+        <label>
+            Contractor: <?=$ic?>
+            <input type="hidden" value="<?=$ic?>">
+        </label>
         <?php
         $auditItems = [
             "Closet Condition" => [
@@ -75,6 +94,7 @@ if(!$buildingName) {
             ],
         ];
 
+        echo "<div class='hr'></div>";
         foreach ($auditItems as $section => $list) {
             echo "<h2>$section</h2>";
             foreach ($list as $item) {
@@ -84,7 +104,7 @@ if(!$buildingName) {
                     $item
                 </label><br>";
             }
-            echo "<div class='hr'></div>";
+            echo "<br><div class='hr'></div>";
         }
         ?>
 
@@ -104,6 +124,9 @@ if(!$buildingName) {
         gap: 10px;
         align-items: center;
         justify-content: flex-start;
+    }
+    h1 {
+        text-align: center;
     }
 
 </style>
