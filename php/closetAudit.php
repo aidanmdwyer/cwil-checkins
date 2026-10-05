@@ -141,7 +141,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                     </td>
                     <td>
                         <label>
-                            <textarea name='comments[$item]' placeholder='Comment...' maxlength='160'>
+                            <textarea name='comments[$item]' placeholder='Comment...' maxlength='160'></textarea>
                         </label>
                     </td>
                 </tr>";
