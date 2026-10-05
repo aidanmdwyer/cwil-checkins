@@ -28,7 +28,6 @@ if($icResults) {
     }
 }
 
-$selectAuditsStmt->close();
 $conn->close();
 
 echo json_encode([
