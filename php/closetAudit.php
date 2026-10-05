@@ -141,7 +141,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                     </td>
                     <td style='padding: 0; margin: 0;'>
                         <label>
-                            <textarea name='comments[$item]' placeholder='Comment...' maxlength='160'></textarea>
+                            <textarea name='comments[$item]' placeholder='Comments...' maxlength='160'></textarea>
                         </label>
                     </td>
                 </tr>";
@@ -151,7 +151,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         }
         ?>
 
-        <input type="submit" class="big">
+        <button type="submit" class="big">Submit Audit</button>
 
     </form>
 </body>
