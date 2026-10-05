@@ -198,7 +198,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         $auditItemsValuesList[] = $auditId;
         $auditItemsValuesList[] = $itemId;
         $auditItemsValuesList[] = $item;
-        $auditItemsValuesList[] = $value;
+        $auditItemsValuesList[] = $value === 'on';
 
         $itemId++;
     }
@@ -224,6 +224,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
+    <p>thank you!<p>
 </body>
 </html>
 <?php } ?>
