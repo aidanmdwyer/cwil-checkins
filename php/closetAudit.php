@@ -82,7 +82,7 @@ if(!$buildingName) {
                 <label>
                     <input type='checkbox' name='$item'>
                     $item
-                </label>";
+                </label><br>";
             }
             echo "<div class='hr'></div>";
         }
