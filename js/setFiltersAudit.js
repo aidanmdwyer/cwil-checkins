@@ -88,9 +88,11 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
         const itemElement = document.getElementById(desc);
         itemElement.className = "";
         itemElement.classList.add(item['value'] === 1 ? 'checked' : 'unchecked');
+        const commentElement = document.getElementById(desc + "-comment");
         if(item['comment']) {
-            const commentElement = document.getElementById(desc + "-comment");
             commentElement.innerHTML = item['comment'];
+        } else {
+            commentElement.innerHTML = "-";
         }
     });
 }
