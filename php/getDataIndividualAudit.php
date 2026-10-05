@@ -6,45 +6,27 @@ isKeyValid();
 
 $auditId = $_GET['auditId'] ?? null;
 
-if (!$auditId) {
-    http_response_code(404);
-    die('Page load failed.');
-}
+header('Content-Type: text/plain');
+
+var_dump($_GET);
+var_dump($auditId);
 
 require_once 'db.php';
 
-$selectAuditItemsStmt = $conn->prepare(
-    "SELECT * FROM closet_audit_items WHERE auditId = ?;"
+$stmt = $conn->prepare(
+    "SELECT * FROM closet_audit_items WHERE auditId = ?"
 );
 
-if (!$selectAuditItemsStmt) {
-    http_response_code(500);
-    die('Prepare failed: ' . $conn->error);
+var_dump($stmt);
+
+$stmt->bind_param("i", (int)$auditId);
+
+var_dump($stmt->execute());
+
+$result = $stmt->get_result();
+
+var_dump($result);
+
+while ($row = $result->fetch_assoc()) {
+    var_dump($row);
 }
-
-$selectAuditItemsStmt->bind_param("i", (int)$auditId);
-
-if (!$selectAuditItemsStmt->execute()) {
-    http_response_code(500);
-    die('Execute failed: ' . $selectAuditItemsStmt->error);
-}
-
-$selectAuditItemsResult = $selectAuditItemsStmt->get_result();
-
-if (!$selectAuditItemsResult) {
-    http_response_code(500);
-    die('Get result failed: ' . $selectAuditItemsStmt->error);
-}
-
-$rows = [];
-
-while ($row = $selectAuditItemsResult->fetch_assoc()) {
-    $rows[] = $row;
-}
-
-$selectAuditItemsStmt->close();
-$conn->close();
-
-header('Content-Type: application/json');
-echo json_encode($rows);
-?>
