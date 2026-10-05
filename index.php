@@ -25,7 +25,7 @@ if (!accountProperties('Home Page')) {
         <button onclick="window.location.href='./php/addBuilding.php'" class="big" style="display: <?php echo accountProperties('Add Building Page') ? '' : 'none';?>;">Add Building</button>
         <button onclick="window.location.href='./php/addContractor.php'" class="big" style="display: <?php echo accountProperties('Contractors Page') ? '' : 'none';?>;">Contractors</button>
         <button onclick="window.location.href='./php/addManager.php'" class="big" style="display: <?php echo accountProperties('Managers Page') ? '' : 'none';?>;">Managers</button>
-        <button onclick="window.location.href='./php/closetAudits.php'" class="big" style="display: <?php echo accountProperties('Closet Audits') ? '' : 'none';?>;">Managers</button>
+        <button onclick="window.location.href='./php/closetAudits.php'" class="big" style="display: <?php echo accountProperties('Closet Audits Page') ? '' : 'none';?>;">Managers</button>
     </div>
     <h3>City Wide Check-Ins <a href="./php/instructions.php" target="_blank"><img src="./imgs/helpIconWhite.png" alt="help" style="width: 15px; height: 15px;"></a></h3>
     <div>
