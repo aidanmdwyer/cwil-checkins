@@ -14,17 +14,17 @@ $auditorRows = [];
 $icRows = [];
 if($buildingNameResults) {
     while ($row = $buildingNameResults->fetch_assoc()) {
-        $buildingNameRows[] = $row;
+        $buildingNameRows[] = $row['buildingName'];
     }
 }
 if($auditorResults) {
     while ($row = $auditorResults->fetch_assoc()) {
-        $auditorRows[] = $row;
+        $auditorRows[] = $row['auditor'];
     }
 }
 if($icResults) {
     while ($row = $icResults->fetch_assoc()) {
-        $icRows[] = $row;
+        $icRows[] = $row['ic'];
     }
 }
 
