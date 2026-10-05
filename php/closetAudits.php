@@ -53,11 +53,30 @@ if (!accountProperties('Closet Audits Page')) {
                         Filter IC
                         <select id="filterIC" name="filterIC"></select>
                     </label>
+                    <div class="vr"></div>
                 </div>
             </div>
         </div>
+        <div class="splitBox">
+            <div class="left"></div>
+            <div class="right"></div>
+        </div>
     </main>
 </body>
+
+<style>
+    .splitBox {
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+    }
+    .splitBox .left {
+        flex: 1;
+    }
+    .splitBox .right {
+        flex: 2;
+    }
+</style>
 
 <script src="/js/accessKey.js"></script>
 <script src="/js/adjustMainMargin.js"></script>
