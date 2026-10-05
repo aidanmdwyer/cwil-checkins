@@ -68,7 +68,17 @@ if (!accountProperties('Closet Audits Page')) {
                 <div id="auditList"></div>
             </div>
             <div class="right">
-                <div id="noAuditSelectedText"><h1>Select an audit to view.</h1></div>
+                <div id="noAuditSelectedText">
+                    <?php 
+                    if($_GET['deleted']) {
+                        echo "<h1 style='color: red;'>" . $_GET['deleted'] . "</h1>";
+                    } else if($_GET['error']) {
+                        echo "<h1 style='color: red;'>" . $_GET['error'] . "</h1>";
+                    } else {
+                        echo "<h1>Select an audit to view.</h1>";
+                    }
+                    ?>
+                </div>
                 <div id="displayAudit">
                     <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: flex-start;">
                         <button id="deleteAuditButton" class="big" style="margin-top: 20px;">Delete</button>
