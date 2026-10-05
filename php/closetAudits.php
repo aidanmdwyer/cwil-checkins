@@ -156,9 +156,14 @@ if (!accountProperties('Closet Audits Page')) {
         overflow: hidden;
     }
 
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
     main {
-        height: 100%;
-        overflow: hidden;
+        flex: 1;
+        min-height: 0;
     }
 
     h1 {
