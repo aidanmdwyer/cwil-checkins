@@ -105,16 +105,15 @@ if (!accountProperties('Closet Audits Page')) {
         background: white;
         border-radius: 5px;
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
+        flex-direction: column;
         padding: 10px;
         box-sizing: border-box;
+        gap: 10px;
     }
     #auditList > div > div {
         display: flex;
-        flex-direction: column;
-        gap: 10px;
+        flex-direction: row;
+        justify-content: space-between;
     }
     #auditList > div > div > h3, #auditList > div > div > p {
         margin: 0;

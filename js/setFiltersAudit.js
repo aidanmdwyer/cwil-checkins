@@ -55,8 +55,8 @@ async function buildTableAudit() {
         div.onclick = function () {openAudit(audit)};
         const date = new Date(audit['date']);
         div.innerHTML = `
-        <div><h3>` + audit['buildingName'] + `</h3><p>` + date.toLocaleDateString('en-CA') + `</p></div>` +
-        `<div><p>` + audit['auditor'] + "</p><p>" + audit['ic'] + `</p></div>`;
+        <div><h3>` + audit['buildingName'] + `</h3><p>` + audit['auditor'] + `</p></div>` +
+        `<div><p>` + date.toLocaleDateString('en-CA') + "</p><p>" + audit['ic'] + `</p></div>`;
 
         auditList.appendChild(div);
     });
