@@ -13,17 +13,17 @@ $filterIC = $_GET['filterIC'];
 $selectAuditsFilters = [];
 $selectAuditsTypeString = "";
 $selectAuditsValues = [];
-if($filterBuildingName) {
+if($filterBuildingName && $filterBuildingName !== "---") {
     $selectAuditsFilters[] = "buildingName = ?";
     $selectAuditsTypeString .= "s";
     $selectAuditsValues[] = $filterBuildingName;
 }
-if($filterAuditor) {
+if($filterAuditor && $filterAuditor !== "---") {
     $selectAuditsFilters[] = "auditor = ?";
     $selectAuditsTypeString .= "s";
     $selectAuditsValues[] = $filterAuditor;
 }
-if($filterIC) {
+if($filterIC && $filterIC !== "---") {
     $selectAuditsFilters[] = "ic = ?";
     $selectAuditsTypeString .= "s";
     $selectAuditsValues[] = $filterIC;

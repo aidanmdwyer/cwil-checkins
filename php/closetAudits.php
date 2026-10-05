@@ -41,17 +41,23 @@ if (!accountProperties('Closet Audits Page')) {
                     <div class="vr"></div>
                     <label style="display: flex; flex-direction: column;">
                         Filter Building Name
-                        <select id="filterBuildingName" name="filterBuildingName"></select>
+                        <select id="filterBuildingName" name="filterBuildingName">
+                            <option>---</option>
+                        </select>
                     </label>
                     <div class="vr"></div>
                     <label style="display: flex; flex-direction: column;">
                         Filter Auditor
-                        <select id="filterAuditor" name="filterAuditor"></select>
+                        <select id="filterAuditor" name="filterAuditor">
+                            <option>---</option>
+                        </select>
                     </label>
                     <div class="vr"></div>
                     <label style="display: flex; flex-direction: column;">
                         Filter IC
-                        <select id="filterIC" name="filterIC"></select>
+                        <select id="filterIC" name="filterIC">
+                            <option>---</option>
+                        </select>
                     </label>
                     <div class="vr"></div>
                 </div>
