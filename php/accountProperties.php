@@ -49,9 +49,14 @@ if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'applicati
 
 // otherwise allow this file to be included and used in PHP
 function accountProperties($property) {
-    if($_SESSION['accountProperties'] === '*') {
-        return true;
+    $props = $_SESSION['accountProperties'];
+    if($props) {
+        if($props === '*') {
+            return true;
+        }
+        return in_array($property, $_SESSION['accountProperties']);
+    } else {
+        return false;
     }
-    return in_array($property, $_SESSION['accountProperties']);
 }
 ?>
