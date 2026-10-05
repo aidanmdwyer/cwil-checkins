@@ -179,6 +179,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         padding: 0;
     }
 
+    table {
+        width: 100%;
+    }
     input[type='textarea'] {
         width: 250px;
         height: 30px;
