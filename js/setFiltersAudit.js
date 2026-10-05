@@ -2,15 +2,20 @@ const filterBuildingName = document.getElementById("filterBuildingName");
 const filterAuditor = document.getElementById("filterAuditor");
 const filterIC = document.getElementById("filterIC");
 const auditList = document.getElementById("auditList");
+const displayBuildingName = document.getElementById("displayBuildingName");
+const displayAuditor = document.getElementById("displayAuditor");
+const displayIC = document.getElementById("displayIC");
+const displayDate = document.getElementById("displayDate");
+const auditTable = document.getElementById("auditTable");
 
 filterBuildingName.addEventListener('input', function () {
-    buildTableAudit();
+    buildAuditList();
 });
 filterAuditor.addEventListener('input', function () {
-    buildTableAudit();
+    buildAuditList();
 });
 filterIC.addEventListener('input', function () {
-    buildTableAudit();
+    buildAuditList();
 });
 
 async function loadAuditFilterData() {
@@ -38,7 +43,7 @@ async function loadAuditFilterData() {
     });
 }
 
-async function buildTableAudit() {
+async function buildAuditList() {
     let response;
     response = await fetch(
         '/php/getDataAudit.php?key=' + accessKey +
@@ -62,6 +67,19 @@ async function buildTableAudit() {
     });
 }
 
-function openAudit(audit) {
-    console.log(audit);
+async function openAudit({auditId, buildingName, auditor, date, ic}) {
+    displayBuildingName.innerHTML = buildingName;
+    displayAuditor.innerHTML = auditor;
+    displayDate.innerHTML = date;
+    displayIC.innerHTML = ic;
+
+    // let response;
+    // response = await fetch(
+    //     '/php/getDataIndividualAudit.php?key=' + accessKey +
+    //     '&auditId=' + auditId
+    // );
+
+
+    
+    // const data = await response.json();
 }
