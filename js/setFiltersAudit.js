@@ -1,10 +1,14 @@
-document.getElementById('filterBuildingName').addEventListener('input', function () {
+const filterBuildingName = document.getElementById("filterBuildingName");
+const filterAuditor = document.getElementById("filterAuditor");
+const filterIC = document.getElementById("filterIC");
+
+filterBuildingName.addEventListener('input', function () {
     buildTableAudit();
 });
-document.getElementById('filterAuditor').addEventListener('input', function () {
+filterAuditor.addEventListener('input', function () {
     buildTableAudit();
 });
-document.getElementById('filterIC').addEventListener('input', function () {
+filterIC.addEventListener('input', function () {
     buildTableAudit();
 });
 
@@ -16,7 +20,18 @@ async function loadAuditFilterData() {
     
     const data = await response.json();
 
-    console.log(data);
+    data['buildingNames'].forEach(buildingName => {
+        const option = "<option>" + buildingName + "</option>";
+        filterBuildingName.appendChild(option);
+    });
+    data['auditors'].forEach(auditor => {
+        const option = "<option>" + auditor + "</option>";
+        filterAuditor.appendChild(option);
+    });
+    data['ics'].forEach(ic => {
+        const option = "<option>" + ic + "</option>";
+        filterIC.appendChild(option);
+    });
 }
 
 async function buildTableAudit() {
