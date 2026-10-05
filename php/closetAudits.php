@@ -157,7 +157,6 @@ if (!accountProperties('Closet Audits Page')) {
     }
 
     main {
-        height: 100%;
         overflow: hidden;
     }
 
