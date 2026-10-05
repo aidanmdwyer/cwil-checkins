@@ -19,12 +19,23 @@ $date = $now->format("Y-m-d");
 
 require_once 'db.php';
 
-$stmt = $conn->prepare("SELECT ic FROM buildings WHERE name = ?");
-$stmt->bind_param("s", $buildingName);
-$stmt->execute();
-$result = $stmt->get_result();
-$ic = $result->fetch_assoc()['ic'];
-$stmt->close();
+$contractorStmt = $conn->prepare("SELECT ic FROM buildings WHERE name = ?");
+$contractorStmt->bind_param("s", $buildingName);
+$contractorStmt->execute();
+$contractorResults = $contractorStmt->get_result();
+$ic = $contractorResults->fetch_assoc()['ic'];
+if(!$ic) {
+    http_response_code(404);
+    die('Page load failed.');
+}
+$contractorStmt->close();
+
+$lastDateStmt = $conn->prepare("SELECT date FROM closet_audits WHERE building_name = ? ORDER BY date DESC LIMIT 1");
+$lastDateStmt->bind_param("s", $buildingName);
+$lastDateStmt->execute();
+$lastDateResults = $lastDateStmt->get_result();
+$lastAuditDate = $lastDateResults->fetch_assoc()['ic'];
+$lastDateStmt->close();
 
 ?>
 
