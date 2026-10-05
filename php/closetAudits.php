@@ -70,10 +70,14 @@ if (!accountProperties('Closet Audits Page')) {
             <div class="right">
                 <div id="noAuditSelectedText"><h1>Select an audit to view.</h1></div>
                 <div id="displayAudit">
-                    <h1>
-                        Closet Audit -
-                        <br><span id="displayBuildingName"></span>
-                    </h1>
+                    <div style="display: flex; flex-direction: row; justify-content: space between;">
+                        <button class="big">Delete</button>
+                        <h1>
+                            Closet Audit -
+                            <br><span id="displayBuildingName"></span>
+                        </h1>
+                        <button class="big">Export</button>
+                    </div>
 
                     <div class='hr'></div>
 
