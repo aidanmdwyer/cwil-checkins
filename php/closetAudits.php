@@ -104,11 +104,18 @@ if (!accountProperties('Closet Audits Page')) {
     #auditList > div {
         background: white;
         border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
     }
     #auditList > div > div {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
+    }
+    #auditList > div > div > h3 {
+        margin: 0;
+        padding: 0;
     }
 </style>
 
