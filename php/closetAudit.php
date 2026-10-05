@@ -141,7 +141,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                     </td>
                     <td>
                         <label>
-                            <input type='text' name='comments[$item]' placeholder='Comment...'>
+                            <input type='textarea' name='comments[$item]' placeholder='Comment...' maxlength='160'>
                         </label>
                     </td>
                 </tr>";
@@ -179,9 +179,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         padding: 0;
     }
 
-    input[type='text'] {
-        width: 300px;
-        height: 50px;
+    input[type='textarea'] {
+        width: 250px;
+        height: 30px;
     }
 
 </style>
