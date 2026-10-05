@@ -196,11 +196,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         box-sizing: border-box;
         padding: 5px;
         margin: 0;
+        outline: none;
         border: none;
         background: transparent;
-    }
-    textarea:focus {
-        border: none;
     }
 
 </style>
@@ -284,7 +282,17 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
-    <p>thank you!<p>
+    <h2>Closet audit successfully submitted for <?= $buildingName ?>.</h2>
 </body>
+<style>
+    body {
+        width: 100%;
+        height: 100%;
+        margin: auto;
+    }
+    h2 {
+        text-align: center;
+    }
+</style>
 </html>
 <?php } ?>
