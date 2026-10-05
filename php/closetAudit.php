@@ -200,13 +200,16 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 
     $auditId = $conn->insert_id;
 
-    $auditItemsInsertSQL = "INSERT INTO closet_audit_items (audit_id, item_id, item_description, item_value) VALUES";
-    $auditItemsInsertSQL .= implode(',', array_fill(0, count($auditItems), " (?, ?, ?, ?)")) . ";";
-
     $auditItemsValuesList = [];
+    $auditItemsTypeString = "";
+    $auditCommentsValuesList = [];
+    $auditCommentsTypeString = "";
     $itemId = 0;
-    $auditItemCommentsList = [];
+    $auditItemCount = 0;
+    $auditCommentCount = 0;
     foreach ($auditItems as $item => $value) {
+        $auditItemCount++;
+        //prep audit items insert
         $auditItemsTypeString .= "iisi";
 
         $auditItemsValuesList[] = $auditId;
@@ -214,18 +217,33 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         $auditItemsValuesList[] = $item;
         $auditItemsValuesList[] = $value === 'on';
 
+        //prep comments insert
         if($auditItemComments[$item]) {
-            $auditItemCommentsList[$itemId] = $auditItemComments[$item];
+            $auditCommentCount++;
+
+            $auditCommentsTypeString .= "iis";
+
+            $auditCommentsValuesList[] = $auditId;
+            $auditCommentsValuesList[] = $itemId;
+            $auditCommentsValuesList[] = $auditItemComments[$item];
         }
 
         $itemId++;
     }
 
+    $auditItemsInsertSQL = "INSERT INTO closet_audit_items (audit_id, item_id, item_description, item_value) VALUES";
+    $auditItemsInsertSQL .= implode(',', array_fill(0, $auditItemCount, " (?, ?, ?, ?)")) . ";";
     $auditItemsInsertStmt = $conn->prepare($auditItemsInsertSQL);
     $auditItemsInsertStmt->bind_param($auditItemsTypeString, ...$auditItemsValuesList);
     $auditItemsInsertStmt->execute();
-
     $auditItemsInsertStmt->close();
+
+    $auditCommentsInsertSQL = "INSERT INTO closet_audit_comments (audit_id, item_id, comment) VALUES";
+    $auditCommentsInsertSQL .= implode(',', array_fill(0, $auditCommentCount, " (?, ?, ?)")) . ";";
+    $auditCommentsInsertStmt = $conn->prepare($auditCommentsInsertSQL);
+    $auditCommentsInsertStmt->bind_param($auditCommentsTypeString, ...$auditCommentsValuesList);
+    $auditCommentsInsertStmt->execute();
+    $auditCommentsInsertStmt->close();
 
     $conn->close();
 ?>
@@ -243,11 +261,6 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 </head>
 <body>
     <p>thank you!<p>
-    <?php
-        foreach($auditItemCommentsList as $itemId => $comment) {
-            echo $comment;
-        }
-    ?>
 </body>
 </html>
 <?php } ?>
