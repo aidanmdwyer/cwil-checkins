@@ -11,9 +11,7 @@ if(!$auditId) {
 
 require_once 'db.php';
 
-$selectAuditItemsSQL = "SELECT * FROM closet_audits_items WHERE auditId = ?";
-
-$selectAuditItemsStmt = $conn->prepare($selectAuditItemsSQL);
+$selectAuditItemsStmt = $conn->prepare("SELECT * FROM closet_audits_items WHERE auditId = ?");
 $selectAuditItemsStmt->bind_param("i", $auditId);
 $selectAuditItemsStmt->execute();
 
