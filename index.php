@@ -39,7 +39,7 @@ if (!accountProperties('Home Page')) {
         </div>
     </div>
 </header>
-<main>
+<main style="width: 100%; padding: 0 20px;">
     <div id="tableMenu" style="display: none; position: fixed; top: 0; left: 0; right: 0; border-bottom: 2px solid black; align-items: center; padding: 15px; background-color: lightgrey; z-index: 10; overflow-x: auto;">
         <div style="margin-right: 20px;">
             <a href="/index.php"><img src="/imgs/logoSmall.png" style="width: 100px;"></a>
