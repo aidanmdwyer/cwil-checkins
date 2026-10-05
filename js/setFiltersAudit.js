@@ -1,6 +1,7 @@
 const filterBuildingName = document.getElementById("filterBuildingName");
 const filterAuditor = document.getElementById("filterAuditor");
 const filterIC = document.getElementById("filterIC");
+const auditList = document.getElementById("auditList");
 
 filterBuildingName.addEventListener('input', function () {
     buildTableAudit();
@@ -53,6 +54,8 @@ async function buildTableAudit() {
         div.onclick = openAudit(audit);
         div.innerHTML = `
         <h3>` + audit['buildingName'] + `</h3>`;
+
+        auditList.appendChild(div);
     });
 }
 
