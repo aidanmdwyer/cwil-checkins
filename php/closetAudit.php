@@ -6,6 +6,12 @@ if (!accountProperties('Closet Audit')) {
     http_response_code(403);
     die('Forbidden: You do not have permission to access this page.');
 }
+
+$buildingName = $_GET['buildingName'];
+if(!$buildingName) {
+    http_response_code(404);
+    die('Page load failed.');
+}
 ?>
 
 <!doctype html>
@@ -20,6 +26,8 @@ if (!accountProperties('Closet Audit')) {
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
+    <h1>Closet Audit -</h1>
+    <h2><?= $buildingName?></h2>
     <form>
         <label>
             Enter:
@@ -28,6 +36,13 @@ if (!accountProperties('Closet Audit')) {
     </form>
 </body>
 <style>
-
+    html {
+        width: 100%;
+        height: 100%;
+    }
+    body {
+        width: 100%;
+        margin: 0 auto;
+    }
 </style>
 </html>
