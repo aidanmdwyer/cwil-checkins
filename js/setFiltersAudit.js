@@ -48,5 +48,14 @@ async function buildTableAudit() {
     
     const data = await response.json();
 
-    console.log(data);
+    data.forEach(audit => {
+        const div = document.createElement("div");
+        div.onclick = openAudit(audit);
+        div.innerHTML = `
+        <h3>` + audit['buildingName'] + `</h3>`;
+    });
+}
+
+function openAudit(audit) {
+    console.log(audit);
 }
