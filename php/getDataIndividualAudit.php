@@ -6,7 +6,7 @@ isKeyValid();
 
 $auditId = $_GET['auditId'] ?? null;
 
-if (!$auditId && $auditId !== '0') {
+if (!$auditId && $auditId !== 0) {
     http_response_code(404);
     die('Page load failed.');
 }
