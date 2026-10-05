@@ -27,14 +27,12 @@ if (isset($_GET['auditId']) && isset($_GET['buildingName'])) {
         header("Location: /php/closetAudits.php?deleted=" . urlencode($buildingName));
         exit();
     } else {
-        $errorMsg = "Failed to delete audit.";
-        header("Location: /php/closetAudits.php?error=" . urlencode($errorMsg));
+        header("Location: /php/closetAudits.php?error=" . urlencode($buildingName));
         exit();
     }
 
 } else {
-    $errorMsg = "Invalid request.";
-    header("Location: /php/closetAudits.php?error=" . urlencode($errorMsg));
+    header("Location: /php/closetAudits.php?error=" . urlencode($buildingName));
     exit();
 }
 ?>
