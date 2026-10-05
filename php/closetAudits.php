@@ -30,8 +30,31 @@ if (!accountProperties('Closet Audits Page')) {
             </div>
         </div>
     </header>
+
     <main>
-        <div class="contentContainer">
+        <div id="tableMenu" style="display: none; position: fixed; top: 0; left: 0; right: 0; border-bottom: 2px solid black; align-items: center; padding: 15px; background-color: lightgrey; z-index: 10; overflow-x: auto;">
+            <div style="margin-right: 20px;">
+                <a href="/index.php"><img src="/imgs/logoSmall.png" style="width: 100px;"></a>
+            </div>
+            <div style="display: flex; justify-content: space-between; width: 100%; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="vr"></div>
+                    <label style="flex-direction: column;">
+                        Filter Building Name
+                        <select id="filterBuildingName" name="filterBuildingName"></select>
+                    </label>
+                    <div class="vr"></div>
+                    <label style="flex-direction: column;">
+                        Filter Auditor
+                        <select id="filterAuditor" name="filterAuditor"></select>
+                    </label>
+                    <div class="vr"></div>
+                    <label style="flex-direction: column;">
+                        Filter IC
+                        <select id="filterIC" name="filterIC"></select>
+                    </label>
+                </div>
+            </div>
         </div>
     </main>
 </body>
