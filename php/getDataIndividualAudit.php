@@ -3,52 +3,30 @@ session_start();
 include 'requireKey.php';
 isKeyValid();
 
+$auditId = $_GET['auditId'];
+if(!$auditId) {
+    http_response_code(404);
+    die('Page load failed.');
+}
+
 require_once 'db.php';
 
-$selectAuditsSQL = "SELECT * FROM closet_audits";
-$filterBuildingName = $_GET['filterBuildingName'];
-$filterAuditor = $_GET['filterAuditor'];
-$filterIC = $_GET['filterIC'];
+$selectAuditItemsSQL = "SELECT * FROM closet_audits_items WHERE auditId = ?";
 
-$selectAuditsFilters = [];
-$selectAuditsTypeString = "";
-$selectAuditsValues = [];
-if($filterBuildingName && $filterBuildingName !== "---") {
-    $selectAuditsFilters[] = "buildingName = ?";
-    $selectAuditsTypeString .= "s";
-    $selectAuditsValues[] = $filterBuildingName;
-}
-if($filterAuditor && $filterAuditor !== "---") {
-    $selectAuditsFilters[] = "auditor = ?";
-    $selectAuditsTypeString .= "s";
-    $selectAuditsValues[] = $filterAuditor;
-}
-if($filterIC && $filterIC !== "---") {
-    $selectAuditsFilters[] = "ic = ?";
-    $selectAuditsTypeString .= "s";
-    $selectAuditsValues[] = $filterIC;
-}
+$selectAuditItemsStmt = $conn->prepare($selectAuditItemsSQL);
+$selectAuditItemsStmt->bind_param("i", $auditId);
+$selectAuditItemsStmt->execute();
 
-if(count($selectAuditsFilters) > 0) {
-    $selectAuditsSQL .= " WHERE " . implode(" AND ", $selectAuditsFilters) . ";";
-}
-
-$selectAuditsStmt = $conn->prepare($selectAuditsSQL);
-if(count($selectAuditsFilters) > 0) {
-    $selectAuditsStmt->bind_param($selectAuditsTypeString, ...$selectAuditsValues);
-}
-$selectAuditsStmt->execute();
-
-$selectAuditResult = $selectAuditsStmt->get_result();
+$selectAuditItemsResult = $selectAuditItemsStmt->get_result();
 
 $rows = [];
-if($selectAuditResult) {
-    while ($row = $selectAuditResult->fetch_assoc()) {
+if($selectAuditItemsResult) {
+    while ($row = $selectAuditItemsResult->fetch_assoc()) {
         $rows[] = $row;
     }
 }
 
-$selectAuditsStmt->close();
+$selectAuditItemsStmt->close();
 $conn->close();
 
 echo json_encode($rows);

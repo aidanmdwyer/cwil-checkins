@@ -78,13 +78,12 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     displayAudit.style.display = "flex";
     noAuditSelectedText.style.display = "none";
 
-    // let response;
-    // response = await fetch(
-    //     '/php/getDataIndividualAudit.php?key=' + accessKey +
-    //     '&auditId=' + auditId
-    // );
-
-
+    let response;
+    response = await fetch(
+        '/php/getDataIndividualAudit.php?key=' + accessKey +
+        '&auditId=' + auditId
+    );
     
-    // const data = await response.json();
+    const data = await response.json();
+    console.log(data);
 }
