@@ -21,8 +21,7 @@ filterIC.addEventListener('input', function () {
 });
 
 async function loadAuditFilterData() {
-    let response;
-    response = await fetch(
+    const response = await fetch(
         '/php/getAuditFilterOptions.php?key=' + accessKey
     );
     
@@ -46,8 +45,7 @@ async function loadAuditFilterData() {
 }
 
 async function buildAuditList() {
-    let response;
-    response = await fetch(
+    const response = await fetch(
         '/php/getDataAudit.php?key=' + accessKey +
         '&filterBuildingName=' + document.getElementById('filterBuildingName').value +
         '&filterAuditor=' + document.getElementById('filterAuditor').value +
@@ -83,6 +81,8 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
         '&auditId=' + auditId
     );
 
-    console.log("HTTP:", response.status);
-    console.log(await response.text());
+
+    
+    const data = await response.json();
+    console.log(data);
 }
