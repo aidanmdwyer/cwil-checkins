@@ -168,6 +168,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 <?php
 } else { //after submission
     $buildingName = $_POST['buildingName'];
+    $date = $_POST['date'];
+    $auditor = $_POST['auditor'];
+    $ic = $_POST['ic'];
     $auditItems = $_POST['auditItems'];
 ?>
 
@@ -184,6 +187,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 </head>
 <body>
     <?= $buildingName?>
+    <?= $date?>
+    <?= $auditor?>
+    <?= $ic?>
     <br>
     <?php 
     foreach ($auditItems as $item => $value) {
