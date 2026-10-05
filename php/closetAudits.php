@@ -58,4 +58,7 @@ if (!accountProperties('Closet Audits Page')) {
         </div>
     </main>
 </body>
+
+<script src="/js/accessKey.js"></script>
+<script src="/js/adjustMainMargin.js"></script>
 </html>
