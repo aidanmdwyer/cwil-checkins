@@ -195,10 +195,12 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         width: max(120px, 20vw);
         resize: none;
         box-sizing: border-box;
+        outline: none;
         border: none;
         background: transparent;
     }
     textarea:focus {
+        outline: none;
         border: none;
     }
 
