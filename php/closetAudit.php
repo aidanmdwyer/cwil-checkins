@@ -260,12 +260,14 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $auditItemsInsertStmt->execute();
     $auditItemsInsertStmt->close();
 
-    $auditCommentsInsertSQL = "INSERT INTO closet_audit_comments (audit_id, item_id, comment) VALUES";
-    $auditCommentsInsertSQL .= implode(',', array_fill(0, $auditCommentCount, " (?, ?, ?)")) . ";";
-    $auditCommentsInsertStmt = $conn->prepare($auditCommentsInsertSQL);
-    $auditCommentsInsertStmt->bind_param($auditCommentsTypeString, ...$auditCommentsValuesList);
-    $auditCommentsInsertStmt->execute();
-    $auditCommentsInsertStmt->close();
+    if($auditCommentCount > 0) {
+        $auditCommentsInsertSQL = "INSERT INTO closet_audit_comments (audit_id, item_id, comment) VALUES";
+        $auditCommentsInsertSQL .= implode(',', array_fill(0, $auditCommentCount, " (?, ?, ?)")) . ";";
+        $auditCommentsInsertStmt = $conn->prepare($auditCommentsInsertSQL);
+        $auditCommentsInsertStmt->bind_param($auditCommentsTypeString, ...$auditCommentsValuesList);
+        $auditCommentsInsertStmt->execute();
+        $auditCommentsInsertStmt->close();
+    }
 
     $conn->close();
 ?>
