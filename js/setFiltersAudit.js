@@ -55,7 +55,8 @@ async function buildTableAudit() {
         div.onClick = openAudit(audit);
         div.innerHTML = `
         <h3>` + audit['buildingName'] + `</h3><p>` + audit['date'] + `</p><br>` +
-        `<p>` + audit['auditor'] + `</p> | <p>` + audit['ic'] + `</p>`;
+        `<p>Auditor: ` + audit['auditor'] + `</p><br>` +
+        `<p>IC: ` + audit['ic'] + `</p>`;
 
         auditList.appendChild(div);
     });
