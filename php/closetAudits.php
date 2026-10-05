@@ -90,7 +90,7 @@ if (!accountProperties('Closet Audits Page')) {
     }
 
     #auditList {
-        
+
     }
     #auditList div {
 
@@ -100,4 +100,7 @@ if (!accountProperties('Closet Audits Page')) {
 <script src="/js/accessKey.js"></script>
 <script src="/js/adjustMainMargin.js"></script>
 <script src="/js/setFiltersAudit.js"></script>
+<script>
+    buildTableAudit();
+</script>
 </html>
