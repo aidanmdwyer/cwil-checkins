@@ -78,7 +78,9 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     noAuditSelectedText.style.display = "none";
 
     deleteAuditButton.onclick = (() => {
-        window.location.href='/php/deleteAudit.php?auditId=' + auditId + '&buildingName=' + buildingName;
+        if(confirm('Are you sure you want to delete ' + buildingName + '?')) {
+            window.location.href='/php/deleteAudit.php?auditId=' + auditId + '&buildingName=' + buildingName;
+        }
     });
 
     const response = await fetch(
