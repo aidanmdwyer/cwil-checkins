@@ -5,27 +5,44 @@ isKeyValid();
 
 require_once 'db.php';
 
-$buildingNameResults = $conn->query("SELECT DISTINCT buildingName FROM closet_audits;");
-$auditorResults = $conn->query("SELECT DISTINCT auditor FROM closet_audits;");
-$icResults = $conn->query("SELECT DISTINCT ic FROM closet_audits;");
+header('Content-Type: application/json');
+
+$buildingNameResults = $conn->query(
+    "SELECT DISTINCT buildingName FROM closet_audits"
+);
+
+$auditorResults = $conn->query(
+    "SELECT DISTINCT auditor FROM closet_audits"
+);
+
+$icResults = $conn->query(
+    "SELECT DISTINCT ic FROM closet_audits"
+);
+
+if (!$buildingNameResults || !$auditorResults || !$icResults) {
+    http_response_code(500);
+
+    echo json_encode([
+        'error' => $conn->error
+    ]);
+
+    exit;
+}
 
 $buildingNameRows = [];
 $auditorRows = [];
 $icRows = [];
-if($buildingNameResults) {
-    while ($row = $buildingNameResults->fetch_assoc()) {
-        $buildingNameRows[] = $row;
-    }
+
+while ($row = $buildingNameResults->fetch_assoc()) {
+    $buildingNameRows[] = $row['buildingName'];
 }
-if($auditorResults) {
-    while ($row = $auditorResults->fetch_assoc()) {
-        $auditorRows[] = $row;
-    }
+
+while ($row = $auditorResults->fetch_assoc()) {
+    $auditorRows[] = $row['auditor'];
 }
-if($icResults) {
-    while ($row = $icResults->fetch_assoc()) {
-        $icRows[] = $row;
-    }
+
+while ($row = $icResults->fetch_assoc()) {
+    $icRows[] = $row['ic'];
 }
 
 $conn->close();
@@ -35,4 +52,3 @@ echo json_encode([
     'auditors' => $auditorRows,
     'ics' => $icRows
 ]);
-?>
