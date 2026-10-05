@@ -189,11 +189,10 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $auditId = $conn->insert_id;
 
     $auditItemsInsertSQL = "INSERT INTO closet_audit_items (audit_id, item_id, item_description, item_value) VALUES";
-
+    $auditItemsInsertSQL .= implode(',', array_fill(0, count($auditItems), " (?, ?, ?, ?)")) . ";";
     $auditItemsValuesList = [];
     $itemId = 0;
     foreach ($auditItems as $item => $value) {
-        $auditItemsInsertSQL .= " (?, ?, ?, ?),";
         $auditItemsTypeString .= "iisi";
 
         $auditItemsValuesList .= $auditId;
@@ -203,7 +202,6 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 
         $itemId++;
     }
-    $auditItemsInsertSQL .= ";";
 
     $auditItemsInsertStmt = $conn->prepare($auditItemsInsertSQL);
     $auditItemsInsertStmt->bind_param($auditItemsTypeString, ...$auditItemsValuesList);
