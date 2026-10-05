@@ -12,16 +12,18 @@ if (isset($_GET['auditId']) && isset($_GET['buildingName'])) {
     $auditId = $_GET['auditId'];
     $buildingName = $_GET['buildingName'];
 
-    $deleteAuditStmt = $conn->prepare("
-        DELETE FROM closet_audit_comments WHERE auditId = ?;
-        DELETE FROM closet_audit_items WHERE auditId = ?;
-        DELETE FROM closet_audits WHERE auditId = ?;
-    ");
+    $deleteAuditStmt1 = $conn->prepare("DELETE FROM closet_audits WHERE auditId = ?;");
+    $deleteAuditStmt2 = $conn->prepare("DELETE FROM closet_audit_items WHERE auditId = ?;");
+    $deleteAuditStmt3 = $conn->prepare("DELETE FROM closet_audit_comments WHERE auditId = ?;");
 
-    $deleteAuditStmt->bind_param("iii", $auditId, $auditId, $auditId);
-    $deleteAuditStmt->execute();
+    $deleteAuditStmt1->bind_param("i", $auditId);
+    $deleteAuditStmt2->bind_param("i", $auditId);
+    $deleteAuditStmt3->bind_param("i", $auditId);
+    $deleteAuditStmt1->execute();
+    $deleteAuditStmt2->execute();
+    $deleteAuditStmt3->execute();
 
-    if($deleteAuditStmt->affected_rows > 0) {
+    if($deleteAuditStmt1->affected_rows > 0 && $deleteAuditStmt2->affected_rows > 0) {
         header("Location: /php/deleteAudit.php?deleted=" . urlencode($buildingName));
         exit();
     } else {
