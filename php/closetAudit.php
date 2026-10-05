@@ -180,7 +180,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     }
 
     input[type='text'] {
-        width: 200px;
+        width: 300px;
         height: 50px;
     }
 
