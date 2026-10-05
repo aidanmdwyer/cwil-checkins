@@ -285,12 +285,14 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 </head>
 <body>
     <h2>Closet audit successfully submitted for <?= $buildingName ?>.</h2>
+    <button class="big" onclick="window.location.href='/index.php'">Home</button>
 </body>
 <style>
     body {
         width: 100%;
         height: 100%;
         margin: auto;
+        padding: 30px;
     }
     h2 {
         text-align: center;
