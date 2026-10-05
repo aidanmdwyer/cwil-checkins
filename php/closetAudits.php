@@ -65,10 +65,11 @@ if (!accountProperties('Closet Audits Page')) {
 </body>
 
 <style>
-    html, body {
+    html, body, main {
         width: 100%;
         height: 100%;
     }
+
     .splitBox {
         display: flex;
         flex-direction: row;
