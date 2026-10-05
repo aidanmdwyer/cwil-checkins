@@ -33,5 +33,4 @@ while ($row = $selectAuditItemsResult->fetch_assoc()) {
 $selectAuditItemsStmt->close();
 $conn->close();
 
-header('Content-Type: application/json');
 echo json_encode($rows);
