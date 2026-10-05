@@ -101,6 +101,9 @@ if(!$loadAll && count($rows) > 20) {
     array_pop($rows);
 }
 
+$stmt->close();
+$conn->close();
+
 // Output
 echo json_encode([
     'dayOfWeek' => $dayOfWeek,

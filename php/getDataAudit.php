@@ -10,19 +10,44 @@ $filterBuildingName = $_GET['filterBuildingName'];
 $filterAuditor = $_GET['filterAuditor'];
 $filterIC = $_GET['filterIC'];
 
-if($filterBuildingName || $filterAuditor || $filterIC) {
-    $selectAuditsSQL .= " WHERE";
-    if($filterBuildingName) {
-        $selectAuditsSQL .= " buildingName = ?";
-    }
-    if($filterAuditor) {
-        $selectAuditsSQL .= " auditor = ?";
-    }
-    if($filterIC) {
-        $selectAuditsSQL .= " ic = ?";
+$selectAuditsFilters = [];
+$selectAuditsTypeString = "";
+$selectAuditsValues = [];
+if($filterBuildingName) {
+    $selectAuditsFilters[] = "buildingName = ?";
+    $selectAuditsTypeString .= "s";
+    $selectAuditsValues[] = $filterBuildingName;
+}
+if($filterAuditor) {
+    $selectAuditsFilters[] = "auditor = ?";
+    $selectAuditsTypeString .= "s";
+    $selectAuditsValues[] = $filterAuditor;
+}
+if($filterIC) {
+    $selectAuditsFilters[] = "ic = ?";
+    $selectAuditsTypeString .= "s";
+    $selectAuditsValues[] = $filterIC;
+}
+
+if(count($selectAuditsFilters) > 0) {
+    $selectAuditsSQL .= " WHERE " . implode(" AND ", $selectAuditsFilters) . ";";
+}
+
+$selectAuditsStmt = $conn->prepare($selectAuditsSQL);
+$selectAuditsStmt->bind_param($selectAuditsTypeString, ...$selectAuditsValues);
+$selectAuditsStmt->execute();
+
+$selectAuditResult = $selectAuditStmt->get_result();
+
+$rows = [];
+if($selectAuditResult) {
+    while ($row = $selectAuditResult->fetch_assoc()) {
+        $rows[] = $row;
     }
 }
 
+$selectAuditsStmt->close();
 $conn->close();
 
+echo json_encode($rows);
 ?>
