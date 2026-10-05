@@ -284,15 +284,5 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 <body>
     <h2>Closet audit successfully submitted for <?= $buildingName ?>.</h2>
 </body>
-<style>
-    body {
-        width: 100%;
-        height: 100%;
-        margin: auto;
-    }
-    h2 {
-        text-align: center;
-    }
-</style>
 </html>
 <?php } ?>
