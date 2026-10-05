@@ -95,7 +95,7 @@ if (!accountProperties('Home Page')) {
 
     <div style="display: flex; align-items: flex-start;">
         <!--        Table-->
-        <div id="tableContainer" style="display: inline-block; margin: 0 20px;">
+        <div id="tableContainer" style="display: inline-block; margin: 0 20px; box-sizing: border-box;">
             <form id="tableSelectedForm" method="POST" action="php/handleSelect.php">
                 <table id="buildingsTable" style="display: none;"></table>
             </form>
