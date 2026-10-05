@@ -134,7 +134,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         }
         ?>
 
-        <input type="submit">
+        <input type="submit" class="big">
 
     </form>
 </body>
@@ -152,6 +152,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         gap: 10px;
         align-items: center;
         justify-content: flex-start;
+        margin-bottom: 250px;
     }
 
     h1 {
