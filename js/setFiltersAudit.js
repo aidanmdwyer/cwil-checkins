@@ -83,10 +83,15 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     
     const data = await response.json();
 
+    console.log(data);
+
     data.forEach(item => {
         const desc = item['itemDescription'];
+
         const valueElement = document.getElementById(desc + "-value");
+        valueElement.innerHTML = "";
         valueElement.innerHTML = item['itemValue'] == 1 ? '✅' : '❌';
+
         const commentElement = document.getElementById(desc + "-comment");
         if(item['comment']) {
             commentElement.innerHTML = item['comment'];
