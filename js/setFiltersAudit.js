@@ -49,11 +49,13 @@ async function buildTableAudit() {
     
     const data = await response.json();
 
+    auditList.innerHTML = "";
     data.forEach(audit => {
         const div = document.createElement("div");
-        div.onclick = openAudit(audit);
+        div.onClick = openAudit(audit);
         div.innerHTML = `
-        <h3>` + audit['buildingName'] + `</h3>`;
+        <h3>` + audit['buildingName'] + `</h3><p>` + audit['date'] + `</p><br>` +
+        `<p>` + audit['auditor'] + `</p> | <p>` + audit['ic'] + `</p>`;
 
         auditList.appendChild(div);
     });
