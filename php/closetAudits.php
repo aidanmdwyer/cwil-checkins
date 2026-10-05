@@ -181,6 +181,7 @@ if (!accountProperties('Closet Audits Page')) {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        min-height: 100%;
         padding: 10px;
         border-right: 2px solid black;
         box-sizing: border-box;
