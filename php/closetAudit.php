@@ -17,6 +17,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $auditor = $_SESSION['username'];
     $now = new DateTime('now', new DateTimeZone('America/Chicago'));
     $date = $now->format("Y-m-d H:i:s");
+    $dateFormatted = $now->format("Y-m-d");
 
     require_once 'db.php';
 
@@ -69,7 +70,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     <form method="POST">
         <input type="hidden" name="buildingName" value="<?=$buildingName?>">
 
-        <h3>Date: <?=$date?></h3>
+        <h3>Date: <?=$dateFormatted?></h3>
         <input type="hidden" name="date" value="<?=$date?>">
         <br>
 
