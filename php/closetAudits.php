@@ -71,12 +71,12 @@ if (!accountProperties('Closet Audits Page')) {
                 <div id="noAuditSelectedText"><h1>Select an audit to view.</h1></div>
                 <div id="displayAudit">
                     <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: flex-start;">
-                        <button class="big" style="padding-top: 20px;" onclick="window.location.href='/php/deleteAudit.php?buildingName=' + document.getElementById('displayBuildingName').innerText">Delete</button>
+                        <button id="deleteAuditButton" class="big" style="margin-top: 20px;">Delete</button>
                         <h1>
                             Closet Audit -
                             <br><span id="displayBuildingName"></span>
                         </h1>
-                        <button class="big" style="padding-top: 20px;">Export</button>
+                        <button class="big" style="margin-top: 20px;">Export</button>
                     </div>
 
                     <div class='hr'></div>

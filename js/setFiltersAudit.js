@@ -9,6 +9,7 @@ const displayDate = document.getElementById("displayDate");
 const auditTable = document.getElementById("auditTable");
 const displayAudit = document.getElementById("displayAudit");
 const noAuditSelectedText = document.getElementById("noAuditSelectedText");
+const deleteAuditButton = document.getElementById("deleteAuditButton");
 
 filterBuildingName.addEventListener('input', function () {
     buildAuditList();
@@ -75,6 +76,10 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
 
     displayAudit.style.display = "flex";
     noAuditSelectedText.style.display = "none";
+
+    deleteAuditButton.onclick = (() => {
+        window.location.href='/php/deleteAudit.php?auditId=' + auditId + '&buildingName=' + buildingName;
+    });
 
     const response = await fetch(
         '/php/getDataIndividualAudit.php?key=' + accessKey +
