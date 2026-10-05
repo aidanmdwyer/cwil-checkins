@@ -179,6 +179,11 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         padding: 0;
     }
 
+    input[type='text'] {
+        width: 200px;
+        height: 50px;
+    }
+
 </style>
 </html>
 
