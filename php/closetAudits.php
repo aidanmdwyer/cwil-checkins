@@ -128,6 +128,7 @@ if (!accountProperties('Closet Audits Page')) {
                     foreach ($auditItems as $section => $list) {
                         echo "<h2>$section</h2>";
                         echo "<table id='auditTable'>";
+                        echo "<tr><th>Audit Item</th><th>✅/❌</th><th>Comments</th></tr>";
                         foreach ($list as $item) {
                             echo "
                             <tr>
