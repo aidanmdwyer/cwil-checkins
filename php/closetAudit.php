@@ -26,9 +26,40 @@ if(!$buildingName) {
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
-    <h1>Closet Audit -</h1>
-    <h2><?= $buildingName?></h2>
+    <h1>
+        Closet Audit -
+        <br><?= $buildingName?>
+    </h1>
+
     <form>
+        <?php
+        $auditItems = [
+            "Closet Condition" => [
+                "Closet door secured and functioning properly",
+                "Closet is clean and free of debris",
+                "Floors are swept and free of spills",
+                "Shelving is clean and organized",
+                "No unnecessary personal items stored in closet",
+                "QR Code properly stored in closet "
+            ],
+            "Closet Condition" => [
+                "Closet door secured and functioning properly",
+                "Closet is clean and free of debris",
+                "Floors are swept and free of spills",
+                "Shelving is clean and organized",
+                "No unnecessary personal items stored in closet",
+                "QR Code properly stored in closet "
+            ],
+        ];
+
+        foreach ($auditItems as $section => $list) {
+            echo "<h2>$section</h2>";
+            foreach ($list as $item) {
+                echo "<p>$item</p>";
+            }
+        }
+        ?>
+        <h2>Closet Condition</h2>
         <label>
             Enter:
             <input type="checkbox">
