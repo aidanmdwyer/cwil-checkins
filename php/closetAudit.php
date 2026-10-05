@@ -42,7 +42,7 @@ if(!$buildingName) {
                 "No unnecessary personal items stored in closet",
                 "QR Code properly stored in closet "
             ],
-            "Closet Condition" => [
+            "Closet Conditio" => [
                 "Closet door secured and functioning properly",
                 "Closet is clean and free of debris",
                 "Floors are swept and free of spills",
@@ -59,11 +59,6 @@ if(!$buildingName) {
             }
         }
         ?>
-        <h2>Closet Condition</h2>
-        <label>
-            Enter:
-            <input type="checkbox">
-        </label>
     </form>
 </body>
 <style>
