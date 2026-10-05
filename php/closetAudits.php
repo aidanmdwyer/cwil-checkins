@@ -70,7 +70,7 @@ if (!accountProperties('Closet Audits Page')) {
             <div class="right">
                 <div id="noAuditSelectedText"><h1>Select an audit to view.</h1></div>
                 <div id="displayAudit">
-                    <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: flex-start;">
+                    <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: flex-start; padding-top: 20px;">
                         <button class="big">Delete</button>
                         <h1>
                             Closet Audit -
@@ -176,6 +176,7 @@ if (!accountProperties('Closet Audits Page')) {
 
     h1 {
         text-align: center;
+        margin-top: 0;
     }
     h3 {
         margin: 0;
