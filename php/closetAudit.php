@@ -294,6 +294,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         margin: auto;
         padding: 30px;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     h2 {
         text-align: center;
