@@ -186,6 +186,8 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
 
+    $insertId = $conn->insert_id;
+
     // $auditItemsInsertSQL = "INSERT INTO closet_audits (building_name, date, auditor, ic) VALUES";
     // $auditItemsInsertSQL .= str_repeat(" (?, ?, ?, ?),", count($auditItems));
     // $auditItemsInsertSQL .= ";";
@@ -218,7 +220,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
-
+    <?= $insertId ?>
 </body>
 </html>
 <?php } ?>
