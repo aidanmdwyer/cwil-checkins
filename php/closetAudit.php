@@ -17,7 +17,14 @@ $auditor = $_SESSION['username'];
 $now = new DateTime('now', new DateTimeZone('America/Chicago'));
 $date = $now->format("Y-m-d");
 
-// require_once 'db.php';
+require_once 'db.php';
+
+$stmt = $conn->prepare("SELECT ic FROM buildings WHERE name = ?");
+$stmt->bind_param("s", $buildingName);
+$stmt->execute();
+$result = $stmt->get_result();
+$ic = $result->fetch_assoc()['ic'];
+$stmt->close();
 
 ?>
 
@@ -42,6 +49,11 @@ $date = $now->format("Y-m-d");
         <h3>Date: <?=$date?></h3>
         <input type="hidden" name="date" value="<?=$date?>">
         <br>
+
+        <?php if($lastAuditDate) { ?>
+            <h3>Last Audit: <?=$lastAuditDate?></h3>
+            <br>
+        <?php } ?>
 
         <h3>Auditor: <?=$auditor?></h3>
         <input type="hidden" name="auditor" value="<?=$auditor?>">
