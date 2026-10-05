@@ -34,7 +34,9 @@ if(count($selectAuditsFilters) > 0) {
 }
 
 $selectAuditsStmt = $conn->prepare($selectAuditsSQL);
-$selectAuditsStmt->bind_param($selectAuditsTypeString, ...$selectAuditsValues);
+if(count($selectAuditsFilters) > 0) {
+    $selectAuditsStmt->bind_param($selectAuditsTypeString, ...$selectAuditsValues);
+}
 $selectAuditsStmt->execute();
 
 $selectAuditResult = $selectAuditStmt->get_result();
