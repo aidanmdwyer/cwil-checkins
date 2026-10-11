@@ -90,6 +90,8 @@ if (!accountProperties('Home Page')) {
         </div>
     </div>
 
+    <br>
+
     <h2 id="inactiveText" style="color: #bf3232; margin-top: 10px; display: none;">***INACTIVE BUILDINGS***</h2>
 
     <div id="checkInCounter" style="margin: 0 30px;"></div>

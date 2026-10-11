@@ -95,6 +95,8 @@ if (!accountProperties('Archives Page')) {
         </div>
     </div>
 
+    <br>
+
     <div class="card">
         <h2 id="archiveText" style="margin-bottom: 0;"></h2>
         <div id="checkInCounter"></div>
