@@ -69,7 +69,5 @@ async function getArchiveData() {
     }
     
     const data = await response.json();
-    data.forEach(item => {
-        console.log(item);
-    });
+    return data;
 }
