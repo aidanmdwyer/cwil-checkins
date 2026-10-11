@@ -94,7 +94,7 @@ if (!accountProperties('Home Page')) {
 
     <h2 id="inactiveText" style="color: #bf3232; margin-top: 10px; display: none;">***INACTIVE BUILDINGS***</h2>
 
-    <div id="checkInCounter" style="margin: 0 30px;"></div>
+    <div id="checkInCounter" style="margin: 0 30px; white-space: nowrap;"></div>
 
     <div style="display: flex; align-items: flex-start;">
         <!--        Table-->
