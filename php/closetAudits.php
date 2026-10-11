@@ -233,6 +233,8 @@ if (!accountProperties('Closet Audits Page')) {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
     }
     #auditList > div > div > h3, #auditList > div > div > p {
         margin: 0;
