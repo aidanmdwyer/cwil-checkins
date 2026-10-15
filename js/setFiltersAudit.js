@@ -55,14 +55,16 @@ async function buildAuditList() {
     
     const data = await response.json();
 
+    console.log(data);
+
     auditList.innerHTML = "";
     data.forEach(audit => {
         const div = document.createElement("div");
         div.onclick = function () {openAudit(audit)};
-        audit['date'] = new Date(audit['date']).toLocaleDateString('en-CA');
+        const auditDate = new Date(audit['date']).toLocaleDateString('en-CA');
         div.innerHTML = `
         <div><h3>` + audit['buildingName'] + `</h3><p>` + audit['auditor'] + `</p></div>` +
-        `<div><p>` + audit['date'] + "</p><p>" + audit['ic'] + `</p></div>`;
+        `<div><p>` + auditDate + "</p><p>" + audit['ic'] + `</p></div>`;
 
         auditList.appendChild(div);
     });
