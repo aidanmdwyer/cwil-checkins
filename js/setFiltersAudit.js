@@ -6,6 +6,7 @@ const displayBuildingName = document.getElementById("displayBuildingName");
 const displayAuditor = document.getElementById("displayAuditor");
 const displayIC = document.getElementById("displayIC");
 const displayDate = document.getElementById("displayDate");
+const displayTime = document.getElementById("displayTime");
 const auditTable = document.getElementById("auditTable");
 const displayAudit = document.getElementById("displayAudit");
 const noAuditSelectedText = document.getElementById("noAuditSelectedText");
@@ -73,7 +74,8 @@ async function buildAuditList() {
 async function openAudit({auditId, buildingName, auditor, date, ic}) {
     displayBuildingName.innerHTML = buildingName;
     displayAuditor.innerHTML = auditor;
-    displayDate.innerHTML = date;
+    displayDate.innerHTML = new Date(date).toLocaleDateString('en-CA');
+    displayTime.innerHTML = new Date(date).toLocaleTimeString('en-US');
     displayIC.innerHTML = ic;
 
     displayAudit.style.display = "flex";
