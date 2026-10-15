@@ -253,7 +253,6 @@ if (!accountProperties('Closet Audits Page')) {
     }
     #displayAudit > h3 > span {
         font-weight: normal;
-        font-family: monospace;
     }
     .valueBox {
         text-align: center;
