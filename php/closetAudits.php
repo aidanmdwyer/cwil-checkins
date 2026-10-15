@@ -251,6 +251,9 @@ if (!accountProperties('Closet Audits Page')) {
         padding: 0 30px 200px 30px;
         box-sizing: border-box;
     }
+    #displayAudit > h3 {
+        text-align: center;
+    }
     #displayAudit > h3 > span {
         font-weight: normal;
     }
