@@ -75,7 +75,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     displayBuildingName.innerHTML = buildingName;
     displayAuditor.innerHTML = auditor;
     displayDate.innerHTML = new Date(date).toLocaleDateString('en-CA');
-    displayTime.innerHTML = new Date(date).toLocaleTimeString('en-US');
+    displayTime.innerHTML = new Date(date).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'});
     displayIC.innerHTML = ic;
 
     displayAudit.style.display = "flex";
