@@ -64,9 +64,12 @@ async function loadAuditFilterData() {
 async function buildAuditList() {
     const response = await fetch(
         '/php/getDataAudit.php?key=' + accessKey +
+        '&filterFromDate=' + filterFromDate.value +
+        '&filterToDate=' + filterToDate.value +
         '&filterBuildingName=' + filterBuildingName.value +
         '&filterAuditor=' + filterAuditor.value +
-        '&filterIC=' + filterIC.value
+        '&filterIC=' + filterIC.value +
+        '&page=' + 1
     );
     
     const data = await response.json();
