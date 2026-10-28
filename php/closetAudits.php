@@ -75,12 +75,12 @@ if (!accountProperties('Closet Audits Page')) {
         <div class="splitBox">
             <div class="left">
                 <div id="auditList"></div>
-                <div id="pageSelector">
-                    <button><<</button>
-                    <button><</button>
-                    <div id="pageNumber"></div>
-                    <button>></button>
-                    <button>>></button>
+                <div id="pageSelector" style="display: none;">
+                    <button id="skipBackButton"><<</button>
+                    <button id="backButton"><</button>
+                    <span id="currentPage"></span>/<span id="numPages"></span>
+                    <button id="forwardButton">></button>
+                    <button id="skipForwardButton">>></button>
                 </div>
             </div>
             <div class="right">
@@ -286,7 +286,6 @@ if (!accountProperties('Closet Audits Page')) {
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
         gap: 5px;
     }
     #pageSelector button {

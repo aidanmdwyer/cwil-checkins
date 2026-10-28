@@ -71,7 +71,6 @@ $selectAuditsStmt->close();
 $conn->close();
 
 echo json_encode([
-    'sql' => $selectAuditsSQL,
     'page' => $page,
     'numPages' => $numPages,
     'rows' => $rows

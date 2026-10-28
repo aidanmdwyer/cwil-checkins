@@ -13,6 +13,13 @@ const noAuditSelectedText = document.getElementById("noAuditSelectedText");
 const deleteAuditButton = document.getElementById("deleteAuditButton");
 const filterFromDate = document.getElementById("filterFromDate");
 const filterToDate = document.getElementById("filterToDate");
+const pageSelector = document.getElementById("pageSelector");
+const currentPage = document.getElementById("currentPage");
+const numPages = document.getElementById("numPages");
+const backButton = document.getElementById("backButton");
+const skipBackButton = document.getElementById("skipBackButton");
+const forwardButton = document.getElementById("forwardButton");
+const skipForwardButton = document.getElementById("skipForwardButton");
 
 filterFromDate.addEventListener('input', async function() {
     filterToDate.disabled = false;
@@ -61,7 +68,7 @@ async function loadAuditFilterData() {
     });
 }
 
-async function buildAuditList() {
+async function buildAuditList(page = 1) {
     const response = await fetch(
         '/php/getDataAudit.php?key=' + accessKey +
         '&filterFromDate=' + filterFromDate.value +
@@ -69,7 +76,7 @@ async function buildAuditList() {
         '&filterBuildingName=' + filterBuildingName.value +
         '&filterAuditor=' + filterAuditor.value +
         '&filterIC=' + filterIC.value +
-        '&page=1'
+        '&page=' + page
     );
     
     const data = await response.json();
@@ -89,6 +96,44 @@ async function buildAuditList() {
 
         auditList.appendChild(div);
     });
+
+    if(data['numPages'] > 1) {
+        pageSelector.style.display = "flex";
+        currentPage.innerText = data['page'];
+        numPages.innerText = data['numPages'];
+
+        if(data['page'] === 1) {
+            backButton.disabled = true;
+        } else {
+            backButton.disabled = false;
+            backButton.onclick = (() => {
+                buildAuditList(data['page'] - 1);
+            });
+        }
+
+        if(data['page'] === data['numPages']) {
+            forwardButton.disabled = true;
+        } else {
+            forwardButton.disabled = false;
+            forwardButton.onclick = (() => {
+                buildAuditList(data['page'] + 1);
+            });
+        }
+
+        if(data['numPages'] > 2) {
+            skipBackButton.disabled = false;
+            skipForwardButton.disabled = false;
+            skipBackButton.onclick = (() => {
+                buildAuditList();
+            });
+            skipForwardButton.onclick = (() => {
+                buildAuditList(data['numPages']);
+            });
+        } else {
+            skipBackButton.disabled = true;
+            skipForwardButton.disabled = true;
+        }
+    }
 }
 
 async function openAudit({auditId, buildingName, auditor, date, ic}) {
