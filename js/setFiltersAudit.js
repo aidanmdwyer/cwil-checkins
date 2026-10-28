@@ -67,7 +67,6 @@ async function buildAuditList() {
         '&filterBuildingName=' + filterBuildingName.value +
         '&filterAuditor=' + filterAuditor.value +
         '&filterIC=' + filterIC.value +
-        '&page=' + 1
     );
     
     const data = await response.json();
