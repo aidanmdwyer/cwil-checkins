@@ -11,6 +11,12 @@ const auditTable = document.getElementById("auditTable");
 const displayAudit = document.getElementById("displayAudit");
 const noAuditSelectedText = document.getElementById("noAuditSelectedText");
 const deleteAuditButton = document.getElementById("deleteAuditButton");
+const filterFromDate = document.getElementById("filterFromDate");
+const filterToDate = document.getElementById("filterToDate");
+
+filterFromDate.addEventListener('input', async function() {
+    filterToDate.disabled = false;
+});
 
 filterBuildingName.addEventListener('input', function () {
     buildAuditList();

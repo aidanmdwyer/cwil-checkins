@@ -40,6 +40,15 @@ if (!accountProperties('Closet Audits Page')) {
                 <div style="display: flex; align-items: center; gap: 15px;">
                     <div class="vr"></div>
                     <label style="display: flex; flex-direction: column;">
+                        Filter Date
+                        <div>
+                            <input type="date" id="filterFromDate" name="filterFromDate">
+                            -
+                            <input type="date" id="filterToDate" name="filterToDate" disabled>
+                        </div>
+                    </label>
+                    <div class="vr"></div>
+                    <label style="display: flex; flex-direction: column;">
                         Filter Building Name
                         <select id="filterBuildingName" name="filterBuildingName">
                             <option>---</option>
