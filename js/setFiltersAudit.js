@@ -24,7 +24,9 @@ filterFromDate.addEventListener('input', async function() {
 });
 
 filterToDate.addEventListener('input', async function() {
-
+    if(filterFromDate.value) {
+        buildAuditList();
+    }
 });
 
 filterBuildingName.addEventListener('input', function () {
@@ -64,9 +66,11 @@ async function loadAuditFilterData() {
 async function buildAuditList() {
     const response = await fetch(
         '/php/getDataAudit.php?key=' + accessKey +
-        '&filterBuildingName=' + document.getElementById('filterBuildingName').value +
-        '&filterAuditor=' + document.getElementById('filterAuditor').value +
-        '&filterIC=' + document.getElementById('filterIC').value
+        '&filterFromDate=' + filterFromDate.value +
+        '&filterToDate=' + filterToDate.value +
+        '&filterBuildingName=' + filterBuildingName.value +
+        '&filterAuditor=' + filterAuditor.value +
+        '&filterIC=' + filterIC.value
     );
     
     const data = await response.json();

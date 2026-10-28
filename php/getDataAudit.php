@@ -5,14 +5,25 @@ isKeyValid();
 
 require_once 'db.php';
 
-$selectAuditsSQL = "SELECT * FROM closet_audits";
+$filterFromDate = $_GET['filterFromDate'];
+$filterToDate = $_GET['filterToDate'];
 $filterBuildingName = $_GET['filterBuildingName'];
 $filterAuditor = $_GET['filterAuditor'];
 $filterIC = $_GET['filterIC'];
 
+$selectAuditsSQL = "SELECT * FROM closet_audits";
+
 $selectAuditsFilters = [];
 $selectAuditsTypeString = "";
 $selectAuditsValues = [];
+if($filterFromDate && $filterToDate) {
+    $selectAuditsFilters[] = "date > ?";
+    $selectAuditsTypeString .= "s";
+    $selectAuditsValues[] = $filterFromDate;
+    $selectAuditsFilters[] = "date < ?";
+    $selectAuditsTypeString .= "s";
+    $selectAuditsValues[] = $filterToDate;
+}
 if($filterBuildingName && $filterBuildingName !== "---") {
     $selectAuditsFilters[] = "buildingName = ?";
     $selectAuditsTypeString .= "s";
