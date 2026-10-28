@@ -69,6 +69,8 @@ async function loadAuditFilterData() {
 }
 
 async function buildAuditList(page = 1) {
+    pageSelector.style.display = "none";
+
     const response = await fetch(
         '/php/getDataAudit.php?key=' + accessKey +
         '&filterFromDate=' + filterFromDate.value +
