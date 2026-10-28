@@ -217,18 +217,18 @@ if (!accountProperties('Closet Audits Page')) {
         width: 100%;
         height: 100%;
     }
-    .splitBox .left {
-        flex: 1;
+    .splitBox .left, .splitBox .right {
         height: 100%;
         overflow-y: scroll;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
+    .splitBox .left {
+        flex: 1;
+    }
     .splitBox .right {
         flex: 2;
-        height: 100%;
-        overflow-y: scroll;
     }
 
     #auditList {
