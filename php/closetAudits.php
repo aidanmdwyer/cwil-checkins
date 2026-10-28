@@ -225,6 +225,7 @@ if (!accountProperties('Closet Audits Page')) {
     }
     .splitBox .left {
         flex: 1;
+        border-right: 2px solid black;
     }
     .splitBox .right {
         flex: 2;
@@ -235,7 +236,6 @@ if (!accountProperties('Closet Audits Page')) {
         flex-direction: column;
         gap: 10px;
         padding: 10px;
-        border-right: 2px solid black;
         box-sizing: border-box;
     }
     #auditList > div {
