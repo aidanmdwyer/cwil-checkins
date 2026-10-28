@@ -70,7 +70,7 @@ async function loadAuditFilterData() {
 
 async function buildAuditList(page = 1) {
     document.getElementsByClassName("left")[0].scrollTop = 0;
-    
+
     pageSelector.style.display = "none";
 
     const response = await fetch(
@@ -174,7 +174,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
 
         const valueElement = document.getElementById(desc + "-value");
         valueElement.innerHTML = "";
-        valueElement.innerHTML = item['itemValue'] == 1 ? '✅' : '❌';
+        valueElement.innerHTML = item['itemValue'] == 1 ? '✅' : (item['itemValue'] == 0 ? '❌' : 'N/A');
 
         const commentElement = document.getElementById(desc + "-comment");
         if(item['comment']) {
