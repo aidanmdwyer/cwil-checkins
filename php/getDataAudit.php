@@ -53,7 +53,9 @@ if (count($selectAuditsFilters) > 0) {
 }
 
 $countStmt = $conn->prepare($countSQL);
-$countStmt->bind_param($selectAuditsTypeString, ...$selectAuditsValues);
+if (count($selectAuditsFilters) > 0) {
+    $countStmt->bind_param($selectAuditsTypeString, ...$selectAuditsValues);
+}
 $countStmt->execute();
 $totalRows = $countStmt->get_result()->fetch_assoc()['totalRows'];
 $numPages = ceil($totalRows / 10);
