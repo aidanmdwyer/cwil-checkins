@@ -53,7 +53,7 @@ archiveFromDate.addEventListener('input', async function() {
     archiveToDate.disabled = false;
     archiveToDate.min = archiveFromDate.value;
     const maxDate = new Date(archiveFromDate.value);
-    maxDate.setDate(maxDate.getDate() + 31);
+    maxDate.setDate(maxDate.getDate() + 30);
     archiveToDate.max = maxDate.toISOString().split('T')[0];
     archiveToDate.value = archiveFromDate.value;
 });
