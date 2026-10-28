@@ -14,8 +14,8 @@ const deleteAuditButton = document.getElementById("deleteAuditButton");
 const filterFromDate = document.getElementById("filterFromDate");
 const filterToDate = document.getElementById("filterToDate");
 const pageSelector = document.getElementById("pageSelector");
-const currentPage = document.getElementById("currentPage");
-const numPages = document.getElementById("numPages");
+const currentPageElement = document.getElementById("currentPage");
+const numPagesElement = document.getElementById("numPages");
 const backButton = document.getElementById("backButton");
 const skipBackButton = document.getElementById("skipBackButton");
 const forwardButton = document.getElementById("forwardButton");
@@ -84,6 +84,8 @@ async function buildAuditList(page = 1) {
     console.log(data);
 
     const rows = data['rows'];
+    const page = Number(data['page']);
+    const numPages = Number(data['numPages']);
 
     auditList.innerHTML = "";
     rows.forEach(audit => {
@@ -97,21 +99,21 @@ async function buildAuditList(page = 1) {
         auditList.appendChild(div);
     });
 
-    if(data['numPages'] > 1) {
+    if(numPages > 1) {
         pageSelector.style.display = "flex";
-        currentPage.innerText = data['page'];
-        numPages.innerText = data['numPages'];
+        currentPageElement.innerText = page;
+        numPagesElement.innerText = numPages;
 
-        if(data['page'] === 1) {
+        if(page === 1) {
             backButton.disabled = true;
         } else {
             backButton.disabled = false;
             backButton.onclick = (() => {
-                buildAuditList(data['page'] - 1);
+                buildAuditList(page - 1);
             });
         }
 
-        if(data['page'] === data['numPages']) {
+        if(page === numPages) {
             forwardButton.disabled = true;
         } else {
             forwardButton.disabled = false;
@@ -120,14 +122,14 @@ async function buildAuditList(page = 1) {
             });
         }
 
-        if(data['numPages'] > 2) {
+        if(numPages > 2) {
             skipBackButton.disabled = false;
             skipForwardButton.disabled = false;
             skipBackButton.onclick = (() => {
                 buildAuditList();
             });
             skipForwardButton.onclick = (() => {
-                buildAuditList(data['numPages']);
+                buildAuditList(numPages);
             });
         } else {
             skipBackButton.disabled = true;

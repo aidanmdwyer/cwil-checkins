@@ -221,6 +221,9 @@ if (!accountProperties('Closet Audits Page')) {
         flex: 1;
         height: 100%;
         overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     .splitBox .right {
         flex: 2;
@@ -258,6 +261,17 @@ if (!accountProperties('Closet Audits Page')) {
         padding: 0;
     }
 
+    #pageSelector {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+    }
+    #pageSelector button {
+        background: transparent;
+        border: none;
+    }
+
     #displayAudit {
         display: none;
         flex-direction: column;
@@ -280,17 +294,6 @@ if (!accountProperties('Closet Audits Page')) {
         width: max(20%, 250px);
         padding: 5px 10px;
         box-sizing: border-box;
-    }
-
-    #pageSelector {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 5px;
-    }
-    #pageSelector button {
-        background: transparent;
-        border: none;
     }
 </style>
 
