@@ -68,23 +68,23 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     <div class='hr'></div>
 
     <form method="POST">
-        <input type="hidden" name="buildingName" value="<?=$buildingName?>">
+        <input type="hidden" name="buildingName" value="<?=htmlspecialchars($buildingName)?>">
 
-        <h3>Date: <?=$dateFormatted?></h3>
+        <h3>Date: <?=htmlspecialchars($dateFormatted)?></h3>
         <input type="hidden" name="date" value="<?=$date?>">
         <br>
 
         <?php if($lastAuditDate) { ?>
-            <h3>Last Audit: <?=$lastAuditDate?></h3>
+            <h3>Last Audit: <?=htmlspecialchars($lastAuditDate)?></h3>
             <br>
         <?php } ?>
 
-        <h3>Auditor: <?=$auditor?></h3>
-        <input type="hidden" name="auditor" value="<?=$auditor?>">
+        <h3>Auditor: <?=htmlspecialchars($auditor)?></h3>
+        <input type="hidden" name="auditor" value="<?=htmlspecialchars($auditor)?>">
         <br>
         
-        <h3>Contractor: <?=$ic?></h3>
-        <input type="hidden" name="ic" value="<?=$ic?>">
+        <h3>Contractor: <?=htmlspecialchars($ic)?></h3>
+        <input type="hidden" name="ic" value="<?=htmlspecialchars($ic)?>">
         <br>
 
         <?php

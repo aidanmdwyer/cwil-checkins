@@ -16,6 +16,7 @@ const filterToDate = document.getElementById("filterToDate");
 
 filterFromDate.addEventListener('input', async function() {
     filterToDate.disabled = false;
+    filterToDate.value = filterFromDate.value;
 });
 
 filterBuildingName.addEventListener('input', function () {
