@@ -17,10 +17,10 @@ $selectAuditsFilters = [];
 $selectAuditsTypeString = "";
 $selectAuditsValues = [];
 if($filterFromDate && $filterToDate) {
-    $selectAuditsFilters[] = "date > ?";
+    $selectAuditsFilters[] = "date >= ?";
     $selectAuditsTypeString .= "s";
     $selectAuditsValues[] = $filterFromDate;
-    $selectAuditsFilters[] = "date < ?";
+    $selectAuditsFilters[] = "date <= ?";
     $selectAuditsTypeString .= "s";
     $selectAuditsValues[] = $filterToDate;
 }
