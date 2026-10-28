@@ -128,7 +128,8 @@ if (!accountProperties('Closet Audits Page')) {
                             "Chemicals stored upright and secured",
                             "No leaking or damaged containers",
                             "Chemicals separated appropriately",
-                            "Spray bottles labeled with contents"
+                            "Spray bottles labeled with contents",
+                            "Envirox System"
                         ],
                         "Equipment Condition" => [
                             "Vacuum clean and operational",
