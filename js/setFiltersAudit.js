@@ -161,7 +161,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     });
 
     Array.from(document.getElementsByClassName('valueBox')).forEach((valueBox) => {
-        valueBox.firstChild.innerHTML = "ERROR";
+        valueBox.firstElementChild.innerHTML = "ERROR";
     });
 
     const response = await fetch(
