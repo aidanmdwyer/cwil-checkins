@@ -106,24 +106,6 @@ async function buildAuditList(page = 1) {
         currentPageElement.innerText = currentPage;
         numPagesElement.innerText = numPages;
 
-        if(currentPage === 1) {
-            backButton.disabled = true;
-        } else {
-            backButton.disabled = false;
-            backButton.onclick = (() => {
-                buildAuditList(currentPage - 1);
-            });
-        }
-
-        if(currentPage === numPages) {
-            forwardButton.disabled = true;
-        } else {
-            forwardButton.disabled = false;
-            forwardButton.onclick = (() => {
-                buildAuditList(currentPage + 1);
-            });
-        }
-
         if(numPages > 2) {
             skipBackButton.disabled = false;
             skipForwardButton.disabled = false;
@@ -136,6 +118,26 @@ async function buildAuditList(page = 1) {
         } else {
             skipBackButton.disabled = true;
             skipForwardButton.disabled = true;
+        }
+
+        if(currentPage === 1) {
+            backButton.disabled = true;
+            skipBackButton.disabled = true;
+        } else {
+            backButton.disabled = false;
+            backButton.onclick = (() => {
+                buildAuditList(currentPage - 1);
+            });
+        }
+
+        if(currentPage === numPages) {
+            forwardButton.disabled = true;
+            skipForwardButton.disabled = true;
+        } else {
+            forwardButton.disabled = false;
+            forwardButton.onclick = (() => {
+                buildAuditList(currentPage + 1);
+            });
         }
     }
 }
