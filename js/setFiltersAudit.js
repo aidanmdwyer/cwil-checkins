@@ -71,15 +71,18 @@ async function buildAuditList() {
         '&filterToDate=' + filterToDate.value +
         '&filterBuildingName=' + filterBuildingName.value +
         '&filterAuditor=' + filterAuditor.value +
-        '&filterIC=' + filterIC.value
+        '&filterIC=' + filterIC.value +
+        '&page=' + 1
     );
     
     const data = await response.json();
 
     console.log(data);
 
+    const rows = data['rows'];
+
     auditList.innerHTML = "";
-    data.forEach(audit => {
+    rows.forEach(audit => {
         const div = document.createElement("div");
         div.onclick = function () {openAudit(audit)};
         const auditDate = new Date(audit['date']).toLocaleDateString('en-CA');

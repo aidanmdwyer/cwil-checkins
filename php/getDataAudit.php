@@ -10,6 +10,7 @@ $filterToDate = $_GET['filterToDate'];
 $filterBuildingName = $_GET['filterBuildingName'];
 $filterAuditor = $_GET['filterAuditor'];
 $filterIC = $_GET['filterIC'];
+$page = $_GET['page'] >= 1 ? $_GET['page'] : 1;
 
 $selectAuditsSQL = "SELECT * FROM closet_audits";
 
@@ -48,7 +49,9 @@ if(count($selectAuditsFilters) > 0) {
     $selectAuditsSQL .= " WHERE " . implode(" AND ", $selectAuditsFilters);
 }
 
-$selectAuditsSQL .= " ORDER BY date DESC;";
+$selectAuditsSQL .= " ORDER BY date DESC LIMIT ?, 10";
+$selectAuditsTypeString .= "i";
+$selectAuditsValues[] = ($page-1) * 10;
 
 $selectAuditsStmt = $conn->prepare($selectAuditsSQL);
 if(count($selectAuditsFilters) > 0) {
@@ -64,9 +67,14 @@ if($selectAuditResult) {
         $rows[] = $row;
     }
 }
+$numPages = ceil(sizeof($rows)/10);
 
 $selectAuditsStmt->close();
 $conn->close();
 
-echo json_encode($rows);
+echo json_encode([
+    'page' => $page,
+    'numPages' => $numPages,
+    'rows' => $rows
+    ]);
 ?>
