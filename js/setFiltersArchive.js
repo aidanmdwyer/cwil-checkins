@@ -1,53 +1,64 @@
-document.getElementById("singleDateButton").addEventListener('input', function() {
-    document.getElementById("archiveFromDateLabel").style.display = "none";
-    document.getElementById("archiveToDateLabel").style.display = "none";
-    document.getElementById("archiveSingleDateLabel").style.display = "flex";
-    document.getElementById("archiveFromDate").value = "";
-    document.getElementById("archiveToDate").value = "";
-    document.getElementById('filterManager').value = defaultManagerFilter;
-    document.getElementById('filterIC').value = '---';
+const singleDateButton = document.getElementById("singleDateButton");
+const dateRangeButton = document.getElementById("dateRangeButton");
+const archiveFromDateLabel = document.getElementById("archiveFromDateLabel");
+const archiveToDateLabel = document.getElementById("archiveToDateLabel");
+const archiveSingleDateLabel = document.getElementById("archiveSingleDateLabel");
+const archiveFromDate = document.getElementById("archiveFromDate");
+const archiveToDate = document.getElementById("archiveToDate");
+const archiveSingleDate = document.getElementById("archiveSingleDate");
+const filterManager = document.getElementById('filterManager');
+const filterIc = document.getElementById('filterIC');
+
+singleDateButton.addEventListener('input', function() {
+    archiveFromDateLabel.style.display = "none";
+    archiveToDateLabel.style.display = "none";
+    archiveSingleDateLabel.style.display = "flex";
+    archiveFromDate.value = "";
+    archiveToDate.value = "";
+    filterManager.value = defaultManagerFilter;
+    filterIc.value = '---';
     resetArchiveTable();
     hideArchiveFilters();
 });
-document.getElementById("dateRangeButton").addEventListener('input', function() {
-    document.getElementById("archiveFromDateLabel").style.display = "flex";
-    document.getElementById("archiveToDateLabel").style.display = "flex";
-    document.getElementById("archiveSingleDateLabel").style.display = "none";
-    document.getElementById("archiveSingleDate").value = "";
-    document.getElementById('filterManager').value = defaultManagerFilter;
-    document.getElementById('filterIC').value = '---';
+dateRangeButton.addEventListener('input', function() {
+    archiveFromDateLabel.style.display = "flex";
+    archiveToDateLabel.style.display = "flex";
+    archiveSingleDateLabel.style.display = "none";
+    archiveSingleDate.value = "";
+    filterManager.value = defaultManagerFilter;
+    filterIc.value = '---';
     resetArchiveTable();
     hideArchiveFilters();
 });
 
-document.getElementById('filterManager').addEventListener('input', function() {
+filterManager.addEventListener('input', function() {
     buildTableArchive(archiveData);
 });
 
-document.getElementById('filterIC').addEventListener('input', function() {
+filterIc.addEventListener('input', function() {
     buildTableArchive(archiveData);
 });
 
-document.getElementById('archiveSingleDate').addEventListener('input', async function() {
-    document.getElementById('filterManager').value = defaultManagerFilter;
-    document.getElementById('filterIC').value = '---';
+archiveSingleDate.addEventListener('input', async function() {
+    filterManager.value = defaultManagerFilter;
+    filterIc.value = '---';
     archiveData = await getArchiveData();
     buildTableArchive(archiveData);
 });
 
-document.getElementById('archiveFromDate').addEventListener('input', async function() {
-    document.getElementById('filterManager').value = defaultManagerFilter;
-    document.getElementById('filterIC').value = '---';
-    if(document.getElementById('archiveToDate').value) {
-        archiveData = await getArchiveData();
-        buildTableArchive(archiveData);
-    }
+archiveFromDate.addEventListener('input', async function() {
+    filterManager.value = defaultManagerFilter;
+    filterIc.value = '---';
+
+    archiveToDate.disabled = false;
+    archiveToDate.min = archiveFromDate.value;
+    archiveToDate.value = archiveFromDate.value;
 });
 
-document.getElementById('archiveToDate').addEventListener('input', async function() {
-    document.getElementById('filterManager').value = defaultManagerFilter;
-    document.getElementById('filterIC').value = '---';
-    if(document.getElementById('archiveFromDate').value) {
+archiveToDate.addEventListener('input', async function() {
+    filterManager.value = defaultManagerFilter;
+    filterIc.value = '---';
+    if(archiveFromDate.value) {
         archiveData = await getArchiveData();
         buildTableArchive(archiveData);
     }
@@ -55,16 +66,16 @@ document.getElementById('archiveToDate').addEventListener('input', async functio
 
 async function getArchiveData() {
     let response;
-    if(document.getElementById('singleDateButton').checked) { //single date
+    if(singleDateButton.checked) { //single date
         response = await fetch(
             '/php/getDataArchive.php?key=' + accessKey +
-            '&archiveSingleDate=' + document.getElementById('archiveSingleDate').value
+            '&archiveSingleDate=' + archiveSingleDate.value
         );
     } else { //range
         response = await fetch(
             '/php/getDataArchive.php?key=' + accessKey +
-            '&archiveFromDate=' + document.getElementById('archiveFromDate').value +
-            '&archiveToDate=' + document.getElementById('archiveToDate').value
+            '&archiveFromDate=' + archiveFromDate.value +
+            '&archiveToDate=' + archiveToDate.value
         );
     }
     

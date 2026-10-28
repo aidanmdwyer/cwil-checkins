@@ -60,7 +60,7 @@ if (!accountProperties('Archives Page')) {
                 </label>
                 <label id="archiveToDateLabel" style="display: flex; flex-direction: column; display: none;">
                     To Date
-                    <input type="date" id="archiveToDate" name="archiveToDate">
+                    <input type="date" id="archiveToDate" name="archiveToDate" disabled>
                 </label>
                 <div id="searchVr" class="vr" style="display: none;"></div>
                 <div id="searchBox" style="display: none;">
