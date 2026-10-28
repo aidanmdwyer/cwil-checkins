@@ -242,7 +242,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         $auditItemsValuesList[] = $auditId;
         $auditItemsValuesList[] = $itemId;
         $auditItemsValuesList[] = $item;
-        $auditItemsValuesList[] = $value === 'on';
+        $auditItemsValuesList[] = $value;
 
         //prep comments insert
         if($auditItemComments[$item]) {
