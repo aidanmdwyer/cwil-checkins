@@ -14,16 +14,17 @@ const deleteAuditButton = document.getElementById("deleteAuditButton");
 const filterFromDate = document.getElementById("filterFromDate");
 const filterToDate = document.getElementById("filterToDate");
 
-filterFromDate.addEventListener('change', async function() {
+filterFromDate.addEventListener('input', async function() {
     filterToDate.disabled = false;
     filterToDate.min = filterFromDate.value;
     const maxDate = new Date(filterFromDate.value);
     maxDate.setDate(maxDate.getDate() + 30);
     filterToDate.max = maxDate.toISOString().split('T')[0];
     filterToDate.value = filterFromDate.value;
+    filterToDate.dispatchEvent(new Event('input'));
 });
 
-filterToDate.addEventListener('change', async function() {
+filterToDate.addEventListener('input', async function() {
     if(filterFromDate.value) {
         buildAuditList();
     }
