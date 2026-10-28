@@ -140,9 +140,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                 <tr>
                     <td style='width: 100%;'>
                         <label>
-                            <input type='radio' name='auditItems[$item]' value=0>
-                            <input type='radio' name='auditItems[$item]' value=1>
-                            <input type='radio' name='auditItems[$item]' value=2>
+                            <input type='radio' name='auditItems[$item]' value='0'>
+                            <input type='radio' name='auditItems[$item]' value='1'>
+                            <input type='radio' name='auditItems[$item]' value='2'>
                             $item
                         </label>
                     </td>
