@@ -173,7 +173,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
         const desc = item['itemDescription'];
 
         const valueElement = document.getElementById(desc + "-value");
-        if(item['itemValue']) {
+        if('itemValue' in item) {
             valueElement.innerHTML = item['itemValue'] == 1 ? '✅' : (item['itemValue'] == 0 ? '❌' : 'N/A');
         } else {
             valueElement.innerHTML = "Error";
