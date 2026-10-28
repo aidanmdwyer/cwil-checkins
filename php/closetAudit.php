@@ -139,12 +139,10 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                 echo "
                 <tr>
                     <td style='width: 100%;'>
-                        <label>
-                            <input type='radio' name='auditItems[$item]' value='0'>
-                            <input type='radio' name='auditItems[$item]' value='1'>
-                            <input type='radio' name='auditItems[$item]' value='2'>
-                            $item
-                        </label>
+                        <input type='radio' name='auditItems[$item]' value='0' checked>
+                        <input type='radio' name='auditItems[$item]' value='1'>
+                        <input type='radio' name='auditItems[$item]' value='2'>
+                        $item
                     </td>
                     <td style='padding: 0; margin: 0;'>
                         <textarea name='comments[$item]' placeholder='Comments...' maxlength='160'></textarea>
