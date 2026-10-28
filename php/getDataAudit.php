@@ -54,9 +54,7 @@ $selectAuditsTypeString .= "i";
 $selectAuditsValues[] = ($page-1) * 10;
 
 $selectAuditsStmt = $conn->prepare($selectAuditsSQL);
-if(count($selectAuditsFilters) > 0) {
-    $selectAuditsStmt->bind_param($selectAuditsTypeString, ...$selectAuditsValues);
-}
+$selectAuditsStmt->bind_param($selectAuditsTypeString, ...$selectAuditsValues);
 $selectAuditsStmt->execute();
 
 $selectAuditResult = $selectAuditsStmt->get_result();
