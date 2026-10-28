@@ -222,6 +222,9 @@ if (!accountProperties('Closet Audits Page')) {
         overflow-y: scroll;
         padding-bottom: 150px;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     .splitBox .left {
         flex: 1;
