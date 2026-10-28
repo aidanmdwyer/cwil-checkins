@@ -17,7 +17,14 @@ const filterToDate = document.getElementById("filterToDate");
 filterFromDate.addEventListener('input', async function() {
     filterToDate.disabled = false;
     filterToDate.min = filterFromDate.value;
+    const maxDate = new Date(filterFromDate.value);
+    maxDate.setDate(maxDate.getDate() + 30);
+    filterToDate.max = maxDate.toISOString().split('T')[0];
     filterToDate.value = filterFromDate.value;
+});
+
+filterToDate.addEventListener('input', async function() {
+
 });
 
 filterBuildingName.addEventListener('input', function () {

@@ -40,7 +40,7 @@ if (!accountProperties('Closet Audits Page')) {
                 <div style="display: flex; align-items: center; gap: 15px;">
                     <div class="vr"></div>
                     <label style="display: flex; flex-direction: column;">
-                        Filter Date
+                        Filter Date Range
                         <div>
                             <input type="date" id="filterFromDate" name="filterFromDate">
                             -
