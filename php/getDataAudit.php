@@ -72,9 +72,5 @@ $numPages = ceil(sizeof($rows)/10);
 $selectAuditsStmt->close();
 $conn->close();
 
-echo json_encode([
-    'page' => $page,
-    'numPages' => $numPages,
-    'rows' => $rows
-    ]);
+echo json_encode($rows);
 ?>

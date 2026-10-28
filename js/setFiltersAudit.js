@@ -76,10 +76,8 @@ async function buildAuditList() {
 
     console.log(data);
 
-    const rows = data['rows'];
-
     auditList.innerHTML = "";
-    rows.forEach(audit => {
+    data.forEach(audit => {
         const div = document.createElement("div");
         div.onclick = function () {openAudit(audit)};
         const auditDate = new Date(audit['date']).toLocaleDateString('en-CA');
