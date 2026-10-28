@@ -66,7 +66,7 @@ async function buildAuditList() {
         '/php/getDataAudit.php?key=' + accessKey +
         '&filterBuildingName=' + filterBuildingName.value +
         '&filterAuditor=' + filterAuditor.value +
-        '&filterIC=' + filterIC.value +
+        '&filterIC=' + filterIC.value
     );
     
     const data = await response.json();
