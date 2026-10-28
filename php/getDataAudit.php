@@ -20,7 +20,7 @@ if($filterFromDate && $filterToDate) {
     $selectAuditsFilters[] = "date >= ?";
     $selectAuditsTypeString .= "s";
     $selectAuditsValues[] = $filterFromDate;
-    $selectAuditsFilters[] = "date <= ?";
+    $selectAuditsFilters[] = "date <= dateadd(day, 1, ?)";
     $selectAuditsTypeString .= "s";
     $selectAuditsValues[] = $filterToDate;
 }
