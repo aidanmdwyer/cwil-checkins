@@ -160,6 +160,10 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
         }
     });
 
+    document.getElementsByClassName('valueBox').forEach((valueBox) => {
+        valueBox.innerHTML = "ERROR";
+    });
+
     const response = await fetch(
         '/php/getDataIndividualAudit.php?key=' + accessKey +
         '&auditId=' + auditId
@@ -173,11 +177,8 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
         const desc = item['itemDescription'];
 
         const valueElement = document.getElementById(desc + "-value");
-        if('itemValue' in item) {
-            valueElement.innerHTML = item['itemValue'] == 1 ? '✅' : (item['itemValue'] == 0 ? '❌' : 'N/A');
-        } else {
-            valueElement.innerHTML = "Error";
-        }
+        valueElement.innerHTML = "";
+        valueElement.innerHTML = item['itemValue'] == 1 ? '✅' : (item['itemValue'] == 0 ? '❌' : 'N/A');
 
         const commentElement = document.getElementById(desc + "-comment");
         if(item['comment']) {
