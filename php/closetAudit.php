@@ -136,33 +136,18 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
             echo "<h2>$section</h2>";
             echo "<table>";
             foreach ($list as $item) {
-                $id = htmlspecialchars($item, ENT_QUOTES, 'UTF-8');
-
                 echo "
                 <tr>
                     <td style='width: 100%;'>
                         <label>
-                            <input type='hidden' name='auditItems[$id]' value='0' id='value_$id'>
-                            <input type='checkbox' id='check_$id'
-                                onchange=\"
-                                    document.getElementById('value_$id').value = this.checked ? 1 : 0;
-                                    if (this.checked) document.getElementById('na_$id').checked = false;
-                                \">
-                            $id
-                        </label>
-                    </td>
-                    <td>
-                        <label>
-                            <input type='checkbox' id='na_$id'
-                                onchange=\"
-                                    document.getElementById('value_$id').value = this.checked ? 2 : (document.getElementById('check_$id').checked ? 1 : 0);
-                                    if (this.checked) document.getElementById('check_$id').checked = false;
-                                \">
-                            N/A
+                            <input type='radio' name='auditItems[$item]' value=0>
+                            <input type='radio' name='auditItems[$item]' value=1>
+                            <input type='radio' name='auditItems[$item]' value=2>
+                            $item
                         </label>
                     </td>
                     <td style='padding: 0; margin: 0;'>
-                        <textarea name='comments[$id]' placeholder='Comments...' maxlength='160'></textarea>
+                        <textarea name='comments[$item]' placeholder='Comments...' maxlength='160'></textarea>
                     </td>
                 </tr>";
             }
