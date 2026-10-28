@@ -45,6 +45,22 @@ if($filterIC && $filterIC !== "---") {
     $selectAuditsValues[] = $filterIC;
 }
 
+//separate query for counting total rows for filter, done before pagination parameter
+$countSQL = "SELECT COUNT(*) AS totalRows FROM closet_audits";
+
+if (count($selectAuditsFilters) > 0) {
+    $countSQL .= " WHERE " . implode(" AND ", $selectAuditsFilters);
+}
+
+$countStmt = $conn->prepare($countSQL);
+$countStmt->bind_param($selectAuditsTypeString, ...$selectAuditsValues);
+$countStmt->execute();
+$totalRows = $countStmt->get_result()->fetch_assoc()['totalRows'];
+$numPages = ceil($totalRows / 10);
+
+$countStmt->close();
+
+//back to select query
 if(count($selectAuditsFilters) > 0) {
     $selectAuditsSQL .= " WHERE " . implode(" AND ", $selectAuditsFilters);
 }
@@ -65,7 +81,6 @@ if($selectAuditResult) {
         $rows[] = $row;
     }
 }
-$numPages = ceil(sizeof($rows)/10);
 
 $selectAuditsStmt->close();
 $conn->close();
