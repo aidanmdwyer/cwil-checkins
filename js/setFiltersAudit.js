@@ -84,7 +84,7 @@ async function buildAuditList(page = 1) {
     console.log(data);
 
     const rows = data['rows'];
-    const page = Number(data['page']);
+    const currentPage = Number(data['page']);
     const numPages = Number(data['numPages']);
 
     auditList.innerHTML = "";
@@ -101,24 +101,24 @@ async function buildAuditList(page = 1) {
 
     if(numPages > 1) {
         pageSelector.style.display = "flex";
-        currentPageElement.innerText = page;
+        currentPageElement.innerText = currentPage;
         numPagesElement.innerText = numPages;
 
-        if(page === 1) {
+        if(currentPage === 1) {
             backButton.disabled = true;
         } else {
             backButton.disabled = false;
             backButton.onclick = (() => {
-                buildAuditList(page - 1);
+                buildAuditList(currentPage - 1);
             });
         }
 
-        if(page === numPages) {
+        if(currentPage === numPages) {
             forwardButton.disabled = true;
         } else {
             forwardButton.disabled = false;
             forwardButton.onclick = (() => {
-                buildAuditList(data['page'] + 1);
+                buildAuditList(currentPage + 1);
             });
         }
 
