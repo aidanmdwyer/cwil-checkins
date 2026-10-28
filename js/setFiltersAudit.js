@@ -69,6 +69,8 @@ async function loadAuditFilterData() {
 }
 
 async function buildAuditList(page = 1) {
+    document.getElementsByClassName("left")[0].scrollTop = 0;
+    
     pageSelector.style.display = "none";
 
     const response = await fetch(
@@ -140,8 +142,6 @@ async function buildAuditList(page = 1) {
             });
         }
     }
-
-    document.getElementsByClassName("left")[0].scrollTop = 0
 }
 
 async function openAudit({auditId, buildingName, auditor, date, ic}) {
