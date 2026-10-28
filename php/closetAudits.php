@@ -235,6 +235,7 @@ if (!accountProperties('Closet Audits Page')) {
     }
 
     #auditList {
+        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -274,6 +275,7 @@ if (!accountProperties('Closet Audits Page')) {
     }
 
     #displayAudit {
+        width: 100%;
         display: none;
         flex-direction: column;
         align-items: center;
