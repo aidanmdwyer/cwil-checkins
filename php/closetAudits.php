@@ -220,9 +220,6 @@ if (!accountProperties('Closet Audits Page')) {
     .splitBox .left, .splitBox .right {
         height: 100%;
         overflow-y: scroll;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
     .splitBox .left {
         flex: 1;
