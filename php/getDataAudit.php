@@ -20,9 +20,13 @@ if($filterFromDate && $filterToDate) {
     $selectAuditsFilters[] = "date >= ?";
     $selectAuditsTypeString .= "s";
     $selectAuditsValues[] = $filterFromDate;
-    $selectAuditsFilters[] = "date <= dateadd(day, 1, ?)";
+
+    $modFilterToDate = new DateTime($filterToDate);
+    $modFilterToDate->modify('+1 day');
+
+    $selectAuditsFilters[] = "date < ?";
     $selectAuditsTypeString .= "s";
-    $selectAuditsValues[] = $filterToDate;
+    $selectAuditsValues[] = $modFilterToDate->format('Y-m-d');
 }
 if($filterBuildingName && $filterBuildingName !== "---") {
     $selectAuditsFilters[] = "buildingName = ?";
