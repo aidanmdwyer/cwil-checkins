@@ -306,9 +306,6 @@ if (!accountProperties('Closet Audits Page')) {
 <script src="/js/setFiltersAudit.js"></script>
 <script>
     accessKeyReady.then(() => {
-        loadAuditFilterData();
-        buildAuditList();
-
         <?php
         if($_GET['auditId']) {
             require_once 'db.php';
@@ -326,9 +323,13 @@ if (!accountProperties('Closet Audits Page')) {
             $selectAuditStmt->close();
             $conn->close();
 
+            echo "loadAuditFilterData(" . $row['buildingName'] . ");";
             echo "openAudit(" . json_encode($row) . ");";
+        } else {
+            echo "loadAuditFilterData();";
         }
         ?>
+        buildAuditList();
     });
 </script>
 </html>

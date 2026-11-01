@@ -44,7 +44,7 @@ filterIC.addEventListener('input', function () {
     buildAuditList();
 });
 
-async function loadAuditFilterData() {
+async function loadAuditFilterData(defaultBuildingName = "---") {
     const response = await fetch(
         '/php/getAuditFilterOptions.php?key=' + accessKey
     );
@@ -66,6 +66,8 @@ async function loadAuditFilterData() {
         option.innerHTML = ic;
         filterIC.appendChild(option);
     });
+
+    filterBuildingName.value = defaultBuildingName;
 }
 
 async function buildAuditList(page = 1) {
