@@ -135,6 +135,12 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                             (rowData, bgColor) =>
                                 `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="window.open('/php/closetAudit.php?buildingName=${encodeURIComponent(rowData['name']).replace(/'/g, '%27')}', '_blank')"><span style="font-size:15px;">📝</span></button></td>`
                         ],
+                    'Closet Audits Page' :
+                    [
+                        `<th>Last Audit</th>`,
+                        (rowData, bgColor) =>
+                            `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="window.open('/php/closetAudits.php?buildingName=${encodeURIComponent(rowData['name']).replace(/'/g, '%27')}', '_blank')">DATE</button></td>`
+                    ],
                     'Edit Buildings' :
                         [
                             `<th>Edit</th>`,
