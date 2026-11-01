@@ -272,7 +272,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
 
 function formatDateStr(date) {
     if(date) {
-        return new Date(rowData['lastAudit']).toLocaleDateString('en-CA');
+        return new Date(date).toLocaleDateString('en-CA');
     }
     return "-";
 }
