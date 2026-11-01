@@ -326,7 +326,7 @@ if (!accountProperties('Closet Audits Page')) {
             $selectAuditsStmt->close();
             $conn->close();
 
-            echo "openAudit(" . json_encode($row) . ");";
+            echo "console.log(" . json_encode($row) . ");";
         }
         ?>
     });
