@@ -323,10 +323,10 @@ if (!accountProperties('Closet Audits Page')) {
             $selectAuditStmt->close();
             $conn->close();
 
-            echo "loadAuditFilterData('" . $row['buildingName'] . "').then(buildAuditList());";
+            echo "loadAuditFilterData('" . json_encode($row['buildingName']) . "').then(buildAuditList);";
             echo "openAudit(" . json_encode($row) . ");";
         } else {
-            echo "loadAuditFilterData().then(buildAuditList());";
+            echo "loadAuditFilterData().then(buildAuditList);";
         }
         ?>
     });
