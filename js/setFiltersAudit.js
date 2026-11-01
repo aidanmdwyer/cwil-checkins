@@ -53,7 +53,8 @@ async function loadAuditFilterData(defaultBuildingName = "---") {
 
     data['buildingNames'].forEach(buildingName => {
         const option = document.createElement("option");
-        option.innerHTML = buildingName;
+        option.value = buildingName;
+        option.textContent = buildingName;
         filterBuildingName.appendChild(option);
     });
     data['auditors'].forEach(auditor => {
