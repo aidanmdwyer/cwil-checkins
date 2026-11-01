@@ -5,6 +5,8 @@ isKeyValid();
 
 require_once 'db.php';
 
+include 'accountProperties.php';
+
 $manager = $_GET['manager'] ?? '';
 $ic = $_GET['ic'] ?? '';
 $todayOnly = $_GET['todayOnly'] ?? '';
