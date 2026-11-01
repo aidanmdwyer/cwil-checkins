@@ -329,6 +329,7 @@ if (!accountProperties('Closet Audits Page')) {
             echo "console.log('hi test working');'";
             echo "console.log(" . json_encode($row) . ");";
         }
+        echo "console.log('wtg');";
         ?>
     });
 </script>
