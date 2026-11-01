@@ -30,9 +30,6 @@ header h3 {
     transform: translate(-50%);
 }
 
-button {
-    font-family: monospace;
-}
 button.big {
     width: fit-content;
     font-family: inherit;
