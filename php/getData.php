@@ -95,7 +95,7 @@ if(accountProperties('Closet Audits Page')) {
             WHERE ca2.buildingName = b.name
             ORDER BY ca2.date DESC, ca2.auditId DESC
             LIMIT 1
-        );";
+        )";
 } else {
     $sql .= "SELECT * FROM buildings";
 }
