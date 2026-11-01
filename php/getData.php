@@ -69,9 +69,9 @@ if ($_SESSION['accountType'] === 'contractor') {
 
 // Build SQL query
 //define start depending on if showing audits
+$sql = "";
 if(accountProperties('Closet Audits Page')) {
-    $sql = "
-    SELECT
+    $sql .= "SELECT
         b.*,
         ca.auditId,
         ca.date AS lastAudit
@@ -83,10 +83,9 @@ if(accountProperties('Closet Audits Page')) {
             WHERE ca2.buildingName = b.name
             ORDER BY ca2.date DESC, ca2.auditId DESC
             LIMIT 1
-        )
-    ";
+        )";
 } else {
-    $sql = "SELECT * FROM buildings";
+    $sql .= "SELECT * FROM buildings";
 }
 
 if (!empty($conditions)) {
