@@ -140,7 +140,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                             `<th>Last Audit</th>`,
                             (rowData, bgColor) => {
                                 if(rowData['lastAudit']) {
-                                    return `<td style="background-color: ${bgColor}"><button type="button" style="color: ${rowData['allChecked'] ? 'green' : 'red'}; background-color: transparent; border: none;" onclick="window.location.href='/php/closetAudits.php?auditId=${encodeURIComponent(rowData['auditId'])}'">${encodeHTML(new Date(rowData['lastAudit']).toLocaleDateString('en-CA'))}</button></td>`
+                                    return `<td style="background-color: ${bgColor}"><button type="button" style="color: ${rowData['allChecked'] ? 'green' : 'red'}; background-color: transparent; border: none; white-space: nowrap;" onclick="window.location.href='/php/closetAudits.php?auditId=${encodeURIComponent(rowData['auditId'])}'">${encodeHTML(new Date(rowData['lastAudit']).toLocaleDateString('en-CA'))}</button></td>`
                                 } else {
                                     return `<td style="background-color: ${bgColor}">-</td>`
                                 }
