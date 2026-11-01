@@ -326,12 +326,9 @@ if (!accountProperties('Closet Audits Page')) {
             $selectAuditsStmt->close();
             $conn->close();
 
-            echo "console.log('hi test working');'";
             echo "console.log(" . json_encode($row) . ");";
-        ?>
-        console.log("TETWSITNISGNISG NISNFDVJ");
-        <?php
         }
+        echo "console.log('hi test working');'";
         ?>
     });
 </script>
