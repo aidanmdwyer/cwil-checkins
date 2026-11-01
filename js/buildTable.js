@@ -277,8 +277,8 @@ function formatDateStr(date) {
     return "-";
 }
 
-function getLastAuditColor({ date, allChecked }) {
-    if(date) {
+function getLastAuditColor({ lastAudit, allChecked }) {
+    if(lastAudit) {
         if(allChecked) {
             return 'green';
         } else {
