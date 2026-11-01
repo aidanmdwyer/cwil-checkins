@@ -75,11 +75,11 @@ $selectAuditsStmt = $conn->prepare($selectAuditsSQL);
 $selectAuditsStmt->bind_param($selectAuditsTypeString, ...$selectAuditsValues);
 $selectAuditsStmt->execute();
 
-$selectAuditResult = $selectAuditsStmt->get_result();
+$selectAuditsResult = $selectAuditsStmt->get_result();
 
 $rows = [];
-if($selectAuditResult) {
-    while ($row = $selectAuditResult->fetch_assoc()) {
+if($selectAuditsResult) {
+    while ($row = $selectAuditsResult->fetch_assoc()) {
         $rows[] = $row;
     }
 }
