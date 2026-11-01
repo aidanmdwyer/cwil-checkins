@@ -68,6 +68,7 @@ async function loadAuditFilterData(defaultBuildingName = "---") {
     });
 
     filterBuildingName.value = defaultBuildingName;
+    filterBuildingName.dispatchEvent(new Event('input'));
 }
 
 async function buildAuditList(page = 1) {
