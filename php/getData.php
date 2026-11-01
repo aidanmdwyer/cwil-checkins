@@ -76,7 +76,17 @@ if(accountProperties('Closet Audits Page')) {
     $sql .= "SELECT
         b.*,
         ca.auditId,
-        ca.date AS lastAudit
+        ca.date AS lastAudit,
+        CASE
+            WHEN ca.auditId IS NULL THEN NULL
+            WHEN EXISTS (
+                SELECT 1
+                FROM closet_audit_items cai
+                WHERE cai.auditId = ca.auditId
+                AND cai.itemValue = 0
+            ) THEN 0
+            ELSE 1
+        END AS allChecked
     FROM buildings b
     LEFT JOIN closet_audits ca
         ON ca.auditId = (
@@ -85,7 +95,7 @@ if(accountProperties('Closet Audits Page')) {
             WHERE ca2.buildingName = b.name
             ORDER BY ca2.date DESC, ca2.auditId DESC
             LIMIT 1
-        )";
+        );";
 } else {
     $sql .= "SELECT * FROM buildings";
 }

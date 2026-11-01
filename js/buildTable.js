@@ -136,11 +136,11 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                                 `<td style="background-color: ${bgColor}"><button type="button" style="width: 100%; box-sizing: border-box; text-align:center; background-color: transparent; border: none;" onclick="window.open('/php/closetAudit.php?buildingName=${encodeURIComponent(rowData['name']).replace(/'/g, '%27')}', '_blank')"><span style="font-size:15px;">📝</span></button></td>`
                         ],
                     'Closet Audits Page' :
-                    [
-                        `<th>Last Audit</th>`,
-                        (rowData, bgColor) =>
-                            `<td style="background-color: ${bgColor}"><button type="button" style="background-color: transparent; border: none;" onclick="window.location.href='/php/closetAudits.php?buildingName=${encodeURIComponent(rowData['auditId'])}'">${encodeHTML(formatDateStr(rowData['lastAudit']))}</button></td>`
-                    ],
+                        [
+                            `<th>Last Audit</th>`,
+                            (rowData, bgColor) =>
+                                `<td style="background-color: ${bgColor}"><button type="button" style="color: ${rowData['allChecked'] ? 'green' : 'red'}; background-color: transparent; border: none;" onclick="window.location.href='/php/closetAudits.php?auditId=${encodeURIComponent(rowData['auditId'])}'">${encodeHTML(formatDateStr(rowData['lastAudit']))}</button></td>`
+                        ],
                     'Edit Buildings' :
                         [
                             `<th>Edit</th>`,
