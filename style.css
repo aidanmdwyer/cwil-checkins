@@ -5,6 +5,10 @@ html, body {
     padding: 0;
 }
 
+button {
+    font-family: Georgia, serif;
+}
+
 input::-ms-reveal {
     display: none;
 }
