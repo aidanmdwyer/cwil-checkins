@@ -323,12 +323,12 @@ if (!accountProperties('Closet Audits Page')) {
 
             $row = $selectAuditResult->fetch_assoc();
 
-            $selectAuditsStmt->close();
+            $selectAuditStmt->close();
             $conn->close();
 
             echo "console.log(" . json_encode($row) . ");";
         }
-        echo "console.log('hi test working');'";
+        echo "console.log('hi test working');S";
         ?>
     });
 </script>
