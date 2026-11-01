@@ -45,6 +45,10 @@ filterIC.addEventListener('input', function () {
 });
 
 async function loadAuditFilterData(defaultBuildingName = "---") {
+    filterBuildingName.innerHTML = "<option>---</option>";
+    filterAuditor.innerHTML = "<option>---</option>";
+    filterIC.innerHTML = "<option>---</option>";
+
     const response = await fetch(
         '/php/getAuditFilterOptions.php?key=' + accessKey
     );
