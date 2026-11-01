@@ -326,9 +326,10 @@ if (!accountProperties('Closet Audits Page')) {
             echo "loadAuditFilterData(" . json_encode($row['buildingName']) . ").then(buildAuditList);";
             echo "openAudit(" . json_encode($row) . ");";
         } else {
-            echo "loadAuditFilterData().then(buildAuditList);";
+            echo "loadAuditFilterData()";
         }
         ?>
+        buildAuditList();
     });
 </script>
 </html>
