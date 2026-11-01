@@ -68,7 +68,27 @@ if ($_SESSION['accountType'] === 'contractor') {
 }
 
 // Build SQL query
-$sql = "SELECT * FROM buildings";
+//define start depending on if showing audits
+if(accountProperties('Closet Audits Page')) {
+    $sql = "
+    SELECT
+        b.*,
+        ca.auditId,
+        ca.date AS lastAudit
+    FROM buildings b
+    LEFT JOIN closet_audits ca
+        ON ca.auditId = (
+            SELECT ca2.auditId
+            FROM closet_audits ca2
+            WHERE ca2.buildingName = b.name
+            ORDER BY ca2.date DESC, ca2.auditId DESC
+            LIMIT 1
+        )
+    ";
+} else {
+    $sql = "SELECT * FROM buildings";
+}
+
 if (!empty($conditions)) {
     $sql .= " WHERE " . implode(" AND ", $conditions);
 }
