@@ -138,8 +138,13 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     'Closet Audits Page' :
                         [
                             `<th>Last Audit</th>`,
-                            (rowData, bgColor) =>
-                                `<td style="background-color: ${bgColor}"><button type="button" style="color: ${getLastAuditColor(rowData)}; background-color: transparent; border: none;" onclick="window.location.href='/php/closetAudits.php?auditId=${encodeURIComponent(rowData['auditId'])}'">${encodeHTML(formatDateStr(rowData['lastAudit']))}</button></td>`
+                            (rowData, bgColor) => {
+                                if(rowData['lastAudit']) {
+                                    return `<td style="background-color: ${bgColor}"><button type="button" style="color: ${rowData['allChecked'] ? 'green' : 'red'}; background-color: transparent; border: none;" onclick="window.location.href='/php/closetAudits.php?auditId=${encodeURIComponent(rowData['auditId'])}'">${encodeHTML(new Date(rowData['lastAudit']).toLocaleDateString('en-CA'))}</button></td>`
+                                } else {
+                                    return `<td style="background-color: ${bgColor}">-</td>`
+                                }
+                            }
                         ],
                     'Edit Buildings' :
                         [
@@ -268,23 +273,4 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
             });
 
         }).catch(error => console.error('Error fetching account properties:', error));
-}
-
-function formatDateStr(date) {
-    if(date) {
-        return new Date(date).toLocaleDateString('en-CA');
-    }
-    return "-";
-}
-
-function getLastAuditColor({ lastAudit, allChecked }) {
-    if(lastAudit) {
-        if(allChecked) {
-            return 'green';
-        } else {
-            return 'red';
-        }
-    } else {
-        return 'black';
-    }
 }
