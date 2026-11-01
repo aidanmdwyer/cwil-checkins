@@ -68,6 +68,18 @@ async function loadAuditFilterData(defaultBuildingName = "---") {
         filterIC.appendChild(option);
     });
 
+    console.log("Default:", JSON.stringify(defaultBuildingName));
+
+console.log(
+    "Options:",
+    Array.from(filterBuildingName.options).map(o => JSON.stringify(o.value))
+);
+
+console.log(
+    "Exact match:",
+    Array.from(filterBuildingName.options).some(o => o.value === defaultBuildingName)
+);
+
     filterBuildingName.value = defaultBuildingName;
 
     return true;
