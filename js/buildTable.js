@@ -127,13 +127,13 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         [
                             `<th>QR</th>`,
                             (rowData, bgColor) =>
-                                `<td style="background-color: ${bgColor}"><button type="button" style="width: 100%; box-sizing: border-box; text-align:center; background-color: transparent; border: none;" onclick="openQr(JSON.parse(decodeURIComponent(this.dataset.row)))" data-row="${encodeURIComponent(JSON.stringify(rowData))}"><span style="font-size:15px;">&#9635</span></button></td>`
+                                `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="openQr(JSON.parse(decodeURIComponent(this.dataset.row)))" data-row="${encodeURIComponent(JSON.stringify(rowData))}"><span style="font-size:15px;">&#9635</span></button></td>`
                         ],
                     'Perform Closet Audits' :
                         [
                             `<th>Audit</th>`,
                             (rowData, bgColor) =>
-                                `<td style="background-color: ${bgColor}"><button type="button" style="text-align:center; background-color: transparent; border: none;" onclick="window.open('/php/closetAudit.php?buildingName=${encodeURIComponent(rowData['name']).replace(/'/g, '%27')}', '_blank')"><span style="font-size:15px;">📝</span></button></td>`
+                                `<td style="background-color: ${bgColor}"><button type="button" style="width: 100%; box-sizing: border-box; text-align:center; background-color: transparent; border: none;" onclick="window.open('/php/closetAudit.php?buildingName=${encodeURIComponent(rowData['name']).replace(/'/g, '%27')}', '_blank')"><span style="font-size:15px;">📝</span></button></td>`
                         ],
                     'Closet Audits Page' :
                     [
