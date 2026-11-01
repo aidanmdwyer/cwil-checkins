@@ -139,7 +139,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                     [
                         `<th>Last Audit</th>`,
                         (rowData, bgColor) =>
-                            `<td style="background-color: ${bgColor}"><button type="button" style="background-color: transparent; border: none;" onclick="window.location.href='/php/closetAudits.php?buildingName=${encodeURIComponent(rowData['auditId'])}'">${encodeHTML(new Date(rowData['lastAudit'])).toLocaleDateString('en-CA')}</button></td>`
+                            `<td style="background-color: ${bgColor}"><button type="button" style="background-color: transparent; border: none;" onclick="window.location.href='/php/closetAudits.php?buildingName=${encodeURIComponent(rowData['auditId'])}'">${encodeHTML(formatDateStr(rowData['lastAudit']))}</button></td>`
                     ],
                     'Edit Buildings' :
                         [
@@ -268,4 +268,11 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
             });
 
         }).catch(error => console.error('Error fetching account properties:', error));
+}
+
+function formatDateStr(date) {
+    if(date) {
+        return new Date(rowData['lastAudit']).toLocaleDateString('en-CA');
+    }
+    return "-";
 }
