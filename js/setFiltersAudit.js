@@ -45,10 +45,6 @@ filterIC.addEventListener('input', function () {
 });
 
 async function loadAuditFilterData(defaultBuildingName = "---") {
-    filterBuildingName.innerHTML = "";
-    filterAuditor.innerHTML = "";
-    filterIC.innerHTML = "";
-
     const response = await fetch(
         '/php/getAuditFilterOptions.php?key=' + accessKey
     );
@@ -82,17 +78,15 @@ async function buildAuditList(page = 1) {
 
     pageSelector.style.display = "none";
 
-    const params = new URLSearchParams({
-        key: accessKey,
-        filterFromDate: filterFromDate.value,
-        filterToDate: filterToDate.value,
-        filterBuildingName: filterBuildingName.value,
-        filterAuditor: filterAuditor.value,
-        filterIC: filterIC.value,
-        page: page
-    });
-
-    const response = await fetch('/php/getDataAudit.php?' + params.toString());
+    const response = await fetch(
+        '/php/getDataAudit.php?key=' + accessKey +
+        '&filterFromDate=' + filterFromDate.value +
+        '&filterToDate=' + filterToDate.value +
+        '&filterBuildingName=' + filterBuildingName.value +
+        '&filterAuditor=' + filterAuditor.value +
+        '&filterIC=' + filterIC.value +
+        '&page=' + page
+    );
     
     const data = await response.json();
 
