@@ -217,15 +217,18 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         background: transparent;
     }
 
-    td label {
-        width: 100%;
-        height: 100%;
+    .checkboxCell {
+        padding: 0;
+        position: relative;
+    }
+
+    .checkboxCell label {
+        position: absolute;
+        inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-    .checkboxCell {
-        padding: 0;
+        cursor: pointer;
     }
 
 </style>
