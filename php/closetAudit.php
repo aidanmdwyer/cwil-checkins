@@ -258,6 +258,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        background: transparent;
     }
 
     .imageOverlay {
