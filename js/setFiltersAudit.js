@@ -20,6 +20,7 @@ const backButton = document.getElementById("backButton");
 const skipBackButton = document.getElementById("skipBackButton");
 const forwardButton = document.getElementById("forwardButton");
 const skipForwardButton = document.getElementById("skipForwardButton");
+const closetImage = document.getElementById("closetImage");
 
 filterFromDate.addEventListener('input', async function() {
     filterToDate.disabled = false;
@@ -182,7 +183,9 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
 
     console.log(data);
 
-    data.forEach(item => {
+    closetImage.src = data['closetImage'];
+
+    data['items'].forEach(item => {
         const desc = item['itemDescription'];
 
         const valueElement = document.getElementById(desc + "-value");

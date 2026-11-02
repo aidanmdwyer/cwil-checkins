@@ -112,6 +112,8 @@ if (!accountProperties('Closet Audits Page')) {
                     <h3>Auditor: <span id="displayAuditor"></span></h3><br>
                     <h3>Contractor: <span id="displayIC"></span></h3><br>
 
+                    <img id="closetImage"><br>
+
                     <?php
                     $auditItems = [
                         "Closet Condition" => [

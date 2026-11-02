@@ -13,6 +13,14 @@ if (!$auditId) {
 
 require_once 'db.php';
 
+$selectAuditImageStmt = $conn->prepare("SELECT image FROM closet_audits WHERE auditId = ?;");
+$selectAuditImageStmt->bind_param("i", $auditId);
+$selectAuditImageStmt->execute();
+$selectAuditImageResult = $selectAuditImageStmt->get_result();
+$imageRow = $selectAuditImageResult->fetch_assoc();
+$closetImage = $imageRow['closetImage'];
+$selectAuditImageStmt->close();
+
 $selectAuditItemsStmt = $conn->prepare(
     "SELECT a.auditId, a.itemId, a.itemDescription, a.itemValue, b.comment
         FROM closet_audit_items a
@@ -27,7 +35,6 @@ $auditId = (int)$auditId;
 
 $selectAuditItemsStmt->bind_param("ii", $auditId, $auditId);
 $selectAuditItemsStmt->execute();
-
 $selectAuditItemsResult = $selectAuditItemsStmt->get_result();
 
 $rows = [];
@@ -39,4 +46,7 @@ while ($row = $selectAuditItemsResult->fetch_assoc()) {
 $selectAuditItemsStmt->close();
 $conn->close();
 
-echo json_encode($rows);
+echo json_encode([
+    'closetImage' => $closetImage,
+    'items' => $rows
+    ]);
