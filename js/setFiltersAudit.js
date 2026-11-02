@@ -83,15 +83,16 @@ async function buildAuditList(page = 1) {
 
     pageSelector.style.display = "none";
 
-    const response = await fetch(
-        '/php/getDataAudit.php?key=' + accessKey +
-        '&filterFromDate=' + filterFromDate.value +
-        '&filterToDate=' + filterToDate.value +
-        '&filterBuildingName=' + filterBuildingName.value +
-        '&filterAuditor=' + filterAuditor.value +
-        '&filterIC=' + filterIC.value +
-        '&page=' + page
-    );
+    const params = new URLSearchParams({
+        filterFromDate: filterFromDate.value,
+        filterToDate: filterToDate.value,
+        filterBuildingName: filterBuildingName.value,
+        filterAuditor: filterAuditor.value,
+        filterIC: filterIC.value,
+        page: page
+    });
+
+    const response = await fetch('/php/getDataAudit.php?' + params);
     
     const data = await response.json();
 
