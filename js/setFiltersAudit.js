@@ -173,6 +173,9 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     Array.from(document.getElementsByClassName('valueBox')).forEach((valueBox) => {
         valueBox.firstElementChild.innerHTML = "";
     });
+    Array.from(document.getElementsByClassName('imageBox')).forEach((valueBox) => {
+        valueBox.firstElementChild.innerHTML = "";
+    });
 
     const response = await fetch(
         '/php/getDataIndividualAudit.php?key=' + accessKey +
