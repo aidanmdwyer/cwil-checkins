@@ -18,7 +18,7 @@ $selectAuditImageStmt->bind_param("i", $auditId);
 $selectAuditImageStmt->execute();
 $selectAuditImageResult = $selectAuditImageStmt->get_result();
 $imageRow = $selectAuditImageResult->fetch_assoc();
-$closetImage = $imageRow['closetImage'];
+$closetImage = base64_encode($imageRow['closetImage']);
 $selectAuditImageStmt->close();
 
 $selectAuditItemsStmt = $conn->prepare(

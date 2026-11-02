@@ -183,7 +183,9 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
 
     console.log(data);
 
-    closetImage.src = data['closetImage'];
+    if(data['closetImage']) {
+        closetImage.src = 'data:image/jpeg;base64,' + data['closetImage'];
+    }
 
     data['items'].forEach(item => {
         const desc = item['itemDescription'];
