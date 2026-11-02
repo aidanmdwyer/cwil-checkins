@@ -288,16 +288,15 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     }
 
     .imageCell {
+        min-width: 100px;
+        width: 100px;
         white-space: normal;
         overflow-wrap: anywhere;
-        min-width: 0;
     }
 
     .imageCell input[type="file"] {
-        display: block;
         width: 100%;
         max-width: 100%;
-        min-width: 0;
         box-sizing: border-box;
     }
 
