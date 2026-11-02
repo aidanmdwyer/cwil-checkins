@@ -83,7 +83,8 @@ async function buildAuditList(page = 1) {
 
     pageSelector.style.display = "none";
 
-    const params = new URLSearchParams({
+        const params = new URLSearchParams({
+        key: accessKey,
         filterFromDate: filterFromDate.value,
         filterToDate: filterToDate.value,
         filterBuildingName: filterBuildingName.value,
@@ -93,7 +94,7 @@ async function buildAuditList(page = 1) {
     });
 
     const response = await fetch('/php/getDataAudit.php?' + params);
-    
+
     const data = await response.json();
 
     console.log(data);
