@@ -135,13 +135,20 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         foreach ($auditItems as $section => $list) {
             echo "<h2>$section</h2>";
             echo "<table>";
+            echo "<th><td>❌</td><td>✅</td><td>N/A</td>Item<td><td>Comments</td></td></th>";
             foreach ($list as $item) {
                 echo "
                 <tr>
-                    <td style='width: 100%;'>
+                    <td>
                         <input type='radio' name='auditItems[$item]' value='0' checked>
+                    </td>
+                    <td>
                         <input type='radio' name='auditItems[$item]' value='1'>
+                    </td>
+                    <td>
                         <input type='radio' name='auditItems[$item]' value='2'>
+                    </td>
+                    <td style='width: 100%;'>
                         $item
                     </td>
                     <td style='padding: 0; margin: 0;'>
