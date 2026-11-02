@@ -181,12 +181,14 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         }
         ?>
 
+        <h2>Upload an Image of the Entire Closet.</h2>
         <div>
             <input type='file' name='closetImage' accept='image/*' class='imageInput'>
             <button type='button' class='previewButton' style='display: none;'>
                 Preview
             </button>
         </div>
+        <br>
 
         <div class="hr"></div>
 

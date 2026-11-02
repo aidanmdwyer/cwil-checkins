@@ -176,7 +176,7 @@ if (!accountProperties('Closet Audits Page')) {
                                     <div id='" . $item . "-comment" . "'></div>
                                 </td>
                                 <td class='imageBox'>
-                                    <button type='button' class='big' id='" . $item . "-imagePreviewButton" . "'>View</button>
+                                    <button type='button' id='" . $item . "-imagePreviewButton" . "'>View</button>
                                 </td>
                             </tr>";
                         }
