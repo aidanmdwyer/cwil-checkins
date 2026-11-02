@@ -201,9 +201,13 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
             commentElement.innerHTML = "-";
         }
 
-        const imageElement = document.getElementById(desc + "-image");
+        const imagePreviewButton = document.getElementById(desc + "-imagePreviewButton");
         if(item['image']) {
-            imageElement.src = 'data:image/jpeg;base64,' + item['image'];
+            imagePreviewButton.style.display = "block";
+            imagePreviewButton.dataset.imgSrc = 'data:image/jpeg;base64,' + item['image'];
+        } else {
+            imagePreviewButton.style.display = "none";
+            imagePreviewButton.dataset.imgSrc = "";
         }
     });
 }

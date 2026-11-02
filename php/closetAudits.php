@@ -176,7 +176,7 @@ if (!accountProperties('Closet Audits Page')) {
                                     <div id='" . $item . "-comment" . "'></div>
                                 </td>
                                 <td class='imageBox'>
-                                    <img id='" . $item . "-image" . "'>
+                                    <button type='button' id='" . $item . "-imagePreviewButton" . "'>🏞️</button>
                                 </td>
                             </tr>";
                         }
@@ -188,6 +188,10 @@ if (!accountProperties('Closet Audits Page')) {
             </div>
         </div>
     </main>
+    <div id="imageOverlay" class="imageOverlay">
+        <button type="button" id="closeOverlay">X</button>
+        <img id="overlayImage">
+    </div>
 </body>
 
 <style>
@@ -304,7 +308,66 @@ if (!accountProperties('Closet Audits Page')) {
         padding: 5px 10px;
         box-sizing: border-box;
     }
+
+    .imageOverlay {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        background: rgba(0, 0, 0, 0.8);
+
+        justify-content: center;
+        align-items: center;
+    }
+    .imageOverlay img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+    }
+    #closeOverlay {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 30px;
+        cursor: pointer;
+    }
 </style>
+
+<script>
+    const imageOverlay = document.getElementById('imageOverlay');
+    const overlayImage = document.getElementById('overlayImage');
+    const closeOverlay = document.getElementById('closeOverlay');
+
+    // Open preview when an image button is clicked
+    document.querySelectorAll('.imageBox button').forEach(button => {
+        button.addEventListener('click', function() {
+            const imgSrc = this.dataset.imgSrc;
+
+            if (!imgSrc) return;
+
+            overlayImage.src = imgSrc;
+            imageOverlay.style.display = 'flex';
+        });
+    });
+
+    // Close preview using X
+    closeOverlay.addEventListener('click', function() {
+        imageOverlay.style.display = 'none';
+        overlayImage.src = '';
+    });
+
+    // Close preview by clicking outside the image
+    imageOverlay.addEventListener('click', function(e) {
+        if (e.target === imageOverlay) {
+            imageOverlay.style.display = 'none';
+            overlayImage.src = '';
+        }
+    });
+</script>
 
 <script src="/js/accessKey.js"></script>
 <script src="/js/adjustMainMargin.js"></script>
