@@ -13,7 +13,7 @@ if (!$auditId) {
 
 require_once 'db.php';
 
-$selectAuditImageStmt = $conn->prepare("SELECT image FROM closet_audits WHERE auditId = ?;");
+$selectAuditImageStmt = $conn->prepare("SELECT closetImage FROM closet_audits WHERE auditId = ?;");
 $selectAuditImageStmt->bind_param("i", $auditId);
 $selectAuditImageStmt->execute();
 $selectAuditImageResult = $selectAuditImageStmt->get_result();
