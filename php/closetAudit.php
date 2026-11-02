@@ -135,7 +135,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         foreach ($auditItems as $section => $list) {
             echo "<h2>$section</h2>";
             echo "<table>";
-            echo "<th><td>❌</td><td>✅</td><td>N/A</td><td>Item</td><td>Comments</td></th>";
+            echo "<tr><th>❌</th><th>✅</th><th>N/A</th><th>Item</th><th>Comments</th></tr>";
             foreach ($list as $item) {
                 echo "
                 <tr>
