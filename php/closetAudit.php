@@ -288,7 +288,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     }
 
     .imageInput {
-        width: 0;
+        width: 100px;
         min-width: 0;
     }
 
