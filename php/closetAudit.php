@@ -161,7 +161,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                             <input type='radio' name='auditItems[$item]' value='2'>
                         </label>
                     </td>
-                    <td style='white-space: nowrap;'>
+                    <td>
                         $item
                     </td>
                     <td style='padding: 0; margin: 0;'>
