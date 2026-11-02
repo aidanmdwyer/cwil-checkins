@@ -12,7 +12,7 @@ $filterAuditor = $_GET['filterAuditor'];
 $filterIC = $_GET['filterIC'];
 $page = $_GET['page'] >= 1 ? $_GET['page'] : 1;
 
-$selectAuditsSQL = "SELECT * FROM closet_audits";
+$selectAuditsSQL = "SELECT auditId, buildingName, date, auditor, ic FROM closet_audits";
 
 $selectAuditsFilters = [];
 $selectAuditsTypeString = "";
@@ -46,7 +46,7 @@ if($filterIC && $filterIC !== "---") {
 }
 
 //separate query for counting total rows for filter, done before pagination parameter
-$countSQL = "SELECT COUNT(*) AS totalRows FROM closet_audits";
+$countSQL = "SELECT COUNT(auditId) AS totalRows FROM closet_audits";
 
 if (count($selectAuditsFilters) > 0) {
     $countSQL .= " WHERE " . implode(" AND ", $selectAuditsFilters);
