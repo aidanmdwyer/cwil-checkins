@@ -140,13 +140,19 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                 echo "
                 <tr>
                     <td>
-                        <input type='radio' name='auditItems[$item]' value='0' checked>
+                        <label>
+                            <input type='radio' name='auditItems[$item]' value='0' checked>
+                        </label>
                     </td>
                     <td>
-                        <input type='radio' name='auditItems[$item]' value='1'>
+                        <label>
+                            <input type='radio' name='auditItems[$item]' value='1'>
+                        </label>
                     </td>
                     <td>
-                        <input type='radio' name='auditItems[$item]' value='2'>
+                        <label>
+                            <input type='radio' name='auditItems[$item]' value='2'>
+                        </label>
                     </td>
                     <td style='width: 100%;'>
                         $item
@@ -209,6 +215,14 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         outline: none;
         border: none;
         background: transparent;
+    }
+
+    td label {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
 </style>
