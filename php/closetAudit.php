@@ -135,7 +135,14 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         foreach ($auditItems as $section => $list) {
             echo "<h2>$section</h2>";
             echo "<table>";
-            echo "<tr><th>❌</th><th>✅</th><th>N/A</th><th>Item</th><th>Comments</th></tr>";
+            echo "<tr>
+                <th>❌</th>
+                <th>✅</th>
+                <th>N/A</th>
+                <th>Item</th>
+                <th>Comments</th>
+                <th>Image</th>
+            </tr>";
             foreach ($list as $item) {
                 echo "
                 <tr>
@@ -160,6 +167,13 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                     <td style='padding: 0; margin: 0;'>
                         <textarea name='comments[$item]' placeholder='Comments...' maxlength='160'></textarea>
                     </td>
+                    <td>
+                        <input type='file' name='images[]' accept='image/*' class='imageInput'>
+
+                        <button type='button' class='previewButton' style='display: none;'>
+                            🏞️
+                        </button>
+                    </td>
                 </tr>";
             }
             echo "</table>";
@@ -170,6 +184,10 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         <button type="submit" class="big">Submit Audit</button>
 
     </form>
+    <div id="imageOverlay" class="imageOverlay">
+        <button type="button" id="closeOverlay">X</button>
+        <img id="overlayImage">
+    </div>
 </body>
 <style>
     html {
@@ -231,7 +249,143 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         cursor: pointer;
     }
 
+    .imageOverlay {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        background: rgba(0, 0, 0, 0.8);
+
+        justify-content: center;
+        align-items: center;
+    }
+    .imageOverlay img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+    }
+    #closeOverlay {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
 </style>
+<script>
+async function compressImage(file) {
+
+    const bitmap = await createImageBitmap(file);
+
+    const maxWidth = 1280;
+    const maxHeight = 720;
+
+    const scale = Math.min(
+        maxWidth / bitmap.width,
+        maxHeight / bitmap.height,
+        1
+    );
+
+    const width = Math.round(bitmap.width * scale);
+    const height = Math.round(bitmap.height * scale);
+
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext('2d');
+
+    // White background (JPEG doesn't support transparency)
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.drawImage(bitmap, 0, 0, width, height);
+
+    bitmap.close();
+
+    return new Promise(resolve => {
+        canvas.toBlob(resolve, 'image/jpeg', 0.82);
+    });
+}
+
+const imageOverlay = document.getElementById('imageOverlay');
+const overlayImage = document.getElementById('overlayImage');
+const closeOverlay = document.getElementById('closeOverlay');
+
+let previewURLs = new Map();
+
+document.querySelectorAll('.imageInput').forEach(input => {
+
+    const previewButton = input.parentElement.querySelector('.previewButton');
+
+    input.addEventListener('change', async function() {
+
+        previewButton.style.display = 'none';
+
+        if (previewURLs.has(this)) {
+            URL.revokeObjectURL(previewURLs.get(this));
+            previewURLs.delete(this);
+        }
+
+        const file = this.files[0];
+
+        if (!file) return;
+
+        try {
+            const compressedBlob = await compressImage(file);
+
+            const compressedFile = new File(
+                [compressedBlob],
+                file.name.replace(/\.[^.]+$/, '') + '.jpg',
+                {
+                    type: 'image/jpeg',
+                    lastModified: Date.now()
+                }
+            );
+
+            // Replace the original file with the compressed one
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(compressedFile);
+            this.files = dataTransfer.files;
+
+            // Generate preview URL from compressed image
+            previewURLs.set(this, URL.createObjectURL(compressedBlob));
+
+            previewButton.style.display = 'inline-block';
+
+        }
+        catch (error) {
+            console.error('Image compression failed:', error);
+            alert('Unable to process this image.');
+            this.value = '';
+        }
+
+    });
+
+    previewButton.addEventListener('click', function() {
+        overlayImage.src = previewURLs.get(input);
+        imageOverlay.style.display = 'flex';
+    });
+
+});
+
+closeOverlay.addEventListener('click', function() {
+    imageOverlay.style.display = 'none';
+    overlayImage.src = '';
+});
+
+imageOverlay.addEventListener('click', function(e) {
+    if (e.target === imageOverlay) {
+        imageOverlay.style.display = 'none';
+        overlayImage.src = '';
+    }
+});
+</script>
 </html>
 
 <?php
