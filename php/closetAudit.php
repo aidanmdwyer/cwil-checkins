@@ -410,8 +410,8 @@ imageOverlay.addEventListener('click', function(e) {
 
     require_once 'db.php';
 
-    $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic, closet_image) VALUES (?, ?, ?, ?, ?);");
-    $closetAuditInsertStmt->bind_param("sssss", $buildingName, $date, $auditor, $ic, $closet_image);
+    $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic, closetImage) VALUES (?, ?, ?, ?, ?);");
+    $closetAuditInsertStmt->bind_param("sssss", $buildingName, $date, $auditor, $ic, $closetImage);
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
 
