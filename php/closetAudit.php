@@ -294,6 +294,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     }
 
     .imageCell input[type="file"] {
+        display: block;
         width: 100%;
         max-width: 100%;
         min-width: 0;
