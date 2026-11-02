@@ -67,7 +67,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 
     <div class='hr'></div>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <input type="hidden" name="buildingName" value="<?=htmlspecialchars($buildingName)?>">
 
         <h3>Date: <?=htmlspecialchars($dateFormatted)?></h3>
@@ -405,14 +405,20 @@ imageOverlay.addEventListener('click', function(e) {
     $ic = $_POST['ic'];
     $auditItems = $_POST['auditItems'];
     $auditItemComments = $_POST['comments'];
-    $closetImage = file_get_contents($_FILES['closetImage']['tmp_name']);
-    $images = $_POST['images'];
+    $closetImage = null;
+    if ($_FILES['closetImage']['error'] === UPLOAD_ERR_OK) {
+        $closetImage = file_get_contents($_FILES['closetImage']['tmp_name']);
+    }
+    $images = $_FILES['images'];
 
     require_once 'db.php';
 
     $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic, closetImage) VALUES (?, ?, ?, ?, ?);");
+    $null = null;
     $closetAuditInsertStmt->bind_param("ssssb", $buildingName, $date, $auditor, $ic, $null);
-    $closetAuditInsertStmt->send_long_data(4, $closetImage);
+    if ($closetImage !== null) {
+        $closetAuditInsertStmt->send_long_data(4, $closetImage);
+    }
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
 
