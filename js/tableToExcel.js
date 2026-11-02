@@ -6,7 +6,7 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", metadata = {
         let wb = XLSX.utils.table_to_book(table, {sheet: sheetName});
         const ws = wb.Sheets[sheetName];
 
-        removeColumns(ws, ["", "ID", "QR", "Edit"]);
+        removeColumns(ws, ["", "ID", "QR", "Edit", "Audit"]);
 
         autoFitColumn(ws, "Building Name");
         autoFitColumn(ws, "Manager");
@@ -20,6 +20,7 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", metadata = {
         autoFitColumn(ws, "F", -5);
         autoFitColumn(ws, "Sat", -5);
         autoFitColumn(ws, "Sun", -5);
+        autoFitColumn(ws, "Last Audit");
 
         writeMetadata(ws, metadata);
 
