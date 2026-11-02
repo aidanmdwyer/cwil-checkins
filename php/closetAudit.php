@@ -415,11 +415,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
             const imageInput = row.querySelector('.imageInput');
 
             if (!imageInput.files.length) {
-                e.preventDefault();
-
-                alert('An image is required for: ' + row.cells[3].textContent.trim());
-
-                imageInput.focus();
+                imageInput.required = true;
                 return;
             }
         }
