@@ -396,6 +396,36 @@ imageOverlay.addEventListener('click', function(e) {
         overlayImage.src = '';
     }
 });
+
+document.querySelector('form').addEventListener('submit', function(e) {
+
+    const rows = document.querySelectorAll('table tr');
+
+    for (const row of rows) {
+
+        const radios = row.querySelectorAll('input[type="radio"]');
+
+        if (radios.length === 0) continue;
+
+        const selectedValue = row.querySelector('input[type="radio"]:checked').value;
+
+        // Only require an image when ❌ (value 0) is selected
+        if (selectedValue === '0') {
+
+            const imageInput = row.querySelector('.imageInput');
+
+            if (!imageInput.files.length) {
+                e.preventDefault();
+
+                alert('An image is required for: ' + row.cells[3].textContent.trim());
+
+                imageInput.focus();
+                return;
+            }
+        }
+    }
+
+});
 </script>
 </html>
 
