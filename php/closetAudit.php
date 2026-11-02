@@ -428,6 +428,18 @@ document.querySelectorAll('table tr').forEach(row => {
     imageInput.required = row.querySelector('input[type="radio"]:checked').value === '0';
 
 });
+
+document.querySelector("form").addEventListener("invalid", function(event) {
+    const input = event.target;
+
+    setTimeout(() => {
+        input.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }, 100);
+}, true);
+
 </script>
 </html>
 
