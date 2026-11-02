@@ -161,7 +161,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                             <input type='radio' name='auditItems[$item]' value='2'>
                         </label>
                     </td>
-                    <td>
+                    <td style='white-space: nowrap;'>
                         $item
                     </td>
                     <td style='padding: 0; margin: 0;'>
@@ -285,12 +285,6 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         right: 30px;
         font-size: 30px;
         cursor: pointer;
-    }
-
-
-    td:last-child {
-        width: 1%;
-        white-space: nowrap;
     }
 
 </style>
