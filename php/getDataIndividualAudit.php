@@ -22,13 +22,15 @@ $closetImage = base64_encode($imageRow['closetImage']);
 $selectAuditImageStmt->close();
 
 $selectAuditItemsStmt = $conn->prepare(
-    "SELECT a.auditId, a.itemId, a.itemDescription, a.itemValue, b.comment
+    "SELECT a.auditId, a.itemId, a.itemDescription, a.itemValue, b.comment, TO_BASE64(c.image) AS image
         FROM closet_audit_items a
         LEFT JOIN closet_audit_comments b
             ON a.auditId = b.auditId 
-        AND a.itemId = b.itemId
-        AND a.auditId = ?
-        WHERE a.auditId = ?;"
+        	AND a.itemId = b.itemId
+        LEFT JOIN closet_audit_images c
+            ON a.auditId = c.auditId 
+        	AND a.itemId = c.itemId
+        WHERE a.auditId = 81;"
 );
 
 $auditId = (int)$auditId;

@@ -200,5 +200,10 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
         } else {
             commentElement.innerHTML = "-";
         }
+
+        const imageElement = document.getElementById(desc + "-image");
+        if(item['image']) {
+            imageElement.src = 'data:image/jpeg;base64,' + item['image'];
+        }
     });
 }
