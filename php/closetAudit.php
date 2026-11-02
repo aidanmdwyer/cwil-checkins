@@ -397,29 +397,21 @@ imageOverlay.addEventListener('click', function(e) {
     }
 });
 
-document.querySelector('form').addEventListener('submit', function(e) {
+document.querySelectorAll('table tr').forEach(row => {
 
-    const rows = document.querySelectorAll('table tr');
+    const radios = row.querySelectorAll('input[type="radio"]');
+    const imageInput = row.querySelector('.imageInput');
 
-    for (const row of rows) {
+    if (radios.length === 0) return;
 
-        const radios = row.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            imageInput.required = this.value === '0';
+        });
+    });
 
-        if (radios.length === 0) continue;
-
-        const selectedValue = row.querySelector('input[type="radio"]:checked').value;
-
-        // Only require an image when ❌ (value 0) is selected
-        if (selectedValue === '0') {
-
-            const imageInput = row.querySelector('.imageInput');
-
-            if (!imageInput.files.length) {
-                imageInput.required = true;
-                return;
-            }
-        }
-    }
+    // Set initial state
+    imageInput.required = row.querySelector('input[type="radio"]:checked').value === '0';
 
 });
 </script>
