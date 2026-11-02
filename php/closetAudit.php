@@ -181,10 +181,12 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         }
         ?>
 
-        <input type='file' name='closetImage' accept='image/*' class='imageInput'>
-        <button type='button' class='previewButton' style='display: none;'>
-            Preview
-        </button>
+        <div>
+            <input type='file' name='closetImage' accept='image/*' class='imageInput'>
+            <button type='button' class='previewButton' style='display: none;'>
+                Preview
+            </button>
+        </div>
 
         <div class="hr"></div>
 
