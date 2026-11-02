@@ -405,13 +405,14 @@ imageOverlay.addEventListener('click', function(e) {
     $ic = $_POST['ic'];
     $auditItems = $_POST['auditItems'];
     $auditItemComments = $_POST['comments'];
-    $closetImage = $_POST['closetImage'];
+    $closetImage = file_get_contents($_FILES['closetImage']['tmp_name']);
     $images = $_POST['images'];
 
     require_once 'db.php';
 
     $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic, closetImage) VALUES (?, ?, ?, ?, ?);");
-    $closetAuditInsertStmt->bind_param("sssss", $buildingName, $date, $auditor, $ic, $closetImage);
+    $closetAuditInsertStmt->bind_param("ssssb", $buildingName, $date, $auditor, $ic, $null);
+    $closetAuditInsertStmt->send_long_data(4, $closetImage);
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
 
