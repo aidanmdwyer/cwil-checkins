@@ -13,12 +13,12 @@ if (!$auditId) {
 
 require_once 'db.php';
 
-$selectAuditImageStmt = $conn->prepare("SELECT closetImage FROM closet_audits WHERE auditId = ?;");
+$selectAuditImageStmt = $conn->prepare("SELECT TO_BASE64(closetImage) AS closetImage FROM closet_audits WHERE auditId = ?;");
 $selectAuditImageStmt->bind_param("i", $auditId);
 $selectAuditImageStmt->execute();
 $selectAuditImageResult = $selectAuditImageStmt->get_result();
 $imageRow = $selectAuditImageResult->fetch_assoc();
-$closetImage = base64_encode($imageRow['closetImage']);
+$closetImage = $imageRow['closetImage'] ?? null;
 $selectAuditImageStmt->close();
 
 $selectAuditItemsStmt = $conn->prepare(
@@ -30,12 +30,12 @@ $selectAuditItemsStmt = $conn->prepare(
         LEFT JOIN closet_audit_images c
             ON a.auditId = c.auditId 
         	AND a.itemId = c.itemId
-        WHERE a.auditId = 81;"
+        WHERE a.auditId = ?;"
 );
 
 $auditId = (int)$auditId;
 
-$selectAuditItemsStmt->bind_param("ii", $auditId, $auditId);
+$selectAuditItemsStmt->bind_param("i", $auditId);
 $selectAuditItemsStmt->execute();
 $selectAuditItemsResult = $selectAuditItemsStmt->get_result();
 
