@@ -171,7 +171,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                         <input type='file' name='images[]' accept='image/*' class='imageInput'>
 
                         <button type='button' class='previewButton' style='display: none;'>
-                            🏞️
+                            Preview
                         </button>
                     </td>
                 </tr>";
@@ -180,6 +180,13 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
             echo "<br><div class='hr'></div>";
         }
         ?>
+
+        <input type='file' name='closetImage' accept='image/*' class='imageInput'>
+        <button type='button' class='previewButton' style='display: none;'>
+            Preview
+        </button>
+
+        <div class="hr"></div>
 
         <button type="submit" class="big">Submit Audit</button>
 
@@ -396,11 +403,13 @@ imageOverlay.addEventListener('click', function(e) {
     $ic = $_POST['ic'];
     $auditItems = $_POST['auditItems'];
     $auditItemComments = $_POST['comments'];
+    $closetImage = $_POST['closetImage'];
+    $images = $_POST['images'];
 
     require_once 'db.php';
 
-    $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic) VALUES (?, ?, ?, ?);");
-    $closetAuditInsertStmt->bind_param("ssss", $buildingName, $date, $auditor, $ic);
+    $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic, closet_image) VALUES (?, ?, ?, ?, ?);");
+    $closetAuditInsertStmt->bind_param("sssss", $buildingName, $date, $auditor, $ic, $closet_image);
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
 
