@@ -287,9 +287,10 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         cursor: pointer;
     }
 
-    .imageInput {
-        width: 100px;
-        min-width: 0;
+
+    td:last-child {
+        width: 1%;
+        white-space: nowrap;
     }
 
 </style>
