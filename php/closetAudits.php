@@ -229,8 +229,7 @@ if (!accountProperties('Closet Audits Page')) {
     }
     .splitBox .left, .splitBox .right {
         height: 100%;
-        overflow-y: scroll;
-        overflow-x: hidden;
+        overflow: scroll;
         padding-bottom: 150px;
         box-sizing: border-box;
         display: flex;
@@ -289,7 +288,7 @@ if (!accountProperties('Closet Audits Page')) {
         width: 100%;
         display: none;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         justify-content: flex-start;
 
         padding: 0 30px 0 30px;
