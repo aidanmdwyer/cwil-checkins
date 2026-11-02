@@ -176,7 +176,7 @@ if (!accountProperties('Closet Audits Page')) {
                                     <div id='" . $item . "-comment" . "'></div>
                                 </td>
                                 <td class='imageBox'>
-                                    <button type='button' id='" . $item . "-imagePreviewButton" . "'>View</button>
+                                    <button type='button' class='big' id='" . $item . "-imagePreviewButton" . "'>View</button>
                                 </td>
                             </tr>";
                         }
@@ -307,12 +307,6 @@ if (!accountProperties('Closet Audits Page')) {
         width: max(20%, 250px);
         padding: 5px 10px;
         box-sizing: border-box;
-    }
-    .imageBox button {
-        background: none;
-        border: none;
-        padding: none;
-        font-size: 14px;
     }
 
     .imageOverlay {
