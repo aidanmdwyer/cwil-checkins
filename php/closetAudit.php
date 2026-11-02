@@ -286,8 +286,6 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         right: 30px;
         font-size: 30px;
         cursor: pointer;
-        background: transparent;
-        pointer-events: auto;
     }
 
     .imageCell {
