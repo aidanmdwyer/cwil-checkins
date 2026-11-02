@@ -161,7 +161,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                             <input type='radio' name='auditItems[$item]' value='2'>
                         </label>
                     </td>
-                    <td style='width: 100%;'>
+                    <td>
                         $item
                     </td>
                     <td style='padding: 0; margin: 0;'>
@@ -285,10 +285,6 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         right: 30px;
         font-size: 30px;
         cursor: pointer;
-    }
-
-    .imageInput {
-        min-width: 0;
     }
 
 </style>
