@@ -431,6 +431,11 @@ imageOverlay.addEventListener('click', function(e) {
     $itemId = 0;
     $auditItemCount = 0;
     $auditCommentCount = 0;
+
+    $auditImagesValues = [];
+    $auditImages = [];
+    $auditImageCount = 0;
+
     foreach ($auditItems as $item => $value) {
         $auditItemCount++;
         //prep audit items insert
@@ -452,7 +457,44 @@ imageOverlay.addEventListener('click', function(e) {
             $auditCommentsValuesList[] = $auditItemComments[$item];
         }
 
+        // Insert image if one was uploaded for this item
+        if ($images['error'][$itemId] === UPLOAD_ERR_OK) {
+            $imageData = file_get_contents($images['tmp_name'][$itemId]);
+
+            if ($imageData === false) {
+                die("Failed to read uploaded image.");
+            }
+
+            $auditImagesValues[] = $auditId;
+            $auditImagesValues[] = $itemId;
+            $auditImagesValues[] = null; // BLOB placeholder
+
+            $auditImages[] = $imageData;
+            $auditImageCount++;
+        }
+
         $itemId++;
+    }
+
+    if ($auditImageCount > 0) {
+        $auditImageInsertSQL = "INSERT INTO closet_audit_images (auditId, itemId, image) VALUES";
+        $auditImageInsertSQL .= implode(',', array_fill(0, $auditImageCount, " (?, ?, ?)"));
+
+        $auditImageInsertStmt = $conn->prepare($auditImageInsertSQL);
+
+        $auditImageTypes = str_repeat("iib", $auditImageCount);
+
+        $auditImageInsertStmt->bind_param(
+            $auditImageTypes,
+            ...$auditImagesValues
+        );
+
+        foreach ($auditImages as $index => $imageData) {
+            $auditImageInsertStmt->send_long_data(($index * 3) + 2, $imageData);
+        }
+
+        $auditImageInsertStmt->execute();
+        $auditImageInsertStmt->close();
     }
 
     $auditItemsInsertSQL = "INSERT INTO closet_audit_items (auditId, itemId, itemDescription, itemValue) VALUES";
