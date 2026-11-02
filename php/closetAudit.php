@@ -167,7 +167,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
                     <td style='padding: 0; margin: 0;'>
                         <textarea name='comments[$item]' placeholder='Comments...' maxlength='160'></textarea>
                     </td>
-                    <td>
+                    <td class='imageCell'>
                         <input type='file' name='images[]' accept='image/*' class='imageInput'>
 
                         <button type='button' class='previewButton' style='display: none;'>
@@ -285,6 +285,19 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         right: 30px;
         font-size: 30px;
         cursor: pointer;
+    }
+
+    .imageCell {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        min-width: 0;
+    }
+
+    .imageCell input[type="file"] {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
     }
 
 </style>
