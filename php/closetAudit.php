@@ -139,17 +139,17 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
             foreach ($list as $item) {
                 echo "
                 <tr>
-                    <td>
+                    <td class='checkboxCell'>
                         <label>
                             <input type='radio' name='auditItems[$item]' value='0' checked>
                         </label>
                     </td>
-                    <td>
+                    <td class='checkboxCell'>
                         <label>
                             <input type='radio' name='auditItems[$item]' value='1'>
                         </label>
                     </td>
-                    <td>
+                    <td class='checkboxCell'>
                         <label>
                             <input type='radio' name='auditItems[$item]' value='2'>
                         </label>
@@ -223,6 +223,9 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    .checkboxCell {
+        padding: 0;
     }
 
 </style>
