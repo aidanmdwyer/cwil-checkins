@@ -429,15 +429,17 @@ document.querySelectorAll('table tr').forEach(row => {
 
 });
 
-document.querySelector("form").addEventListener("invalid", function(event) {
-    const input = event.target;
+const form = document.querySelector("form");
 
-    setTimeout(() => {
-        input.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-    }, 100);
+form.addEventListener("invalid", function(event) {
+    const firstInvalid = form.querySelector(":invalid");
+
+    if (event.target !== firstInvalid) return;
+
+    firstInvalid.scrollIntoView({
+        behavior: "instant",
+        block: "center"
+    });
 }, true);
 
 </script>
