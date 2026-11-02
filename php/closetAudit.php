@@ -287,6 +287,11 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         cursor: pointer;
     }
 
+    .imageInput {
+        width: 0;
+        min-width: 0;
+    }
+
 </style>
 <script>
 async function compressImage(file) {
