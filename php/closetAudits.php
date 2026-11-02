@@ -176,7 +176,7 @@ if (!accountProperties('Closet Audits Page')) {
                                     <div id='" . $item . "-comment" . "'></div>
                                 </td>
                                 <td class='imageBox'>
-                                    <button type='button' id='" . $item . "-imagePreviewButton" . "'>🏞️</button>
+                                    <button type='button' id='" . $item . "-imagePreviewButton" . "'>View</button>
                                 </td>
                             </tr>";
                         }
@@ -340,6 +340,10 @@ if (!accountProperties('Closet Audits Page')) {
         right: 30px;
         font-size: 30px;
         cursor: pointer;
+    }
+
+    #closetImage {
+        width: 50%;
     }
 </style>
 
