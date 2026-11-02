@@ -253,7 +253,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 
     .checkboxCell label {
         position: absolute;
-        inset: 3px;
+        inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -286,6 +286,8 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         right: 30px;
         font-size: 30px;
         cursor: pointer;
+        background: transparent;
+        pointer-events: auto;
     }
 
     .imageCell {
