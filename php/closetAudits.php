@@ -175,6 +175,9 @@ if (!accountProperties('Closet Audits Page')) {
                                 <td class='commentBox'>
                                     <div id='" . $item . "-comment" . "'></div>
                                 </td>
+                                <td class='imageBox'>
+                                    <img id='" . $item . "-image" . "'>
+                                </td>
                             </tr>";
                         }
                         echo "</table>";
