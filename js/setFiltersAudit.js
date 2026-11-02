@@ -174,7 +174,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
         valueBox.firstElementChild.innerHTML = "";
     });
     Array.from(document.getElementsByClassName('imageBox')).forEach((valueBox) => {
-        valueBox.firstElementChild.innerHTML = "";
+        valueBox.firstElementChild.style.display = "none";
     });
 
     const response = await fetch(
