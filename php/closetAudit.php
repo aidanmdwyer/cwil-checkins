@@ -577,7 +577,7 @@ form.addEventListener("invalid", function(event) {
     $selectEmailsStmt = $conn->prepare("SELECT DISTINCT email FROM associated_emails 
                                             WHERE (accountName = ? AND accountType = 'manager') 
                                             OR (accountName = ? AND accountType = 'contractor');");
-    $selectEmailsStmt->bind_param("ss", $manager, $contractor);
+    $selectEmailsStmt->bind_param("ss", $manager, $ic);
     $selectEmailsStmt->execute();
     $selectEmailsResults = $selectEmailsStmt->get_result();
     $emailsList = [];
