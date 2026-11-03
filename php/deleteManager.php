@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['manager_name'])) {
             exit();
         }
 
-        $stmt4 = $conn->prepare("DELETE FROM associatedEmails WHERE accountName = ? AND accountType = 'manager'");
+        $stmt4 = $conn->prepare("DELETE FROM associated_emails WHERE accountName = ? AND accountType = 'manager'");
         $stmt4->bind_param("s", $name);
         $stmt4->execute();
 
