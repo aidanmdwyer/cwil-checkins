@@ -235,7 +235,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         const emailsList = emailsListBox.getElementsByClassName("emailsList")[0];
 
         const newEmail = document.createElement("div");
-        newEmail.className = "emailsListItem";
+        newEmail.className = "addEmailsListItem";
 
         const newEmailInput = document.createElement("input");
         newEmailInput.type = "text";
@@ -329,7 +329,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         padding: 0;
         box-sizing: border-box;
     }
-    .emailsListItem {
+    .emailsListItem .addEmailsListItem {
         font-size: 12px;
         background-color: white;
         border-radius: 8px;
