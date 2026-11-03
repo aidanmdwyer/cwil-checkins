@@ -491,7 +491,7 @@ form.addEventListener("invalid", function(event) {
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
 
-    $BODY .= "<img src='data:image/jpeg;base64," . $closetImage . "'>";
+    $BODY .= "<img src='data:image/jpeg;base64," . base64_encode($closetImage) . "'>";
 
     $auditId = $conn->insert_id;
 
@@ -555,7 +555,7 @@ form.addEventListener("invalid", function(event) {
             $auditImages[] = $imageData;
             $auditImageCount++;
 
-            $BODY .= "<img src='data:image/jpeg;base64," . $imageData . "'>";
+            $BODY .= "<img src='data:image/jpeg;base64," . base64_encode($imageData) . "'>";
         }
         $BODY .= "</td>";
 
@@ -642,6 +642,8 @@ form.addEventListener("invalid", function(event) {
             echo "<p>$email</p>";
         }
         echo "</div>";
+    } else {
+        echo "<h3>Failed to send email.</h3>";
     }
     ?>
     <button class="big" onclick="window.location.href='/index.php'">Home</button>
