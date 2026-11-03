@@ -262,6 +262,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 submitNewEmail(name, newEmailInput, newEmail);
             }
         });
+
+        //remove add box when focus is lost
+        const handleOutsideClick = (event) => {
+            if (!newEmail.contains(event.target)) {
+                newEmail.remove();
+                addingEmail = false;
+                document.removeEventListener('mousedown', handleOutsideClick);
+            }
+        };
+
+        document.addEventListener('mousedown', handleOutsideClick);
     }
 
     async function submitNewEmail(name, emailInput, emailListItem) {
