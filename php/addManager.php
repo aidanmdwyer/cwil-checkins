@@ -256,7 +256,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         newEmailInput.focus();
 
-        newEmailInput.onblur = () => {
+        newEmail.onfocusout = () => {
             newEmail.remove();
             addingEmail = false;
         };
