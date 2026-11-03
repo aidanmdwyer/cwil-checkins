@@ -73,6 +73,7 @@ async function submitNewEmail(name, accountType, emailInput, emailListItem) {
         }
     } else {
         alert("Please enter a valid email.");
+        emailInput.focus();
     }
 }
 
