@@ -5,6 +5,7 @@ const auditList = document.getElementById("auditList");
 const displayBuildingName = document.getElementById("displayBuildingName");
 const displayAuditor = document.getElementById("displayAuditor");
 const displayIC = document.getElementById("displayIC");
+const displayManager = document.getElementById("displayManager");
 const displayDate = document.getElementById("displayDate");
 const displayTime = document.getElementById("displayTime");
 const auditTable = document.getElementById("auditTable");
@@ -156,14 +157,20 @@ async function buildAuditList(page = 1) {
     }
 }
 
-async function openAudit({auditId, buildingName, auditor, date, ic}) {
-    displayBuildingName.innerHTML = buildingName;
-    displayAuditor.innerHTML = auditor;
-    displayDate.innerHTML = new Date(date).toLocaleDateString('en-CA');
-    displayTime.innerHTML = new Date(date).toLocaleTimeString('en-US', {hour: 'numeric', minute:'numeric'});
-    displayIC.innerHTML = ic;
+async function openAudit({auditId, buildingName, auditor, date, ic, manager, closetImage}) {
+    displayBuildingName.innerHTML = buildingName ?? "";
+    displayAuditor.innerHTML = auditor ?? "";
+    displayDate.innerHTML = new Date(date).toLocaleDateString('en-CA') ?? "";
+    displayTime.innerHTML = new Date(date).toLocaleTimeString('en-US', {hour: 'numeric', minute:'numeric'}) ?? "";
+    displayIC.innerHTML = ic ?? "";
+    displayManager.innerHTML = manager ?? "";
     displayClosetImage.style.display = "none";
     displayClosetImage.src = "";
+
+    if(closetImage) {
+        displayClosetImage.style.display = "inline-block";
+        displayClosetImage.src = 'data:image/jpeg;base64,' + closetImage;
+    }
 
     displayAudit.style.display = "flex";
     noAuditSelectedText.style.display = "none";
@@ -189,11 +196,6 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     const data = await response.json();
 
     console.log(data);
-
-    if(data['closetImage']) {
-        displayClosetImage.style.display = "inline-block";
-        displayClosetImage.src = 'data:image/jpeg;base64,' + data['closetImage'];
-    }
 
     data['items'].forEach(item => {
         const desc = item['itemDescription'];
