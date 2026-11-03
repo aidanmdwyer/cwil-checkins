@@ -256,11 +256,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         newEmailInput.focus();
 
-        newEmail.onfocusout = 
-            setTimeout(() => {
-                newEmail.remove();
-                addingEmail = false;
-            }, 50);
+        newEmailInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                submitNewEmail(name, newEmailInput, newEmail);
+            }
+        });
     }
 
     async function submitNewEmail(name, emailInput, emailListItem) {
