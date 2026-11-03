@@ -276,13 +276,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 console.error(data.message);
             }
+        } else {
+            alert("Please enter a valid email.");
         }
     }
 
     function checkEmailStr(emailStr) {
-        if(emailStr) {
-            return true;
-        }
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return pattern.test(emailStr) && emailStr.length <= 100;
     }
 </script>
 <style>
