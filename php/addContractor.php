@@ -181,14 +181,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 echo "<td style='text-align: center; background-color: $bgColor; font-size: 12px; border: none; padding-top: 0;'>
                     <div class='emailsListBox'>
-                        <button onclick='addEmail(this, " . json_encode($row['name']) . ", " . $accountType . ")' style='background: white; border: none; border-radius: 6px; font-size: 20px; padding: 3px;'>+</button>
+                        <button onclick='addEmail(this, " . htmlspecialchars(json_encode($row['name']), ENT_QUOTES, "UTF-8") . ", " . $accountType . ")' style='background: white; border: none; border-radius: 6px; font-size: 20px; padding: 3px;'>+</button>
                         <div class='emailsList'>";
                         
                 $emails = explode(',', $row['emails']);
                 if(sizeof($emails) > 0) {
                     foreach($emails as $email) {
                         if($email) {
-                            echo "<div class='emailsListItem' onclick='deleteEmail(" . json_encode($row['name']) . ", " . $accountType . ", " . json_encode($email) . ")'>$email</div>";
+                            echo "<div class='emailsListItem' onclick='deleteEmail(" .
+                                htmlspecialchars(json_encode($row['name']), ENT_QUOTES, 'UTF-8') .
+                                ", " . $accountType . ", " .
+                                htmlspecialchars(json_encode($email), ENT_QUOTES, 'UTF-8') .
+                                ")'>$email</div>";
                         }
                     }
                 }
