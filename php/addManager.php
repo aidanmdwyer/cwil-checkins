@@ -164,24 +164,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "<td style='text-align: center; background-color: $bgColor; font-size: 12px; $styleColor'>" . htmlspecialchars($statusText) . "</td>";
 
                 echo "<td style='text-align: center; background-color: $bgColor; font-size: 12px; border: none; padding-top: 0;'>
-                    <div class='associatedEmailsListBox'>
-                        <button style='background: transparent; border: none;'>🖊️</button>
-                        <div class='associatedEmailsList'>";
+                    <div class='emailsListBox'>
+                        <button onclick='editEmailsList(this, " . json_encode($row['name']) . ")' style='background: transparent; border: none;'>🖊️</button>
+                        <div class='emailsList'>";
                         
                 $emails = explode(',', $row['emails']);
                 if(sizeof($emails) > 0) {
                     foreach($emails as $email) {
                         if($email) {
-                            echo "<div class='emailListItem'>$email</div>";
+                            echo "<div class='emailsListItem'>$email</div>";
                         }
                     }
                 }
 
                 echo "</div>
                     </div>
-                    <div class='editAssociatedEmailsBox'>
-                        <button style='background: transparent; border: none;'>✅</button>
-                        <textarea class='editAssociatedEmails'></textarea>
+                    <div class='editEmailsBox'>
+                        <button onclick='submitEmailsList(this, " . json_encode($row['name']) . ")' style='background: transparent; border: none;'>✅</button>
+                        <textarea class='editEmails'></textarea>
                     </div>
                 </td>";
 
@@ -228,14 +228,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </main>
 </body>
 <style>
-    .associatedEmailsListBox {
+    .emailsListBox {
         width: 100%;
         display: flex;
         gap: 5px;
         padding: 2px;
         box-sizing: border-box;
     }
-    .associatedEmailsList {
+    .emailsList {
         flex: 1;
         display: flex;
         flex-wrap: wrap;
@@ -243,7 +243,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         padding: 0;
         box-sizing: border-box;
     }
-    .emailListItem {
+    .emailsListItem {
         font-size: 12px;
         background-color: white;
         border-radius: 8px;
@@ -251,7 +251,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         padding: 4px 6px;
     }
 
-    .editAssociatedEmailsBox {
+    .editEmailsBox {
         width: 100%;
         display: flex;
         gap: 5px;
@@ -259,7 +259,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         box-sizing: border-box;
         display: none;
     }
-    .editAssociatedEmails {
+    .editEmails {
         background: transparent;
         outline: none;
         margin: 0;
