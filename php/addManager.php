@@ -227,6 +227,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </main>
 </body>
+<script>
+    function editEmailsList(element, name) {
+        const emailsListBox = element.parent;
+        const emailsList = emailsListBox.getElementsByClassName("emailsList")[0];
+        Array.from(emailsList.children).forEach(listItem => {
+            console.log(listItem.innerText);
+        })
+        emailsList.style.display = "none";
+        const editEmailsBox = emailsListBox.parent.getElementsByClassName("editEmailsBox")[0];
+        editEmailsBox.style.display = "flex";
+    }
+</script>
 <style>
     .emailsListBox {
         width: 100%;
