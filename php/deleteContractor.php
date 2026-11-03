@@ -33,6 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contractor_name'])) {
             exit();
         }
 
+        $stmt4 = $conn->prepare("DELETE FROM associated_emails WHERE accountName = ? AND accountType = 'contractor'");
+        $stmt4->bind_param("s", $name);
+        $stmt4->execute();
+
+        if ($stmt4->errno) {
+            // Unexpected DB error → stop here
+            $stmt4->close();
+            $conn->close();
+
+            $errorMsg = "Database error deleting account: " . $stmt4->error;
+            header("Location: ../php/addContractor.php?error=" . urlencode($errorMsg));
+            exit();
+        }
+
         $stmt2 = $conn->prepare("DELETE FROM contractors WHERE name = ?");
         $stmt2->bind_param("s", $name);
         $stmt2->execute();
