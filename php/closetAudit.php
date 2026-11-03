@@ -636,7 +636,7 @@ form.addEventListener("invalid", function(event) {
         foreach($emailsList as $email) {
             echo "<p>$email</p>";
         }
-        echo "</div>";
+        echo "</div><br>";
     } else {
         echo "<h3>Failed to send email.</h3>";
     }
