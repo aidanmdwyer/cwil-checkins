@@ -490,7 +490,7 @@ form.addEventListener("invalid", function(event) {
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
 
-    $BODY .= "<img src='data:image/jpeg;base64," . base64_encode($closetImage) . "'>";
+    // $BODY .= "<img src='data:image/jpeg;base64," . base64_encode($closetImage) . "'>";
 
     $auditId = $conn->insert_id;
 
@@ -554,7 +554,7 @@ form.addEventListener("invalid", function(event) {
             $auditImages[] = $imageData;
             $auditImageCount++;
 
-            $BODY .= "<img src='data:image/jpeg;base64," . base64_encode($imageData) . "'>";
+            // $BODY .= "<img src='data:image/jpeg;base64," . base64_encode($imageData) . "'>";
         }
         $BODY .= "</td>";
 
