@@ -472,6 +472,14 @@ form.addEventListener("invalid", function(event) {
     }
     $images = $_FILES['images'];
 
+    $dateObj = new DateTime($date);
+    $dateFormatted = $dateObj->format("Y-m-d");
+    $TO = "";
+    $SUBJECT = "Closet Audit: $buildingName, $dateFormatted";
+    $BODY = "<html><body><b>Closet Audit: $buildingName, $dateFormatted</b><br>";
+    $HEADERS = "MIME-Version: 1.0\r\n";
+    $HEADERS .= "Content-type: text/html; charset=UTF-8\r\n";
+
     require_once 'db.php';
 
     $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic, manager, closetImage) VALUES (?, ?, ?, ?, ?, ?);");
@@ -497,8 +505,14 @@ form.addEventListener("invalid", function(event) {
     $auditImages = [];
     $auditImageCount = 0;
 
+    $BODY .= "<table><tr><th>Audit Item</th><th>✅/❌</th><th>Comments</th><th>Image</th></tr>";
     foreach ($auditItems as $item => $value) {
         $auditItemCount++;
+
+        //add to email
+        $BODY .= "<tr><td>$item</td>";
+        $BODY .= "<td>" . ($value === 0 ? "❌" : ($value === 1 ? "✅" : "N/A")) . "</td>";
+
         //prep audit items insert
         $auditItemsTypeString .= "iisi";
 
@@ -507,6 +521,7 @@ form.addEventListener("invalid", function(event) {
         $auditItemsValuesList[] = $item;
         $auditItemsValuesList[] = $value;
 
+        $BODY .= "<td>";
         //prep comments insert
         if($auditItemComments[$item]) {
             $auditCommentCount++;
@@ -516,8 +531,13 @@ form.addEventListener("invalid", function(event) {
             $auditCommentsValuesList[] = $auditId;
             $auditCommentsValuesList[] = $itemId;
             $auditCommentsValuesList[] = $auditItemComments[$item];
+            $BODY .= $auditItemComments[$item];
+        } else {
+            $BODY .= "-";
         }
+        $BODY .= "</td>";
 
+        $BODY .= "<td>";
         // Insert image if one was uploaded for this item
         if ($images['error'][$itemId] === UPLOAD_ERR_OK) {
             $imageData = file_get_contents($images['tmp_name'][$itemId]);
@@ -532,10 +552,15 @@ form.addEventListener("invalid", function(event) {
 
             $auditImages[] = $imageData;
             $auditImageCount++;
-        }
 
+            $BODY .= "<img src='data:image/jpeg;base64," . $imageData . "'>";
+        }
+        $BODY .= "</td>";
+
+        $BODY .= "</tr>";
         $itemId++;
     }
+    $BODY .= "</table>";
 
     if ($auditImageCount > 0) {
         $auditImageInsertSQL = "INSERT INTO closet_audit_images (auditId, itemId, image) VALUES";
@@ -604,13 +629,8 @@ form.addEventListener("invalid", function(event) {
 <body>
     <h2>Closet audit successfully submitted for<br><?= $buildingName ?>.</h2>
     <?php
-    $dateObj = new DateTime($date);
-    $dateFormatted = $dateObj->format("Y-m-d");
-    $TO = "aidandyr@gmail.com";
-    $SUBJECT = "Closet Audit: $buildingName, $dateFormatted";
-    $BODY = "<html><body><b>Closet Audit: $buildingName, $dateFormatted</b><br><br>";
-    $HEADERS = "MIME-Version: 1.0\r\n";
-    $HEADERS .= "Content-type: text/html; charset=UTF-8\r\n";
+    
+    $BODY .= "</body></html>";
     $HEADERS .= "Bcc: " . implode(",", $emailsList) . "\r\n";
 
     if(mail($TO, $SUBJECT, $BODY, $HEADERS)) {
