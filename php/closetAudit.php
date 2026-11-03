@@ -603,14 +603,22 @@ form.addEventListener("invalid", function(event) {
 </head>
 <body>
     <h2>Closet audit successfully submitted for<br><?= $buildingName ?>.</h2>
-    <h3>Email sent to:</h3>
-    <div class="emailList">
-        <?php
+    <?php
+    $TO = "aidandyr@gmail.com, jeffreyallday05@gmail.com";
+    $SUBJECT = "Closet Audit: $buildingName, $date";
+    $BODY = "<html><body><b>Closet Audit: $buildingName, $date</b><br><br>";
+    $HEADERS = "MIME-Version: 1.0\r\n";
+    $HEADERS .= "Content-type: text/html; charset=UTF-8\r\n";
+
+    if(mail($TO, $SUBJECT, $BODY, $HEADERS)) {
+        echo "<h3>Email sent to:</h3>";
+        echo "<div class='emailList'>";
         foreach($emailsList as $email) {
             echo "<p>$email</p>";
         }
-        ?>
-    </div>
+        echo "</div>";
+    }
+    ?>
     <button class="big" onclick="window.location.href='/index.php'">Home</button>
 </body>
 <style>
