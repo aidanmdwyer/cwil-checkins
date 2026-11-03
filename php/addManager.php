@@ -255,6 +255,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         newEmail.appendChild(newEmailConfirm);
 
         newEmailInput.focus();
+
+        newEmailInput.onblur = () => {
+            newEmail.remove();
+            addingEmail = false;
+        };
     }
 
     async function submitNewEmail(name, emailInput, emailListItem) {
@@ -293,7 +298,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     async function deleteEmail(name, email) {
-        if(confirm("Are you sure you want to delete " + email + "?") && name && email) {
+        if(confirm("Are you sure you want to remove " + email + "?") && name && email) {
             const response = await fetch('/php/deleteAssociatedEmail.php', {
                 method: 'POST',
                 body: new URLSearchParams({
