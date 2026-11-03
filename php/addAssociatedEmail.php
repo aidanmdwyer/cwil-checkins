@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(isset($_POST['accountName']) && isset($_POST['accountType']) && isset($_POST['email'])) {
         $accountName = $_POST['accountName'];
         $accountType = $_POST['accountType'];
-        $email = $_POST['email'];
+        $email = strtolower($_POST['email']);
 
         require_once 'db.php';
 
