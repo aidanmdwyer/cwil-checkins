@@ -172,7 +172,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if(sizeof($emails) > 0) {
                     foreach($emails as $email) {
                         if($email) {
-                            echo "<div class='emailsListItem'>$email</div>";
+                            echo "<div class='emailsListItem' onclick='deleteEmail(" . json_encode($row['name']) . ", " . json_encode($email) . ")'>$email</div>";
                         }
                     }
                 }
@@ -230,7 +230,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     function addEmail(element, name) {
         if(addingEmail) return;
         addingEmail = true;
-        
+
         const emailsListBox = element.parentElement;
         const emailsList = emailsListBox.getElementsByClassName("emailsList")[0];
 
@@ -291,6 +291,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return pattern.test(emailStr) && emailStr.length <= 100;
     }
+
+    function deleteEmail(name, email) {
+        if(confirm("Are you sure you want to delete " + email + "?") && name && email) {
+            const response = await fetch('/php/deleteAssociatedEmail.php', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    accountName: name,
+                    accountType: "manager",
+                    email: email
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                window.location.reload();
+            } else {
+                console.error(data.message);
+            }
+        }
+    }
 </script>
 <style>
     .emailsListBox {
@@ -317,6 +338,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         display: flex;
         gap: 5px;
+    }
+    .emailsListItem:hover {
+        background-color: #ff8f8f;
     }
 </style>
 </html>

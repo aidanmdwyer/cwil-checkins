@@ -23,13 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute() && $stmt->affected_rows > 0) {
                 echo json_encode([
                     'success' => true,
-                    'message' => 'Email successfully associated.'
+                    'message' => 'Email successfully added.'
                 ]);
             } else {
                 http_response_code(500);
                 echo json_encode([
                     'success' => false,
-                    'message' => 'Failed to associate email.'
+                    'message' => 'Failed to add email.'
                 ]);
             }
         } finally {
