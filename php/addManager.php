@@ -229,15 +229,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </body>
 <script>
     function editEmailsList(element, name) {
-        console.log(element);
         const emailsListBox = element.parentElement;
-        console.log(emailsListBox);
         const emailsList = emailsListBox.getElementsByClassName("emailsList")[0];
+        let emails = [];
         Array.from(emailsList.children).forEach(listItem => {
-            console.log(listItem.innerText);
-        })
-        emailsList.style.display = "none";
+            emails.push(listItem.innerText);
+        });
+        emailsListBox.style.display = "none";
+
         const editEmailsBox = emailsListBox.parentElement.getElementsByClassName("editEmailsBox")[0];
+        const editEmails = editEmailsBox.getElementsByClassName("editEmails")[0];
+        editEmails.value = emails.implode(", ", emails);
         editEmailsBox.style.display = "flex";
     }
 </script>
