@@ -225,34 +225,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </main>
 </body>
 <script src='/js/associatedEmails.js'></script>
-<style>
-    .emailsListBox {
-        width: 100%;
-        display: flex;
-        gap: 5px;
-        padding: 2px;
-        box-sizing: border-box;
-    }
-    .emailsList {
-        flex: 1;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    .emailsListItem, .addEmailsListItem {
-        font-size: 12px;
-        background-color: white;
-        border-radius: 8px;
-        border: none;
-        padding: 4px 6px;
-
-        display: flex;
-        gap: 5px;
-    }
-    .emailsListItem:hover {
-        background-color: #ff8f8f;
-    }
-</style>
+<style src='/css/associatedEmails.css'></style>
 </html>
