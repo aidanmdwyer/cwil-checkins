@@ -165,7 +165,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 echo "<td style='text-align: center; background-color: $bgColor; font-size: 12px; border: none; padding-top: 0;'>
                     <div class='emailsListBox'>
-                        <button onclick='editEmailsList(this, " . json_encode($row['name']) . ")' style='background: transparent; border: none;'>🖊️</button>
+                        <button onclick='addEmail(this, " . json_encode($row['name']) . ")' style='background: white; border: none; border-radius: 6px; font-size: 20px; padding: 3px;'>+</button>
                         <div class='emailsList'>";
                         
                 $emails = explode(',', $row['emails']);
@@ -228,19 +228,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </main>
 </body>
 <script>
-    function editEmailsList(element, name) {
+    function addEmail(element, name) {
         const emailsListBox = element.parentElement;
         const emailsList = emailsListBox.getElementsByClassName("emailsList")[0];
-        let emails = [];
-        Array.from(emailsList.children).forEach(listItem => {
-            emails.push(listItem.innerText);
-        });
-        emailsListBox.style.display = "none";
-
-        const editEmailsBox = emailsListBox.parentElement.getElementsByClassName("editEmailsBox")[0];
-        const editEmails = editEmailsBox.getElementsByClassName("editEmails")[0];
-        editEmails.value = emails.join(", ");
-        editEmailsBox.style.display = "flex";
+        const newEmail = document.createElement("input");
+        newEmail.type = "text";
+        newEmail.className = "emailsListItem";
+        emailsList.appendChild(newEmail);
     }
 </script>
 <style>
