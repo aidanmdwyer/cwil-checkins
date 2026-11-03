@@ -155,7 +155,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $styleColor = $statusColor ? "color: {$statusColor};" : '';
                 echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; {$styleColor}'>" . htmlspecialchars($statusText) . "</td>";
 
-                echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; border: none; padding-top: 0; {$styleColor}'>
+                echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; border: none; padding-top: 0;'>
                     <div class='associatedEmailsBox'>
                         <button style='background: transparent; border: none;'>🖊️</button>
                         <div class='associatedEmailsList'>
@@ -226,9 +226,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     .emailListItem {
         font-size: 12px;
         background-color: white;
-        border-radius: 4px;
+        border-radius: 8px;
         border: none;
-        padding: 2px;
+        padding: 4px;
     }
     .editAssociatedEmails {
         background: transparent;
