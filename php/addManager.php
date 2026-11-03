@@ -161,6 +161,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class='associatedEmailsList'>
                             <div class='emailListItem'>bobbilly@gmail.com</div>
                             <div class='emailListItem'>billy@gmail.com</div>
+                            <div class='emailListItem'>billy@gmail.com</div>
                         </div>
                     </div>
                     <textarea class='editAssociatedEmails'></textarea>
@@ -228,7 +229,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         background-color: white;
         border-radius: 8px;
         border: none;
-        padding: 4px;
+        padding: 4px 6px;
     }
     .editAssociatedEmails {
         background: transparent;
