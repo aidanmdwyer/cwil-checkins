@@ -237,7 +237,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             console.log(listItem.innerText);
         })
         emailsList.style.display = "none";
-        const editEmailsBox = emailsListBox.parent.getElementsByClassName("editEmailsBox")[0];
+        const editEmailsBox = emailsListBox.parentElement.getElementsByClassName("editEmailsBox")[0];
         editEmailsBox.style.display = "flex";
     }
 </script>
