@@ -98,15 +98,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $query = "SELECT * FROM `managers`";
             $result = $conn->query($query);
 
-            echo "<table style='width: 600px'>";
+            echo "<table style='width: 700px'>";
             echo "<thead>
                 <tr>
                     <th style='width:150px'>Manager Name</th>
                     <th style='text-align: center; width:30px; font-size: 12px;'>Account Link</th>
                     <th style='text-align: center; width:30px; font-size: 10px;'>Password Reset Link</th>
-                    <th style='text-align: center; width:80px; font-size: 12px;'>Status</th>
-                    <th style='text-align: center; width:150px; font-size: 12px;'>Associated Emails</th>
-                    <th style='text-align: center; width:30px; font-size: 12px;'>Delete</th>
+                    <th style='text-align: center; width:80px;'>Status</th>
+                    <th style='text-align: center; width:250px;'>Associated Emails</th>
+                    <th style='text-align: center; width:30px;'>Delete</th>
                 </tr>
             </thead>";
             echo "<tbody>";
