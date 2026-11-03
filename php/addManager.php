@@ -284,7 +284,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         newEmailListItem.className = "emailsListItem";
         newEmailListItem.innerText = email;
         emailsList.appendChild(newEmailListItem);
-
     }
 
     function checkEmailStr(emailStr) {
