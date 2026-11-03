@@ -95,7 +95,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             //display table with Status column
-            $query = "SELECT * FROM `managers`";
+            $query = "SELECT
+                m.name,
+                GROUP_CONCAT(i.email SEPARATOR ',') AS emails
+            FROM managers m
+            LEFT JOIN associated_emails i
+                ON i.accountName = m.name
+                AND i.accountType = 'manager'
+                GROUP BY m.name;";
+
             $result = $conn->query($query);
 
             echo "<table style='width: 700px'>";
@@ -152,13 +160,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $statusText = 'Account not made';
                     $statusColor = 'red';
                 }
-                $styleColor = $statusColor ? "color: {$statusColor};" : '';
-                echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; {$styleColor}'>" . htmlspecialchars($statusText) . "</td>";
+                $styleColor = $statusColor ? "color: $statusColor;" : '';
+                echo "<td style='text-align: center; background-color: $bgColor; font-size: 12px; $styleColor'>" . htmlspecialchars($statusText) . "</td>";
 
-                echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; border: none; padding-top: 0;'>
+                echo "<td style='text-align: center; background-color: $bgColor; font-size: 12px; border: none; padding-top: 0;'>
                     <div class='associatedEmailsBox'>
                         <button style='background: transparent; border: none;'>🖊️</button>
-                        <div class='associatedEmailsList'></div>
+                        <div class='associatedEmailsList'>";
+                        
+                $emails = explode(',', $row['emails']);
+                if(sizeof($emails) > 0) {
+                    foreach($emails as $email) {
+                        echo "<div class='emailListItem'>$email</div>";
+                    }
+                }
+
+                echo "</div>
                     </div>
                     <div class='editAssociatedEmailsBox'>
                         <button style='background: transparent; border: none;'>✅</button>
@@ -166,7 +183,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </td>";
 
-                echo "<td style='text-align: center; background-color: {$bgColor}'>";
+                echo "<td style='text-align: center; background-color: $bgColor'>";
                 echo '
                     <form method="POST" action="deleteManager.php" style="display:inline;" data-name="' . htmlspecialchars($row['name']) . '">
                         <input type="hidden" name="manager_name" value="' . htmlspecialchars($row['name']) . '">
