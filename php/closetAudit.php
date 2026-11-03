@@ -491,6 +491,8 @@ form.addEventListener("invalid", function(event) {
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
 
+    $BODY .= "<img src='data:image/jpeg;base64," . $closetImage . "'>";
+
     $auditId = $conn->insert_id;
 
     $auditItemsValuesList = [];
