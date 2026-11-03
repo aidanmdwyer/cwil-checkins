@@ -164,7 +164,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "<td style='text-align: center; background-color: $bgColor; font-size: 12px; $styleColor'>" . htmlspecialchars($statusText) . "</td>";
 
                 echo "<td style='text-align: center; background-color: $bgColor; font-size: 12px; border: none; padding-top: 0;'>
-                    <div class='associatedEmailsBox'>
+                    <div class='associatedEmailsListBox'>
                         <button style='background: transparent; border: none;'>🖊️</button>
                         <div class='associatedEmailsList'>";
                         
@@ -226,7 +226,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </main>
 </body>
 <style>
-    .associatedEmailsBox {
+    .associatedEmailsListBox {
         width: 100%;
         display: flex;
         gap: 5px;
@@ -248,7 +248,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         border: none;
         padding: 4px 6px;
     }
-    .associatedEmailsBox {
+    
+    .editAssociatedEmailsBox {
         width: 100%;
         display: flex;
         gap: 5px;
