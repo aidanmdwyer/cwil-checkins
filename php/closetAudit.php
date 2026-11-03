@@ -604,11 +604,14 @@ form.addEventListener("invalid", function(event) {
 <body>
     <h2>Closet audit successfully submitted for<br><?= $buildingName ?>.</h2>
     <?php
-    $TO = "aidandyr@gmail.com, jeffreyallday05@gmail.com";
-    $SUBJECT = "Closet Audit: $buildingName, $date";
-    $BODY = "<html><body><b>Closet Audit: $buildingName, $date</b><br><br>";
+    $dateObj = new DateTime($date);
+    $dateFormatted = $dateObj->format("Y-m-d");
+    $TO = "aidandyr@gmail.com";
+    $SUBJECT = "Closet Audit: $buildingName, $dateFormatted";
+    $BODY = "<html><body><b>Closet Audit: $buildingName, $dateFormatted</b><br><br>";
     $HEADERS = "MIME-Version: 1.0\r\n";
     $HEADERS .= "Content-type: text/html; charset=UTF-8\r\n";
+    $HEADERS .= "Bcc: " . implode(",", $emailsList) . "\r\n";
 
     if(mail($TO, $SUBJECT, $BODY, $HEADERS)) {
         echo "<h3>Email sent to:</h3>";
