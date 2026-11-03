@@ -158,13 +158,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; border: none; padding-top: 0;'>
                     <div class='associatedEmailsBox'>
                         <button style='background: transparent; border: none;'>🖊️</button>
-                        <div class='associatedEmailsList'>
-                            <div class='emailListItem'>bobbilly@gmail.com</div>
-                            <div class='emailListItem'>billy@gmail.com</div>
-                            <div class='emailListItem'>billy@gmail.com</div>
-                        </div>
+                        <div class='associatedEmailsList'></div>
                     </div>
-                    <textarea class='editAssociatedEmails'></textarea>
+                    <div class='editAssociatedEmailsBox'>
+                        <button style='background: transparent; border: none;'>✅</button>
+                        <textarea class='editAssociatedEmails'></textarea>
+                    </div>
                 </td>";
 
                 echo "<td style='text-align: center; background-color: {$bgColor}'>";
@@ -232,19 +231,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         border: none;
         padding: 4px 6px;
     }
+    .associatedEmailsBox {
+        width: 100%;
+        display: flex;
+        gap: 5px;
+        padding: 0 5px;
+        box-sizing: border-box;
+        display: none;
+    }
     .editAssociatedEmails {
         background: transparent;
         outline: none;
         margin: 0;
-        padding-top: 0;
-        padding-bottom: 0;
+        padding: 0;
         border: none;
         width: 100%;
         resize: none;
         overflow: hidden;
         box-sizing: border-box;
         font: inherit;
-        display: none;
     }
 </style>
 </html>
