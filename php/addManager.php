@@ -99,7 +99,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result = $conn->query($query);
 
             echo "<table style='width: 450px'>";
-            echo "<thead><tr><th style='width:450px'>Manager Name</th><th style='text-align: center; width:30px; font-size: 12px;'>Account Link</th><th style='text-align: center; width:30px; font-size: 10px;'>Password Reset Link</th><th style='text-align: center; width:80px; font-size: 12px;'>Status</th><th style='text-align: center; width:30px; font-size: 12px;'>Delete</th></tr></thead>";
+            echo "<thead>
+                <tr>
+                    <th style='width:450px'>Manager Name</th>
+                    <th style='text-align: center; width:30px; font-size: 12px;'>Account Link</th>
+                    <th style='text-align: center; width:30px; font-size: 10px;'>Password Reset Link</th>
+                    <th style='text-align: center; width:80px; font-size: 12px;'>Status</th>
+                    <th style='text-align: center; width:450px; font-size: 12px;'>Associated Emails</th>
+                    <th style='text-align: center; width:30px; font-size: 12px;'>Delete</th>
+                </tr>
+            </thead>";
             echo "<tbody>";
 
             $switch = FALSE;
@@ -145,6 +154,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 $styleColor = $statusColor ? "color: {$statusColor};" : '';
                 echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; {$styleColor}'>" . htmlspecialchars($statusText) . "</td>";
+
+                echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; {$styleColor}'><input type='textarea'></td>";
 
                 echo "<td style='text-align: center; background-color: {$bgColor}'>";
                 echo '
