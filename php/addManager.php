@@ -251,7 +251,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         newEmailInput.focus();
     }
 
-    function submitNewEmail(name, emailInput, emailListItem) {
+    async function submitNewEmail(name, emailInput, emailListItem) {
         const email = emailInput.value;
         const emailList = emailListItem.parentElement;
 
