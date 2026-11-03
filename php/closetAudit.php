@@ -74,10 +74,16 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         <input type="hidden" name="date" value="<?=$date?>">
         <br>
 
-        <?php if($lastAuditDate) { ?>
-            <h3>Last Audit: <?=htmlspecialchars($lastAuditDate)?></h3>
-            <br>
-        <?php } ?>
+        <h3>Last Audit: 
+            <?php
+            if($lastAuditDate) {
+                echo htmlspecialchars($lastAuditDate);
+            } else {
+                echo "none";
+            }
+            ?>
+            </h3>
+        <br>
 
         <h3>Auditor: <?=htmlspecialchars($auditor)?></h3>
         <input type="hidden" name="auditor" value="<?=htmlspecialchars($auditor)?>">
