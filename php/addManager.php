@@ -156,18 +156,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; {$styleColor}'>" . htmlspecialchars($statusText) . "</td>";
 
                 echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; border: none; padding-top: 0; {$styleColor}'>
-                    <textarea style='
-                        background: transparent;
-                        outline: none;
-                        margin: 0;
-                        padding: 0;
-                        border: none;
-                        width: 100%;
-                        resize: none;
-                        overflow: hidden;
-                        box-sizing: border-box;
-                        font: inherit;
-                    '></textarea>
+                    <div class='associatedEmailsBox'>
+                        <button>🖊️</button>
+                        <div class='associatedEmailsList'></div>
+                    </div>
+                    <textarea class='editAssociatedEmails'></textarea>
                 </td>";
 
                 echo "<td style='text-align: center; background-color: {$bgColor}'>";
@@ -212,4 +205,34 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </main>
 </body>
+<style>
+    .associatedEmailsBox {
+        width: 100%;
+        display: flex;
+        gap: 5px;
+        padding: 2px;
+        box-sizing: border-box;
+    }
+    .associatedEmailsList {
+        flex: 1;
+        display: flex;
+        gap: 5px;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .editAssociatedEmails {
+        background: transparent;
+        outline: none;
+        margin: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        border: none;
+        width: 100%;
+        resize: none;
+        overflow: hidden;
+        box-sizing: border-box;
+        font: inherit;
+        display: none;
+    }
+</style>
 </html>
