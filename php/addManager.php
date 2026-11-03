@@ -292,7 +292,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         return pattern.test(emailStr) && emailStr.length <= 100;
     }
 
-    function deleteEmail(name, email) {
+    async function deleteEmail(name, email) {
         if(confirm("Are you sure you want to delete " + email + "?") && name && email) {
             const response = await fetch('/php/deleteAssociatedEmail.php', {
                 method: 'POST',
