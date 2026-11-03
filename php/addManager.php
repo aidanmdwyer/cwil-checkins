@@ -247,7 +247,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         newEmailConfirm.style.background = "transparent";
         newEmailConfirm.style.border = "none";
         newEmailConfirm.onClick = submitNewEmail(name, newEmailInput, newEmail);
-        
+
         emailsList.appendChild(newEmail);
         newEmail.appendChild(newEmailInput);
         newEmail.appendChild(newEmailConfirm);
@@ -280,6 +280,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         border-radius: 8px;
         border: none;
         padding: 4px 6px;
+
+        display: flex;
+        gap: 5px;
     }
 
     .editEmailsBox {
