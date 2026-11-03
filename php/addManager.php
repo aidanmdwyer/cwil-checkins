@@ -179,10 +179,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 echo "</div>
                     </div>
-                    <div class='editEmailsBox'>
-                        <button onclick='submitEmailsList(this, " . json_encode($row['name']) . ")' style='background: transparent; border: none;'>✅</button>
-                        <textarea class='editEmails'></textarea>
-                    </div>
                 </td>";
 
                 echo "<td style='text-align: center; background-color: $bgColor'>";
@@ -255,9 +251,46 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         newEmailInput.focus();
     }
 
-    function submitNewEmail(name, emailInput, inputElement) {
-        console.log("submitting " + name + ", " + emailInput.value);
-        inputElement.remove();
+    function submitNewEmail(name, emailInput, emailListItem) {
+        const email = emailInput.value;
+        const emailList = emailListItem.parentElement;
+
+        console.log("submitting " + name + ", " + email);
+
+        if(checkEmailStr(email)) {
+            emailListItem.remove();
+
+            const response = await fetch('/php/addAssociatedEmail.php', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    accountName: name,
+                    accountType: "manager",
+                    email: email
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                addEmailListItem(emailList);
+            } else {
+                console.error(data.message);
+            }
+        }
+    }
+
+    function addEmailListItem(emailsList, email) {
+        const newEmailListItem = document.createElement("div");
+        newEmailListItem.className = "emailsListItem";
+        newEmailListItem.innerText = email;
+        emailsList.appendChild(newEmailListItem);
+
+    }
+
+    function checkEmailStr(emailStr) {
+        if(emailStr) {
+            return true;
+        }
     }
 </script>
 <style>
@@ -285,27 +318,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         display: flex;
         gap: 5px;
-    }
-
-    .editEmailsBox {
-        width: 100%;
-        display: flex;
-        gap: 5px;
-        padding: 0 5px;
-        box-sizing: border-box;
-        display: none;
-    }
-    .editEmails {
-        background: transparent;
-        outline: none;
-        margin: 0;
-        padding: 0;
-        border: none;
-        width: 100%;
-        resize: none;
-        overflow: hidden;
-        box-sizing: border-box;
-        font: inherit;
     }
 </style>
 </html>
