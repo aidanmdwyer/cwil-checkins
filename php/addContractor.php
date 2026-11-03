@@ -15,6 +15,7 @@ if (!accountProperties('Contractors Page')) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add Contractor</title>
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/associatedEmails.css">
     <link rel="icon" type="image/x-icon" href="/imgs/favicon.png">
     <link rel="manifest" href="/manifest.json">
     <script src="/modules/xlsx.full.min.js"></script>
@@ -265,6 +266,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
     });
 </script>
+<script src='/js/associatedEmails.js'></script>
 <style>
     tbody tr.even td {
         background-color: #E5E5E5;

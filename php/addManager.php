@@ -15,6 +15,7 @@ if (!accountProperties('Managers Page')) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add Manager</title>
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/css/associatedEmails.css">
     <link rel="icon" type="image/x-icon" href="/imgs/favicon.png">
     <link rel="manifest" href="/manifest.json">
 </head>
@@ -225,5 +226,4 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </main>
 </body>
 <script src='/js/associatedEmails.js'></script>
-<style src='/css/associatedEmails.css'></style>
 </html>
