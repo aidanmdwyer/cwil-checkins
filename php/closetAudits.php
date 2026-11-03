@@ -112,7 +112,7 @@ if (!accountProperties('Closet Audits Page')) {
                     <h3>Auditor: <span id="displayAuditor"></span></h3><br>
                     <h3>Contractor: <span id="displayIC"></span></h3><br>
 
-                    <img id="closetImage"><br>
+                    <img id="displayClosetImage"><br>
 
                     <?php
                     $auditItems = [
@@ -336,7 +336,7 @@ if (!accountProperties('Closet Audits Page')) {
         cursor: pointer;
     }
 
-    #closetImage {
+    #displayClosetImage {
         width: 50%;
     }
 </style>

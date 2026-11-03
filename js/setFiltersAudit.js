@@ -20,7 +20,7 @@ const backButton = document.getElementById("backButton");
 const skipBackButton = document.getElementById("skipBackButton");
 const forwardButton = document.getElementById("forwardButton");
 const skipForwardButton = document.getElementById("skipForwardButton");
-const closetImage = document.getElementById("closetImage");
+const displayClosetImage = document.getElementById("displayClosetImage");
 
 filterFromDate.addEventListener('input', async function() {
     filterToDate.disabled = false;
@@ -162,6 +162,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     displayDate.innerHTML = new Date(date).toLocaleDateString('en-CA');
     displayTime.innerHTML = new Date(date).toLocaleTimeString('en-US', {hour: 'numeric', minute:'numeric'});
     displayIC.innerHTML = ic;
+    displayClosetImage.src = "";
 
     displayAudit.style.display = "flex";
     noAuditSelectedText.style.display = "none";
@@ -189,7 +190,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     console.log(data);
 
     if(data['closetImage']) {
-        closetImage.src = 'data:image/jpeg;base64,' + data['closetImage'];
+        displayClosetImage.src = 'data:image/jpeg;base64,' + data['closetImage'];
     }
 
     data['items'].forEach(item => {
