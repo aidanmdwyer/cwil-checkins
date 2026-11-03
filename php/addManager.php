@@ -155,11 +155,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $styleColor = $statusColor ? "color: {$statusColor};" : '';
                 echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; {$styleColor}'>" . htmlspecialchars($statusText) . "</td>";
 
-                echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; border: none; padding-vertical: 0; {$styleColor}'>
+                echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; border: none; padding-top: 0; {$styleColor}'>
                     <textarea style='
                         background: transparent;
                         outline: none;
                         margin: 0;
+                        padding: 0;
                         border: none;
                         width: 100%;
                         resize: none;
