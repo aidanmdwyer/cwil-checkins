@@ -94,7 +94,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $userReset[$userRow['username']] = $userRow['resetTimer'];
             }
 
-            //display table with Status column
+            //display table
             $query = "SELECT
                 m.name,
                 GROUP_CONCAT(i.email SEPARATOR ',') AS emails
@@ -172,7 +172,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if(sizeof($emails) > 0) {
                     foreach($emails as $email) {
                         if($email) {
-                            echo "<div class='emailsListItem' onclick='deleteEmail(" . json_encode($row['name']) . ", " . json_encode($email) . ")'>$email</div>";
+                            echo "<div class='emailsListItem' onclick='deleteEmail(" . json_encode($row['name']) . ", " . $accountType . ", " . json_encode($email) . ")'>$email</div>";
                         }
                     }
                 }
@@ -227,7 +227,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 <script>
     let addingEmail = false;
 
-    function addEmail(element, name) {
+    function addEmail(element, name, accountType) {
         if(addingEmail) return;
         addingEmail = true;
 
@@ -248,7 +248,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         newEmailConfirm.innerText = "✅";
         newEmailConfirm.style.background = "transparent";
         newEmailConfirm.style.border = "none";
-        newEmailConfirm.onclick = () => {submitNewEmail(name, newEmailInput, newEmail);};
+        newEmailConfirm.onclick = () => {submitNewEmail(name, accountType, newEmailInput, newEmail);};
 
         emailsList.appendChild(newEmail);
         newEmail.appendChild(newEmailInput);
@@ -259,7 +259,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         newEmailInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                submitNewEmail(name, newEmailInput, newEmail);
+                submitNewEmail(name, accountType, newEmailInput, newEmail);
             }
         });
 
@@ -275,7 +275,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         document.addEventListener('mousedown', handleOutsideClick);
     }
 
-    async function submitNewEmail(name, emailInput, emailListItem) {
+    async function submitNewEmail(name, accountType, emailInput, emailListItem) {
         const email = emailInput.value;
         const emailList = emailListItem.parentElement;
 
@@ -286,7 +286,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 method: 'POST',
                 body: new URLSearchParams({
                     accountName: name,
-                    accountType: "manager",
+                    accountType,
                     email: email
                 })
             });
@@ -308,13 +308,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         return pattern.test(emailStr) && emailStr.length <= 100;
     }
 
-    async function deleteEmail(name, email) {
+    async function deleteEmail(name, accountType, email) {
         if(confirm("Are you sure you want to remove " + email + "?") && name && email) {
             const response = await fetch('/php/deleteAssociatedEmail.php', {
                 method: 'POST',
                 body: new URLSearchParams({
                     accountName: name,
-                    accountType: "manager",
+                    accountType,
                     email: email
                 })
             });

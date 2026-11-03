@@ -109,11 +109,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             //display table
-            $query = "SELECT * FROM `contractors`";
+            $query = "SELECT
+                c.name,
+                GROUP_CONCAT(i.email SEPARATOR ',') AS emails
+            FROM contractors c
+            LEFT JOIN associated_emails i
+                ON i.accountName = c.name
+                AND i.accountType = 'contractor'
+                GROUP BY c.name;";
+
             $result = $conn->query($query);
 
             echo "<table id='contractorsTable' style='width: 650px'>";
-            echo "<thead><tr><th>Contractor Name</th><th style='text-align: center; width:30px; font-size: 12px;'>Account Link</th><th style='text-align: center; width:30px; font-size: 10px;'>Password Reset Link</th><th style='text-align: center; width:80px; font-size: 12px;'>Status</th><th style='text-align: center; width:30px; font-size: 12px;'>Delete</th></tr></thead>";
+            echo "<thead>
+                <tr>
+                    <th>Contractor Name</th>
+                    <th style='text-align: center; width:30px; font-size: 12px;'>Account Link</th>
+                    <th style='text-align: center; width:30px; font-size: 10px;'>Password Reset Link</th>
+                    <th style='text-align: center; width:80px;'>Status</th>
+                    <th style='text-align: center; width:200px;'>Associated Emails</th>
+                    <th style='text-align: center; width:30px;'>Delete</th>
+                </tr>
+            </thead>";
             echo "<tbody>";
 
             $switch = false;
@@ -160,6 +177,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 $styleColor = $statusColor ? "color: {$statusColor};" : '';
                 echo "<td style='text-align: center;; font-size: 12px; {$styleColor}'>" . htmlspecialchars($statusText) . "</td>";
+
+                echo "<td style='text-align: center; background-color: $bgColor; font-size: 12px; border: none; padding-top: 0;'>
+                    <div class='emailsListBox'>
+                        <button onclick='addEmail(this, " . json_encode($row['name']) . ")' style='background: white; border: none; border-radius: 6px; font-size: 20px; padding: 3px;'>+</button>
+                        <div class='emailsList'>";
+                        
+                $emails = explode(',', $row['emails']);
+                if(sizeof($emails) > 0) {
+                    foreach($emails as $email) {
+                        if($email) {
+                            echo "<div class='emailsListItem' onclick='deleteEmail(" . json_encode($row['name']) . ", " . json_encode($email) . ")'>$email</div>";
+                        }
+                    }
+                }
+
+                echo "
+                        </div>
+                    </div>
+                </td>";
 
                 echo "<td style='text-align: center;'>";
                 echo '
