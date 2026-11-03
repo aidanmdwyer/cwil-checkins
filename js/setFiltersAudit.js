@@ -162,6 +162,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     displayDate.innerHTML = new Date(date).toLocaleDateString('en-CA');
     displayTime.innerHTML = new Date(date).toLocaleTimeString('en-US', {hour: 'numeric', minute:'numeric'});
     displayIC.innerHTML = ic;
+    displayClosetImage.style.display = "none";
     displayClosetImage.src = "";
 
     displayAudit.style.display = "flex";
@@ -190,6 +191,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic}) {
     console.log(data);
 
     if(data['closetImage']) {
+        displayClosetImage.style.display = "inline-block";
         displayClosetImage.src = 'data:image/jpeg;base64,' + data['closetImage'];
     }
 

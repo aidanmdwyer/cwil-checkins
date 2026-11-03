@@ -338,6 +338,7 @@ if (!accountProperties('Closet Audits Page')) {
 
     #displayClosetImage {
         width: 50%;
+        display: none;
     }
 </style>
 
