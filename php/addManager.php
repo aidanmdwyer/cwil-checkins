@@ -228,7 +228,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </main>
 </body>
 <script>
-    function editEmailsList(element, name) {
+    const editEmailsList = function(element, name) {
         const emailsListBox = element.parent;
         const emailsList = emailsListBox.getElementsByClassName("emailsList")[0];
         Array.from(emailsList.children).forEach(listItem => {
