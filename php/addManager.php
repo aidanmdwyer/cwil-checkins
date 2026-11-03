@@ -231,15 +231,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     function addEmail(element, name) {
         const emailsListBox = element.parentElement;
         const emailsList = emailsListBox.getElementsByClassName("emailsList")[0];
+
         const newEmail = document.createElement("div");
         newEmail.className = "emailsListItem";
+
         const newEmailInput = document.createElement("input");
         newEmailInput.type = "text";
+        newEmailInput.style.background = "transparent";
+        newEmailInput.style.border = "none";
+        newEmailInput.style.padding = "0";
+        newEmailInput.style.margin = "0";
+
         const newEmailConfirm = document.createElement("button");
         newEmailConfirm.innerText = "✅";
         newEmailConfirm.style.background = "transparent";
         newEmailConfirm.style.border = "none";
-        newEmailConfirm.onclick = submitNewEmail(name, newEmailInput, newEmail);
+        newEmailConfirm.onClick = submitNewEmail(name, newEmailInput, newEmail);
+        
         emailsList.appendChild(newEmail);
         newEmail.appendChild(newEmailInput);
         newEmail.appendChild(newEmailConfirm);
