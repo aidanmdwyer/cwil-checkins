@@ -12,7 +12,7 @@ $filterAuditor = $_GET['filterAuditor'];
 $filterIC = $_GET['filterIC'];
 $page = $_GET['page'] >= 1 ? $_GET['page'] : 1;
 
-$selectAuditsSQL = "SELECT auditId, buildingName, date, auditor, ic, manager, closetImage FROM closet_audits";
+$selectAuditsSQL = "SELECT auditId, buildingName, date, auditor, ic, manager FROM closet_audits";
 
 $selectAuditsFilters = [];
 $selectAuditsTypeString = "";

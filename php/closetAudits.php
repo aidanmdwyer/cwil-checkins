@@ -386,7 +386,7 @@ if (!accountProperties('Closet Audits Page')) {
 
             $auditId = $_GET['auditId'];
 
-            $selectAuditStmt = $conn->prepare("SELECT auditId, buildingName, date, auditor, ic, manager, closetImage FROM closet_audits WHERE auditId = ?");
+            $selectAuditStmt = $conn->prepare("SELECT auditId, buildingName, date, auditor, ic, manager FROM closet_audits WHERE auditId = ?");
             $selectAuditStmt->bind_param("i", $auditId);
             $selectAuditStmt->execute();
 

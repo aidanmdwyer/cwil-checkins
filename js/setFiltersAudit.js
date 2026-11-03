@@ -157,7 +157,7 @@ async function buildAuditList(page = 1) {
     }
 }
 
-async function openAudit({auditId, buildingName, auditor, date, ic, manager, closetImage}) {
+async function openAudit({auditId, buildingName, auditor, date, ic, manager}) {
     displayBuildingName.innerHTML = buildingName ?? "";
     displayAuditor.innerHTML = auditor ?? "";
     displayDate.innerHTML = new Date(date).toLocaleDateString('en-CA') ?? "";
@@ -166,11 +166,6 @@ async function openAudit({auditId, buildingName, auditor, date, ic, manager, clo
     displayManager.innerHTML = manager ?? "";
     displayClosetImage.style.display = "none";
     displayClosetImage.src = "";
-
-    if(closetImage) {
-        displayClosetImage.style.display = "inline-block";
-        displayClosetImage.src = 'data:image/jpeg;base64,' + closetImage;
-    }
 
     displayAudit.style.display = "flex";
     noAuditSelectedText.style.display = "none";
@@ -196,6 +191,11 @@ async function openAudit({auditId, buildingName, auditor, date, ic, manager, clo
     const data = await response.json();
 
     console.log(data);
+
+    if(data['closetImage']) {
+        displayClosetImage.style.display = "inline-block";
+        displayClosetImage.src = 'data:image/jpeg;base64,' + data['closetImage'];
+    }
 
     data['items'].forEach(item => {
         const desc = item['itemDescription'];
