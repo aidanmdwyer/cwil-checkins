@@ -105,7 +105,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <th style='text-align: center; width:30px; font-size: 12px;'>Account Link</th>
                     <th style='text-align: center; width:30px; font-size: 10px;'>Password Reset Link</th>
                     <th style='text-align: center; width:80px;'>Status</th>
-                    <th style='text-align: center; width:250px;'>Associated Emails</th>
+                    <th style='text-align: center; width:200px;'>Associated Emails</th>
                     <th style='text-align: center; width:30px;'>Delete</th>
                 </tr>
             </thead>";
@@ -220,6 +220,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     .associatedEmailsList {
         flex: 1;
         display: flex;
+        flex-wrap: wrap;
         gap: 5px;
         padding: 0;
         box-sizing: border-box;
