@@ -173,11 +173,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if(sizeof($emails) > 0) {
                     foreach($emails as $email) {
                         if($email) {
-                            echo "<div class='emailsListItem' onclick='deleteEmail(" .
-                                htmlspecialchars(json_encode($row['name']), ENT_QUOTES, 'UTF-8') .
-                                ", " . $accountType . ", " .
-                                htmlspecialchars(json_encode($email), ENT_QUOTES, 'UTF-8') .
-                                ")'>$email</div>";
+                            echo "<div class='emailsListItem' onclick='deleteEmail(" . htmlspecialchars(json_encode($row['name']), ENT_QUOTES, 'UTF-8') . ", " . $accountType . ", " . htmlspecialchars(json_encode($email), ENT_QUOTES, 'UTF-8') . ")'>" . htmlspecialchars($email) . "</div>";
                         }
                     }
                 }
