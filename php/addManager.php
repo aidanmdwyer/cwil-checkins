@@ -177,7 +177,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                 }
 
-                echo "</div>
+                echo "
+                        </div>
                     </div>
                 </td>";
 
@@ -224,7 +225,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 </main>
 </body>
 <script>
+    let addingEmail = false;
+
     function addEmail(element, name) {
+        if(addingEmail) return;
+        addingEmail = true;
+        
         const emailsListBox = element.parentElement;
         const emailsList = emailsListBox.getElementsByClassName("emailsList")[0];
 
