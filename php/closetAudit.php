@@ -21,16 +21,18 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 
     require_once 'db.php';
 
-    $contractorStmt = $conn->prepare("SELECT ic FROM buildings WHERE name = ?");
-    $contractorStmt->bind_param("s", $buildingName);
-    $contractorStmt->execute();
-    $contractorResults = $contractorStmt->get_result();
-    $ic = $contractorResults->fetch_assoc()['ic'];
+    $assignementsStmt = $conn->prepare("SELECT ic, manager FROM buildings WHERE name = ?");
+    $assignementsStmt->bind_param("s", $buildingName);
+    $assignementsStmt->execute();
+    $assignmentsResult = $assignementsStmt->get_result();
+    $assignmentsRow = $assignmentsStmt->fetch_assoc();
+    $ic = $assignmentsRow['ic'];
+    $manager = $assignmentsRow['manager'];
     if(!$ic) {
         http_response_code(404);
         die('Page load failed.');
     }
-    $contractorStmt->close();
+    $assignementsStmt->close();
 
     $lastDateStmt = $conn->prepare("SELECT date FROM closet_audits WHERE buildingName = ? ORDER BY date DESC LIMIT 1");
     $lastDateStmt->bind_param("s", $buildingName);
@@ -91,6 +93,10 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         
         <h3>Contractor: <?=htmlspecialchars($ic)?></h3>
         <input type="hidden" name="ic" value="<?=htmlspecialchars($ic)?>">
+        <br>
+
+        <h3>Manager: <?=htmlspecialchars($manager)?></h3>
+        <input type="hidden" name="manager" value="<?=htmlspecialchars($manager)?>">
         <br>
 
         <?php
@@ -457,6 +463,7 @@ form.addEventListener("invalid", function(event) {
     $date = $_POST['date'];
     $auditor = $_POST['auditor'];
     $ic = $_POST['ic'];
+    $manager = $_POST['manager'];
     $auditItems = $_POST['auditItems'];
     $auditItemComments = $_POST['comments'];
     $closetImage = null;
@@ -467,11 +474,11 @@ form.addEventListener("invalid", function(event) {
 
     require_once 'db.php';
 
-    $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic, closetImage) VALUES (?, ?, ?, ?, ?);");
+    $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic, manager, closetImage) VALUES (?, ?, ?, ?, ?, ?);");
     $null = null;
-    $closetAuditInsertStmt->bind_param("ssssb", $buildingName, $date, $auditor, $ic, $null);
+    $closetAuditInsertStmt->bind_param("sssssb", $buildingName, $date, $auditor, $ic, $manager, $null);
     if ($closetImage !== null) {
-        $closetAuditInsertStmt->send_long_data(4, $closetImage);
+        $closetAuditInsertStmt->send_long_data(5, $closetImage);
     }
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
@@ -567,6 +574,19 @@ form.addEventListener("invalid", function(event) {
         $auditCommentsInsertStmt->close();
     }
 
+    $selectEmailsStmt = $conn->prepare("SELECT DISTINCT email FROM associated_emails 
+                                            WHERE (accountName = ? AND accountType = 'manager') 
+                                            OR (accountName = ? AND accountType = 'contractor');");
+    $selectEmailsStmt->bind_param("ss", $manager, $contractor);
+    $selectEmailsStmt->execute();
+    $selectEmailsResults = $selectEmailsStmt->get_result();
+    $emailsList = [];
+    while($row = $selectEmailsResults->fetch_assoc()) {
+        $emailsList[] = $row['email'];
+    }
+
+    $selectEmailsStmt->close();
+
     $conn->close();
 ?>
 
@@ -584,6 +604,13 @@ form.addEventListener("invalid", function(event) {
 <body>
     <h2>Closet audit successfully submitted for<br><?= $buildingName ?>.</h2>
     <button class="big" onclick="window.location.href='/index.php'">Home</button>
+    <div style='display: flex; flex-direction: column;'>
+        <?php
+        foreach($emailsList as $email) {
+            echo "<p>$email</p>";
+        }
+        ?>
+    </div>
 </body>
 <style>
     body {
