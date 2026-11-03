@@ -329,7 +329,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         padding: 0;
         box-sizing: border-box;
     }
-    .emailsListItem .addEmailsListItem {
+    .emailsListItem, .addEmailsListItem {
         font-size: 12px;
         background-color: white;
         border-radius: 8px;
