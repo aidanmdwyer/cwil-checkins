@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     $assignementsStmt->bind_param("s", $buildingName);
     $assignementsStmt->execute();
     $assignmentsResult = $assignementsStmt->get_result();
-    $assignmentsRow = $assignmentsStmt->fetch_assoc();
+    $assignmentsRow = $assignmentsResult->fetch_assoc();
     $ic = $assignmentsRow['ic'];
     $manager = $assignmentsRow['manager'];
     if(!$ic) {
