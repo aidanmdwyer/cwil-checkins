@@ -239,7 +239,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         const editEmailsBox = emailsListBox.parentElement.getElementsByClassName("editEmailsBox")[0];
         const editEmails = editEmailsBox.getElementsByClassName("editEmails")[0];
-        editEmails.value = emails.implode(", ", emails);
+        editEmails.value = implode(", ", emails);
         editEmailsBox.style.display = "flex";
     }
 </script>
