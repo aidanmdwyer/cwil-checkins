@@ -603,14 +603,15 @@ form.addEventListener("invalid", function(event) {
 </head>
 <body>
     <h2>Closet audit successfully submitted for<br><?= $buildingName ?>.</h2>
-    <button class="big" onclick="window.location.href='/index.php'">Home</button>
-    <div style='display: flex; flex-direction: column;'>
+    <h3>Email sent to:</h3>
+    <div class="emailList">
         <?php
         foreach($emailsList as $email) {
             echo "<p>$email</p>";
         }
         ?>
     </div>
+    <button class="big" onclick="window.location.href='/index.php'">Home</button>
 </body>
 <style>
     body {
@@ -623,8 +624,18 @@ form.addEventListener("invalid", function(event) {
         flex-direction: column;
         align-items: center;
     }
-    h2 {
+    h2, h3 {
         text-align: center;
+    }
+    .emailList {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+    .emailList p {
+        margin: 0;
+        padding: 0;
     }
 </style>
 </html>
