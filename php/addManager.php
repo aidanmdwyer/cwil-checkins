@@ -246,7 +246,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         newEmailConfirm.innerText = "✅";
         newEmailConfirm.style.background = "transparent";
         newEmailConfirm.style.border = "none";
-        newEmailConfirm.onclick = submitNewEmail(name, newEmailInput, newEmail);
+        newEmailConfirm.onclick = () => {submitNewEmail(name, newEmailInput, newEmail);};
 
         emailsList.appendChild(newEmail);
         newEmail.appendChild(newEmailInput);
