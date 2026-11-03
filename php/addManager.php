@@ -157,8 +157,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; border: none; padding-top: 0; {$styleColor}'>
                     <div class='associatedEmailsBox'>
-                        <button>🖊️</button>
-                        <div class='associatedEmailsList'></div>
+                        <button style='background: transparent; border: none;'>🖊️</button>
+                        <div class='associatedEmailsList'>
+                            <div class='emailListItem'>bobbilly@gmail.com</div>
+                            <div class='emailListItem'>billy@gmail.com</div>
+                        </div>
                     </div>
                     <textarea class='editAssociatedEmails'></textarea>
                 </td>";
@@ -219,6 +222,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         gap: 5px;
         padding: 0;
         box-sizing: border-box;
+    }
+    .emailListItem {
+        font-size: 12px;
+        background-color: white;
+        border-radius: 4px;
+        border: none;
+        padding: 2px;
     }
     .editAssociatedEmails {
         background: transparent;
