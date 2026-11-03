@@ -14,20 +14,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         require_once 'db.php';
 
-        $stmt = $conn->prepare("INSERT INTO `associated_emails`(`accountName`, `accountType`, `email`) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $accountName, $accountType, $email);
+        $stmt = null;
 
-        if ($stmt->execute() && $stmt->affected_rows > 0) {
-            echo json_encode([
-                'success' => true,
-                'message' => 'Email successfully added.'
-            ]);
-        } else {
-            http_response_code(500);
-            echo json_encode([
-                'success' => false,
-                'message' => 'Failed to add email.'
-            ]);
+        try {
+            $stmt = $conn->prepare("INSERT INTO `associated_emails`(`accountName`, `accountType`, `email`) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $accountName, $accountType, $email);
+
+            if ($stmt->execute() && $stmt->affected_rows > 0) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Email successfully associated.'
+                ]);
+            } else {
+                http_response_code(500);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Failed to associate email.'
+                ]);
+            }
+        } finally {
+            if ($stmt !== null) {
+                $stmt->close();
+            }
+
+            $conn->close();
         }
     } else {
         http_response_code(400);
