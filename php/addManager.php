@@ -256,10 +256,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         newEmailInput.focus();
 
-        newEmail.onfocusout = () => {
-            newEmail.remove();
-            addingEmail = false;
-        };
+        newEmail.onfocusout = 
+            setTimeout(() => {
+                newEmail.remove();
+                addingEmail = false;
+            }, 50);
     }
 
     async function submitNewEmail(name, emailInput, emailListItem) {
