@@ -474,7 +474,7 @@ form.addEventListener("invalid", function(event) {
 
     $dateObj = new DateTime($date);
     $dateFormatted = $dateObj->format("Y-m-d");
-    $TO = "";
+    $TO = "aidandyr@gmail.com";
     $SUBJECT = "Closet Audit: $buildingName, $dateFormatted";
     $BODY = "<html><body><b>Closet Audit: $buildingName, $dateFormatted</b><br>";
     $HEADERS = "MIME-Version: 1.0\r\n";
