@@ -156,7 +156,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; {$styleColor}'>" . htmlspecialchars($statusText) . "</td>";
 
                 echo "<td style='text-align: center; background-color: {$bgColor}; font-size: 12px; border: none; {$styleColor}'>
-                    <textarea style='background: transparent; outline: none; margin: 0; border: none; width: 100%;'></textarea>
+                    <textarea style='background: transparent; outline: none; margin: 0; border: none; width: 100%; resize: none; overflow: hidden; box-sizing: border-box;'></textarea>
                 </td>";
 
                 echo "<td style='text-align: center; background-color: {$bgColor}'>";
