@@ -171,7 +171,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $emails = explode(',', $row['emails']);
                 if(sizeof($emails) > 0) {
                     foreach($emails as $email) {
-                        echo "<div class='emailListItem'>$email</div>";
+                        if($email) {
+                            echo "<div class='emailListItem'>$email</div>";
+                        }
                     }
                 }
 
@@ -248,7 +250,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         border: none;
         padding: 4px 6px;
     }
-    
+
     .editAssociatedEmailsBox {
         width: 100%;
         display: flex;
