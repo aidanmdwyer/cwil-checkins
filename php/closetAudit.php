@@ -474,7 +474,6 @@ form.addEventListener("invalid", function(event) {
 
     $dateObj = new DateTime($date);
     $dateFormatted = $dateObj->format("Y-m-d");
-    $TO = "aidandyr@gmail.com";
     $SUBJECT = "Closet Audit: $buildingName, $dateFormatted";
     $BODY = "<html><body><b>Closet Audit: $buildingName, $dateFormatted</b><br>";
     $HEADERS = "MIME-Version: 1.0\r\n";
@@ -633,7 +632,7 @@ form.addEventListener("invalid", function(event) {
     <?php
     
     $BODY .= "</body></html>";
-    $HEADERS .= "Bcc: " . implode(",", $emailsList) . "\r\n";
+    $TO .= implode(",", $emailsList);
 
     if(mail($TO, $SUBJECT, $BODY, $HEADERS)) {
         echo "<h3>Email sent to:</h3>";
