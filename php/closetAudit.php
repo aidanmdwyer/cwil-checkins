@@ -474,6 +474,7 @@ form.addEventListener("invalid", function(event) {
 
     $dateObj = new DateTime($date);
     $dateFormatted = $dateObj->format("Y-m-d");
+    $TO = "";
     $SUBJECT = "Closet Audit: $buildingName, $dateFormatted";
     $BODY = "<html><body><b>Closet Audit: $buildingName, $dateFormatted</b><br>";
     $HEADERS = "MIME-Version: 1.0\r\n";
@@ -490,8 +491,6 @@ form.addEventListener("invalid", function(event) {
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
 
-    // $BODY .= "<img src='data:image/jpeg;base64," . base64_encode($closetImage) . "'>";
-
     $auditId = $conn->insert_id;
 
     $auditItemsValuesList = [];
@@ -506,7 +505,7 @@ form.addEventListener("invalid", function(event) {
     $auditImages = [];
     $auditImageCount = 0;
 
-    $BODY .= "<table><tr><th>Audit Item</th><th>✅/❌</th><th>Comments</th><th>Image</th></tr>";
+    $BODY .= "<table><tr><th>Audit Item</th><th>✅/❌</th><th>Comments</th></tr>";
     foreach ($auditItems as $item => $value) {
         $auditItemCount++;
 
@@ -538,7 +537,6 @@ form.addEventListener("invalid", function(event) {
         }
         $BODY .= "</td>";
 
-        $BODY .= "<td>";
         // Insert image if one was uploaded for this item
         if ($images['error'][$itemId] === UPLOAD_ERR_OK) {
             $imageData = file_get_contents($images['tmp_name'][$itemId]);
@@ -553,10 +551,7 @@ form.addEventListener("invalid", function(event) {
 
             $auditImages[] = $imageData;
             $auditImageCount++;
-
-            // $BODY .= "<img src='data:image/jpeg;base64," . base64_encode($imageData) . "'>";
         }
-        $BODY .= "</td>";
 
         $BODY .= "</tr>";
         $itemId++;
@@ -632,7 +627,8 @@ form.addEventListener("invalid", function(event) {
     <?php
     
     $BODY .= "</body></html>";
-    $TO .= implode(",", $emailsList);
+    // $TO .= implode(",", $emailsList);
+    $HEADERS .= "Bcc: " . implode(",", $emailsList) . "\r\n";
 
     if(mail($TO, $SUBJECT, $BODY, $HEADERS)) {
         echo "<h3>Email sent to:</h3>";
