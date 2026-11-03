@@ -282,8 +282,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         console.log("submitting " + name + ", " + email);
 
         if(checkEmailStr(email)) {
-            emailListItem.remove();
-
             const response = await fetch('/php/addAssociatedEmail.php', {
                 method: 'POST',
                 body: new URLSearchParams({
