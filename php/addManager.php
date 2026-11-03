@@ -272,18 +272,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             const data = await response.json();
 
             if (data.success) {
-                addEmailListItem(emailList);
+                window.location.reload();
             } else {
                 console.error(data.message);
             }
         }
-    }
-
-    function addEmailListItem(emailsList, email) {
-        const newEmailListItem = document.createElement("div");
-        newEmailListItem.className = "emailsListItem";
-        newEmailListItem.innerText = email;
-        emailsList.appendChild(newEmailListItem);
     }
 
     function checkEmailStr(emailStr) {
