@@ -546,7 +546,7 @@ form.addEventListener("invalid", function(event) {
             $auditCommentsValuesList[] = $auditId;
             $auditCommentsValuesList[] = $itemId;
             $auditCommentsValuesList[] = $auditItemComments[$item];
-            $BODY .= $auditItemComments[$item];
+            $TABLE .= $auditItemComments[$item];
         } else {
             $TABLE .= "-";
         }
@@ -573,7 +573,7 @@ form.addEventListener("invalid", function(event) {
     }
     $TABLE .= "</table>\r\n";
 
-    $BODY .= "<br>✅ " . $valueCounts['1'] . " | ❌ " . $valueCounts['0'] . " | N/A " . $valueCounts['2'] . "<br>\r\n";
+    $BODY .= "<br><br>✅ " . $valueCounts['1'] . " | ❌ " . $valueCounts['0'] . " | N/A " . $valueCounts['2'] . "<br><br>\r\n";
 
     $BODY .= $TABLE;
 
