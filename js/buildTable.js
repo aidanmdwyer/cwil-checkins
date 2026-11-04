@@ -3,7 +3,7 @@ function buildTable(fetchStr = './php/getData.php?key=' + accessKey +
                         '&ic=' + encodeURIComponent(document.getElementById('filterIC').value) +
                         '&todayOnly=' + (document.getElementById('todayOnly').checked ? 'true' : 'false') +
                         '&showActive=' + (document.getElementById('showActive').checked ? 'true' : 'false') +
-                        '&search=' + (document.getElementById('searchBuildings').value),
+                        '&search=' + encodeHTML(document.getElementById('searchBuildings').value),
                     respectLoadAll = false,
                     cancelSidebar = true,
                     selected = [],
