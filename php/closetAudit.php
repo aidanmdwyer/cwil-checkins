@@ -573,7 +573,7 @@ form.addEventListener("invalid", function(event) {
     }
     $TABLE .= "</table>\r\n";
 
-    $BODY .= "✅ " . $valueCounts['1'] . " | ❌ " . $valueCounts['0'] . " | N/A " . $valueCounts['2'] . "\r\n";
+    $BODY .= "<br>✅ " . $valueCounts['1'] . " | ❌ " . $valueCounts['0'] . " | N/A " . $valueCounts['2'] . "<br>\r\n";
 
     $BODY .= $TABLE;
 
