@@ -112,6 +112,7 @@ if (!accountProperties('Closet Audits Page')) {
                     <h3>Auditor: <span id="displayAuditor"></span></h3><br>
                     <h3>Contractor: <span id="displayIC"></span></h3><br>
                     <h3>Manager: <span id="displayManager"></span></h3><br>
+                    <p id="displayValues"></p><br>
 
                     <img id="displayClosetImage"><br>
 

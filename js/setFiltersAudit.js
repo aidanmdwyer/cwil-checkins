@@ -8,6 +8,7 @@ const displayIC = document.getElementById("displayIC");
 const displayManager = document.getElementById("displayManager");
 const displayDate = document.getElementById("displayDate");
 const displayTime = document.getElementById("displayTime");
+const displayValues = document.getElementById("displayValues");
 const auditTable = document.getElementById("auditTable");
 const displayAudit = document.getElementById("displayAudit");
 const noAuditSelectedText = document.getElementById("noAuditSelectedText");
@@ -197,7 +198,16 @@ async function openAudit({auditId, buildingName, auditor, date, ic, manager}) {
         displayClosetImage.src = 'data:image/jpeg;base64,' + data['closetImage'];
     }
 
+    let valueCounts = {};
     data['items'].forEach(item => {
+        const value = item['value'];
+        const valueCount = valueCounts[value];
+        if(valueCount) {
+            valueCounts[value] = valueCount++;
+        } else {
+            valueCounts[value] = 1;
+        }
+
         const desc = item['itemDescription'];
 
         const valueElement = document.getElementById(desc + "-value");
@@ -220,4 +230,6 @@ async function openAudit({auditId, buildingName, auditor, date, ic, manager}) {
             imagePreviewButton.dataset.imgSrc = "";
         }
     });
+
+    displayValues.innerText = "✅ " + "";
 }
