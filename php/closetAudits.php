@@ -87,9 +87,9 @@ if (!accountProperties('Closet Audits Page')) {
                 <div id="noAuditSelectedText">
                     <?php 
                     if($_GET['deleted']) {
-                        echo "<h1 style='color: red;'>Deleted closet audit for " . $_GET['deleted'] . ".</h1>";
+                        echo "<h1 style='color: red;'>Deleted closet audit for " . htmlspecialchars($_GET['deleted']) . ".</h1>";
                     } else if($_GET['error']) {
-                        echo "<h1 style='color: red;'>Failed to delete closet audit for " . $_GET['error'] . ".</h1>";
+                        echo "<h1 style='color: red;'>Failed to delete closet audit for " . htmlspecialchars($_GET['error']) . ".</h1>";
                     } else {
                         echo "<h1>Select an audit to view.</h1>";
                     }
