@@ -474,9 +474,16 @@ form.addEventListener("invalid", function(event) {
 
     $dateObj = new DateTime($date);
     $dateFormatted = $dateObj->format("Y-m-d");
+    $timeFormatted = $dateObj->format("h:i A");
     $TO = "";
     $SUBJECT = "Closet Audit: $buildingName, $dateFormatted";
-    $BODY = "<html><body><b>Closet Audit: $buildingName, $dateFormatted</b><br>";
+    $BODY = "<html><body>";
+    $BODY .= "<b>Building:</b> $buildingName<br>";
+    $BODY .= "<b>Date:</b> $dateFormatted<br>";
+    $BODY .= "<b>Time:</b> $timeFormatted<br>";
+    $BODY .= "<b>Auditor:</b> $auditor<br>";
+    $BODY .= "<b>Contractor:</b> $ic<br>";
+    $BODY .= "<b>Manager:</b> $manager<br>";
     $HEADERS = "MIME-Version: 1.0\r\n";
     $HEADERS .= "Content-type: text/html; charset=UTF-8\r\n";
 
@@ -573,7 +580,7 @@ form.addEventListener("invalid", function(event) {
     }
     $TABLE .= "</table>\r\n";
 
-    $BODY .= "<br><br>✅ " . $valueCounts['1'] . " | ❌ " . $valueCounts['0'] . " | N/A " . $valueCounts['2'] . "<br><br>\r\n";
+    $BODY .= "<br>✅ " . $valueCounts['1'] . " <br>❌ " . $valueCounts['0'] . " <br>N/A " . $valueCounts['2'] . "<br><br>\r\n";
 
     $BODY .= $TABLE;
 
