@@ -505,13 +505,15 @@ form.addEventListener("invalid", function(event) {
     $auditImages = [];
     $auditImageCount = 0;
 
-    $BODY .= "<table><tr><th>Audit Item</th><th>✅/❌</th><th>Comments</th></tr>";
+    $BODY .= "<table>\r\n";
+    $BODY .= "<tr><th>Audit Item</th><th>✅/❌</th><th>Comments</th></tr>\r\n";
     foreach ($auditItems as $item => $value) {
         $auditItemCount++;
 
         //add to email
-        $BODY .= "<tr><td>$item</td>";
-        $BODY .= "<td>" . ($value === 0 ? "❌" : ($value === 1 ? "✅" : "N/A")) . "</td>";
+        $BODY .= "<tr>\r\n";
+        $BODY .= "<td>$item</td>\r\n";
+        $BODY .= "<td>" . ($value === 0 ? "❌" : ($value === 1 ? "✅" : "N/A")) . "</td>\r\n";
 
         //prep audit items insert
         $auditItemsTypeString .= "iisi";
@@ -535,7 +537,7 @@ form.addEventListener("invalid", function(event) {
         } else {
             $BODY .= "-";
         }
-        $BODY .= "</td>";
+        $BODY .= "</td>\r\n";
 
         // Insert image if one was uploaded for this item
         if ($images['error'][$itemId] === UPLOAD_ERR_OK) {
@@ -553,10 +555,10 @@ form.addEventListener("invalid", function(event) {
             $auditImageCount++;
         }
 
-        $BODY .= "</tr>";
+        $BODY .= "</tr>\r\n";
         $itemId++;
     }
-    $BODY .= "</table>";
+    $BODY .= "</table>\r\n";
 
     if ($auditImageCount > 0) {
         $auditImageInsertSQL = "INSERT INTO closet_audit_images (auditId, itemId, image) VALUES";
