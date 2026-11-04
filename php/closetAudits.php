@@ -107,6 +107,8 @@ if (!accountProperties('Closet Audits Page')) {
 
                     <div class='hr'></div>
 
+                    <br>
+                    
                     <h3>Date: <span id="displayDate"></span></h3><br>
                     <h3>Time: <span id="displayTime"></span></h3><br>
                     <h3>Auditor: <span id="displayAuditor"></span></h3><br>

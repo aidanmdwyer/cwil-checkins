@@ -231,5 +231,5 @@ async function openAudit({auditId, buildingName, auditor, date, ic, manager}) {
         }
     });
 
-    displayValues.innerHTML = "✅ " + (valueCounts["1"] ?? "0") + " <br> ❌ " + (valueCounts["0"] ?? "0") + " <br> N/A " + (valueCounts["2"] ?? "0");
+    displayValues.innerHTML = (valueCounts[1] ?? "0") + " ✅<br>" + (valueCounts[0] ?? "0") + " ❌<br>" + (valueCounts[2] ?? "0") + " N/A";
 }
