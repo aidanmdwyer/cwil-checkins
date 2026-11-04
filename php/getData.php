@@ -12,7 +12,7 @@ $ic = $_GET['ic'] ?? '';
 $todayOnly = $_GET['todayOnly'] ?? '';
 $loadAll = $_GET['loadAll'] ?? '';
 $showActive = $_GET['showActive'] ?? '';
-$search = $_GET['search'] ?? '';
+$search = urldecode($_GET['search']) ?? '';
 
 //Normalize to boolean
 $todayOnly = strtolower(trim($todayOnly)) === 'true';
