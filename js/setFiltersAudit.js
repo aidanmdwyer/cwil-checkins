@@ -203,7 +203,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic, manager}) {
         const value = item['value'];
         const valueCount = valueCounts[value];
         if(valueCount) {
-            valueCounts[value] = valueCount++;
+            valueCounts[value] = valueCount + 1;
         } else {
             valueCounts[value] = 1;
         }

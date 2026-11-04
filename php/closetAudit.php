@@ -525,7 +525,7 @@ form.addEventListener("invalid", function(event) {
 
         $valueCount = $valueCounts[$value];
         if($valueCount) {
-            $valueCounts[$value] = $valueCount++;
+            $valueCounts[$value] = $valueCount + 1;
         } else {
             $valueCounts[$value] = 1;
         }
