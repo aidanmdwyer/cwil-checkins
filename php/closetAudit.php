@@ -505,19 +505,28 @@ form.addEventListener("invalid", function(event) {
     $auditImages = [];
     $auditImageCount = 0;
 
-    $BODY .= "<table style='border-collapse: collapse; width: 100%; border: 1px solid black;'>\r\n";
-    $BODY .= "<tr>
+    $valueCounts = [];
+
+    $TABLE = "<table style='border-collapse: collapse; width: 100%; border: 1px solid black;'>\r\n";
+    $TABLE .= "<tr>
         <th style='border: 1px solid black; padding: 6px;'>Audit Item</th>
-        <th style='border: 1px solid black; padding: 6px;'>Result</th>
+        <th style='border: 1px solid black; padding: 6px;'>✅/❌</th>
         <th style='border: 1px solid black; padding: 6px;'>Comments</th>
     </tr>\r\n";
     foreach ($auditItems as $item => $value) {
         $auditItemCount++;
 
+        $valueCount = $valueCounts[$value];
+        if($valueCount) {
+            $valueCounts[$value] = $valueCount++;
+        } else {
+            $valueCounts[$value] = 1;
+        }
+
         //add to email
-        $BODY .= "<tr>\r\n";
-        $BODY .= "<td style='border: 1px solid black; padding: 6px;'>$item</td>\r\n";
-        $BODY .= "<td style='border: 1px solid black; padding: 6px;'>" . ($value == 0 ? "❌" : ($value == 1 ? "✅" : "N/A")) . "</td>\r\n";
+        $TABLE .= "<tr>\r\n";
+        $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>$item</td>\r\n";
+        $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>" . ($value == 0 ? "❌" : ($value == 1 ? "✅" : "N/A")) . "</td>\r\n";
 
         //prep audit items insert
         $auditItemsTypeString .= "iisi";
@@ -527,7 +536,7 @@ form.addEventListener("invalid", function(event) {
         $auditItemsValuesList[] = $item;
         $auditItemsValuesList[] = $value;
 
-        $BODY .= "<td style='border: 1px solid black; padding: 6px;'>";
+        $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>";
         //prep comments insert
         if($auditItemComments[$item]) {
             $auditCommentCount++;
@@ -539,9 +548,9 @@ form.addEventListener("invalid", function(event) {
             $auditCommentsValuesList[] = $auditItemComments[$item];
             $BODY .= $auditItemComments[$item];
         } else {
-            $BODY .= "-";
+            $TABLE .= "-";
         }
-        $BODY .= "</td>\r\n";
+        $TABLE .= "</td>\r\n";
 
         // Insert image if one was uploaded for this item
         if ($images['error'][$itemId] === UPLOAD_ERR_OK) {
@@ -559,10 +568,14 @@ form.addEventListener("invalid", function(event) {
             $auditImageCount++;
         }
 
-        $BODY .= "</tr>\r\n";
+        $TABLE .= "</tr>\r\n";
         $itemId++;
     }
-    $BODY .= "</table>\r\n";
+    $TABLE .= "</table>\r\n";
+
+    $BODY .= "✅ " . $valueCounts['1'] . " | ❌ " . $valueCounts['0'] . " | N/A " . $valueCounts['2'] . "\r\n";
+
+    $BODY .= $TABLE;
 
     if ($auditImageCount > 0) {
         $auditImageInsertSQL = "INSERT INTO closet_audit_images (auditId, itemId, image) VALUES";
