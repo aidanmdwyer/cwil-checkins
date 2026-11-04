@@ -505,15 +505,19 @@ form.addEventListener("invalid", function(event) {
     $auditImages = [];
     $auditImageCount = 0;
 
-    $BODY .= "<table>\r\n";
-    $BODY .= "<tr><th>Audit Item</th><th>✅/❌</th><th>Comments</th></tr>\r\n";
+    $BODY .= "<table style='border-collapse: collapse; width: 100%; border: 1px solid black;'>\r\n";
+    $BODY .= "<tr>
+        <th style='border: 1px solid black; padding: 6px;'>Audit Item</th>
+        <th style='border: 1px solid black; padding: 6px;'>Result</th>
+        <th style='border: 1px solid black; padding: 6px;'>Comments</th>
+    </tr>\r\n";
     foreach ($auditItems as $item => $value) {
         $auditItemCount++;
 
         //add to email
         $BODY .= "<tr>\r\n";
-        $BODY .= "<td>$item</td>\r\n";
-        $BODY .= "<td>" . ($value === 0 ? "❌" : ($value === 1 ? "✅" : "N/A")) . "</td>\r\n";
+        $BODY .= "<td style='border: 1px solid black; padding: 6px;'>$item</td>\r\n";
+        $BODY .= "<td style='border: 1px solid black; padding: 6px;'>" . ($value == 0 ? "❌" : ($value == 1 ? "✅" : "N/A")) . "</td>\r\n";
 
         //prep audit items insert
         $auditItemsTypeString .= "iisi";
@@ -523,7 +527,7 @@ form.addEventListener("invalid", function(event) {
         $auditItemsValuesList[] = $item;
         $auditItemsValuesList[] = $value;
 
-        $BODY .= "<td>";
+        $BODY .= "<td style='border: 1px solid black; padding: 6px;'>";
         //prep comments insert
         if($auditItemComments[$item]) {
             $auditCommentCount++;
