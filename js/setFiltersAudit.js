@@ -200,7 +200,7 @@ async function openAudit({auditId, buildingName, auditor, date, ic, manager}) {
 
     let valueCounts = {};
     data['items'].forEach(item => {
-        const value = item['value'];
+        const value = item['itemValue'];
         const valueCount = valueCounts[value];
         if(valueCount) {
             valueCounts[value] = valueCount + 1;
@@ -230,6 +230,8 @@ async function openAudit({auditId, buildingName, auditor, date, ic, manager}) {
             imagePreviewButton.dataset.imgSrc = "";
         }
     });
+
+    console.log(valueCounts);
 
     displayValues.innerHTML = (valueCounts[1] ?? "0") + " ✅<br>" + (valueCounts[0] ?? "0") + " ❌<br>" + (valueCounts[2] ?? "0") + " N/A";
 }
