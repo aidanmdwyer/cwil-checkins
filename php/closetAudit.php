@@ -64,6 +64,8 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
+    <button onclick="window.location.href='/index.php'" class="big">&#8592 Back to Home</button>
+
     <h1>
         Closet Audit -
         <br><?= $buildingName?>
