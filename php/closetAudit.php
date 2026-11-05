@@ -459,6 +459,8 @@ form.addEventListener("invalid", function(event) {
 
 <?php
 } else { //after submission
+    require_once 'db.php';
+
     $buildingName = $_POST['buildingName'];
     $date = $_POST['date'];
     $auditor = $_POST['auditor'];
@@ -495,18 +497,17 @@ form.addEventListener("invalid", function(event) {
         ];
 
         $BODY .= "<img src='cid:closet-image' style='max-width: 100%; height: auto;'><br><br>";
-    }
 
-    require_once 'db.php';
-
-    $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic, manager, closetImage) VALUES (?, ?, ?, ?, ?, ?);");
-    $null = null;
-    $closetAuditInsertStmt->bind_param("sssssb", $buildingName, $date, $auditor, $ic, $manager, $null);
-    if ($closetImage !== null) {
+        $closetAuditInsertStmt = $conn->prepare("INSERT INTO closet_audits (buildingName, date, auditor, ic, manager, closetImage) VALUES (?, ?, ?, ?, ?, ?);");
+        $null = null;
+        $closetAuditInsertStmt->bind_param("sssssb", $buildingName, $date, $auditor, $ic, $manager, $null);
         $closetAuditInsertStmt->send_long_data(5, $closetImage);
+        $closetAuditInsertStmt->execute();
+        $closetAuditInsertStmt->close();
+    } else {
+        http_response_code(400);
+        die('Bad request.');
     }
-    $closetAuditInsertStmt->execute();
-    $closetAuditInsertStmt->close();
 
     $auditId = $conn->insert_id;
 
