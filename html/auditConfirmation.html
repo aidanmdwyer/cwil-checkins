@@ -7,30 +7,37 @@
 <body style="background-color: lightgrey; text-align: center;">
 <img src="/imgs/logo.png" alt="City Wide logo" style="width: 50%; max-width: 350px;"><br>
 
-<h2>Closet audit successfully submitted for<br>BUILDING</h2>
+<h2 id="title"></h2>
 <div id="emailsBox">
     <h3>Email sent to:</h3>
     <div id="emailsList"></div>
 </div>
+<br>
 <button class="big" onclick="window.location.href='/index.php'">Home</button>
 
 </body>
 <script>
-    const emailsBox = document.getElementById("emailsBox");
     let params = new URLSearchParams(document.location.search);
     let buildingName = params.get("buildingName");
-    let emailsStr = params.get("emails");
 
-    if(!emailsStr) {
-        emailsBox.style.display = "none";
+    const title = document.getElementById("title");
+    if(buildingName) {
+        title.innerHTML = "Closet audit successfully submitted for " + buildingName;
+
+        let emailsStr = params.get("emails");
+        if(!emailsStr) {
+            document.getElementById("emailsBox").style.display = "none";
+        } else {
+            const emailsList = document.getElementById("emailsList");
+            const emails = emailsStr.split(",");
+            emails.forEach(email => {
+                const p = document.createElement("p");
+                p.innerText = email;
+                emailsList.appendChild(p);
+            });
+        }
     } else {
-        const emailsList = document.getElementById("emailsList");
-        const emails = emailsStr.split(",");
-        emails.forEach(email => {
-            const p = document.createElement("p");
-            p.innerText = email;
-            emailsList.appendChild(p);
-        });
+        title.innerHTML = "ERROR: invalid link."
     }
 </script>
 <style>
