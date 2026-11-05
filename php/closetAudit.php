@@ -708,6 +708,6 @@ form.addEventListener("invalid", function(event) {
         echo "<h3>No email addresses found to send report to.</h3>";
     }
 
-    header("Location: /html/confirmation.html" . $confirmationParams);
+    header("Location: /html/auditConfirmation.html" . $confirmationParams);
 }
 ?>

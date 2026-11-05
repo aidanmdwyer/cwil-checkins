@@ -5,13 +5,34 @@
   <title>Audit Confirmation</title>
 </head>
 <body style="background-color: lightgrey; text-align: center;">
-<br><br><br>
 <img src="/imgs/logo.png" alt="City Wide logo" style="width: 50%; max-width: 350px;"><br>
 
 <h2>Closet audit successfully submitted for<br>BUILDING</h2>
+<div id="emailsBox">
+    <h3>Email sent to:</h3>
+    <div id="emailsList"></div>
+</div>
 <button class="big" onclick="window.location.href='/index.php'">Home</button>
 
 </body>
+<script>
+    const emailsBox = document.getElementById("emailsBox");
+    let params = new URLSearchParams(document.location.search);
+    let buildingName = params.get("buildingName");
+    let emailsStr = params.get("emails");
+
+    if(!emailsStr) {
+        emailsBox.style.display = "none";
+    } else {
+        const emailsList = document.getElementById("emailsList");
+        const emails = emailsStr.split(",");
+        emails.forEach(email => {
+            const p = document.createElement("p");
+            p.innerText = email;
+            emailsList.appendChild(p);
+        });
+    }
+</script>
 <style>
     body {
         width: 100%;
@@ -22,17 +43,18 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
     }
     h2, h3 {
         text-align: center;
     }
-    .emailList {
+    #emailsList {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 5px;
     }
-    .emailList p {
+    #emailsList p {
         margin: 0;
         padding: 0;
     }
