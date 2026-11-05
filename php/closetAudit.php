@@ -418,12 +418,11 @@ form.addEventListener("invalid", function(event) {
 
 <?php
 } else { //after submission
-    require_once 'db.php';
-
     $confirmationParams = "";
 
     $buildingName = $_POST['buildingName'];
     $confirmationParams .= "?buildingName=" . $buildingName;
+
     $date = $_POST['date'];
     $auditor = $_POST['auditor'];
     $ic = $_POST['ic'];
@@ -435,6 +434,13 @@ form.addEventListener("invalid", function(event) {
         $closetImage = file_get_contents($_FILES['closetImage']['tmp_name']);
     }
     $images = $_FILES['images'];
+
+    if(!$buildingName || !$date || !$auditor || !$ic || !$manager || !$postAuditItems || !$closetImage) {
+        http_response_code(400);
+        die('Bad request.');
+    }
+
+    require_once 'db.php';
 
     $dateObj = new DateTime($date);
     $dateFormatted = $dateObj->format("Y-m-d");
