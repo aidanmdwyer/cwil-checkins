@@ -704,9 +704,9 @@ form.addEventListener("invalid", function(event) {
     $MESSAGE .= "--$boundary--\r\n";
 
     // Send
-    $TO = $emailsList[0] ?? '';
+    $TO = "";
 
-    $HEADERS .= "Bcc: " . implode(",", array_slice($emailsList, 1)) . "\r\n";
+    $HEADERS .= "Bcc: " . implode(",", $emailsList) . "\r\n";
 
     if (count($emailsList) > 0) {
         if (mail($TO, $SUBJECT, $MESSAGE, $HEADERS)) {
