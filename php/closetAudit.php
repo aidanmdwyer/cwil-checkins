@@ -493,7 +493,6 @@ form.addEventListener("invalid", function(event) {
             'cid' => 'closet-image',
             'data' => $closetImage
         ];
-        error_log("Added closet-image: " . strlen($emailInlineImages[count($emailInlineImages) - 1]['data']) . " bytes");
 
         $BODY .= "<img src='cid:closet-image' style='max-width: 100%; height: auto;'><br><br>";
     }
@@ -504,7 +503,11 @@ form.addEventListener("invalid", function(event) {
     $null = null;
     $closetAuditInsertStmt->bind_param("sssssb", $buildingName, $date, $auditor, $ic, $manager, $null);
     if ($closetImage !== null) {
+        error_log("Before DB insert: " . strlen($closetImage));
+
         $closetAuditInsertStmt->send_long_data(5, $closetImage);
+
+        error_log("After DB send_long_data: " . strlen($closetImage));
     }
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
@@ -596,7 +599,6 @@ form.addEventListener("invalid", function(event) {
                 'cid' => $cid,
                 'data' => $imageData
             ];
-            error_log("Added $cid: " . strlen($emailInlineImages[count($emailInlineImages) - 1]['data']) . " bytes");
 
             // Display image in the corresponding email row
             $TABLE .= "<img src='cid:$cid' style='max-width: 200px; height: auto;'>";
@@ -629,9 +631,13 @@ form.addEventListener("invalid", function(event) {
         );
 
         foreach ($auditImages as $index => $imageData) {
-            $auditImageInsertStmt->send_long_data(($index * 3) + 2, $imageData);
-        }
+            error_log("Before DB send_long_data: " . strlen($imageData));
 
+            $auditImageInsertStmt->send_long_data(($index * 3) + 2, $imageData);
+
+            error_log("After DB send_long_data: " . strlen($imageData));
+        }
+        
         $auditImageInsertStmt->execute();
         $auditImageInsertStmt->close();
     }
