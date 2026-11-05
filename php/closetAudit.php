@@ -425,7 +425,7 @@ form.addEventListener("invalid", function(event) {
     $auditor = $_POST['auditor'];
     $ic = $_POST['ic'];
     $manager = $_POST['manager'];
-    $auditItems = $_POST['auditItems'];
+    $postAuditItems = $_POST['auditItems'];
     $auditItemComments = $_POST['comments'];
     $closetImage = null;
     if ($_FILES['closetImage']['error'] === UPLOAD_ERR_OK) {
@@ -480,32 +480,20 @@ form.addEventListener("invalid", function(event) {
     $auditCommentCount = 0;
 
     $auditImagesValues = [];
-    $auditImages = [];
+    $insertAuditImages = [];
     $auditImageCount = 0;
 
     $valueCounts = [];
 
-    $TABLE = "<table style='border-collapse: collapse; width: 100%; border: 1px solid black;'>\r\n";
-    $TABLE .= "<tr>
-        <th style='border: 1px solid black; padding: 6px;'>Audit Item</th>
-        <th style='border: 1px solid black; padding: 6px;'>✅/❌</th>
-        <th style='border: 1px solid black; padding: 6px;'>Comments</th>
-        <th style='border: 1px solid black; padding: 6px;'>Image</th>
-    </tr>\r\n";
-    foreach ($auditItems as $item => $value) {
-        $auditItemCount++;
+    $itemToImageData = [];
 
+    foreach ($postAuditItems as $item => $value) {
         $valueCount = $valueCounts[$value];
         if($valueCount) {
             $valueCounts[$value] = $valueCount + 1;
         } else {
             $valueCounts[$value] = 1;
         }
-
-        //add to email
-        $TABLE .= "<tr>\r\n";
-        $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>$item</td>\r\n";
-        $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>" . ($value == 0 ? "❌" : ($value == 1 ? "✅" : "N/A")) . "</td>\r\n";
 
         //prep audit items insert
         $auditItemsTypeString .= "iisi";
@@ -515,7 +503,6 @@ form.addEventListener("invalid", function(event) {
         $auditItemsValuesList[] = $item;
         $auditItemsValuesList[] = $value;
 
-        $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>";
         //prep comments insert
         if($auditItemComments[$item]) {
             $auditCommentCount++;
@@ -525,17 +512,12 @@ form.addEventListener("invalid", function(event) {
             $auditCommentsValuesList[] = $auditId;
             $auditCommentsValuesList[] = $itemId;
             $auditCommentsValuesList[] = $auditItemComments[$item];
-            $TABLE .= $auditItemComments[$item];
-        } else {
-            $TABLE .= "-";
         }
-        $TABLE .= "</td>\r\n";
 
         // Insert image if one was uploaded for this item
-        $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>";
-
         if ($images['error'][$itemId] === UPLOAD_ERR_OK) {
             $imageData = file_get_contents($images['tmp_name'][$itemId]);
+            $itemToImageData[$item] = $imageData;
 
             if ($imageData === false) {
                 die("Failed to read uploaded image.");
@@ -546,29 +528,64 @@ form.addEventListener("invalid", function(event) {
             $auditImagesValues[] = $itemId;
             $auditImagesValues[] = null;
 
-            $auditImages[] = $imageData;
+            $insertAuditImages[] = $imageData;
             $auditImageCount++;
-
-            // Add image to email attachments
-            $cid = "audit-image-$itemId";
-
-            $emailInlineImages[] = [
-                'cid' => $cid,
-                'data' => $imageData
-            ];
-
-            // Display image in the corresponding email row
-            $TABLE .= "<img src='cid:$cid' style='max-width: 200px; height: auto;'>";
-        } else {
-            $TABLE .= "-";
         }
 
-        $TABLE .= "</td>";
-
-        $TABLE .= "</tr>\r\n";
         $itemId++;
+        $auditItemCount++;
     }
-    $TABLE .= "</table>\r\n";
+
+    //build email tables
+    $TABLE = "";
+    foreach ($auditItems as $section => $list) {
+        $TABLE .= "<h2>$section</h2>";
+        $TABLE .= "<table style='border-collapse: collapse; width: 100%; border: 1px solid black;'>\r\n";
+        $TABLE .= "<tr>
+            <th style='border: 1px solid black; padding: 6px;'>Audit Item</th>
+            <th style='border: 1px solid black; padding: 6px;'>✅/❌</th>
+            <th style='border: 1px solid black; padding: 6px;'>Comments</th>
+            <th style='border: 1px solid black; padding: 6px;'>Image</th>
+        </tr>\r\n";
+        foreach ($list as $item) {
+            $value = $postAuditItems[$item];
+            $TABLE .= "<tr>\r\n";
+            
+            //item
+            $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>$item</td>\r\n";
+
+            //value
+            $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>" . ($value == 0 ? "❌" : ($value == 1 ? "✅" : "N/A")) . "</td>\r\n";
+
+            //comment
+            $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>";
+            if($auditItemComments[$item]) {
+                $TABLE .= $auditItemComments[$item];
+            }
+            $TABLE .= "</td>\r\n";
+
+            //image
+            $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>";
+
+            if($itemToImageData[$item]) {
+                // Add image to email attachments
+                $cid = "audit-image-$item";
+
+                $emailInlineImages[] = [
+                    'cid' => $cid,
+                    'data' => $itemToImageData[$item]
+                ];
+
+                // Display image in the corresponding email row
+                $TABLE .= "<img src='cid:$cid' style='max-width: 200px; height: auto;'>";
+            }
+
+            $TABLE .= "</td>";
+
+            $TABLE .= "</tr>\r\n";
+        }
+        $TABLE .= "</table>\r\n";
+    }
 
     $BODY .= "<br>✅ " . ($valueCounts['1'] ?? "0") . " <br>❌ " . ($valueCounts['0'] ?? "0") . " <br>N/A " . ($valueCounts['2'] ?? "0") . "<br><br>\r\n";
 
@@ -587,7 +604,7 @@ form.addEventListener("invalid", function(event) {
             ...$auditImagesValues
         );
 
-        foreach ($auditImages as $index => $imageData) {
+        foreach ($insertAuditImages as $index => $imageData) {
             $auditImageInsertStmt->send_long_data(($index * 3) + 2, $imageData);
         }
 
