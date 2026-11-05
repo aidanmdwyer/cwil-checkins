@@ -503,11 +503,7 @@ form.addEventListener("invalid", function(event) {
     $null = null;
     $closetAuditInsertStmt->bind_param("sssssb", $buildingName, $date, $auditor, $ic, $manager, $null);
     if ($closetImage !== null) {
-        error_log("Before DB insert: " . strlen($closetImage));
-
         $closetAuditInsertStmt->send_long_data(5, $closetImage);
-
-        error_log("After DB send_long_data: " . strlen($closetImage));
     }
     $closetAuditInsertStmt->execute();
     $closetAuditInsertStmt->close();
@@ -631,13 +627,9 @@ form.addEventListener("invalid", function(event) {
         );
 
         foreach ($auditImages as $index => $imageData) {
-            error_log("Before DB send_long_data: " . strlen($imageData));
-
             $auditImageInsertStmt->send_long_data(($index * 3) + 2, $imageData);
-
-            error_log("After DB send_long_data: " . strlen($imageData));
         }
-        
+
         $auditImageInsertStmt->execute();
         $auditImageInsertStmt->close();
     }
