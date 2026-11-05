@@ -475,7 +475,6 @@ form.addEventListener("invalid", function(event) {
     $dateObj = new DateTime($date);
     $dateFormatted = $dateObj->format("Y-m-d");
     $timeFormatted = $dateObj->format("h:i A");
-    $TO = "";
     $SUBJECT = "Closet Audit: $buildingName, $dateFormatted";
     $BODY = "<html><body>";
     $BODY .= "<b>Building:</b> $buildingName<br>";
@@ -484,8 +483,19 @@ form.addEventListener("invalid", function(event) {
     $BODY .= "<b>Auditor:</b> $auditor<br>";
     $BODY .= "<b>Contractor:</b> $ic<br>";
     $BODY .= "<b>Manager:</b> $manager<br>";
-    $HEADERS = "MIME-Version: 1.0\r\n";
-    $HEADERS .= "Content-type: text/html; charset=UTF-8\r\n";
+
+    // Store images that will be attached to the email.
+    $emailInlineImages = [];
+
+    // Main closet image
+    if ($closetImage !== null) {
+        $emailInlineImages[] = [
+            'cid' => 'closet-image',
+            'data' => $closetImage
+        ];
+
+        $BODY .= "<img src='cid:closet-image' style='max-width: 100%; height: auto;'><br><br>";
+    }
 
     require_once 'db.php';
 
@@ -517,8 +527,9 @@ form.addEventListener("invalid", function(event) {
     $TABLE = "<table style='border-collapse: collapse; width: 100%; border: 1px solid black;'>\r\n";
     $TABLE .= "<tr>
         <th style='border: 1px solid black; padding: 6px;'>Audit Item</th>
-        <th style='border: 1px solid black; padding: 6px;'>✅/❌</th>
+        <th style='border: 1px solid black; padding: 6px;'>Result</th>
         <th style='border: 1px solid black; padding: 6px;'>Comments</th>
+        <th style='border: 1px solid black; padding: 6px;'>Image</th>
     </tr>\r\n";
     foreach ($auditItems as $item => $value) {
         $auditItemCount++;
@@ -560,6 +571,8 @@ form.addEventListener("invalid", function(event) {
         $TABLE .= "</td>\r\n";
 
         // Insert image if one was uploaded for this item
+        $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>";
+
         if ($images['error'][$itemId] === UPLOAD_ERR_OK) {
             $imageData = file_get_contents($images['tmp_name'][$itemId]);
 
@@ -567,13 +580,29 @@ form.addEventListener("invalid", function(event) {
                 die("Failed to read uploaded image.");
             }
 
+            // Add image to database insert arrays
             $auditImagesValues[] = $auditId;
             $auditImagesValues[] = $itemId;
-            $auditImagesValues[] = null; // BLOB placeholder
+            $auditImagesValues[] = null;
 
             $auditImages[] = $imageData;
             $auditImageCount++;
+
+            // Add image to email attachments
+            $cid = "audit-image-$itemId";
+
+            $emailInlineImages[] = [
+                'cid' => $cid,
+                'data' => $imageData
+            ];
+
+            // Display image in the corresponding email row
+            $TABLE .= "<img src='cid:$cid' style='max-width: 200px; height: auto;'>";
+        } else {
+            $TABLE .= "-";
         }
+
+        $TABLE .= "</td>";
 
         $TABLE .= "</tr>\r\n";
         $itemId++;
@@ -653,8 +682,39 @@ form.addEventListener("invalid", function(event) {
     <?php
     
     $BODY .= "</body></html>";
-    // $TO .= implode(",", $emailsList);
-    $HEADERS .= "Bcc: " . implode(",", $emailsList) . "\r\n";
+
+    // Generate a unique MIME boundary
+    $boundary = "----=_ClosetAudit_" . md5(uniqid((string)mt_rand(), true));
+
+    // Email headers
+    $HEADERS = "MIME-Version: 1.0\r\n";
+    $HEADERS .= "Content-Type: multipart/related; boundary=\"$boundary\"; type=\"text/html\"\r\n";
+
+    // Start the email body
+    $MESSAGE = "--$boundary\r\n";
+    $MESSAGE .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $MESSAGE .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
+    $MESSAGE .= $BODY . "\r\n";
+
+    // Add each image as an inline MIME attachment
+    foreach ($emailInlineImages as $image) {
+        $cid = $image['cid'];
+
+        $MESSAGE .= "--$boundary\r\n";
+        $MESSAGE .= "Content-Type: image/jpeg; name=\"$cid.jpg\"\r\n";
+        $MESSAGE .= "Content-Transfer-Encoding: base64\r\n";
+        $MESSAGE .= "Content-ID: <$cid>\r\n";
+        $MESSAGE .= "Content-Disposition: inline; filename=\"$cid.jpg\"\r\n\r\n";
+
+        // Wrap base64 at 76 characters per line
+        $MESSAGE .= chunk_split(base64_encode($image['data']), 76, "\r\n");
+    }
+
+    $MESSAGE .= "--$boundary--\r\n";
+
+    $TO = $emailsList[0] ?? '';
+
+    $HEADERS .= "Bcc: " . implode(",", array_slice($emailsList, 1)) . "\r\n";
 
     if(mail($TO, $SUBJECT, $BODY, $HEADERS)) {
         echo "<h3>Email sent to:</h3>";
