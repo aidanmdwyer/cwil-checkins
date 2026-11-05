@@ -505,6 +505,7 @@ form.addEventListener("invalid", function(event) {
         $closetAuditInsertStmt->execute();
         $closetAuditInsertStmt->close();
     } else {
+        $conn->close();
         http_response_code(400);
         die('Bad request.');
     }
