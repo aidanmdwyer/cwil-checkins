@@ -702,16 +702,12 @@ form.addEventListener("invalid", function(event) {
     $MESSAGE .= $BODY . "\r\n";
 
     // Add inline image parts
-    foreach ($emailInlineImages as $index => $image) {
-        $cid = $image['cid'];
-
-        $MESSAGE .= "--$boundary\r\n";
-        $MESSAGE .= "Content-Type: image/jpeg; name=\"image-$index.jpg\"\r\n";
-        $MESSAGE .= "Content-Transfer-Encoding: base64\r\n";
-        $MESSAGE .= "Content-ID: <$cid>\r\n";
-        $MESSAGE .= "Content-Disposition: inline; filename=\"image-$index.jpg\"\r\n\r\n";
-
-        $MESSAGE .= chunk_split(base64_encode($image['data']), 76, "\r\n");
+    foreach ($emailInlineImages as $image) {
+        error_log(
+            $image['cid'] . ': ' .
+            (is_string($image['data']) ? strlen($image['data']) : 'NOT A STRING') .
+            ' bytes'
+        );
     }
 
     // End MIME message
