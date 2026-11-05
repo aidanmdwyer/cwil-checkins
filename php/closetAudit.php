@@ -66,112 +66,114 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
 <body>
     <button onclick="window.location.href='/index.php'" class="big">&#8592 Back to Home</button>
 
-    <h1>
-        Closet Audit -
-        <br><?= $buildingName?>
-    </h1>
+    <main>
+        <h1>
+            Closet Audit -
+            <br><?= $buildingName?>
+        </h1>
 
-    <div class='hr'></div>
+        <div class='hr'></div>
 
-    <form method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="buildingName" value="<?=htmlspecialchars($buildingName)?>">
+        <form method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="buildingName" value="<?=htmlspecialchars($buildingName)?>">
 
-        <h3>Date: <?=htmlspecialchars($dateFormatted)?></h3>
-        <input type="hidden" name="date" value="<?=$date?>">
-        <br>
+            <h3>Date: <?=htmlspecialchars($dateFormatted)?></h3>
+            <input type="hidden" name="date" value="<?=$date?>">
+            <br>
 
-        <h3>Last Audit: 
+            <h3>Last Audit: 
+                <?php
+                if($lastAuditDate) {
+                    echo htmlspecialchars($lastAuditDate);
+                } else {
+                    echo "none";
+                }
+                ?>
+                </h3>
+            <br>
+
+            <h3>Auditor: <?=htmlspecialchars($auditor)?></h3>
+            <input type="hidden" name="auditor" value="<?=htmlspecialchars($auditor)?>">
+            <br>
+            
+            <h3>Contractor: <?=htmlspecialchars($ic)?></h3>
+            <input type="hidden" name="ic" value="<?=htmlspecialchars($ic)?>">
+            <br>
+
+            <h3>Manager: <?=htmlspecialchars($manager)?></h3>
+            <input type="hidden" name="manager" value="<?=htmlspecialchars($manager)?>">
+            <br>
+
             <?php
-            if($lastAuditDate) {
-                echo htmlspecialchars($lastAuditDate);
-            } else {
-                echo "none";
+            echo "<div class='hr'></div>";
+            foreach ($auditItems as $section => $list) {
+                echo "<h2>$section</h2>";
+                echo "<table>";
+                echo "<tr>
+                    <th>❌</th>
+                    <th>✅</th>
+                    <th>N/A</th>
+                    <th>Item</th>
+                    <th>Comments</th>
+                    <th>Image</th>
+                </tr>";
+                foreach ($list as $item) {
+                    echo "
+                    <tr>
+                        <td class='checkboxCell'>
+                            <label>
+                                <input type='radio' name='auditItems[$item]' value='0' checked>
+                            </label>
+                        </td>
+                        <td class='checkboxCell'>
+                            <label>
+                                <input type='radio' name='auditItems[$item]' value='1'>
+                            </label>
+                        </td>
+                        <td class='checkboxCell'>
+                            <label>
+                                <input type='radio' name='auditItems[$item]' value='2'>
+                            </label>
+                        </td>
+                        <td>
+                            $item
+                        </td>
+                        <td style='padding: 0; margin: 0;'>
+                            <textarea name='comments[$item]' placeholder='Comments...' maxlength='160'></textarea>
+                        </td>
+                        <td class='imageCell'>
+                            <input type='file' name='images[]' accept='image/*' class='imageInput'>
+
+                            <button type='button' class='previewButton' style='display: none;'>
+                                Preview
+                            </button>
+                        </td>
+                    </tr>";
+                }
+                echo "</table>";
+                echo "<br><div class='hr'></div>";
             }
             ?>
-            </h3>
-        <br>
 
-        <h3>Auditor: <?=htmlspecialchars($auditor)?></h3>
-        <input type="hidden" name="auditor" value="<?=htmlspecialchars($auditor)?>">
-        <br>
-        
-        <h3>Contractor: <?=htmlspecialchars($ic)?></h3>
-        <input type="hidden" name="ic" value="<?=htmlspecialchars($ic)?>">
-        <br>
+            <h2>Upload an Image of the Entire Closet.</h2>
+            <div>
+                <input type='file' name='closetImage' accept='image/*' class='imageInput' required>
+                <button type='button' class='previewButton' style='display: none;'>
+                    Preview
+                </button>
+            </div>
+            <br>
 
-        <h3>Manager: <?=htmlspecialchars($manager)?></h3>
-        <input type="hidden" name="manager" value="<?=htmlspecialchars($manager)?>">
-        <br>
+            <div class="hr"></div>
 
-        <?php
-        echo "<div class='hr'></div>";
-        foreach ($auditItems as $section => $list) {
-            echo "<h2>$section</h2>";
-            echo "<table>";
-            echo "<tr>
-                <th>❌</th>
-                <th>✅</th>
-                <th>N/A</th>
-                <th>Item</th>
-                <th>Comments</th>
-                <th>Image</th>
-            </tr>";
-            foreach ($list as $item) {
-                echo "
-                <tr>
-                    <td class='checkboxCell'>
-                        <label>
-                            <input type='radio' name='auditItems[$item]' value='0' checked>
-                        </label>
-                    </td>
-                    <td class='checkboxCell'>
-                        <label>
-                            <input type='radio' name='auditItems[$item]' value='1'>
-                        </label>
-                    </td>
-                    <td class='checkboxCell'>
-                        <label>
-                            <input type='radio' name='auditItems[$item]' value='2'>
-                        </label>
-                    </td>
-                    <td>
-                        $item
-                    </td>
-                    <td style='padding: 0; margin: 0;'>
-                        <textarea name='comments[$item]' placeholder='Comments...' maxlength='160'></textarea>
-                    </td>
-                    <td class='imageCell'>
-                        <input type='file' name='images[]' accept='image/*' class='imageInput'>
+            <button type="submit" class="big">Submit Audit</button>
 
-                        <button type='button' class='previewButton' style='display: none;'>
-                            Preview
-                        </button>
-                    </td>
-                </tr>";
-            }
-            echo "</table>";
-            echo "<br><div class='hr'></div>";
-        }
-        ?>
-
-        <h2>Upload an Image of the Entire Closet.</h2>
-        <div>
-            <input type='file' name='closetImage' accept='image/*' class='imageInput' required>
-            <button type='button' class='previewButton' style='display: none;'>
-                Preview
-            </button>
+        </form>
+        <div id="imageOverlay" class="imageOverlay">
+            <button type="button" id="closeOverlay">X</button>
+            <img id="overlayImage">
         </div>
-        <br>
-
-        <div class="hr"></div>
-
-        <button type="submit" class="big">Submit Audit</button>
-
-    </form>
-    <div id="imageOverlay" class="imageOverlay">
-        <button type="button" id="closeOverlay">X</button>
-        <img id="overlayImage">
-    </div>
+    </main>
 </body>
 <style>
     html {
@@ -183,7 +185,10 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST') { //regular page load
         margin: 0 auto;
         padding: 0 30px 200px 30px;
         box-sizing: border-box;
+    }
 
+    main {
+        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 10px;
