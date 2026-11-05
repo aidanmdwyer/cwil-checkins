@@ -716,7 +716,7 @@ form.addEventListener("invalid", function(event) {
 
     $HEADERS .= "Bcc: " . implode(",", array_slice($emailsList, 1)) . "\r\n";
 
-    if(mail($TO, $SUBJECT, $BODY, $HEADERS)) {
+    if(mail($TO, $SUBJECT, $MESSAGE, $HEADERS)) {
         echo "<h3>Email sent to:</h3>";
         echo "<div class='emailList'>";
         foreach($emailsList as $email) {
