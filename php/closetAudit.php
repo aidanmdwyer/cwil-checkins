@@ -683,44 +683,50 @@ form.addEventListener("invalid", function(event) {
     
     $BODY .= "</body></html>";
 
-    // Generate a unique MIME boundary
-    $boundary = "----=_ClosetAudit_" . md5(uniqid((string)mt_rand(), true));
+    // Generate unique MIME identifiers
+    $boundary = "----=_ClosetAudit_" . bin2hex(random_bytes(16));
+    $htmlCid = "audit-html";
 
     // Email headers
     $HEADERS = "MIME-Version: 1.0\r\n";
-    $HEADERS .= "Content-Type: multipart/related; boundary=\"$boundary\"; type=\"text/html\"\r\n";
+    $HEADERS .= "Content-Type: multipart/related; ";
+    $HEADERS .= "boundary=\"$boundary\"; ";
+    $HEADERS .= "type=\"text/html\"; ";
+    $HEADERS .= "start=\"<$htmlCid>\"\r\n";
 
-    // Start the email body
+    // Start MIME message with the HTML root part
     $MESSAGE = "--$boundary\r\n";
     $MESSAGE .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $MESSAGE .= "Content-Transfer-Encoding: 8bit\r\n\r\n";
+    $MESSAGE .= "Content-Transfer-Encoding: 8bit\r\n";
+    $MESSAGE .= "Content-ID: <$htmlCid>\r\n\r\n";
     $MESSAGE .= $BODY . "\r\n";
 
-    // Add each image as an inline MIME attachment
-    foreach ($emailInlineImages as $image) {
+    // Add inline image parts
+    foreach ($emailInlineImages as $index => $image) {
         $cid = $image['cid'];
 
         $MESSAGE .= "--$boundary\r\n";
-        $MESSAGE .= "Content-Type: image/jpeg; name=\"$cid.jpg\"\r\n";
+        $MESSAGE .= "Content-Type: image/jpeg; name=\"image-$index.jpg\"\r\n";
         $MESSAGE .= "Content-Transfer-Encoding: base64\r\n";
         $MESSAGE .= "Content-ID: <$cid>\r\n";
-        $MESSAGE .= "Content-Disposition: inline; filename=\"$cid.jpg\"\r\n\r\n";
+        $MESSAGE .= "Content-Disposition: inline; filename=\"image-$index.jpg\"\r\n\r\n";
 
-        // Wrap base64 at 76 characters per line
         $MESSAGE .= chunk_split(base64_encode($image['data']), 76, "\r\n");
     }
 
+    // End MIME message
     $MESSAGE .= "--$boundary--\r\n";
 
+    // Send
     $TO = $emailsList[0] ?? '';
 
     $HEADERS .= "Bcc: " . implode(",", array_slice($emailsList, 1)) . "\r\n";
 
-    if(sizeof($emailsList) > 0) {
-        if(mail($TO, $SUBJECT, $MESSAGE, $HEADERS)) {
+    if (count($emailsList) > 0) {
+        if (mail($TO, $SUBJECT, $MESSAGE, $HEADERS)) {
             echo "<h3>Email sent to:</h3>";
             echo "<div class='emailList'>";
-            foreach($emailsList as $email) {
+            foreach ($emailsList as $email) {
                 echo "<p>$email</p>";
             }
             echo "</div><br>";
