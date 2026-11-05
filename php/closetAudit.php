@@ -420,7 +420,10 @@ form.addEventListener("invalid", function(event) {
 } else { //after submission
     require_once 'db.php';
 
+    $confirmationParams = "";
+
     $buildingName = $_POST['buildingName'];
+    $confirmationParams .= "?buildingName=" . $buildingName;
     $date = $_POST['date'];
     $auditor = $_POST['auditor'];
     $ic = $_POST['ic'];
@@ -538,7 +541,7 @@ form.addEventListener("invalid", function(event) {
 
     //build email tables
     $curCidIdx = 0;
-    
+
     $TABLE = "";
     foreach ($auditItems as $section => $list) {
         $TABLE .= "<h2>$section</h2>";
@@ -641,27 +644,14 @@ form.addEventListener("invalid", function(event) {
     while($row = $selectEmailsResults->fetch_assoc()) {
         $emailsList[] = $row['email'];
     }
+    if($emailsList) {
+        $confirmationParams .= "&emails=" . urlencode(implode(",", $emailsList));
+    }
 
     $selectEmailsStmt->close();
 
     $conn->close();
-?>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Closet Audit</title>
-    <link rel="stylesheet" href="/style.css">
-    <link rel="icon" type="image/x-icon" href="/imgs/favicon.png">
-    <link rel="manifest" href="/manifest.json">
-</head>
-<body>
-    <h2>Closet audit successfully submitted for<br><?= $buildingName ?>.</h2>
-    <?php
-    
     $BODY .= "</body></html>";
 
     // Generate unique MIME identifiers
@@ -717,33 +707,7 @@ form.addEventListener("invalid", function(event) {
     } else {
         echo "<h3>No email addresses found to send report to.</h3>";
     }
-    ?>
-    <button class="big" onclick="window.location.href='/index.php'">Home</button>
-</body>
-<style>
-    body {
-        width: 100%;
-        height: 100%;
-        margin: auto;
-        padding: 30px;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    h2, h3 {
-        text-align: center;
-    }
-    .emailList {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-    }
-    .emailList p {
-        margin: 0;
-        padding: 0;
-    }
-</style>
-</html>
-<?php } ?>
+
+    header("Location: /html/confirmation.html" . $confirmationParams);
+}
+?>
