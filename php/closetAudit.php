@@ -537,6 +537,8 @@ form.addEventListener("invalid", function(event) {
     }
 
     //build email tables
+    $curCidIdx = 0;
+    
     $TABLE = "";
     foreach ($auditItems as $section => $list) {
         $TABLE .= "<h2>$section</h2>";
@@ -550,7 +552,7 @@ form.addEventListener("invalid", function(event) {
         foreach ($list as $item) {
             $value = $postAuditItems[$item];
             $TABLE .= "<tr>\r\n";
-            
+
             //item
             $TABLE .= "<td style='border: 1px solid black; padding: 6px;'>$item</td>\r\n";
 
@@ -569,7 +571,8 @@ form.addEventListener("invalid", function(event) {
 
             if($itemToImageData[$item]) {
                 // Add image to email attachments
-                $cid = "audit-image-$item";
+                $cid = "audit-image-$curCidIdx";
+                $curCidIdx++;
 
                 $emailInlineImages[] = [
                     'cid' => $cid,
