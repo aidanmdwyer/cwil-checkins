@@ -31,40 +31,40 @@ $types = ''; // parameter types for bind_param
 
 // Manager filter
 if (!empty($manager) && $manager !== '---') {
-    $conditions[] = "manager = ?";
+    $conditions[] = "b.manager = ?";
     $params[] = $manager;
     $types .= 's';
 }
 
 // IC filter
 if (!empty($ic) && $ic !== '---') {
-    $conditions[] = "ic = ?";
+    $conditions[] = "b.ic = ?";
     $params[] = $ic;
     $types .= 's';
 }
 
 // Today only filter
 if ($todayOnly) {
-    $conditions[] = "$dayOfWeek = 1";
+    $conditions[] = "b.$dayOfWeek = 1";
 }
 
 // Active filter
 if ($showActive) {
-    $conditions[] = "active = 1";
+    $conditions[] = "b.active = 1";
 } else {
-    $conditions[] = "active = 0";
+    $conditions[] = "b.active = 0";
 }
 
 // Search filter (parameterized)
 if (!empty($search)) {
-    $conditions[] = "name LIKE ?";
+    $conditions[] = "b.name LIKE ?";
     $params[] = "%$search%";
     $types .= 's';
 }
 
 // Session-based contractor filter
 if ($_SESSION['accountType'] === 'contractor') {
-    $conditions[] = "ic = ?";
+    $conditions[] = "b.ic = ?";
     $params[] = $_SESSION['username'];
     $types .= 's';
 }
@@ -97,7 +97,7 @@ if(accountProperties('Closet Audits Page')) {
             LIMIT 1
         )";
 } else {
-    $sql .= "SELECT * FROM buildings";
+    $sql .= "SELECT * FROM buildings b";
 }
 
 if (!empty($conditions)) {
