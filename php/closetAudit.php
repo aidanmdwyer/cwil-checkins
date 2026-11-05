@@ -716,15 +716,19 @@ form.addEventListener("invalid", function(event) {
 
     $HEADERS .= "Bcc: " . implode(",", array_slice($emailsList, 1)) . "\r\n";
 
-    if(mail($TO, $SUBJECT, $MESSAGE, $HEADERS)) {
-        echo "<h3>Email sent to:</h3>";
-        echo "<div class='emailList'>";
-        foreach($emailsList as $email) {
-            echo "<p>$email</p>";
+    if(sizeof($emailsList) > 0) {
+        if(mail($TO, $SUBJECT, $MESSAGE, $HEADERS)) {
+            echo "<h3>Email sent to:</h3>";
+            echo "<div class='emailList'>";
+            foreach($emailsList as $email) {
+                echo "<p>$email</p>";
+            }
+            echo "</div><br>";
+        } else {
+            echo "<h3>Failed to send email.</h3>";
         }
-        echo "</div><br>";
     } else {
-        echo "<h3>Failed to send email.</h3>";
+        echo "<h3>No email addresses found to send report to.</h3>";
     }
     ?>
     <button class="big" onclick="window.location.href='/index.php'">Home</button>
