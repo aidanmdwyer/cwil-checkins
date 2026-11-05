@@ -22,7 +22,7 @@
 
     const title = document.getElementById("title");
     if(buildingName) {
-        title.innerHTML = "Closet audit successfully submitted for " + buildingName + ".";
+        title.innerHTML = "Closet audit successfully submitted for <br>" + buildingName + ".";
 
         let emailsStr = params.get("emails");
         if(!emailsStr) {
