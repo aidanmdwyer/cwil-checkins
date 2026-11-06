@@ -103,7 +103,9 @@ include 'auditItems.php';
                 </div>
                 <div id="displayAudit">
                     <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: flex-start;">
-                        <button id="deleteAuditButton" class="big" style="margin-top: 20px;">Delete</button>
+                        <?php if($_SESSION['accountType'] !== "contractor") {?>
+                            <button id="deleteAuditButton" class="big" style="margin-top: 20px;">Delete</button>
+                        <?php }?>
                         <h1>
                             Closet Audit -
                             <br><span id="displayBuildingName"></span>

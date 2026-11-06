@@ -177,11 +177,13 @@ async function openAudit({auditId, buildingName, auditor, date, ic, manager}) {
     displayAudit.style.display = "flex";
     noAuditSelectedText.style.display = "none";
 
-    deleteAuditButton.onclick = (() => {
-        if(confirm('Are you sure you want to delete this audit of ' + buildingName + '?')) {
-            window.location.href='/php/deleteAudit.php?auditId=' + auditId + '&buildingName=' + buildingName;
-        }
-    });
+    if(filterIC) {
+        deleteAuditButton.onclick = (() => {
+            if(confirm('Are you sure you want to delete this audit of ' + buildingName + '?')) {
+                window.location.href='/php/deleteAudit.php?auditId=' + auditId + '&buildingName=' + buildingName;
+            }
+        });
+    }
 
     Array.from(document.getElementsByClassName('valueBox')).forEach((valueBox) => {
         valueBox.firstElementChild.innerHTML = "";
