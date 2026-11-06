@@ -43,14 +43,18 @@ filterBuildingName.addEventListener('input', function () {
 filterAuditor.addEventListener('input', function () {
     buildAuditList();
 });
-filterIC.addEventListener('input', function () {
-    buildAuditList();
-});
+if(filterIC) {
+    filterIC.addEventListener('input', function () {
+        buildAuditList();
+    });
+}
 
 async function loadAuditFilterData(defaultBuildingName = "---") {
     filterBuildingName.innerHTML = "<option>---</option>";
     filterAuditor.innerHTML = "<option>---</option>";
-    filterIC.innerHTML = "<option>---</option>";
+    if(filterIC) {
+        filterIC.innerHTML = "<option>---</option>";
+    }
 
     const response = await fetch(
         '/php/getAuditFilterOptions.php?key=' + accessKey
@@ -69,11 +73,13 @@ async function loadAuditFilterData(defaultBuildingName = "---") {
         option.innerHTML = auditor;
         filterAuditor.appendChild(option);
     });
-    data['ics'].forEach(ic => {
-        const option = document.createElement("option");
-        option.innerHTML = ic;
-        filterIC.appendChild(option);
-    });
+    if(filterIC) {
+        data['ics'].forEach(ic => {
+            const option = document.createElement("option");
+            option.innerHTML = ic;
+            filterIC.appendChild(option);
+        });
+    }
 
     filterBuildingName.value = defaultBuildingName;
 
