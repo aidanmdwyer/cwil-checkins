@@ -105,6 +105,8 @@ include 'auditItems.php';
                     <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: flex-start;">
                         <?php if($_SESSION['accountType'] !== "contractor") {?>
                             <button id="deleteAuditButton" class="big" style="margin-top: 20px;">Delete</button>
+                        <?php } else {?>
+                            <div></div>
                         <?php }?>
                         <h1>
                             Closet Audit -
