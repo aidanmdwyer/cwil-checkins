@@ -401,6 +401,7 @@ if (!accountProperties('Archives Page')) {
 
         } else {
             document.getElementById("archiveTable").style.display = "none";
+            document.getElementById("checkInCounter").innerHTML = "No buildings found.";
         }
     });
 </script>
