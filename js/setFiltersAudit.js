@@ -97,7 +97,7 @@ async function buildAuditList(page = 1) {
         filterToDate: filterToDate.value,
         filterBuildingName: filterBuildingName.value,
         filterAuditor: filterAuditor.value,
-        filterIC: filterIC.value,
+        filterIC: filterIC.value ?? "",
         page: page
     });
 
