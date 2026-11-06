@@ -364,7 +364,10 @@ include 'auditItems.php';
             $conn->close();
 
             echo "loadAuditFilterData(" . json_encode($row['buildingName']) . ").then(() => buildAuditList());";
-            echo "openAudit(" . json_encode($row) . ");";
+
+            if($_SESSION['accountType'] !== "contractor" || $_SESSION['username'] === $row['ic']) {
+                echo "openAudit(" . json_encode($row) . ");";
+            }
         } else {
             echo "loadAuditFilterData().then(() => buildAuditList());";
         }
