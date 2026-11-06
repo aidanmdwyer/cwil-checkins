@@ -46,7 +46,7 @@ function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
                 if (!cell) continue;
 
                 // Extract emails, ignoring buttons and other elements
-                const emails = Array.from(cell.querySelectorAll("div div"))
+                const emails = Array.from(cell.getElementsFromClassName("emailsListItem"))
                     .map(div => div.textContent.trim())
                     .filter(text => text.includes("@"));
 
