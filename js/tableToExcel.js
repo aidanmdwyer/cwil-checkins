@@ -31,13 +31,37 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", metadata = {
 function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
     let table = document.getElementById(tableId);
     if(table.rows.length > 0) {
-        let wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+        // Clone the table so the actual page remains unchanged
+        let exportTable = table.cloneNode(true);
+
+        // Format the Associated Emails column
+        const headers = Array.from(exportTable.rows[0].cells);
+        const emailColumnIndex = headers.findIndex(
+            cell => cell.textContent.trim() === "Associated Emails"
+        );
+
+        if (emailColumnIndex !== -1) {
+            for (let row of Array.from(exportTable.rows).slice(1)) {
+                const cell = row.cells[emailColumnIndex];
+                if (!cell) continue;
+
+                // Extract emails, ignoring buttons and other elements
+                const emails = Array.from(cell.querySelectorAll("div div"))
+                    .map(div => div.textContent.trim())
+                    .filter(text => text.includes("@"));
+
+                cell.textContent = emails.join(", ");
+            }
+        }
+
+        let wb = XLSX.utils.table_to_book(exportTable, {sheet: "Sheet1"});
         const ws = wb.Sheets["Sheet1"];
 
         removeColumns(ws, ["Account Link", "Password Reset Link", "Delete"]);
 
         autoFitColumn(ws, "Contractor Name");
         autoFitColumn(ws, "Status");
+        autoFitColumn(ws, "Associated Emails");
 
         // enable cellStyles so alignment works
         XLSX.writeFile(wb, fileName, {bookType: "xlsx", cellStyles: true});
