@@ -373,14 +373,35 @@ if (!accountProperties('Archives Page')) {
         });
 
         // reapply alternating colors
+        let numChecked = 0;
         const visibleRows = trs.filter(tr => tr.style.display !== 'none');
-        visibleRows.forEach((tr, i) => {
-            tr.classList.remove('even', 'odd');
-            tr.classList.add(i % 2 === 0 ? 'even' : 'odd');
 
-            const checked = tr.children[3+colNum].innerText === "✅";
-            console.log(checked);
-        });
+        if(visibleRows.length > 0) {
+            document.getElementById("archiveTable").style.display = "inline-block";
+            visibleRows.forEach((tr, i) => {
+                tr.classList.remove('even', 'odd');
+                tr.classList.add(i % 2 === 0 ? 'even' : 'odd');
+
+                const checked = tr.children[3+colNum].innerText === "✅";
+                if(checked) {
+                    numChecked++;
+                }
+            });
+
+            numBuildings = visibleRows.length;
+            numUnchecked = numBuildings - numChecked;
+            percentageChecked = Math.round(numChecked/numBuildings*1000)/10;
+            percentageUnchecked = Math.round((100 - percentageChecked)*100)/100;
+
+            let checkInCounterHTML = 
+                "<span style='margin-right: 30px;'>" + numBuildings + " buildings loaded</span>" + 
+                "<span style='margin-right: 30px;'>" + numChecked + "/" + numBuildings + " &#9989 (" + percentageChecked + "%)</span>" + 
+                numUnchecked + "/" + numBuildings + " &#10060 (" + percentageUnchecked + "%)";
+            document.getElementById("checkInCounter").innerHTML = checkInCounterHTML;
+
+        } else {
+            document.getElementById("archiveTable").style.display = "none";
+        }
     });
 </script>
 <style>
