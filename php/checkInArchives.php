@@ -377,6 +377,9 @@ if (!accountProperties('Archives Page')) {
         visibleRows.forEach((tr, i) => {
             tr.classList.remove('even', 'odd');
             tr.classList.add(i % 2 === 0 ? 'even' : 'odd');
+
+            const checked = tr.children[3+colNum].innerText === "✅";
+            console.log(checked);
         });
     });
 </script>
