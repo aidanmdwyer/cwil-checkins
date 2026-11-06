@@ -64,13 +64,17 @@ include 'auditItems.php';
                         </select>
                     </label>
                     <div class="vr"></div>
-                    <label style="display: flex; flex-direction: column;">
-                        Filter IC
-                        <select id="filterIC" name="filterIC">
-                            <option>---</option>
-                        </select>
-                    </label>
-                    <div class="vr"></div>
+
+                    <?php if($_SESSION['accountType'] !== "contractor") {?>
+                        <label style="display: flex; flex-direction: column;">
+                            Filter IC
+                            <select id="filterIC" name="filterIC">
+                                <option>---</option>
+                            </select>
+                        </label>
+                        <div class="vr"></div>
+                    <?php }?>
+
                 </div>
             </div>
         </div>

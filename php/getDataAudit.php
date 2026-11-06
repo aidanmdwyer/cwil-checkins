@@ -9,7 +9,9 @@ $filterFromDate = $_GET['filterFromDate'];
 $filterToDate = $_GET['filterToDate'];
 $filterBuildingName = $_GET['filterBuildingName'];
 $filterAuditor = $_GET['filterAuditor'];
-$filterIC = $_GET['filterIC'];
+$filterIC = $_SESSION['accountType'] === "contractor" ? 
+    $_SESSION['username'] : 
+    $_GET['filterIC'];
 $page = $_GET['page'] >= 1 ? $_GET['page'] : 1;
 
 $selectAuditsSQL = "SELECT auditId, buildingName, date, auditor, ic, manager FROM closet_audits";

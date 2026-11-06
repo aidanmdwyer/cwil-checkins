@@ -68,7 +68,7 @@ if (!accountProperties('Archives Page')) {
                         <label style="display: flex; flex-direction: column;">
                             Search
                             <span style="display: flex; flex-direction: row; gap: 5px; align-items: center;">
-                                <input type="text" id="searchArchives" name="searchContractors"/>
+                                <input type="text" id="searchArchives"/>
                                 <button type="submit" class="big">Enter</button>
                             </span>
                         </label>
