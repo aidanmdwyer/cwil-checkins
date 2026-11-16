@@ -576,7 +576,7 @@ async function addImagesToWorkbook(
 
     for (const image of images) {
         const currentImageHeight = image.height ?? imageHeight;
-        const heightEMU = currentImageHeight * 9525;
+        const heightEMU = Math.round(currentImageHeight * 9525);
 
         const imageId = drawingAnchors.length + 1;
         const relationshipId = "rId" + imageId;
@@ -624,9 +624,9 @@ async function addImagesToWorkbook(
         }
 
         // Calculate width based on original aspect ratio
-        const widthEMU = (
-            currentImageHeight * dimensions.width / dimensions.height
-        ) * 9525;
+        const widthEMU = Math.round(
+            currentImageHeight * dimensions.width / dimensions.height * 9525
+        );
 
         zip.file(imagePath, bytes);
 
