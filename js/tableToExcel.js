@@ -28,41 +28,41 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", metadata = {
     }
 }
 
-function exportAuditTables(fileName = "export.xlsx") {
-    const wb = XLSX.utils.book_new();
+// function exportAuditTables(fileName = "export.xlsx") {
+//     const wb = XLSX.utils.book_new();
 
-    let ws = null;
+//     let ws = null;
 
-    const tables = Array.from(document.getElementsByClassName("auditTable"));
-    tables.forEach((table, index) => {
-        if (!table) return;
+//     const tables = Array.from(document.getElementsByClassName("auditTable"));
+//     tables.forEach((table, index) => {
+//         if (!table) return;
 
-        if (index === 0) {
-            ws = XLSX.utils.table_to_sheet(table);
-        } else {
-            XLSX.utils.sheet_add_dom(ws, table, {
-                origin: -1
-            });
-        }
+//         if (index === 0) {
+//             ws = XLSX.utils.table_to_sheet(table);
+//         } else {
+//             XLSX.utils.sheet_add_dom(ws, table, {
+//                 origin: -1
+//             });
+//         }
 
-        // Add one blank row between tables
-        if (index < tables.length - 1) {
-            const range = XLSX.utils.decode_range(ws["!ref"]);
-            range.e.r += 1;
-            ws["!ref"] = XLSX.utils.encode_range(range);
-        }
-    });
+//         // Add one blank row between tables
+//         if (index < tables.length - 1) {
+//             const range = XLSX.utils.decode_range(ws["!ref"]);
+//             range.e.r += 1;
+//             ws["!ref"] = XLSX.utils.encode_range(range);
+//         }
+//     });
 
-    if (!ws) return;
+//     if (!ws) return;
 
-    autoFitColumn(ws, "Audit Item");
-    autoFitColumn(ws, "✅/❌");
-    autoFitColumn(ws, "Comments");
-    autoFitColumn(ws, "Image");
+//     autoFitColumn(ws, "Audit Item");
+//     autoFitColumn(ws, "✅/❌");
+//     autoFitColumn(ws, "Comments");
+//     autoFitColumn(ws, "Image");
 
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    XLSX.writeFile(wb, fileName);
-}
+//     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+//     XLSX.writeFile(wb, fileName);
+// }
 
 function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
     let table = document.getElementById(tableId);
@@ -229,4 +229,441 @@ function autoFitColumn(ws, columnHeader, margin = 0) {
     // Ensure !cols array exists
     if (!ws['!cols']) ws['!cols'] = [];
     ws['!cols'][targetCol] = { wch: widthWithMargin };
+}
+
+
+
+
+function exportAuditTables(fileName = "export.xlsx") {
+    const wb = XLSX.utils.book_new();
+    const tables = Array.from(document.getElementsByClassName("auditTable"));
+
+    let ws = null;
+    let nextRow = 0;
+    const images = [];
+
+    // Build worksheet and collect images
+    tables.forEach((table) => {
+        const rows = Array.from(table.querySelectorAll("tr"));
+        const startRow = nextRow;
+
+        if (!ws) {
+            ws = XLSX.utils.table_to_sheet(table);
+        } else {
+            XLSX.utils.sheet_add_dom(ws, table, {
+                origin: { r: startRow, c: 0 }
+            });
+        }
+
+        const headers = Array.from(rows[0].cells)
+            .map(cell => cell.textContent.trim());
+
+        const imageColumn = headers.indexOf("Image");
+
+        if (imageColumn !== -1) {
+            rows.forEach((row, rowIndex) => {
+                const cell = row.cells[imageColumn];
+                const button = cell?.querySelector("button");
+
+                if (!button) return;
+
+                const address = XLSX.utils.encode_cell({
+                    r: startRow + rowIndex,
+                    c: imageColumn
+                });
+
+                // Remove "View" regardless of whether an image exists
+                delete ws[address];
+
+                // Only embed images for visible buttons
+                if (
+                    getComputedStyle(button).display !== "none" &&
+                    button.dataset.imgSrc
+                ) {
+                    images.push({
+                        row: startRow + rowIndex,
+                        col: imageColumn,
+                        src: button.dataset.imgSrc
+                    });
+
+                    // Give image rows enough height
+                    ws["!rows"] ??= [];
+                    ws["!rows"][startRow + rowIndex] = {
+                        ...ws["!rows"][startRow + rowIndex],
+                        hpt: 60
+                    };
+                }
+            });
+        }
+
+        // One blank row between tables
+        nextRow += rows.length + 1;
+    });
+
+    if (!ws) return;
+
+    autoFitColumn(ws, "Audit Item");
+    autoFitColumn(ws, "✅/❌");
+    autoFitColumn(ws, "Comments");
+    autoFitColumn(ws, "Image");
+
+    // Make the image column wide enough
+    const imageColumn = images.length
+        ? images[0].col
+        : -1;
+
+    if (imageColumn !== -1) {
+        ws["!cols"] ??= [];
+        ws["!cols"][imageColumn] = {
+            ...ws["!cols"][imageColumn],
+            wch: 16
+        };
+    }
+
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    // Write workbook, then modify its ZIP contents
+    const workbookData = XLSX.write(wb, {
+        bookType: "xlsx",
+        type: "array"
+    });
+
+    addImagesToWorkbook(workbookData, images, fileName);
+}
+
+
+// Add actual images to the XLSX ZIP archive
+async function addImagesToWorkbook(workbookData, images, fileName) {
+    if (images.length === 0) {
+        XLSX.writeFile(
+            XLSX.read(workbookData, { type: "array" }),
+            fileName
+        );
+        return;
+    }
+
+    const zip = await JSZip.loadAsync(workbookData);
+
+    const SHEET_NS =
+        "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+
+    const REL_NS =
+        "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+
+    const PKG_REL_NS =
+        "http://schemas.openxmlformats.org/package/2006/relationships";
+
+    const CONTENT_NS =
+        "http://schemas.openxmlformats.org/package/2006/content-types";
+
+    const DRAWING_NS =
+        "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing";
+
+    const DRAWING_MAIN_NS =
+        "http://schemas.openxmlformats.org/drawingml/2006/main";
+
+    const parser = new DOMParser();
+    const serializer = new XMLSerializer();
+
+    function parseXml(xml) {
+        const doc = parser.parseFromString(xml, "application/xml");
+
+        if (doc.getElementsByTagName("parsererror").length) {
+            throw new Error("Invalid XML in workbook.");
+        }
+
+        return doc;
+    }
+
+    function addRelationship(doc, id, type, target) {
+        const rel = doc.createElementNS(
+            PKG_REL_NS,
+            "Relationship"
+        );
+
+        rel.setAttribute("Id", id);
+        rel.setAttribute("Type", type);
+        rel.setAttribute("Target", target);
+
+        doc.documentElement.appendChild(rel);
+    }
+
+    // Read worksheet XML
+    const sheetPath = "xl/worksheets/sheet1.xml";
+
+    const sheetDoc = parseXml(
+        await zip.file(sheetPath).async("string")
+    );
+
+    const sheetRoot = sheetDoc.documentElement;
+
+    // Read or create worksheet relationships
+    const sheetRelsPath =
+        "xl/worksheets/_rels/sheet1.xml.rels";
+
+    let sheetRelsDoc;
+
+    if (zip.file(sheetRelsPath)) {
+        sheetRelsDoc = parseXml(
+            await zip.file(sheetRelsPath).async("string")
+        );
+    } else {
+        sheetRelsDoc = document.implementation.createDocument(
+            PKG_REL_NS,
+            "Relationships",
+            null
+        );
+    }
+
+    // Find an unused relationship ID
+    function nextRelationshipId(doc) {
+        const ids = Array.from(
+            doc.getElementsByTagNameNS(
+                PKG_REL_NS,
+                "Relationship"
+            )
+        ).map(rel => {
+            const match = /^rId(\d+)$/.exec(
+                rel.getAttribute("Id")
+            );
+
+            return match ? Number(match[1]) : 0;
+        });
+
+        return "rId" + (Math.max(0, ...ids) + 1);
+    }
+
+    const drawingRelId = nextRelationshipId(sheetRelsDoc);
+
+    addRelationship(
+        sheetRelsDoc,
+        drawingRelId,
+        REL_NS + "/drawing",
+        "../drawings/drawing1.xml"
+    );
+
+    // Attach drawing relationship to worksheet
+    if (!sheetRoot.lookupNamespaceURI("r")) {
+        sheetRoot.setAttributeNS(
+            "http://www.w3.org/2000/xmlns/",
+            "xmlns:r",
+            REL_NS
+        );
+    }
+
+    const drawingElement = sheetDoc.createElementNS(
+        SHEET_NS,
+        "drawing"
+    );
+
+    drawingElement.setAttributeNS(
+        REL_NS,
+        "r:id",
+        drawingRelId
+    );
+
+    const extLst = sheetRoot.getElementsByTagNameNS(
+        SHEET_NS,
+        "extLst"
+    )[0];
+
+    sheetRoot.insertBefore(drawingElement, extLst || null);
+
+    // Create image relationships and drawing anchors
+    let drawingRels = [];
+    let drawingAnchors = [];
+
+    for (let i = 0; i < images.length; i++) {
+        const image = images[i];
+
+        const match = /^data:image\/(jpeg|jpg|png);base64,(.+)$/i.exec(
+            image.src
+        );
+
+        if (!match) {
+            console.warn("Unsupported image format:", image.src);
+            continue;
+        }
+
+        const extension = match[1].toLowerCase() === "png"
+            ? "png"
+            : "jpeg";
+
+        const mime = extension === "png"
+            ? "image/png"
+            : "image/jpeg";
+
+        const imageId = i + 1;
+        const relationshipId = "rId" + imageId;
+        const imagePath = `xl/media/image${imageId}.${extension}`;
+
+        // Decode and save image
+        const binary = atob(match[2]);
+        const bytes = new Uint8Array(binary.length);
+
+        for (let j = 0; j < binary.length; j++) {
+            bytes[j] = binary.charCodeAt(j);
+        }
+
+        zip.file(imagePath, bytes);
+
+        drawingRels.push(`
+            <Relationship
+                Id="${relationshipId}"
+                Type="${REL_NS}/image"
+                Target="../media/image${imageId}.${extension}"
+            />
+        `);
+
+        // Position image in its corresponding Excel cell
+        drawingAnchors.push(`
+            <xdr:oneCellAnchor>
+                <xdr:from>
+                    <xdr:col>${image.col}</xdr:col>
+                    <xdr:colOff>0</xdr:colOff>
+                    <xdr:row>${image.row}</xdr:row>
+                    <xdr:rowOff>0</xdr:rowOff>
+                </xdr:from>
+
+                <xdr:ext cx="952500" cy="714375"/>
+
+                <xdr:pic>
+                    <xdr:nvPicPr>
+                        <xdr:cNvPr
+                            id="${imageId}"
+                            name="Audit Image ${imageId}"
+                        />
+                        <xdr:cNvPicPr>
+                            <a:picLocks noChangeAspect="1"/>
+                        </xdr:cNvPicPr>
+                    </xdr:nvPicPr>
+
+                    <xdr:blipFill>
+                        <a:blip r:embed="${relationshipId}"/>
+                        <a:stretch>
+                            <a:fillRect/>
+                        </a:stretch>
+                    </xdr:blipFill>
+
+                    <xdr:spPr>
+                        <a:prstGeom prst="rect">
+                            <a:avLst/>
+                        </a:prstGeom>
+                    </xdr:spPr>
+                </xdr:pic>
+
+                <xdr:clientData/>
+            </xdr:oneCellAnchor>
+        `);
+    }
+
+    // Create drawing XML
+    const drawingXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <xdr:wsDr
+            xmlns:xdr="${DRAWING_NS}"
+            xmlns:a="${DRAWING_MAIN_NS}"
+            xmlns:r="${REL_NS}">
+            ${drawingAnchors.join("")}
+        </xdr:wsDr>`;
+
+    zip.file("xl/drawings/drawing1.xml", drawingXml);
+
+    // Create drawing relationships
+    const drawingRelsXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <Relationships xmlns="${PKG_REL_NS}">
+            ${drawingRels.join("")}
+        </Relationships>`;
+
+    zip.file(
+        "xl/drawings/_rels/drawing1.xml.rels",
+        drawingRelsXml
+    );
+
+    // Update worksheet relationships
+    zip.file(
+        sheetRelsPath,
+        serializer.serializeToString(sheetRelsDoc)
+    );
+
+    // Update worksheet XML
+    zip.file(
+        sheetPath,
+        serializer.serializeToString(sheetDoc)
+    );
+
+    // Update [Content_Types].xml
+    const contentTypesPath = "[Content_Types].xml";
+
+    const contentDoc = parseXml(
+        await zip.file(contentTypesPath).async("string")
+    );
+
+    const contentRoot = contentDoc.documentElement;
+
+    function hasDefault(extension) {
+        return Array.from(
+            contentRoot.getElementsByTagNameNS(
+                CONTENT_NS,
+                "Default"
+            )
+        ).some(el => el.getAttribute("Extension") === extension);
+    }
+
+    function addDefault(extension, contentType) {
+        if (hasDefault(extension)) return;
+
+        const element = contentDoc.createElementNS(
+            CONTENT_NS,
+            "Default"
+        );
+
+        element.setAttribute("Extension", extension);
+        element.setAttribute("ContentType", contentType);
+
+        contentRoot.appendChild(element);
+    }
+
+    addDefault("jpeg", "image/jpeg");
+    addDefault("png", "image/png");
+
+    const drawingOverride = contentDoc.createElementNS(
+        CONTENT_NS,
+        "Override"
+    );
+
+    drawingOverride.setAttribute(
+        "PartName",
+        "/xl/drawings/drawing1.xml"
+    );
+
+    drawingOverride.setAttribute(
+        "ContentType",
+        "application/vnd.openxmlformats-officedocument.drawing+xml"
+    );
+
+    contentRoot.appendChild(drawingOverride);
+
+    zip.file(
+        contentTypesPath,
+        serializer.serializeToString(contentDoc)
+    );
+
+    // Generate and download finished workbook
+    const blob = await zip.generateAsync({
+        type: "blob",
+        compression: "DEFLATE",
+        compressionOptions: { level: 6 }
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
 }

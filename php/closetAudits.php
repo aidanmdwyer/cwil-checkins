@@ -21,6 +21,7 @@ include 'auditItems.php';
     <link rel="icon" type="image/x-icon" href="/imgs/favicon.png">
     <link rel="manifest" href="/manifest.json">
     <script src="/modules/xlsx.full.min.js"></script>
+    <script src="/modules/jszip.min.js"></script>
 </head>
 <body>
     <header>
