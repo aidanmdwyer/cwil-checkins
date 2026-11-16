@@ -234,28 +234,43 @@ function autoFitColumn(ws, columnHeader, margin = 0) {
 
 
 
+
+
 function exportAuditTables(fileName = "export.xlsx") {
+    // CONFIGURABLE IMAGE HEIGHT (pixels)
+    const IMAGE_HEIGHT = 165;
+
     const wb = XLSX.utils.book_new();
     const tables = Array.from(document.getElementsByClassName("auditTable"));
 
-    let ws = null;
+    let ws = XLSX.utils.aoa_to_sheet([]);
     let nextRow = 0;
     const images = [];
 
     // Build worksheet and collect images
     tables.forEach((table) => {
         const rows = Array.from(table.querySelectorAll("tr"));
-        const startRow = nextRow;
 
-        if (!ws) {
-            ws = XLSX.utils.table_to_sheet(table);
-        } else {
-            XLSX.utils.sheet_add_dom(ws, table, {
-                origin: { r: startRow, c: 0 }
-            });
+        // Find the h2 immediately preceding this table
+        const heading = table.previousElementSibling;
+        const hasHeading = heading?.tagName === "H2";
+
+        // Add section heading
+        if (hasHeading) {
+            XLSX.utils.sheet_add_aoa(
+                ws,
+                [[heading.textContent.trim()]],
+                { origin: { r: nextRow, c: 0 } }
+            );
         }
 
-        const headers = Array.from(rows[0].cells)
+        const startRow = nextRow + (hasHeading ? 1 : 0);
+
+        XLSX.utils.sheet_add_dom(ws, table, {
+            origin: { r: startRow, c: 0 }
+        });
+
+        const headers = Array.from(rows[0]?.cells || [])
             .map(cell => cell.textContent.trim());
 
         const imageColumn = headers.indexOf("Image");
@@ -280,45 +295,43 @@ function exportAuditTables(fileName = "export.xlsx") {
                     getComputedStyle(button).display !== "none" &&
                     button.dataset.imgSrc
                 ) {
+                    const src = button.dataset.imgSrc.replace(/\s/g, "");
+
+                    const match =
+                        /^data:image\/(jpeg|jpg|png);base64,([\s\S]+)$/i.exec(src);
+
+                    if (!match) {
+                        console.warn("Unsupported image format:", button.dataset.imgSrc);
+                        return;
+                    }
+
                     images.push({
                         row: startRow + rowIndex,
                         col: imageColumn,
-                        src: button.dataset.imgSrc
+                        extension: match[1].toLowerCase() === "png" ? "png" : "jpeg",
+                        base64: match[2]
                     });
 
                     // Give image rows enough height
                     ws["!rows"] ??= [];
                     ws["!rows"][startRow + rowIndex] = {
                         ...ws["!rows"][startRow + rowIndex],
-                        hpt: 60
+                        hpt: (IMAGE_HEIGHT + 10) * 0.75
                     };
                 }
             });
         }
 
         // One blank row between tables
-        nextRow += rows.length + 1;
+        nextRow = startRow + rows.length + 1;
     });
 
-    if (!ws) return;
+    if (tables.length === 0) return;
 
     autoFitColumn(ws, "Audit Item");
     autoFitColumn(ws, "✅/❌");
     autoFitColumn(ws, "Comments");
     autoFitColumn(ws, "Image");
-
-    // Make the image column wide enough
-    const imageColumn = images.length
-        ? images[0].col
-        : -1;
-
-    if (imageColumn !== -1) {
-        ws["!cols"] ??= [];
-        ws["!cols"][imageColumn] = {
-            ...ws["!cols"][imageColumn],
-            wch: 16
-        };
-    }
 
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
@@ -328,12 +341,25 @@ function exportAuditTables(fileName = "export.xlsx") {
         type: "array"
     });
 
-    addImagesToWorkbook(workbookData, images, fileName);
+    addImagesToWorkbook(
+        workbookData,
+        images,
+        fileName,
+        IMAGE_HEIGHT
+    );
 }
 
 
+
+
 // Add actual images to the XLSX ZIP archive
-async function addImagesToWorkbook(workbookData, images, fileName) {
+
+async function addImagesToWorkbook(
+    workbookData,
+    images,
+    fileName,
+    imageHeight
+) {
     if (images.length === 0) {
         XLSX.writeFile(
             XLSX.read(workbookData, { type: "array" }),
@@ -469,41 +495,63 @@ async function addImagesToWorkbook(workbookData, images, fileName) {
 
     sheetRoot.insertBefore(drawingElement, extLst || null);
 
+    // Convert configured image height to EMUs
+    const heightEMU = imageHeight * 9525;
+
     // Create image relationships and drawing anchors
-    let drawingRels = [];
-    let drawingAnchors = [];
+    const drawingRels = [];
+    const drawingAnchors = [];
 
-    for (let i = 0; i < images.length; i++) {
-        const image = images[i];
-
-        const match = /^data:image\/(jpeg|jpg|png);base64,([\s\S]+)$/i.exec(
-            image.src.replace(/\s/g, "")
-        );
-
-        if (!match) {
-            console.warn("Unsupported image format:", image.src);
-            continue;
-        }
-
-        const extension = match[1].toLowerCase() === "png"
-            ? "png"
-            : "jpeg";
-
-        const mime = extension === "png"
-            ? "image/png"
-            : "image/jpeg";
-
-        const imageId = i + 1;
+    for (const image of images) {
+        const imageId = drawingAnchors.length + 1;
         const relationshipId = "rId" + imageId;
+
+        const extension = image.extension;
         const imagePath = `xl/media/image${imageId}.${extension}`;
 
         // Decode and save image
-        const binary = atob(match[2]);
+        const binary = atob(image.base64);
         const bytes = new Uint8Array(binary.length);
 
         for (let j = 0; j < binary.length; j++) {
             bytes[j] = binary.charCodeAt(j);
         }
+
+        const mime = extension === "png"
+            ? "image/png"
+            : "image/jpeg";
+
+        // Determine the original image dimensions
+        const imageBlob = new Blob([bytes], { type: mime });
+        const imageUrl = URL.createObjectURL(imageBlob);
+
+        let dimensions;
+
+        try {
+            dimensions = await new Promise((resolve, reject) => {
+                const img = new Image();
+
+                img.onload = () => {
+                    resolve({
+                        width: img.naturalWidth,
+                        height: img.naturalHeight
+                    });
+                };
+
+                img.onerror = () => {
+                    reject(new Error("Could not determine image dimensions."));
+                };
+
+                img.src = imageUrl;
+            });
+        } finally {
+            URL.revokeObjectURL(imageUrl);
+        }
+
+        // Calculate width based on original aspect ratio
+        const widthEMU = (
+            imageHeight * dimensions.width / dimensions.height
+        ) * 9525;
 
         zip.file(imagePath, bytes);
 
@@ -525,7 +573,7 @@ async function addImagesToWorkbook(workbookData, images, fileName) {
                     <xdr:rowOff>0</xdr:rowOff>
                 </xdr:from>
 
-                <xdr:ext cx="952500" cy="714375"/>
+                <xdr:ext cx="${widthEMU}" cy="${heightEMU}"/>
 
                 <xdr:pic>
                     <xdr:nvPicPr>
