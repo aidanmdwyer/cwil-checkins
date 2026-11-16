@@ -348,6 +348,7 @@ include 'auditItems.php';
 <script src="/js/accessKey.js"></script>
 <script src="/js/adjustMainMargin.js"></script>
 <script src="/js/setFiltersAudit.js"></script>
+<script src="/js/tableToExcel.js"></script>
 <script>
     accessKeyReady.then(() => {
         <?php
