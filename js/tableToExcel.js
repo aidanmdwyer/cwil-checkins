@@ -37,7 +37,7 @@ function exportAuditTables(fileName = "export.xlsx") {
         if (!table) return;
 
         if (index === 0) {
-            ws = XLSX.utils.table_to_sheet(table);dSd3
+            ws = XLSX.utils.table_to_sheet(table);
         } else {
             XLSX.utils.sheet_add_dom(ws, table, {
                 origin: -1
