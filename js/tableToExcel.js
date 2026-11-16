@@ -326,6 +326,16 @@ function exportAuditTables(fileName = "export.xlsx") {
 
     autoFitAllColumns(ws);
 
+    let metadata = {};
+    metadata['Date'] = document.getElementById("displayDate");
+    metadata['Time'] = document.getElementById("displayTime");
+    metadata['Auditor'] = document.getElementById("displayAuditor");
+    metadata['Contractor'] = document.getElementById("displayIC");
+    metadata['Manager'] = document.getElementById("displayManager");
+    metadata['Stats'] = document.getElementById("displayValues");
+
+    writeMetadata(ws, metadata);
+
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
     // Write workbook, then modify its ZIP contents
