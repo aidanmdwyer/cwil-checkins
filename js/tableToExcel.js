@@ -73,7 +73,7 @@ function writeMetadata(ws, metadata) {
     if (entries.length === 0) return;
 
     const range = XLSX.utils.decode_range(ws['!ref']);
-    const startCol = range.e.c + 3; // one empty column gap
+    const startCol = range.e.c + 4; // one empty column gap
     const startRow = range.s.r;     // align with table's header row
 
     let maxKeyWidth = 10;
@@ -355,7 +355,7 @@ function exportAuditTables(fileName = "export.xlsx") {
         if (match) {
             images.push({
                 row: 0,
-                col: contentEndCol + 5,
+                col: contentEndCol + 7,
                 extension: match[1].toLowerCase() === "png" ? "png" : "jpeg",
                 base64: match[2],
                 height: CLOSET_IMAGE_HEIGHT
