@@ -113,7 +113,7 @@ include 'auditItems.php';
                             Closet Audit -
                             <br><span id="displayBuildingName"></span>
                         </h1>
-                        <button class="big" style="margin-top: 20px;" onclick='exportAuditTables'>Export</button>
+                        <button class="big" style="margin-top: 20px;" onclick='exportAuditTables()'>Export</button>
                     </div>
 
                     <div class='hr'></div>

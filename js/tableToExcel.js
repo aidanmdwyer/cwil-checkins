@@ -33,7 +33,8 @@ function exportAuditTables(fileName = "export.xlsx") {
 
     let ws = null;
 
-    Array.from(document.getElementsByClassName("auditTable")).forEach((table, index) => {
+    const tables = Array.from(document.getElementsByClassName("auditTable"));
+    tables.forEach((table, index) => {
         if (!table) return;
 
         if (index === 0) {
@@ -45,7 +46,7 @@ function exportAuditTables(fileName = "export.xlsx") {
         }
 
         // Add one blank row between tables
-        if (index < tableIds.length - 1) {
+        if (index < tables.length - 1) {
             const range = XLSX.utils.decode_range(ws["!ref"]);
             range.e.r += 1;
             ws["!ref"] = XLSX.utils.encode_range(range);
