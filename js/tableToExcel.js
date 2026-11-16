@@ -327,12 +327,12 @@ function exportAuditTables(fileName = "export.xlsx") {
     autoFitAllColumns(ws);
 
     let metadata = {};
-    metadata['Date'] = document.getElementById("displayDate");
-    metadata['Time'] = document.getElementById("displayTime");
-    metadata['Auditor'] = document.getElementById("displayAuditor");
-    metadata['Contractor'] = document.getElementById("displayIC");
-    metadata['Manager'] = document.getElementById("displayManager");
-    metadata['Stats'] = document.getElementById("displayValues");
+    metadata['Date'] = document.getElementById("displayDate").innerText;
+    metadata['Time'] = document.getElementById("displayTime").innerText;
+    metadata['Auditor'] = document.getElementById("displayAuditor").innerText;
+    metadata['Contractor'] = document.getElementById("displayIC").innerText;
+    metadata['Manager'] = document.getElementById("displayManager").innerText;
+    metadata['Stats'] = document.getElementById("displayValues").innerText;
 
     writeMetadata(ws, metadata);
 
