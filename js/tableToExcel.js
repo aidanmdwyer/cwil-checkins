@@ -28,6 +28,36 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", metadata = {
     }
 }
 
+function exportAuditTables(fileName = "export.xlsx") {
+    const wb = XLSX.utils.book_new();
+
+    let ws = null;
+
+    Array.from(document.getElementsByClassName("auditTable")).forEach((table, index) => {
+        if (!table) return;
+
+        if (index === 0) {
+            ws = XLSX.utils.table_to_sheet(table);dSd3
+        } else {
+            XLSX.utils.sheet_add_dom(ws, table, {
+                origin: -1
+            });
+        }
+
+        // Add one blank row between tables
+        if (index < tableIds.length - 1) {
+            const range = XLSX.utils.decode_range(ws["!ref"]);
+            range.e.r += 1;
+            ws["!ref"] = XLSX.utils.encode_range(range);
+        }
+    });
+
+    if (!ws) return;
+
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.writeFile(wb, fileName);
+}
+
 function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
     let table = document.getElementById(tableId);
     if(table.rows.length > 0) {

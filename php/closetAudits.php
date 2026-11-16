@@ -112,7 +112,7 @@ include 'auditItems.php';
                             Closet Audit -
                             <br><span id="displayBuildingName"></span>
                         </h1>
-                        <button class="big" style="margin-top: 20px;" disabled>Export</button>
+                        <button class="big" style="margin-top: 20px;" onclick='exportAuditTables'>Export</button>
                     </div>
 
                     <div class='hr'></div>
@@ -132,7 +132,7 @@ include 'auditItems.php';
                     echo "<div class='hr'></div>";
                     foreach ($auditItems as $section => $list) {
                         echo "<h2>$section</h2>";
-                        echo "<table id='auditTable'>";
+                        echo "<table class='auditTable'>";
                         echo "<tr><th>Audit Item</th><th>✅/❌</th><th>Comments</th><th>Image</th></tr>";
                         foreach ($list as $item) {
                             echo "
