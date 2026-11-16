@@ -476,8 +476,8 @@ async function addImagesToWorkbook(workbookData, images, fileName) {
     for (let i = 0; i < images.length; i++) {
         const image = images[i];
 
-        const match = /^data:image\/(jpeg|jpg|png);base64,(.+)$/i.exec(
-            image.src
+        const match = /^data:image\/(jpeg|jpg|png);base64,([\s\S]+)$/i.exec(
+            image.src.replace(/\s/g, "")
         );
 
         if (!match) {
