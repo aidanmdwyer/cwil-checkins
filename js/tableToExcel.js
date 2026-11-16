@@ -28,42 +28,6 @@ function exportBuildingsSheet(tableId, fileName = "buildings.xlsx", metadata = {
     }
 }
 
-// function exportAuditTables(fileName = "export.xlsx") {
-//     const wb = XLSX.utils.book_new();
-
-//     let ws = null;
-
-//     const tables = Array.from(document.getElementsByClassName("auditTable"));
-//     tables.forEach((table, index) => {
-//         if (!table) return;
-
-//         if (index === 0) {
-//             ws = XLSX.utils.table_to_sheet(table);
-//         } else {
-//             XLSX.utils.sheet_add_dom(ws, table, {
-//                 origin: -1
-//             });
-//         }
-
-//         // Add one blank row between tables
-//         if (index < tables.length - 1) {
-//             const range = XLSX.utils.decode_range(ws["!ref"]);
-//             range.e.r += 1;
-//             ws["!ref"] = XLSX.utils.encode_range(range);
-//         }
-//     });
-
-//     if (!ws) return;
-
-//     autoFitColumn(ws, "Audit Item");
-//     autoFitColumn(ws, "✅/❌");
-//     autoFitColumn(ws, "Comments");
-//     autoFitColumn(ws, "Image");
-
-//     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-//     XLSX.writeFile(wb, fileName);
-// }
-
 function exportContractorSheet(tableId, fileName = "buildings.xlsx") {
     let table = document.getElementById(tableId);
     if(table.rows.length > 0) {
@@ -231,6 +195,38 @@ function autoFitColumn(ws, columnHeader, margin = 0) {
     ws['!cols'][targetCol] = { wch: widthWithMargin };
 }
 
+function autoFitAllColumns(ws, margin = 0) {
+    if (!ws["!ref"]) return;
+
+    const range = XLSX.utils.decode_range(ws["!ref"]);
+
+    ws["!cols"] ??= [];
+
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+        let maxWidth = 10;
+        let hasContent = false;
+
+        for (let R = range.s.r; R <= range.e.r; ++R) {
+            const cellAddr = XLSX.utils.encode_cell({ r: R, c: C });
+            const cell = ws[cellAddr];
+
+            if (!cell || cell.v == null || cell.v === "") continue;
+
+            const text = cell.v.toString();
+            maxWidth = Math.max(maxWidth, text.length);
+            hasContent = true;
+        }
+
+        // Only adjust columns that contain content
+        if (hasContent) {
+            ws["!cols"][C] = {
+                ...ws["!cols"][C],
+                wch: maxWidth + margin
+            };
+        }
+    }
+}
+
 
 
 
@@ -328,10 +324,7 @@ function exportAuditTables(fileName = "export.xlsx") {
 
     if (tables.length === 0) return;
 
-    autoFitColumn(ws, "Audit Item");
-    autoFitColumn(ws, "✅/❌");
-    autoFitColumn(ws, "Comments");
-    autoFitColumn(ws, "Image");
+    autoFitAllColumns(ws);
 
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
