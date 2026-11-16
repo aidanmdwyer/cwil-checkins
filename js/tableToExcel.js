@@ -332,7 +332,10 @@ function exportAuditTables(fileName = "export.xlsx") {
     metadata['Auditor'] = document.getElementById("displayAuditor").innerText;
     metadata['Contractor'] = document.getElementById("displayIC").innerText;
     metadata['Manager'] = document.getElementById("displayManager").innerText;
-    metadata['Stats'] = document.getElementById("displayValues").innerText;
+    document.getElementById("displayValues").innerHTML.split("<br>").forEach((item) => {
+        const parts = item.split(" ");
+        metadata[parts[0]] = parts[1];
+    });
 
     writeMetadata(ws, metadata);
 
