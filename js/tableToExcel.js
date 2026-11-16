@@ -55,6 +55,11 @@ function exportAuditTables(fileName = "export.xlsx") {
 
     if (!ws) return;
 
+    autoFitColumn(ws, "Audit Item");
+    autoFitColumn(ws, "✅/❌");
+    autoFitColumn(ws, "Comments");
+    autoFitColumn(ws, "Image");
+
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
     XLSX.writeFile(wb, fileName);
 }
