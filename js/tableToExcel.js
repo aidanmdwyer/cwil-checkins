@@ -232,9 +232,11 @@ function autoFitAllColumns(ws, margin = 0) {
 
 
 
+
 function exportAuditTables(fileName = "export.xlsx") {
-    // CONFIGURABLE IMAGE HEIGHT (pixels)
-    const IMAGE_HEIGHT = 165;
+    // CONFIGURABLE IMAGE HEIGHTS (pixels)
+    const IMAGE_HEIGHT = 200;
+    const CLOSET_IMAGE_HEIGHT = 600;
 
     const wb = XLSX.utils.book_new();
     const tables = Array.from(document.getElementsByClassName("auditTable"));
@@ -243,15 +245,13 @@ function exportAuditTables(fileName = "export.xlsx") {
     let nextRow = 0;
     const images = [];
 
-    // Build worksheet and collect images
+    // Build worksheet and collect audit-item images
     tables.forEach((table) => {
         const rows = Array.from(table.querySelectorAll("tr"));
 
-        // Find the h2 immediately preceding this table
         const heading = table.previousElementSibling;
         const hasHeading = heading?.tagName === "H2";
 
-        // Add section heading
         if (hasHeading) {
             XLSX.utils.sheet_add_aoa(
                 ws,
@@ -286,7 +286,6 @@ function exportAuditTables(fileName = "export.xlsx") {
                 // Remove "View" regardless of whether an image exists
                 delete ws[address];
 
-                // Only embed images for visible buttons
                 if (
                     getComputedStyle(button).display !== "none" &&
                     button.dataset.imgSrc
@@ -326,18 +325,48 @@ function exportAuditTables(fileName = "export.xlsx") {
 
     autoFitAllColumns(ws);
 
+    // Record the last content-table column BEFORE adding metadata
+    const contentEndCol = XLSX.utils.decode_range(ws["!ref"]).e.c;
+
+    // Collect metadata
     let metadata = {};
-    metadata['Date'] = document.getElementById("displayDate").innerText;
-    metadata['Time'] = document.getElementById("displayTime").innerText;
-    metadata['Auditor'] = document.getElementById("displayAuditor").innerText;
-    metadata['Contractor'] = document.getElementById("displayIC").innerText;
-    metadata['Manager'] = document.getElementById("displayManager").innerText;
+    metadata["Date"] = document.getElementById("displayDate").innerText;
+    metadata["Time"] = document.getElementById("displayTime").innerText;
+    metadata["Auditor"] = document.getElementById("displayAuditor").innerText;
+    metadata["Contractor"] = document.getElementById("displayIC").innerText;
+    metadata["Manager"] = document.getElementById("displayManager").innerText;
+
     document.getElementById("displayValues").innerHTML.split("<br>").forEach((item) => {
         const parts = item.split(" ");
         metadata[parts[1]] = parts[0];
     });
 
     writeMetadata(ws, metadata);
+
+    // Add the main closet image five columns after the content tables
+    const closetImage = document.getElementById("displayClosetImage");
+
+    if (closetImage?.src) {
+        const src = closetImage.src.replace(/\s/g, "");
+
+        const match =
+            /^data:image\/(jpeg|jpg|png);base64,([\s\S]+)$/i.exec(src);
+
+        if (match) {
+            images.push({
+                row: 0,
+                col: contentEndCol + 5,
+                extension: match[1].toLowerCase() === "png" ? "png" : "jpeg",
+                base64: match[2],
+                height: CLOSET_IMAGE_HEIGHT
+            });
+        } else {
+            console.warn(
+                "Could not embed displayClosetImage. Expected a Base64 data URI.",
+                closetImage.src
+            );
+        }
+    }
 
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
@@ -354,6 +383,7 @@ function exportAuditTables(fileName = "export.xlsx") {
         IMAGE_HEIGHT
     );
 }
+
 
 
 
@@ -540,14 +570,14 @@ async function addImagesToWorkbook(
 
     sheetRoot.insertBefore(drawingElement, extLst || null);
 
-    // Convert configured image height to EMUs
-    const heightEMU = imageHeight * 9525;
-
     // Create image relationships and drawing anchors
     const drawingRels = [];
     const drawingAnchors = [];
 
     for (const image of images) {
+        const currentImageHeight = image.height ?? imageHeight;
+        const heightEMU = currentImageHeight * 9525;
+
         const imageId = drawingAnchors.length + 1;
         const relationshipId = "rId" + imageId;
 
@@ -595,7 +625,7 @@ async function addImagesToWorkbook(
 
         // Calculate width based on original aspect ratio
         const widthEMU = (
-            imageHeight * dimensions.width / dimensions.height
+            currentImageHeight * dimensions.width / dimensions.height
         ) * 9525;
 
         zip.file(imagePath, bytes);
