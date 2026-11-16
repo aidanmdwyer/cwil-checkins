@@ -416,6 +416,45 @@ async function addImagesToWorkbook(
 
     const sheetRoot = sheetDoc.documentElement;
 
+    // Set vertical alignment to top for all cells
+    const stylesPath = "xl/styles.xml";
+
+    const stylesDoc = parseXml(
+        await zip.file(stylesPath).async("string")
+    );
+
+    const STYLES_NS =
+        "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+
+    const cellXfs = stylesDoc.getElementsByTagNameNS(
+        STYLES_NS,
+        "cellXfs"
+    )[0];
+
+    Array.from(cellXfs.children).forEach(xf => {
+        xf.setAttribute("applyAlignment", "1");
+
+        let alignment = xf.getElementsByTagNameNS(
+            STYLES_NS,
+            "alignment"
+        )[0];
+
+        if (!alignment) {
+            alignment = stylesDoc.createElementNS(
+                STYLES_NS,
+                "alignment"
+            );
+            xf.appendChild(alignment);
+        }
+
+        alignment.setAttribute("vertical", "top");
+    });
+
+    zip.file(
+        stylesPath,
+        serializer.serializeToString(stylesDoc)
+    );
+
     // Read or create worksheet relationships
     const sheetRelsPath =
         "xl/worksheets/_rels/sheet1.xml.rels";
